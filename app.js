@@ -2602,6 +2602,791 @@ Object.assign(CULTURE, {
   'es-u12': ['Long lunches', 'In Spain lunch is the main meal, around 2–3 pm, and many people still go home to eat with family.'],
   'es-u13': ['Pharmacy crosses', 'Spanish pharmacies are marked by a glowing green cross, and pharmacists often treat small problems without a doctor.']
 });
+
+/* ------------------------------ DAILY ESSENTIALS: KOREAN ------------------------------ */
+COURSES.ko.units.push(
+  { id: 'ko-u21', s: 99, title: 'Days & dates', icon: '요일',
+    guide: [
+      { h: 'Days of the week', p: 'Every day ends in 요일 (day of the week): 월요일 Monday, 화요일 Tuesday, 수요일 Wednesday, 목요일 Thursday, 금요일 Friday, 토요일 Saturday, 일요일 Sunday.', ex: [['오늘은 무슨 요일이에요?', 'oneureun museun yoirieyo?', 'What day is it today?'], ['오늘은 금요일이에요.', 'oneureun geumyoirieyo.', 'Today is Friday.']] },
+      { h: 'Months and dates', p: 'Month = number + 월, day = number + 일, using the Sino-Korean numbers: 삼월 십오일 = March 15.', ex: [['제 생일은 삼월 십오일이에요.', 'je saengireun samwol sibo irieyo.', 'My birthday is March 15.']] }
+    ],
+    words: [
+      { t: '월요일', r: 'woryoil', en: 'Monday' }, { t: '화요일', r: 'hwayoil', en: 'Tuesday' }, { t: '수요일', r: 'suyoil', en: 'Wednesday' }, { t: '목요일', r: 'mogyoil', en: 'Thursday' },
+      { t: '금요일', r: 'geumyoil', en: 'Friday' }, { t: '토요일', r: 'toyoil', en: 'Saturday' }, { t: '일요일', r: 'iryoil', en: 'Sunday' }, { t: '오늘', r: 'oneul', en: 'today' },
+      { t: '내일', r: 'naeil', en: 'tomorrow' }, { t: '어제', r: 'eoje', en: 'yesterday' }, { t: '생일', r: 'saengil', en: 'birthday' }, { t: '언제', r: 'eonje', en: 'when' }
+    ],
+    sentences: [
+      { t: '오늘은 무슨 요일이에요?', r: 'oneureun museun yoirieyo?', en: 'What day is it today?' },
+      { t: '오늘은 금요일이에요.', r: 'oneureun geumyoirieyo.', en: 'Today is Friday.', alt: ['it is friday today', 'it is friday'] },
+      { t: '내일은 토요일이에요.', r: 'naeireun toyoirieyo.', en: 'Tomorrow is Saturday.', alt: ['tomorrow is saturday'] },
+      { t: '생일이 언제예요?', r: 'saengiri eonjeyeyo?', en: 'When is your birthday?', alt: ['when is the birthday', 'when is your birthday'] },
+      { t: '제 생일은 삼월 십오일이에요.', r: 'je saengireun samwol sibo irieyo.', en: 'My birthday is March 15.', alt: ['my birthday is march fifteenth', 'my birthday is on march 15'] },
+      { t: '일요일에 쉬어요.', r: 'iryoire swieoyo.', en: 'I rest on Sunday.', alt: ['i rest on sundays', 'i relax on sunday'] }
+    ],
+    blanks: [
+      { t: '오늘은 무슨 __이에요?', en: 'What day is it today?', options: ['요일', '시간'], answer: '요일', why: '요일 = day of the week. 시간 = time / hour.' },
+      { t: '생일이 __예요?', en: 'When is your birthday?', options: ['언제', '어디'], answer: '언제', why: '언제 = when, 어디 = where.' },
+      { t: '일요일__ 쉬어요.', en: 'I rest on Sunday.', options: ['에', '을'], answer: '에', why: '에 marks a point in time: 일요일에 = on Sunday.' }
+    ] },
+  { id: 'ko-u22', s: 99, title: 'Groceries & fruit', icon: '시장',
+    guide: [
+      { h: 'Counting things: 개', p: 'Use 개 to count most objects: 한 개, 두 개, 세 개 (one, two, three). Say the item first: 사과 두 개 주세요.', ex: [['사과 두 개 주세요.', 'sagwa du gae juseyo.', 'Two apples, please.']] },
+      { h: 'Shopping places', p: '시장 is a traditional market, 마트 is a supermarket. 에서 marks where an action happens: 시장에서 사요 (I buy at the market).', ex: [['시장에서 과일을 사요.', 'sijangeseo gwaireul sayo.', 'I buy fruit at the market.']] }
+    ],
+    words: [
+      { t: '과일', r: 'gwail', en: 'fruit' }, { t: '딸기', r: 'ttalgi', en: 'strawberry' }, { t: '포도', r: 'podo', en: 'grapes' }, { t: '수박', r: 'subak', en: 'watermelon' },
+      { t: '귤', r: 'gyul', en: 'tangerine' }, { t: '바나나', r: 'banana', en: 'banana' }, { t: '야채', r: 'yachae', en: 'vegetables' }, { t: '감자', r: 'gamja', en: 'potato' },
+      { t: '양파', r: 'yangpa', en: 'onion' }, { t: '마늘', r: 'maneul', en: 'garlic' }, { t: '계란', r: 'gyeran', en: 'egg' }, { t: '시장', r: 'sijang', en: 'market' }, { t: '마트', r: 'mateu', en: 'supermarket' }
+    ],
+    sentences: [
+      { t: '사과 두 개 주세요.', r: 'sagwa du gae juseyo.', en: 'Two apples, please.', alt: ['two apples please', 'give me two apples'] },
+      { t: '이 포도 얼마예요?', r: 'i podo eolmayeyo?', en: 'How much are these grapes?', alt: ['how much is this grape', 'how much are the grapes'] },
+      { t: '마트가 어디예요?', r: 'mateuga eodiyeyo?', en: 'Where is the supermarket?' },
+      { t: '양파랑 마늘이 필요해요.', r: 'yangparang maeuri piryohaeyo.', en: 'I need onions and garlic.', alt: ['i need onion and garlic'] },
+      { t: '계란 있어요?', r: 'gyeran isseoyo?', en: 'Do you have eggs?', alt: ['do you have egg', 'are there eggs'] },
+      { t: '시장에서 과일을 사요.', r: 'sijangeseo gwaireul sayo.', en: 'I buy fruit at the market.', alt: ['i buy fruit at the market'] }
+    ],
+    blanks: [
+      { t: '사과 두 __ 주세요.', en: 'Two apples, please.', options: ['개', '명'], answer: '개', why: '개 counts objects. 명 counts people.' },
+      { t: '시장__ 과일을 사요.', en: 'I buy fruit at the market.', options: ['에서', '에'], answer: '에서', why: '에서 = at (where an action happens).' },
+      { t: '계란 __?', en: 'Do you have eggs?', options: ['있어요', '없어요'], answer: '있어요', why: '있어요 = have / there is. 없어요 = don’t have.' }
+    ] },
+  { id: 'ko-u23', s: 99, title: 'Home & everyday things', icon: '열쇠',
+    guide: [
+      { h: 'Where is my…?', p: 'Thing + 이/가 어디에 있어요? asks where something is. Answer with place + 에 있어요: 가방 안에 있어요 (it’s inside the bag).', ex: [['제 열쇠가 어디에 있어요?', 'je yeolsoega eodie isseoyo?', 'Where is my key?'], ['열쇠는 가방 안에 있어요.', 'yeolsoeneun gabang ane isseoyo.', 'The key is inside the bag.']] },
+      { h: 'Polite requests', p: 'Verb + 아/어 주세요 = please do it for me: 문을 열어 주세요 (please open the door).', ex: [['문을 열어 주세요.', 'muneul yeoreo juseyo.', 'Please open the door.']] }
+    ],
+    words: [
+      { t: '열쇠', r: 'yeolsoe', en: 'key' }, { t: '문', r: 'mun', en: 'door' }, { t: '창문', r: 'changmun', en: 'window' }, { t: '침대', r: 'chimdae', en: 'bed' },
+      { t: '의자', r: 'uija', en: 'chair' }, { t: '책상', r: 'chaeksang', en: 'desk' }, { t: '전화', r: 'jeonhwa', en: 'phone' }, { t: '가방', r: 'gabang', en: 'bag' },
+      { t: '우산', r: 'usan', en: 'umbrella' }, { t: '시계', r: 'sigye', en: 'watch' }, { t: '안경', r: 'angyeong', en: 'glasses' }, { t: '지갑', r: 'jigap', en: 'wallet' }
+    ],
+    sentences: [
+      { t: '제 열쇠가 어디에 있어요?', r: 'je yeolsoega eodie isseoyo?', en: 'Where is my key?' },
+      { t: '열쇠는 가방 안에 있어요.', r: 'yeolsoeneun gabang ane isseoyo.', en: 'The key is inside the bag.', alt: ['the key is in the bag', 'my key is in the bag'] },
+      { t: '문을 열어 주세요.', r: 'muneul yeoreo juseyo.', en: 'Please open the door.', alt: ['open the door please'] },
+      { t: '창문 좀 닫아 주세요.', r: 'changmun jom dada juseyo.', en: 'Please close the window.', alt: ['close the window please', 'please close the window a little'] },
+      { t: '이거 제 안경이에요.', r: 'igeo je angyeongieyo.', en: 'These are my glasses.', alt: ['this is my glasses', 'these are my glasses', 'these glasses are mine'] },
+      { t: '지갑을 잃어버렸어요.', r: 'jigabeul ireobeoryeosseoyo.', en: 'I lost my wallet.', alt: ['i have lost my wallet'] }
+    ],
+    blanks: [
+      { t: '열쇠가 어디__ 있어요?', en: 'Where is the key?', options: ['에', '를'], answer: '에', why: '에 있어요 = is located at. 어디에 있어요? = where is it?' },
+      { t: '문을 __ 주세요.', en: 'Please open the door.', options: ['열어', '먹어'], answer: '열어', why: '열다 = to open. 먹다 = to eat.' },
+      { t: '이거 제 안경__.', en: 'These are my glasses.', options: ['이에요', '예요'], answer: '이에요', why: '안경 ends in a consonant, so use 이에요.' }
+    ] },
+  { id: 'ko-u24', s: 99, title: 'Phone, Wi-Fi & getting help', icon: '도움',
+    guide: [
+      { h: 'Wi-Fi and charging', p: 'Cafés in Korea almost always have Wi-Fi. Ask: 와이파이 비밀번호가 뭐예요? (What’s the Wi-Fi password?). 충전기 있어요? asks if they have a charger.', ex: [['와이파이 비밀번호가 뭐예요?', 'waipai bimilbeonhoga mwoyeyo?', 'What’s the Wi-Fi password?']] },
+      { h: 'Emergencies', p: '도와주세요! means “help me!”. Police is 112 and ambulance is 119 in Korea. 길을 잃었어요 = I’m lost.', ex: [['도와주세요!', 'dowajuseyo!', 'Help me!'], ['길을 잃었어요.', 'gireul ireosseoyo.', 'I’m lost.']] }
+    ],
+    words: [
+      { t: '와이파이', r: 'waipai', en: 'wifi' }, { t: '비밀번호', r: 'bimilbeonho', en: 'password' }, { t: '휴대폰', r: 'hyudaepon', en: 'cell phone' }, { t: '충전기', r: 'chungjeongi', en: 'charger' },
+      { t: '배터리', r: 'baeteori', en: 'battery' }, { t: '전화번호', r: 'jeonhwabeonho', en: 'phone number' }, { t: '도와주세요', r: 'dowajuseyo', en: 'help me' }, { t: '경찰', r: 'gyeongchal', en: 'police' },
+      { t: '병원', r: 'byeongwon', en: 'hospital' }, { t: '약국', r: 'yakguk', en: 'pharmacy' }, { t: '응급실', r: 'eunggeupsil', en: 'emergency room' }, { t: '길을 잃었어요', r: 'gireul ireosseoyo', en: 'I’m lost' }
+    ],
+    sentences: [
+      { t: '와이파이 비밀번호가 뭐예요?', r: 'waipai bimilbeonhoga mwoyeyo?', en: 'What is the Wi-Fi password?', alt: ['what is the wifi password', 'what is the password for the wifi'] },
+      { t: '휴대폰 충전기 있어요?', r: 'hyudaepon chungjeongi isseoyo?', en: 'Do you have a phone charger?', alt: ['do you have a charger', 'do you have a phone charger'] },
+      { t: '도와주세요!', r: 'dowajuseyo!', en: 'Help me!', alt: ['help', 'please help me'] },
+      { t: '경찰을 불러 주세요.', r: 'gyeongchareul bulleo juseyo.', en: 'Please call the police.', alt: ['call the police please', 'please call police'] },
+      { t: '길을 잃었어요.', r: 'gireul ireosseoyo.', en: 'I am lost.', alt: ['i am lost', 'i got lost'] },
+      { t: '약국이 어디예요?', r: 'yakgugi eodiyeyo?', en: 'Where is the pharmacy?' }
+    ],
+    blanks: [
+      { t: '와이파이 __가 뭐예요?', en: 'What is the Wi-Fi password?', options: ['비밀번호', '우산'], answer: '비밀번호', why: '비밀번호 = password. 우산 = umbrella.' },
+      { t: '약국이 __예요?', en: 'Where is the pharmacy?', options: ['어디', '언제'], answer: '어디', why: '어디 = where, 언제 = when.' },
+      { t: '경찰을 불러 __.', en: 'Please call the police.', options: ['주세요', '있어요'], answer: '주세요', why: '아/어 주세요 = please do it for me.' }
+    ] },
+  { id: 'ko-u25', s: 99, title: 'Clothes & shopping', icon: '옷',
+    guide: [
+      { h: 'Trying things on', p: '입어 봐도 돼요? = Can I try it on? (아/어 봐도 돼요? = may I try…?).', ex: [['이거 입어 봐도 돼요?', 'igeo ibeo bwado dwaeyo?', 'Can I try this on?']] },
+      { h: 'Size, colour, discount', p: '사이즈 = size, 색깔 = colour. 더 큰 = bigger, 더 작은 = smaller. In markets you can ask 좀 깎아 주세요 (a little discount, please).', ex: [['더 큰 사이즈 있어요?', 'deo keun saijeu isseoyo?', 'Do you have a bigger size?'], ['좀 깎아 주세요.', 'jom kkakka juseyo.', 'Please give me a discount.']] }
+    ],
+    words: [
+      { t: '티셔츠', r: 'tisyeocheu', en: 'T-shirt' }, { t: '치마', r: 'chima', en: 'skirt' }, { t: '신발', r: 'sinbal', en: 'shoes' }, { t: '양말', r: 'yangmal', en: 'socks' },
+      { t: '코트', r: 'koteu', en: 'coat' }, { t: '사이즈', r: 'saijeu', en: 'size' }, { t: '색깔', r: 'saekkkal', en: 'colour' }, { t: '더 큰', r: 'deo keun', en: 'bigger' },
+      { t: '더 작은', r: 'deo jageun', en: 'smaller' }, { t: '깎아 주세요', r: 'kkakka juseyo', en: 'discount please' }, { t: '입어 봐도 돼요', r: 'ibeo bwado dwaeyo', en: 'can I try it on' }, { t: '카드', r: 'kadeu', en: 'card' }
+    ],
+    sentences: [
+      { t: '이거 입어 봐도 돼요?', r: 'igeo ibeo bwado dwaeyo?', en: 'Can I try this on?', alt: ['may i try this on', 'can i try it on'] },
+      { t: '더 큰 사이즈 있어요?', r: 'deo keun saijeu isseoyo?', en: 'Do you have a bigger size?', alt: ['do you have a larger size', 'do you have a bigger one'] },
+      { t: '다른 색깔 있어요?', r: 'dareun saekkkal isseoyo?', en: 'Do you have another colour?', alt: ['do you have another color', 'do you have other colors', 'do you have a different colour'] },
+      { t: '좀 깎아 주세요.', r: 'jom kkakka juseyo.', en: 'Please give me a discount.', alt: ['a discount please', 'discount please', 'please give a little discount'] },
+      { t: '카드로 계산할게요.', r: 'kadeuro gyesanhalgeyo.', en: 'I will pay by card.', alt: ['i will pay with a card', 'i will pay by card', 'i am paying by card'] },
+      { t: '이 신발 얼마예요?', r: 'i sinbal eolmayeyo?', en: 'How much are these shoes?', alt: ['how much is this shoe', 'how much are these shoes'] }
+    ],
+    blanks: [
+      { t: '이거 입어 __ 돼요?', en: 'Can I try this on?', options: ['봐도', '가도'], answer: '봐도', why: '아/어 봐도 돼요? = may I try (doing) it?' },
+      { t: '__ 큰 사이즈 있어요?', en: 'Do you have a bigger size?', options: ['더', '덜'], answer: '더', why: '더 = more. 더 큰 = bigger.' },
+      { t: '카드__ 계산할게요.', en: 'I will pay by card.', options: ['로', '을'], answer: '로', why: '(으)로 = by means of. 카드로 = by card.' }
+    ] }
+);
+
+/* ------------------------------ DAILY ESSENTIALS: SPANISH ------------------------------ */
+COURSES.es.units.push(
+  { id: 'es-u14', s: 99, title: 'Days & dates',  icon: 'Lunes',
+    guide: [
+      { h: 'Days and months', p: 'Days and months are written in lowercase in Spanish: lunes, martes, miércoles, jueves, viernes, sábado, domingo. The week starts on Monday.', ex: [['¿Qué día es hoy?', 'keh DEE-ah ehs oy?', 'What day is it today?'], ['Hoy es viernes.', 'oy ehs BYEHR-nehs.', 'Today is Friday.']] },
+      { h: 'On a day: el / los', p: 'Use el before a day to say “on”: el lunes = on Monday. Use los for “every”: los lunes = on Mondays.', ex: [['El lunes trabajo.', 'ehl LOO-nehs trah-BAH-hoh.', 'On Monday I work.']] }
+    ],
+    words: [
+      { t: 'lunes', r: 'LOO-nehs', en: 'Monday' }, { t: 'martes', r: 'MAR-tehs', en: 'Tuesday' }, { t: 'miércoles', r: 'MYEHR-koh-lehs', en: 'Wednesday' }, { t: 'jueves', r: 'HWEH-behs', en: 'Thursday' },
+      { t: 'viernes', r: 'BYEHR-nehs', en: 'Friday' }, { t: 'sábado', r: 'SAH-bah-doh', en: 'Saturday' }, { t: 'domingo', r: 'doh-MEEN-goh', en: 'Sunday' }, { t: 'hoy', r: 'oy', en: 'today' },
+      { t: 'mañana', r: 'mah-NYAH-nah', en: 'tomorrow' }, { t: 'ayer', r: 'ah-YEHR', en: 'yesterday' }, { t: 'el cumpleaños', r: 'ehl koom-pleh-AH-nyohs', en: 'birthday' }, { t: 'cuándo', r: 'KWAHN-doh', en: 'when' }
+    ],
+    sentences: [
+      { t: '¿Qué día es hoy?', r: 'keh DEE-ah ehs oy?', en: 'What day is it today?' },
+      { t: 'Hoy es viernes.', r: 'oy ehs BYEHR-nehs.', en: 'Today is Friday.', alt: ['it is friday today', 'it is friday'] },
+      { t: 'Mañana es sábado.', r: 'mah-NYAH-nah ehs SAH-bah-doh.', en: 'Tomorrow is Saturday.', alt: ['tomorrow is saturday'] },
+      { t: '¿Cuándo es tu cumpleaños?', r: 'KWAHN-doh ehs too koom-pleh-AH-nyohs?', en: 'When is your birthday?' },
+      { t: 'Mi cumpleaños es en marzo.', r: 'mee koom-pleh-AH-nyohs ehs ehn MAR-soh.', en: 'My birthday is in March.', alt: ['my birthday is in march'] },
+      { t: 'El domingo descanso.', r: 'ehl doh-MEEN-goh dehs-KAHN-soh.', en: 'On Sunday I rest.', alt: ['i rest on sunday', 'i rest on sundays', 'on sundays i rest'] }
+    ],
+    blanks: [
+      { t: '¿__ día es hoy?', en: 'What day is it today?', options: ['Qué', 'Quién'], answer: 'Qué', why: 'Qué = what. Quién = who.' },
+      { t: 'Hoy __ viernes.', en: 'Today is Friday.', options: ['es', 'son'], answer: 'es', why: 'es = is (singular). son = are.' },
+      { t: 'Mi cumpleaños es __ marzo.', en: 'My birthday is in March.', options: ['en', 'a'], answer: 'en', why: 'en = in (a month).' }
+    ] },
+  { id: 'es-u15', s: 99, title: 'Groceries & fruit', icon: 'Fruta',
+    guide: [
+      { h: 'Asking for amounts', p: 'Use un kilo de, medio kilo de or un poco de + item: un kilo de manzanas (a kilo of apples).', ex: [['Quiero un kilo de manzanas.', 'KYEH-roh oon KEE-loh deh mahn-SAH-nahs.', 'I want a kilo of apples.']] },
+      { h: 'Shops', p: 'El mercado is a market, el supermercado a supermarket. ¿Cuánto cuesta(n)…? asks the price: cuesta for one, cuestan for many.', ex: [['¿Cuánto cuestan las naranjas?', 'KWAHN-toh KWEHS-tahn lahs nah-RAHN-hahs?', 'How much are the oranges?']] }
+    ],
+    words: [
+      { t: 'la fruta', r: 'lah FROO-tah', en: 'fruit' }, { t: 'la manzana', r: 'lah mahn-SAH-nah', en: 'apple' }, { t: 'la naranja', r: 'lah nah-RAHN-hah', en: 'orange' }, { t: 'el plátano', r: 'ehl PLAH-tah-noh', en: 'banana' },
+      { t: 'las verduras', r: 'lahs behr-DOO-rahs', en: 'vegetables' }, { t: 'la patata', r: 'lah pah-TAH-tah', en: 'potato' }, { t: 'la cebolla', r: 'lah seh-BOH-yah', en: 'onion' }, { t: 'el ajo', r: 'ehl AH-hoh', en: 'garlic' },
+      { t: 'el pollo', r: 'ehl POH-yoh', en: 'chicken' }, { t: 'el pescado', r: 'ehl pehs-KAH-doh', en: 'fish' }, { t: 'el mercado', r: 'ehl mehr-KAH-doh', en: 'market' }, { t: 'el supermercado', r: 'ehl soo-pehr-mehr-KAH-doh', en: 'supermarket' }
+    ],
+    sentences: [
+      { t: 'Quiero un kilo de manzanas.', r: 'KYEH-roh oon KEE-loh deh mahn-SAH-nahs.', en: 'I want a kilo of apples.', alt: ['i want one kilo of apples'] },
+      { t: '¿Cuánto cuestan las naranjas?', r: 'KWAHN-toh KWEHS-tahn lahs nah-RAHN-hahs?', en: 'How much are the oranges?', alt: ['how much do the oranges cost'] },
+      { t: 'Necesito cebolla y ajo.', r: 'neh-seh-SEE-toh seh-BOH-yah ee AH-hoh.', en: 'I need onion and garlic.', alt: ['i need onions and garlic'] },
+      { t: '¿Dónde está el supermercado?', r: 'DOHN-deh ehs-TAH ehl soo-pehr-mehr-KAH-doh?', en: 'Where is the supermarket?' },
+      { t: 'Medio kilo de pollo, por favor.', r: 'MEH-dyoh KEE-loh deh POH-yoh, pohr fah-BOHR.', en: 'Half a kilo of chicken, please.', alt: ['half a kilo of chicken please', 'half kilo of chicken please'] },
+      { t: '¿Tiene pescado fresco?', r: 'TYEH-neh pehs-KAH-doh FREHS-koh?', en: 'Do you have fresh fish?', alt: ['do you have fresh fish'] }
+    ],
+    blanks: [
+      { t: 'Quiero un kilo __ manzanas.', en: 'I want a kilo of apples.', options: ['de', 'con'], answer: 'de', why: 'de = of. un kilo de = a kilo of.' },
+      { t: '¿Cuánto __ las naranjas?', en: 'How much are the oranges?', options: ['cuestan', 'cuesta'], answer: 'cuestan', why: 'Plural things (naranjas) take cuestan.' },
+      { t: 'Necesito cebolla __ ajo.', en: 'I need onion and garlic.', options: ['y', 'o'], answer: 'y', why: 'y = and, o = or.' }
+    ] },
+  { id: 'es-u16', s: 99, title: 'Home & everyday things', icon: 'Casa',
+    guide: [
+      { h: 'Where is my…?', p: '¿Dónde está + thing? asks where something is. Use está (not es) for location: La llave está en el bolso.', ex: [['¿Dónde está mi llave?', 'DOHN-deh ehs-TAH mee YAH-beh?', 'Where is my key?']] },
+      { h: 'Polite commands', p: 'Add por favor to a command: Abre la puerta, por favor. Cierra la ventana, por favor.', ex: [['Abre la puerta, por favor.', 'AH-breh lah PWEHR-tah, pohr fah-BOHR.', 'Open the door, please.']] }
+    ],
+    words: [
+      { t: 'la llave', r: 'lah YAH-beh', en: 'key' }, { t: 'la puerta', r: 'lah PWEHR-tah', en: 'door' }, { t: 'la ventana', r: 'lah behn-TAH-nah', en: 'window' }, { t: 'la cama', r: 'lah KAH-mah', en: 'bed' },
+      { t: 'la silla', r: 'lah SEE-yah', en: 'chair' }, { t: 'la mesa', r: 'lah MEH-sah', en: 'table' }, { t: 'el teléfono', r: 'ehl teh-LEH-foh-noh', en: 'phone' }, { t: 'el bolso', r: 'ehl BOHL-soh', en: 'bag' },
+      { t: 'el paraguas', r: 'ehl pah-RAH-gwahs', en: 'umbrella' }, { t: 'el reloj', r: 'ehl rreh-LOH', en: 'watch' }, { t: 'las gafas', r: 'lahs GAH-fahs', en: 'glasses' }, { t: 'la cartera', r: 'lah kar-TEH-rah', en: 'wallet' }
+    ],
+    sentences: [
+      { t: '¿Dónde está mi llave?', r: 'DOHN-deh ehs-TAH mee YAH-beh?', en: 'Where is my key?' },
+      { t: 'La llave está en el bolso.', r: 'lah YAH-beh ehs-TAH ehn ehl BOHL-soh.', en: 'The key is in the bag.', alt: ['the key is in the purse', 'my key is in the bag'] },
+      { t: 'Abre la puerta, por favor.', r: 'AH-breh lah PWEHR-tah, pohr fah-BOHR.', en: 'Open the door, please.', alt: ['open the door please'] },
+      { t: 'Cierra la ventana, por favor.', r: 'SYEH-rrah lah behn-TAH-nah, pohr fah-BOHR.', en: 'Close the window, please.', alt: ['close the window please'] },
+      { t: 'Estas son mis gafas.', r: 'EHS-tahs sohn mees GAH-fahs.', en: 'These are my glasses.', alt: ['these are my glasses', 'these glasses are mine'] },
+      { t: 'He perdido la cartera.', r: 'eh pehr-DEE-doh lah kar-TEH-rah.', en: 'I have lost my wallet.', alt: ['i lost my wallet', 'i have lost the wallet'] }
+    ],
+    blanks: [
+      { t: '¿Dónde __ mi llave?', en: 'Where is my key?', options: ['está', 'es'], answer: 'está', why: 'Use está for where something is located.' },
+      { t: '__ la puerta, por favor.', en: 'Open the door, please.', options: ['Abre', 'Come'], answer: 'Abre', why: 'abrir = to open. comer = to eat.' },
+      { t: 'La llave está __ el bolso.', en: 'The key is in the bag.', options: ['en', 'de'], answer: 'en', why: 'en = in / on / at.' }
+    ] },
+  { id: 'es-u17', s: 99, title: 'Phone, Wi-Fi & getting help', icon: 'Wifi',
+    guide: [
+      { h: 'Wi-Fi and charging', p: 'Ask ¿Cuál es la contraseña del wifi? (What is the Wi-Fi password?) and ¿Tiene un cargador? (Do you have a charger?). Cafés usually put the password on the receipt or wall.', ex: [['¿Cuál es la contraseña del wifi?', 'kwahl ehs lah kohn-trah-SEH-nyah dehl WEE-fee?', 'What is the Wi-Fi password?']] },
+      { h: 'Emergencies', p: '¡Ayuda! = help! The European emergency number is 112, also used in Spain. Estoy perdido (m) / perdida (f) = I’m lost.', ex: [['¡Ayuda!', 'ah-YOO-dah!', 'Help!'], ['Estoy perdido.', 'ehs-TOY pehr-DEE-doh.', 'I’m lost.']] }
+    ],
+    words: [
+      { t: 'el wifi', r: 'ehl WEE-fee', en: 'wifi' }, { t: 'la contraseña', r: 'lah kohn-trah-SEH-nyah', en: 'password' }, { t: 'el móvil', r: 'ehl MOH-beel', en: 'cell phone' }, { t: 'el cargador', r: 'ehl kar-gah-DOHR', en: 'charger' },
+      { t: 'la batería', r: 'lah bah-teh-REE-ah', en: 'battery' }, { t: 'el número de teléfono', r: 'ehl NOO-meh-roh deh teh-LEH-foh-noh', en: 'phone number' }, { t: '¡Ayuda!', r: 'ah-YOO-dah', en: 'help me' }, { t: 'la policía', r: 'lah poh-lee-SEE-ah', en: 'police' },
+      { t: 'el hospital', r: 'ehl ohs-pee-TAHL', en: 'hospital' }, { t: 'la farmacia', r: 'lah far-MAH-syah', en: 'pharmacy' }, { t: 'la emergencia', r: 'lah eh-mehr-HEHN-syah', en: 'emergency' }, { t: 'estoy perdido', r: 'ehs-TOY pehr-DEE-doh', en: 'I’m lost' }
+    ],
+    sentences: [
+      { t: '¿Cuál es la contraseña del wifi?', r: 'kwahl ehs lah kohn-trah-SEH-nyah dehl WEE-fee?', en: 'What is the Wi-Fi password?', alt: ['what is the wifi password'] },
+      { t: '¿Tiene un cargador?', r: 'TYEH-neh oon kar-gah-DOHR?', en: 'Do you have a charger?', alt: ['do you have a phone charger'] },
+      { t: '¡Ayuda!', r: 'ah-YOO-dah!', en: 'Help!', alt: ['help me'] },
+      { t: 'Llame a la policía, por favor.', r: 'YAH-meh ah lah poh-lee-SEE-ah, pohr fah-BOHR.', en: 'Call the police, please.', alt: ['please call the police', 'call the police please'] },
+      { t: 'Estoy perdido.', r: 'ehs-TOY pehr-DEE-doh.', en: 'I am lost.', alt: ['i am lost', 'i am lost (m)'] },
+      { t: '¿Dónde está la farmacia?', r: 'DOHN-deh ehs-TAH lah far-MAH-syah?', en: 'Where is the pharmacy?' }
+    ],
+    blanks: [
+      { t: '¿Cuál es la __ del wifi?', en: 'What is the Wi-Fi password?', options: ['contraseña', 'llave'], answer: 'contraseña', why: 'contraseña = password. llave = key.' },
+      { t: 'Llame a la __.', en: 'Call the police.', options: ['policía', 'mesa'], answer: 'policía', why: 'la policía = the police.' },
+      { t: '¿Dónde __ la farmacia?', en: 'Where is the pharmacy?', options: ['está', 'tiene'], answer: 'está', why: 'está = is (location). tiene = has.' }
+    ] },
+  { id: 'es-u18', s: 99, title: 'Clothes & shopping', icon: 'Ropa',
+    guide: [
+      { h: 'Trying things on', p: '¿Puedo probármelo? = Can I try it on? Fitting rooms are probadores.', ex: [['¿Puedo probármelo?', 'PWEH-doh proh-BAR-meh-loh?', 'Can I try it on?']] },
+      { h: 'Size, colour, discount', p: 'La talla = size, el color = colour. más grande = bigger, más pequeño = smaller. ¿Hay descuento? = Is there a discount?', ex: [['¿Tiene una talla más grande?', 'TYEH-neh OO-nah TAH-yah mahs GRAHN-deh?', 'Do you have a bigger size?']] }
+    ],
+    words: [
+      { t: 'la camiseta', r: 'lah kah-mee-SEH-tah', en: 'T-shirt' }, { t: 'los pantalones', r: 'lohs pahn-tah-LOH-nehs', en: 'pants' }, { t: 'los zapatos', r: 'lohs sah-PAH-tohs', en: 'shoes' }, { t: 'la falda', r: 'lah FAHL-dah', en: 'skirt' },
+      { t: 'el abrigo', r: 'ehl ah-BREE-goh', en: 'coat' }, { t: 'los calcetines', r: 'lohs kahl-seh-TEE-nehs', en: 'socks' }, { t: 'la talla', r: 'lah TAH-yah', en: 'size' }, { t: 'el color', r: 'ehl koh-LOHR', en: 'colour' },
+      { t: 'más grande', r: 'mahs GRAHN-deh', en: 'bigger' }, { t: 'más pequeño', r: 'mahs peh-KEH-nyoh', en: 'smaller' }, { t: 'el descuento', r: 'ehl dehs-KWEHN-toh', en: 'discount' }, { t: 'probarse', r: 'proh-BAR-seh', en: 'try on' }
+    ],
+    sentences: [
+      { t: '¿Puedo probármelo?', r: 'PWEH-doh proh-BAR-meh-loh?', en: 'Can I try it on?', alt: ['may i try it on', 'can i try this on'] },
+      { t: '¿Tiene una talla más grande?', r: 'TYEH-neh OO-nah TAH-yah mahs GRAHN-deh?', en: 'Do you have a bigger size?', alt: ['do you have a larger size'] },
+      { t: '¿Tiene otro color?', r: 'TYEH-neh OH-troh koh-LOHR?', en: 'Do you have another colour?', alt: ['do you have another color', 'do you have a different color'] },
+      { t: '¿Hay descuento?', r: 'eye dehs-KWEHN-toh?', en: 'Is there a discount?', alt: ['is there any discount', 'is there a sale'] },
+      { t: 'Pago con tarjeta.', r: 'PAH-goh kohn tar-HEH-tah.', en: 'I pay by card.', alt: ['i will pay by card', 'i pay with card'] },
+      { t: '¿Cuánto cuestan estos zapatos?', r: 'KWAHN-toh KWEHS-tahn EHS-tohs sah-PAH-tohs?', en: 'How much are these shoes?', alt: ['how much do these shoes cost'] }
+    ],
+    blanks: [
+      { t: '¿Tiene una talla más __?', en: 'Do you have a bigger size?', options: ['grande', 'gran'], answer: 'grande', why: 'más grande = bigger (talla is feminine, but grande stays the same).' },
+      { t: '¿Hay __?', en: 'Is there a discount?', options: ['descuento', 'camiseta'], answer: 'descuento', why: 'descuento = discount. camiseta = T-shirt.' },
+      { t: '¿Cuánto __ estos zapatos?', en: 'How much are these shoes?', options: ['cuestan', 'cuesta'], answer: 'cuestan', why: 'zapatos is plural, so use cuestan.' }
+    ] }
+);
+
+/* ------------------------------ DAILY ESSENTIALS: ARABIC ------------------------------ */
+COURSES.ar.units.push(
+  { id: 'ar-u15', s: 99, title: 'Days & dates', icon: 'أيام',
+    guide: [
+      { h: 'Days of the week', p: 'السبت Saturday, الأحد Sunday, الاثنين Monday, الثلاثاء Tuesday, الأربعاء Wednesday, الخميس Thursday, الجمعة Friday. Ask ما هو اليوم؟ (What day is it?).', ex: [['ما هو اليوم؟', 'mā huwa al-yawm?', 'What day is it?'], ['اليوم الخميس.', 'al-yawm al-khamīs.', 'Today is Thursday.']] },
+      { h: 'Birthday', p: 'عيد ميلاد = birthday (literally “feast of birth”). Add ي for “my” and ك for “your”: عيد ميلادي، عيد ميلادك.', ex: [['متى عيد ميلادك؟', 'matā ʿīd mīlādak?', 'When is your birthday?']] }
+    ],
+    words: [
+      { t: 'الاثنين', r: 'al-ithnayn', en: 'Monday' }, { t: 'الثلاثاء', r: 'ath-thulāthāʾ', en: 'Tuesday' }, { t: 'الأربعاء', r: 'al-arbiʿāʾ', en: 'Wednesday' }, { t: 'الخميس', r: 'al-khamīs', en: 'Thursday' },
+      { t: 'الجمعة', r: 'al-jumʿa', en: 'Friday' }, { t: 'السبت', r: 'as-sabt', en: 'Saturday' }, { t: 'الأحد', r: 'al-aḥad', en: 'Sunday' }, { t: 'أسبوع', r: 'usbūʿ', en: 'week' },
+      { t: 'شهر', r: 'shahr', en: 'month' }, { t: 'عيد ميلاد', r: 'ʿīd mīlād', en: 'birthday' }, { t: 'متى', r: 'matā', en: 'when' }
+    ],
+    sentences: [
+      { t: 'ما هو اليوم؟', r: 'mā huwa al-yawm?', en: 'What day is it?', alt: ['what day is today'] },
+      { t: 'اليوم الخميس.', r: 'al-yawm al-khamīs.', en: 'Today is Thursday.', alt: ['it is thursday today', 'it is thursday'] },
+      { t: 'غدا الجمعة.', r: 'ghadan al-jumʿa.', en: 'Tomorrow is Friday.', alt: ['tomorrow is friday'] },
+      { t: 'متى عيد ميلادك؟', r: 'matā ʿīd mīlādak?', en: 'When is your birthday?' },
+      { t: 'عيد ميلادي في مارس.', r: 'ʿīd mīlādī fī mārs.', en: 'My birthday is in March.', alt: ['my birthday is in march'] },
+      { t: 'أعمل يوم الأحد.', r: 'aʿmalu yawm al-aḥad.', en: 'I work on Sunday.', alt: ['i work on sunday', 'i work on sundays'] }
+    ],
+    blanks: [
+      { t: 'اليوم __.', en: 'Today is Thursday.', options: ['الخميس', 'شاي'], answer: 'الخميس', why: 'الخميس = Thursday. شاي = tea.' },
+      { t: 'متى عيد __؟', en: 'When is your birthday?', options: ['ميلادك', 'سيارة'], answer: 'ميلادك', why: 'عيد ميلادك = your birthday.' },
+      { t: 'عيد ميلادي __ مارس.', en: 'My birthday is in March.', options: ['في', 'من'], answer: 'في', why: 'في = in. من = from.' }
+    ] },
+  { id: 'ar-u16', s: 99, title: 'Groceries & fruit', icon: 'سوق',
+    guide: [
+      { h: 'Asking for amounts', p: 'أريد = I want. Say the amount first: كيلو تفاح (a kilo of apples), نصف كيلو (half a kilo).', ex: [['أريد كيلو تفاح.', 'urīdu kīlū tuffāḥ.', 'I want a kilo of apples.']] },
+      { h: 'Asking the price', p: 'بكم…؟ = how much is…? In the souk, bargaining is normal and friendly.', ex: [['بكم البرتقال؟', 'bikam al-burtuqāl?', 'How much are the oranges?']] }
+    ],
+    words: [
+      { t: 'فاكهة', r: 'fākiha', en: 'fruit' }, { t: 'تفاح', r: 'tuffāḥ', en: 'apple' }, { t: 'موز', r: 'mawz', en: 'banana' }, { t: 'برتقال', r: 'burtuqāl', en: 'orange' },
+      { t: 'خضار', r: 'khuḍār', en: 'vegetables' }, { t: 'بطاطس', r: 'baṭāṭis', en: 'potato' }, { t: 'بصل', r: 'baṣal', en: 'onion' }, { t: 'ثوم', r: 'thawm', en: 'garlic' },
+      { t: 'دجاج', r: 'dajāj', en: 'chicken' }, { t: 'سمك', r: 'samak', en: 'fish' }, { t: 'سوق', r: 'sūq', en: 'market' }, { t: 'كيلو', r: 'kīlū', en: 'kilo' }
+    ],
+    sentences: [
+      { t: 'أريد كيلو تفاح.', r: 'urīdu kīlū tuffāḥ.', en: 'I want a kilo of apples.', alt: ['i want a kilo of apple', 'i want one kilo of apples'] },
+      { t: 'بكم البرتقال؟', r: 'bikam al-burtuqāl?', en: 'How much are the oranges?', alt: ['how much is the orange', 'how much are oranges'] },
+      { t: 'أحتاج بصل وثوم.', r: 'aḥtāju baṣal wa-thawm.', en: 'I need onion and garlic.', alt: ['i need onions and garlic'] },
+      { t: 'أين السوق؟', r: 'ayna as-sūq?', en: 'Where is the market?' },
+      { t: 'نصف كيلو دجاج، من فضلك.', r: 'niṣf kīlū dajāj, min faḍlak.', en: 'Half a kilo of chicken, please.', alt: ['half a kilo of chicken please'] },
+      { t: 'هل عندك سمك طازج؟', r: 'hal ʿindak samak ṭāzaj?', en: 'Do you have fresh fish?', alt: ['do you have fresh fish'] }
+    ],
+    blanks: [
+      { t: 'أريد كيلو __.', en: 'I want a kilo of apples.', options: ['تفاح', 'باب'], answer: 'تفاح', why: 'تفاح = apples. باب = door.' },
+      { t: '__ البرتقال؟', en: 'How much are the oranges?', options: ['بكم', 'أين'], answer: 'بكم', why: 'بكم = how much. أين = where.' },
+      { t: 'أحتاج بصل __ ثوم.', en: 'I need onion and garlic.', options: ['و', 'في'], answer: 'و', why: 'و = and (it attaches to the next word: وثوم).' }
+    ] },
+  { id: 'ar-u17', s: 99, title: 'Home & everyday things', icon: 'بيت',
+    guide: [
+      { h: 'Where is my…?', p: 'أين + thing asks where it is. Add ي to mean “my”: مفتاح → مفتاحي (my key).', ex: [['أين مفتاحي؟', 'ayna miftāḥī?', 'Where is my key?'], ['المفتاح في الحقيبة.', 'al-miftāḥ fī al-ḥaqība.', 'The key is in the bag.']] },
+      { h: 'Polite requests', p: 'Use the command form + من فضلك: افتح الباب، من فضلك (open the door, please). To a woman: افتحي.', ex: [['افتح الباب، من فضلك.', 'iftaḥ al-bāb, min faḍlak.', 'Open the door, please.']] }
+    ],
+    words: [
+      { t: 'مفتاح', r: 'miftāḥ', en: 'key' }, { t: 'باب', r: 'bāb', en: 'door' }, { t: 'نافذة', r: 'nāfidha', en: 'window' }, { t: 'سرير', r: 'sarīr', en: 'bed' },
+      { t: 'كرسي', r: 'kursī', en: 'chair' }, { t: 'طاولة', r: 'ṭāwila', en: 'table' }, { t: 'هاتف', r: 'hātif', en: 'phone' }, { t: 'حقيبة', r: 'ḥaqība', en: 'bag' },
+      { t: 'مظلة', r: 'miẓalla', en: 'umbrella' }, { t: 'نظارة', r: 'naẓẓāra', en: 'glasses' }, { t: 'محفظة', r: 'miḥfaẓa', en: 'wallet' }
+    ],
+    sentences: [
+      { t: 'أين مفتاحي؟', r: 'ayna miftāḥī?', en: 'Where is my key?' },
+      { t: 'المفتاح في الحقيبة.', r: 'al-miftāḥ fī al-ḥaqība.', en: 'The key is in the bag.', alt: ['my key is in the bag', 'the key is in the handbag'] },
+      { t: 'افتح الباب، من فضلك.', r: 'iftaḥ al-bāb, min faḍlak.', en: 'Open the door, please.', alt: ['open the door please'] },
+      { t: 'أغلق النافذة، من فضلك.', r: 'aghliq an-nāfidha, min faḍlak.', en: 'Close the window, please.', alt: ['close the window please'] },
+      { t: 'هذه نظارتي.', r: 'hādhihi naẓẓāratī.', en: 'These are my glasses.', alt: ['this is my glasses', 'these are my glasses', 'this is my pair of glasses'] },
+      { t: 'أضعت محفظتي.', r: 'aḍaʿtu miḥfaẓatī.', en: 'I lost my wallet.', alt: ['i have lost my wallet'] }
+    ],
+    blanks: [
+      { t: 'أين __؟', en: 'Where is my key?', options: ['مفتاحي', 'شكرا'], answer: 'مفتاحي', why: 'مفتاحي = my key. شكرا = thanks.' },
+      { t: 'المفتاح __ الحقيبة.', en: 'The key is in the bag.', options: ['في', 'مع'], answer: 'في', why: 'في = in. مع = with.' },
+      { t: '__ الباب، من فضلك.', en: 'Open the door, please.', options: ['افتح', 'كل'], answer: 'افتح', why: 'افتح = open! كل = eat!' }
+    ] },
+  { id: 'ar-u18', s: 99, title: 'Phone, Wi-Fi & getting help', icon: 'نجدة',
+    guide: [
+      { h: 'Wi-Fi and charging', p: 'Cafés and hotels often share the code if you ask: ما هي كلمة سر الواي فاي؟ (What is the Wi-Fi password?). هل عندك شاحن؟ = do you have a charger?', ex: [['ما هي كلمة سر الواي فاي؟', 'mā hiya kalimat sirr al-wāy fāy?', 'What is the Wi-Fi password?']] },
+      { h: 'Emergencies', p: 'النجدة! means “help!”. Say أنا ضائع (I’m lost, a man speaking) or أنا ضائعة (a woman speaking). Police: شرطة.', ex: [['النجدة!', 'an-najda!', 'Help!'], ['أنا ضائع.', 'anā ḍāʾiʿ.', 'I’m lost.']] }
+    ],
+    words: [
+      { t: 'واي فاي', r: 'wāy fāy', en: 'wifi' }, { t: 'كلمة السر', r: 'kalimat as-sirr', en: 'password' }, { t: 'جوال', r: 'jawwāl', en: 'cell phone' }, { t: 'شاحن', r: 'shāḥin', en: 'charger' },
+      { t: 'بطارية', r: 'baṭṭāriyya', en: 'battery' }, { t: 'رقم الهاتف', r: 'raqm al-hātif', en: 'phone number' }, { t: 'النجدة', r: 'an-najda', en: 'help me' }, { t: 'شرطة', r: 'shurṭa', en: 'police' },
+      { t: 'مستشفى', r: 'mustashfā', en: 'hospital' }, { t: 'صيدلية', r: 'ṣaydaliyya', en: 'pharmacy' }, { t: 'طوارئ', r: 'ṭawāriʾ', en: 'emergency' }, { t: 'ضائع', r: 'ḍāʾiʿ', en: 'lost' }
+    ],
+    sentences: [
+      { t: 'ما هي كلمة سر الواي فاي؟', r: 'mā hiya kalimat sirr al-wāy fāy?', en: 'What is the Wi-Fi password?', alt: ['what is the wifi password'] },
+      { t: 'هل عندك شاحن؟', r: 'hal ʿindak shāḥin?', en: 'Do you have a charger?', alt: ['do you have a phone charger'] },
+      { t: 'النجدة!', r: 'an-najda!', en: 'Help!', alt: ['help me'] },
+      { t: 'اتصل بالشرطة، من فضلك.', r: 'ittaṣil bish-shurṭa, min faḍlak.', en: 'Call the police, please.', alt: ['please call the police', 'call the police please'] },
+      { t: 'أنا ضائع.', r: 'anā ḍāʾiʿ.', en: 'I am lost.', alt: ['i am lost', 'i am lost (m)'] },
+      { t: 'أين الصيدلية؟', r: 'ayna aṣ-ṣaydaliyya?', en: 'Where is the pharmacy?' }
+    ],
+    blanks: [
+      { t: 'أنا __.', en: 'I am lost.', options: ['ضائع', 'لذيذ'], answer: 'ضائع', why: 'ضائع = lost. لذيذ = delicious.' },
+      { t: 'هل __ شاحن؟', en: 'Do you have a charger?', options: ['عندك', 'أمس'], answer: 'عندك', why: 'عندك = you have (literally “at you”).' },
+      { t: 'ما هي كلمة __ الواي فاي؟', en: 'What is the Wi-Fi password?', options: ['سر', 'باب'], answer: 'سر', why: 'كلمة السر = password (literally “word of the secret”).' }
+    ] },
+  { id: 'ar-u19', s: 99, title: 'Clothes & shopping', icon: 'ملابس',
+    guide: [
+      { h: 'Trying things on', p: 'هل أستطيع أن أجرب هذا؟ = Can I try this on? Shorter: هل يمكن أن أجرب؟', ex: [['هل أستطيع أن أجرب هذا؟', 'hal astaṭīʿu an ujarriba hādhā?', 'Can I try this on?']] },
+      { h: 'Size, colour, discount', p: 'مقاس = size, لون = colour, أكبر = bigger, أصغر = smaller, تخفيض = discount.', ex: [['هل عندك مقاس أكبر؟', 'hal ʿindak maqās akbar?', 'Do you have a bigger size?']] }
+    ],
+    words: [
+      { t: 'قميص', r: 'qamīṣ', en: 'shirt' }, { t: 'بنطلون', r: 'banṭalūn', en: 'pants' }, { t: 'حذاء', r: 'ḥidhāʾ', en: 'shoes' }, { t: 'فستان', r: 'fustān', en: 'dress' },
+      { t: 'معطف', r: 'miʿṭaf', en: 'coat' }, { t: 'جوارب', r: 'jawārib', en: 'socks' }, { t: 'مقاس', r: 'maqās', en: 'size' }, { t: 'لون', r: 'lawn', en: 'colour' },
+      { t: 'أكبر', r: 'akbar', en: 'bigger' }, { t: 'أصغر', r: 'aṣghar', en: 'smaller' }, { t: 'تخفيض', r: 'takhfīḍ', en: 'discount' }
+    ],
+    sentences: [
+      { t: 'هل أستطيع أن أجرب هذا؟', r: 'hal astaṭīʿu an ujarriba hādhā?', en: 'Can I try this on?', alt: ['may i try this on', 'can i try this'] },
+      { t: 'هل عندك مقاس أكبر؟', r: 'hal ʿindak maqās akbar?', en: 'Do you have a bigger size?', alt: ['do you have a larger size'] },
+      { t: 'هل عندك لون آخر؟', r: 'hal ʿindak lawn ākhar?', en: 'Do you have another colour?', alt: ['do you have another color', 'do you have a different color'] },
+      { t: 'هل يوجد تخفيض؟', r: 'hal yūjad takhfīḍ?', en: 'Is there a discount?', alt: ['is there any discount', 'is there a discount'] },
+      { t: 'سأدفع بالبطاقة.', r: 'sa-adfaʿu bil-biṭāqa.', en: 'I will pay by card.', alt: ['i will pay with the card', 'i will pay by card'] },
+      { t: 'بكم هذا الحذاء؟', r: 'bikam hādhā al-ḥidhāʾ?', en: 'How much are these shoes?', alt: ['how much is this shoe', 'how much are these shoes'] }
+    ],
+    blanks: [
+      { t: 'هل عندك مقاس __؟', en: 'Do you have a bigger size?', options: ['أكبر', 'أمس'], answer: 'أكبر', why: 'أكبر = bigger. أمس = yesterday.' },
+      { t: 'هل عندك __ آخر؟', en: 'Do you have another colour?', options: ['لون', 'باب'], answer: 'لون', why: 'لون = colour. باب = door.' },
+      { t: 'بكم هذا __؟', en: 'How much are these shoes?', options: ['الحذاء', 'صباحا'], answer: 'الحذاء', why: 'الحذاء = the shoe(s). صباحا = in the morning.' }
+    ] }
+);
+
+for (const k of ['ko', 'ar', 'es']) EXTRA_SECTIONS[k].push({ title: 'Daily essentials', blurb: 'Days, groceries, things at home, phone and Wi-Fi, help, and clothes: the words you use every single day.' });
+const EN_EMOJI = {
+  "a cold": "🤧",
+  "a latte, please.": "☕",
+  "a lesson": "📚",
+  "a table": "🪑",
+  "airport": "✈️",
+  "americano": "☕",
+  "angry": "😠",
+  "apple": "🍎",
+  "arabic": "🇸🇦",
+  "at night": "🌙",
+  "baby": "👶",
+  "bad": "👎",
+  "bag": "👜",
+  "banana": "🍌",
+  "bank": "🏦",
+  "baseball": "⚾",
+  "bathroom": "🚻",
+  "battery": "🔋",
+  "beach": "🏖️",
+  "bear": "🐻",
+  "bed": "🛏️",
+  "beef": "🥩",
+  "beer": "🍺",
+  "berries": "🫐",
+  "bicycle": "🚲",
+  "big": "🐘",
+  "bigger": "➕",
+  "bike": "🚲",
+  "bill": "🧾",
+  "bird": "🐦",
+  "birthday": "🎂",
+  "boat": "⛴️",
+  "body": "🧍",
+  "book": "📖",
+  "boy": "👦",
+  "bread": "🍞",
+  "breakfast": "🍳",
+  "bridge": "🌉",
+  "brother": "👦",
+  "building": "🏢",
+  "bus": "🚌",
+  "bye": "👋",
+  "cabbage": "🥬",
+  "cafe": "☕",
+  "café": "☕",
+  "cake": "🍰",
+  "car": "🚗",
+  "card": "💳",
+  "carrot": "🥕",
+  "cash": "💵",
+  "cat": "🐈",
+  "cell phone": "📱",
+  "chair": "🪑",
+  "charger": "🔌",
+  "cheap": "🏷️",
+  "cheese": "🧀",
+  "chicken": "🍗",
+  "child": "🧒",
+  "church": "⛪",
+  "city": "🏙️",
+  "clock": "⏰",
+  "clothes": "👕",
+  "cloud": "☁️",
+  "coat": "🧥",
+  "coffee": "☕",
+  "cold": "🥶",
+  "cold (illness)": "🤧",
+  "colour": "🎨",
+  "cookie": "🍪",
+  "cooking": "🍳",
+  "cow": "🐄",
+  "cucumber": "🥒",
+  "cup": "☕",
+  "dad": "👨",
+  "dance": "💃",
+  "dates": "🌴",
+  "dates (fruit)": "🌴",
+  "deer": "🦌",
+  "delicious": "😋",
+  "desk": "🖥️",
+  "dinner": "🍽️",
+  "discount": "🏷️",
+  "doctor": "🧑‍⚕️",
+  "dog": "🐕",
+  "door": "🚪",
+  "dress": "👗",
+  "drink": "🥤",
+  "ear": "👂",
+  "egg": "🥚",
+  "eggs": "🥚",
+  "eight": "8️⃣",
+  "elephant": "🐘",
+  "emergency": "🚨",
+  "emergency room": "🚑",
+  "engineer": "👷",
+  "english": "🇬🇧",
+  "euro": "💶",
+  "evening": "🌆",
+  "every day": "🔁",
+  "exercise": "🏋️",
+  "expensive": "💸",
+  "eye": "👁️",
+  "eyes": "👀",
+  "family": "👨‍👩‍👧‍👦",
+  "far": "🔭",
+  "father": "👨",
+  "fever": "🤒",
+  "fire": "🔥",
+  "fish": "🐟",
+  "five": "5️⃣",
+  "flower": "🌸",
+  "food": "🍽️",
+  "foot": "🦶",
+  "football": "⚽",
+  "fork": "🍴",
+  "four": "4️⃣",
+  "friday": "🗓️",
+  "friend": "🧑‍🤝‍🧑",
+  "friends": "🧑‍🤝‍🧑",
+  "fruit": "🍎",
+  "garlic": "🧄",
+  "gazelle": "🦌",
+  "gift": "🎁",
+  "girl": "👧",
+  "glass": "🥛",
+  "glasses": "👓",
+  "gold": "🪙",
+  "good": "👍",
+  "goodbye": "👋",
+  "grandfather": "👴",
+  "grandma": "👵",
+  "grandmother": "👵",
+  "grandpa": "👴",
+  "grape": "🍇",
+  "grapes": "🍇",
+  "ham": "🍖",
+  "hand": "✋",
+  "happy": "😊",
+  "hat": "🧢",
+  "head": "💇",
+  "headache": "🤕",
+  "heart": "❤️",
+  "hello": "👋",
+  "help": "🆘",
+  "help me": "🆘",
+  "here": "📍",
+  "hi": "👋",
+  "hobby": "🎨",
+  "home": "🏠",
+  "horse": "🐴",
+  "hospital": "🏥",
+  "hot": "🥵",
+  "hotel": "🏨",
+  "house": "🏠",
+  "hundred": "💯",
+  "hunger": "😋",
+  "hungry": "😋",
+  "i come back": "🏡",
+  "i drink": "🥤",
+  "i eat": "🍽️",
+  "i get up": "⏰",
+  "i go to bed": "🛏️",
+  "i go to work": "🚌",
+  "i have a headache": "🤕",
+  "i leave home": "🚪",
+  "i leave work": "🏢",
+  "i like": "❤️",
+  "i shower": "🚿",
+  "i sleep": "😴",
+  "i wake up": "⏰",
+  "i wash": "🚿",
+  "i'm happy": "😊",
+  "i'm hungry": "😋",
+  "i'm lost": "🧭",
+  "i'm sad": "😢",
+  "i'm sorry (formal)": "🙇",
+  "i'm tired": "😴",
+  "ice": "🧊",
+  "ice cream": "🍦",
+  "iced": "🧊",
+  "in the evening": "🌆",
+  "in the morning": "🌅",
+  "internet": "📶",
+  "island": "🏝️",
+  "it hurts": "🤕",
+  "it hurts me": "🤕",
+  "it's clear / sunny": "☀️",
+  "it's close": "📍",
+  "it's cold": "🥶",
+  "it's delicious": "😋",
+  "it's hot": "🥵",
+  "it's raining": "🌧️",
+  "jacket": "🧥",
+  "juice": "🧃",
+  "karaoke room": "🎤",
+  "key": "🔑",
+  "kilo": "⚖️",
+  "kimchi": "🥬",
+  "kitchen": "🍳",
+  "knife": "🔪",
+  "korean": "🇰🇷",
+  "language": "🗣️",
+  "latte": "☕",
+  "left": "⬅️",
+  "leg": "🦵",
+  "lemon": "🍋",
+  "lion": "🦁",
+  "llama": "🦙",
+  "lost": "🧭",
+  "luggage": "🧳",
+  "lunch": "🍱",
+  "man": "👨",
+  "map": "🗺️",
+  "market": "🛒",
+  "meal": "🍽️",
+  "meat": "🥩",
+  "medicine": "💊",
+  "menu": "📋",
+  "metro": "🚇",
+  "milk": "🥛",
+  "mister / middle-aged man": "👨",
+  "mom": "👩",
+  "monday": "🗓️",
+  "money": "💰",
+  "month": "🗓️",
+  "moon": "🌙",
+  "morning": "🌅",
+  "mosque": "🕌",
+  "mother": "👩‍👧",
+  "mountain": "⛰️",
+  "mouth": "👄",
+  "movie": "🎬",
+  "music": "🎵",
+  "my name": "📛",
+  "name": "📛",
+  "near": "📍",
+  "nice to meet you": "🤝",
+  "night": "🌙",
+  "nine": "9️⃣",
+  "no": "❌",
+  "nose": "👃",
+  "now": "⏰",
+  "office worker": "🧑‍💼",
+  "oil": "🫒",
+  "ok": "👌",
+  "okay": "👌",
+  "older brother": "👦",
+  "older sister": "👩",
+  "olive oil": "🫒",
+  "omelette": "🍳",
+  "on foot": "🚶",
+  "one": "1️⃣",
+  "one cup": "🥤",
+  "one hundred": "💯",
+  "onion": "🧅",
+  "orange": "🍊",
+  "pants": "👖",
+  "park": "🌳",
+  "passport": "🛂",
+  "password": "🔐",
+  "pen": "🖊️",
+  "people": "👥",
+  "person": "🧍",
+  "pharmacy": "💊",
+  "phone": "📱",
+  "phone number": "📞",
+  "pig": "🐖",
+  "pizza": "🍕",
+  "plane": "✈️",
+  "plate": "🍽️",
+  "please": "🙏",
+  "police": "👮",
+  "pork": "🐖",
+  "potato": "🥔",
+  "price": "🏷️",
+  "rabbit": "🐇",
+  "radio": "📻",
+  "rain": "🌧️",
+  "reading": "📖",
+  "receipt": "🧾",
+  "restaurant": "🍴",
+  "restroom": "🚻",
+  "rice": "🍚",
+  "right": "➡️",
+  "river": "🏞️",
+  "road": "🛣️",
+  "room": "🛏️",
+  "rose": "🌹",
+  "roses": "🌹",
+  "sad": "😢",
+  "salad": "🥗",
+  "saturday": "🗓️",
+  "school": "🏫",
+  "sea": "🌊",
+  "seven": "7️⃣",
+  "shirt": "👕",
+  "shoe": "👞",
+  "shoes": "👞",
+  "shop": "🏪",
+  "shower": "🚿",
+  "sick": "🤒",
+  "singer": "🎤",
+  "sister": "👧",
+  "six": "6️⃣",
+  "size": "📏",
+  "skirt": "👗",
+  "sleep": "😴",
+  "small": "🐜",
+  "smaller": "➖",
+  "snack": "🍪",
+  "snow": "❄️",
+  "soccer": "⚽",
+  "socks": "🧦",
+  "son": "👦",
+  "song": "🎶",
+  "sorry": "🙇",
+  "soup": "🍲",
+  "spanish": "🇪🇸",
+  "spanish omelette": "🍳",
+  "spoon": "🥄",
+  "sport": "🏅",
+  "sports": "🏅",
+  "star": "⭐",
+  "station": "🚉",
+  "stew": "🍲",
+  "stomach": "🤢",
+  "stop": "🛑",
+  "store": "🏪",
+  "straight": "⬆️",
+  "straight ahead": "⬆️",
+  "strawberry": "🍓",
+  "street": "🛣️",
+  "student": "🧑‍🎓",
+  "study": "📚",
+  "subway": "🚇",
+  "subway station": "🚇",
+  "suitcase": "🧳",
+  "sun": "☀️",
+  "sunday": "🗓️",
+  "supermarket": "🛒",
+  "t-shirt": "👕",
+  "table": "🪑",
+  "takeout": "🛍️",
+  "takeout / wrapping": "🛍️",
+  "tangerine": "🍊",
+  "tasty": "😋",
+  "taxi": "🚕",
+  "tea": "🍵",
+  "teacher": "🧑‍🏫",
+  "teeth": "🦷",
+  "telephone": "📱",
+  "ten": "🔟",
+  "ten thousand": "🔢",
+  "thank you": "🙏",
+  "thanks": "🙏",
+  "the bill": "🧾",
+  "the card": "💳",
+  "the check": "🧾",
+  "the glass": "🥛",
+  "the holiday / day off": "🏝️",
+  "the menu": "📋",
+  "the weekend": "🗓️",
+  "there": "📍",
+  "thirst": "🥤",
+  "thirsty": "🥤",
+  "thousand": "🔢",
+  "three": "3️⃣",
+  "throat / neck": "🗣️",
+  "thursday": "🗓️",
+  "ticket": "🎫",
+  "tired": "😴",
+  "tissue": "🧻",
+  "to cook": "🍳",
+  "to dance": "💃",
+  "to like": "❤️",
+  "to read": "📖",
+  "to study": "📚",
+  "to travel": "🧳",
+  "to work": "💼",
+  "today": "📅",
+  "tofu": "🧈",
+  "toilet": "🚻",
+  "tomato": "🍅",
+  "tomorrow": "📆",
+  "tooth": "🦷",
+  "train": "🚆",
+  "travel": "🧳",
+  "tree": "🌳",
+  "tuesday": "🗓️",
+  "twenty": "2️⃣0️⃣",
+  "twenty (20)": "2️⃣0️⃣",
+  "two": "2️⃣",
+  "two cups": "🥤",
+  "umbrella": "☂️",
+  "vegetables": "🥬",
+  "wallet": "👛",
+  "watch": "⌚",
+  "water": "💧",
+  "watermelon": "🍉",
+  "weather": "🌤️",
+  "wednesday": "🗓️",
+  "week": "🗓️",
+  "weekend": "🗓️",
+  "welcome": "🤝",
+  "wifi": "📶",
+  "wind": "💨",
+  "window": "🪟",
+  "wine": "🍷",
+  "woman": "👩",
+  "won (currency)": "💴",
+  "work": "💼",
+  "worker": "🧑‍💼",
+  "yes": "✅",
+  "yesterday": "⏪",
+  "younger sibling": "🧒",
+  "zero": "0️⃣"
+};
+/* Picture for a word = the emoji that matches its English meaning exactly; unmatched words keep their drawn art or show none. */
+function emojiFor(gloss) {
+  const g = String(gloss || '').toLowerCase().replace(/’/g, "'").replace(/\(.*?\)/g, '').trim();
+  for (const o of [g, ...g.split('/').map(x => x.trim())]) for (const k of [o, o.replace(/^(the|a|an|to|my|your|some)\s+/, '')]) if (EN_EMOJI[k]) return EN_EMOJI[k];
+  return '';
+}
+const NO_PIC = new Set(['he', 'she', 'really', 'I live', 'I want', 'I have', 'please give me', 'have / there is', 'don’t have / there isn’t', 'it is not', 'how much', 'where', 'what', 'this', 'go', 'come', 'I', 'I (polite)', 'fine / well']);
+function emojiArt(e) { if (!ART[e]) ART[e] = () => `<text x="50" y="74" font-size="76" text-anchor="middle" font-family="'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">${e}</text>`; return e; }
 /* =====================================================================
    SPEAKABOO — FINALIZE: runs after all content files are loaded.
    ===================================================================== */
@@ -2623,12 +3408,12 @@ for (const c of Object.values(COURSES)) {
   c.letterUnits = all.filter(u => u.letters);
   c.units = all.filter(u => !u.letters);
   c.sections = MAIN_SECTIONS[c.code] || c.sections;
-  c.units.forEach(u => { u.s = MAIN_SECTION_OF[u.id] ?? u.s ?? 0; u.dialog = UNIT_DIALOG[u.id] ?? u.dialog; });
+  c.units.forEach(u => { u.s = MAIN_SECTION_OF[u.id] ?? u.s ?? 0; u.dialog = UNIT_DIALOG[u.id] ?? u.dialog; if (u.s === 99) u.s = c.sections.length - 1; });
   c.letterUnits.forEach(u => { u.s = 0; });
   const seenC = new Set(['ㅇ']), seenV = new Set();
   [[c.letterUnits, 'letters'], [c.units, 'main']].forEach(([list, track]) => list.forEach((u, i) => {
     u.index = i; u.track = track; u.lang = c.code; u.story = STORIES[u.id] || null; u.culture = CULTURE[u.id] || null;
-    (u.words || []).forEach(w => { w.id = `${c.code}:${w.t}`; w.pic = w.pic || EMOJI_ART[PICS[w.t]] || (ART[PICS[w.t]] ? PICS[w.t] : ''); });
+    (u.words || []).forEach(w => { w.id = `${c.code}:${w.t}`; const em = emojiFor(w.en); w.pic = em ? emojiArt(em) : NO_PIC.has(w.en) ? '' : (w.pic || EMOJI_ART[PICS[w.t]] || (ART[PICS[w.t]] ? PICS[w.t] : '')); });
     (u.letters || []).forEach(l => { if (l.t === 'c') seenC.add(l.g); if (l.t === 'v') seenV.add(l.g); });
     u.poolC = [...seenC]; u.poolV = [...seenV];
   }));
@@ -3911,58 +4696,38 @@ function wearOverlay(kind) {
 function wardrobeHTML() {
   const p = P(), have = p.wardrobe || [], finds = p.dailyFinds || 0;
   return `<div class="card wardrobe"><h3>${esc(MASCOTS[p.mascot].name)}’s wardrobe <span class="muted num" style="font:700 14px var(--font-body)">${have.length}/${WARDROBE.length}</span></h3>
-    <p class="note" style="margin:0 0 10px">Find your Boo in the Daily Peekaboo to unlock outfits. You’ve found it ${finds} time${finds === 1 ? '' : 's'}.</p>
+    <p class="note" style="margin:0 0 10px">Say Today’s phrase out loud each day to unlock outfits. You’ve done it ${finds} time${finds === 1 ? '' : 's'}.</p>
     <div class="wear-grid"><button class="wear ${!p.wear ? 'on' : ''}" data-wear=""><span class="wear-art"><svg viewBox="-4 -14 128 128">${MASCOT_ART[p.mascot].body}${mascotFace('happy', MASCOT_ART[p.mascot])}</svg></span><small>Nothing</small></button>
     ${WARDROBE.map(w => { const ok = have.includes(w.id); return `<button class="wear ${p.wear === w.id ? 'on' : ''} ${ok ? '' : 'locked'}" ${ok ? `data-wear="${w.id}"` : 'disabled'}><span class="wear-art"><svg viewBox="-4 -14 128 128">${MASCOT_ART[p.mascot].body}${mascotFace('happy', MASCOT_ART[p.mascot])}${wearSVG(w.id, MASCOT_ART[p.mascot])}</svg></span><small>${ok ? esc(w.name) : `Find ${w.at}×`}</small></button>`; }).join('')}</div></div>`;
 }
 
-/* ---------- Daily Peekaboo ---------- */
-const HIDE_SPOTS = ['tree', 'door', 'umbrella', 'bus', 'cake', 'gift', 'bag', 'house', 'table', 'island', 'menu', 'car'];
-const NOT_BOO = [['shoe', 'Just a sock-less shoe. Boo is not here.'], ['ticket', 'An old bus ticket. No Boo.'], ['receipt', 'A very long receipt. Still no Boo.'], ['cookie', 'Half a cookie. Suspicious, but no Boo.'], ['tissue', 'A tissue. Bless you. No Boo.'], ['pen', 'A pen that doesn’t work. No Boo.']];
+/* ---------- Today's phrase: one useful line a day, then say it out loud ---------- */
 const seedOf = s => [...String(s)].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7);
 function daily() {
   const p = P(), c = course(), t = dayKey();
-  if (!p.daily || p.daily.day !== t || p.daily.lang !== c.code) {
-    const sd = seedOf(t + c.code + p.name), spots = [0, 1, 2].map(i => HIDE_SPOTS[(sd + i * 5) % HIDE_SPOTS.length]);
-    const pool = vocabPool(c).filter(w => w.pic && ART[w.pic] && !ABSTRACT_ART.has(w.pic));
-    const w = pool[sd % pool.length];
-    p.daily = { day: t, lang: c.code, spots, boo: sd % 3, tries: [], found: false, done: false, word: w ? w.id : null, junk: [(sd >>> 3) % NOT_BOO.length, (sd >>> 5) % NOT_BOO.length] };
+  if (!p.daily || p.daily.day !== t || p.daily.lang !== c.code || !p.daily.phrase) {
+    const open = c.units.filter(u => unitUnlocked(u) && u.sentences && !u.dialog_only), src = (open.length ? open : c.units.filter(u => u.sentences)).flatMap(u => u.sentences);
+    const s = src[seedOf(t + c.code + p.name) % Math.max(1, src.length)];
+    p.daily = { day: t, lang: c.code, phrase: s ? { t: s.t, r: s.r, en: s.en } : null, done: false };
     Store.save();
   }
   return p.daily;
 }
 function dailyHTML() {
-  const p = P(), c = course(), d = daily(), w = VOCAB_INDEX[d.word], mc = MASCOTS[p.mascot];
-  if (!w) return '';
-  if (d.done) {
-    const next = new Date(); next.setHours(24, 0, 0, 0); const h = Math.ceil((next - Date.now()) / 36e5);
-    return `<div class="daily done"><div class="daily-done-art">${artSVG(w.pic)}</div><div><b>Today’s peekaboo word</b><button class="dw" data-say="${esc(w.t)}"><span class="script" ${attrs(c)}>${esc(w.t)}</span><small>${esc(w.r)} · ${esc(w.en)}</small></button><small class="muted">${esc(mc.name)} hides somewhere new in ${h}h.</small></div></div>`;
-  }
-  if (d.found) {
-    const opts = shuffle([w.en, ...shuffle(vocabPool(c).filter(x => x.en !== w.en)).slice(0, 2).map(x => x.en)]);
-    return `<div class="daily found"><div class="daily-top"><div class="mascot" data-daily-m></div><div><b>Peekaboo! You found me!</b><small>Here’s today’s word. What does it mean?</small></div></div>
-      <button class="daily-word" data-say="${esc(w.t)}">${artSVG(w.pic)}<span><span class="script" ${attrs(c)}>${esc(w.t)}</span><small>${esc(w.r)}</small></span></button>
-      <div class="daily-opts">${opts.map(o => `<button class="chip-btn big" data-daily-ans="${esc(o)}">${esc(o)}</button>`).join('')}</div></div>`;
-  }
-  return `<div class="daily"><div class="daily-top"><span class="daily-tag">Daily Peekaboo</span><b>Where is ${esc(mc.name)} hiding today?</b><small>${d.tries.length ? 'Not there! Try another spot.' : 'Tap a spot. Find me for today’s word, gems and outfits.'}</small></div>
-    <div class="spots">${d.spots.map((s, i) => { const tried = d.tries.includes(i), junk = NOT_BOO[d.junk[d.tries.indexOf(i)] ?? 0]; return `<button class="spot ${tried ? 'tried' : ''}" data-hide="${i}" ${tried ? 'disabled' : ''}>${tried ? `${artSVG(junk[0])}<small>${esc(junk[1])}</small>` : `${artSVG(s)}<span class="peek-eyes"></span>`}</button>`; }).join('')}</div></div>`;
+  const p = P(), c = course(), d = daily(), s = d.phrase, due = SRS.due().length;
+  if (!s) return '';
+  const review = due ? `<button class="btn ghost sm" data-practice="mix">Review ${due} word${due > 1 ? 's' : ''}</button>` : '';
+  return `<div class="daily phrase ${d.done ? 'done' : ''}"><span class="daily-tag">Today’s phrase</span>
+    <button class="daily-word" data-say="${esc(s.t)}"><span><span class="script" ${attrs(c)}>${esc(s.t)}</span><small>${esc(s.r)}</small></span>${ICON.speaker}</button>
+    <p class="muted" style="margin:6px 0 10px">${esc(s.en)}</p>
+    <div class="phrase-actions">${d.done ? '<b class="good">Said it today ✓</b>' : '<button class="btn primary sm" data-daily-done>I said it · +5 gems</button>'}${starBtn(s)}${review}</div></div>`;
 }
-function hideTap(i) {
-  const d = daily(); if (d.found || d.tries.includes(i)) return;
-  Sfx.tap();
-  if (i === d.boo || d.tries.length >= 2) { d.found = true; d.boo = i; Store.save(); renderLearn(); const m = $('[data-daily-m]'); if (m) { paintMascot(m, P().mascot, 'peek', true); setTimeout(() => paintMascot(m, P().mascot, 'cheer', true), 700); } Voice.speak(VOCAB_INDEX[d.word].t); }
-  else { d.tries.push(i); Store.save(); renderLearn(); Sfx.wrong(); }
-}
-function dailyAnswer(ans) {
-  const p = P(), d = daily(), w = VOCAB_INDEX[d.word]; if (d.done) return;
-  const ok = ans === w.en, first = d.tries.length === 0;
-  d.done = true; p.dailyFinds = (p.dailyFinds || 0) + 1;
-  const gems = (ok ? 10 : 4) + (first ? 5 : 0); p.gems += gems;
-  SRS.update(w.id, ok);
+function dailyDone() {
+  const p = P(), d = daily(); if (d.done) return;
+  d.done = true; p.dailyFinds = (p.dailyFinds || 0) + 1; p.gems += 5;
   const unlocked = WARDROBE.filter(x => x.at <= p.dailyFinds && !(p.wardrobe ||= []).includes(x.id));
   unlocked.forEach(x => p.wardrobe.push(x.id));
-  award(ok ? 5 : 2); Store.save();
-  toast(ok ? `Correct! +${gems} gems${first ? ' (found me first try!)' : ''}` : `It means “${w.en}”. +${gems} gems anyway.`, ok ? '✓' : '');
+  award(3); Store.save(); toast('Nice! +5 gems', '✓');
   if (unlocked.length) setTimeout(() => newOutfit(unlocked[unlocked.length - 1]), 500);
   renderChrome(); renderLearn();
 }
@@ -5715,8 +6480,7 @@ document.addEventListener('click', e => {
   if (t.closest('[data-hands-free]')) { P().handsFree = !P().handsFree; Store.save(); renderChatHead(); toast(P().handsFree ? 'Hands-free on: I read prompts aloud and open the mic for you.' : 'Hands-free off.'); if (P().handsFree && !P().autoVoice) { P().autoVoice = true; Store.save(); } return; }
   const hb = t.closest('[data-hero-boo]'); if (hb) { heroPeek(hb); return; }
   if (t.closest('[data-call]')) { Call.open(); return; }
-  const hide = t.closest('[data-hide]'); if (hide) { hideTap(+hide.dataset.hide); return; }
-  const dans = t.closest('[data-daily-ans]'); if (dans) { dailyAnswer(dans.dataset.dailyAns); return; }
+  if (t.closest('[data-daily-done]')) { dailyDone(); return; }
   const wear = t.closest('[data-wear]'); if (wear) { P().wear = wear.dataset.wear || null; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', 'How do I look?'); return; }
   const feel = t.closest('[data-feel]'); if (feel) { startMood(feel.dataset.feel); return; }
   const star = t.closest('[data-star]'); if (star) { const on = Phrases.toggle(JSON.parse(star.dataset.star)); star.classList.toggle('on', on); if (UI.tab === 'practice' && $('#lesson').hidden) renderPractice(); return; }
