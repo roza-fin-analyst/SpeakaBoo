@@ -3031,31 +3031,80 @@ const Sfx = {
 
 /* ---------- 8. Speech: text-to-speech (native device voices) ---------- */
 const Voice = {
-  voices: [], warned: {},
+  voices: [], warned: {}, loaded: null, keep: null, seq: 0,
+  /** Chrome fills getVoices() late; resolve once it has (or after a short wait) so the first tap is never silent. */
   init() {
     if (!('speechSynthesis' in window)) return;
-    const load = () => { this.voices = speechSynthesis.getVoices(); };
-    load(); speechSynthesis.onvoiceschanged = load;
+    const load = () => { this.voices = speechSynthesis.getVoices() || []; };
+    load();
+    speechSynthesis.addEventListener?.('voiceschanged', load);
+    this.loaded = new Promise(res => { if (this.voices.length) return res(); const t = setTimeout(res, 1500); speechSynthesis.addEventListener?.('voiceschanged', () => { clearTimeout(t); load(); res(); }, { once: true }); });
   },
-  find(lang) { const base = lang.split('-')[0]; return this.voices.find(v => v.lang === lang) || this.voices.find(v => v.lang && v.lang.toLowerCase().startsWith(base)); },
+  /** Natural-sounding voices score high; old robotic engines score low. */
+  score(v) {
+    const n = `${v.name} ${v.voiceURI || ''}`;
+    let s = 0;
+    if (/natural|neural|wavenet|studio|premium|enhanced|siri/i.test(n)) s += 6;
+    if (/online|google/i.test(n)) s += 3;
+    if (!v.localService) s += 1;
+    if (/espeak|festival|compact|flite|pico/i.test(n)) s -= 8;
+    return s;
+  },
+  /** All usable voices for a language, best first (exact locale before same language). */
+  options(lang) {
+    const base = lang.split('-')[0].toLowerCase(), l = lang.toLowerCase().replace('_', '-');
+    return this.voices.filter(v => v.lang && v.lang.toLowerCase().replace('_', '-').startsWith(base))
+      .sort((x, y) => (this.score(y) - this.score(x)) || ((y.lang.toLowerCase().replace('_', '-') === l) - (x.lang.toLowerCase().replace('_', '-') === l)));
+  },
+  /** Each character gets its own voice when the device has several; otherwise they share the best one and differ by pitch/speed. */
+  find(lang, who) {
+    const all = this.options(lang); if (!all.length) return null;
+    const top = this.score(all[0]), good = all.filter(v => this.score(v) >= top - 2).slice(0, 5);
+    const i = Math.max(0, MASCOT_ORDER.indexOf(who)); return good[who ? i % good.length : 0];
+  },
+  stop() { this.seq++; clearInterval(this.keep); try { speechSynthesis.cancel(); } catch (e) { /* ignore */ } },
   speak(text, lang = course().tts, rate = .9, who = null) {
     if (!('speechSynthesis' in window)) { this.warn(lang, 'This browser has no speech voices.'); return; }
-    try {
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text); u.lang = lang; const vp = VOICES[who] || null; u.rate = vp ? rate * vp[1] : rate; if (vp) u.pitch = vp[0];
-      const v = this.find(lang); if (v) u.voice = v; else this.warn(lang, `No ${({ ko: 'Korean', ar: 'Arabic', es: 'Spanish' })[lang.slice(0, 2)] || lang} voice on this device. Install one in your system's language settings for native audio.`);
-      this.last = u; speechSynthesis.speak(u);
-    } catch (e) { /* ignore */ }
+    text = String(text || '').trim(); if (!text) return;
+    who = who || P()?.mascot || null;
+    const id = ++this.seq;
+    const go = () => {
+      if (id !== this.seq) return;
+      try {
+        const vp = VOICES[who] || [1, 1], u = new SpeechSynthesisUtterance(text);
+        u.lang = lang;
+        const foreign = !/^en/i.test(lang);        // keep pitch gentle on other languages so sounds stay accurate
+        u.pitch = foreign ? Math.min(1.25, Math.max(.8, vp[0])) : Math.min(1.6, Math.max(.6, vp[0]));
+        u.rate = Math.min(1.4, Math.max(.5, rate * (foreign ? .5 + vp[1] / 2 : vp[1])));
+        u.volume = 1;
+        const v = this.find(lang, who);
+        if (v) { u.voice = v; u.lang = v.lang; } else if (this.voices.length) this.warn(lang, `No ${({ ko: 'Korean', ar: 'Arabic', es: 'Spanish' })[lang.slice(0, 2)] || lang} voice on this device. Install one in your system’s language settings for native audio.`);
+        u.onerror = e => { if (e.error && !/interrupted|canceled/.test(e.error)) this.warn(lang, 'Audio didn’t play. Check your volume and silent mode, then tap again.'); };
+        this.last = u;
+        speechSynthesis.resume();
+        speechSynthesis.speak(u);
+        // Chrome silently stops long lines after ~15s; nudging the engine keeps them going.
+        clearInterval(this.keep);
+        if (text.length > 80) this.keep = setInterval(() => { if (!speechSynthesis.speaking) clearInterval(this.keep); else { speechSynthesis.pause(); speechSynthesis.resume(); } }, 10000);
+      } catch (e) { /* ignore */ }
+    };
+    try { speechSynthesis.cancel(); } catch (e) { /* ignore */ }
+    // A short gap after cancel() is needed or Chrome drops the new line; wait for voices on the very first tap.
+    const start = () => setTimeout(go, 60);
+    if (!this.voices.length && this.loaded) this.loaded.then(start); else start();
   },
   /** Speak, then resolve when the line has finished (or after a safety timeout). */
   speakThen(text, lang, rate = .9, who = null) {
     return new Promise(res => {
       if (!('speechSynthesis' in window)) return res();
-      const done = () => { clearTimeout(t); res(); }; const t = setTimeout(done, 1200 + String(text).length * 260);
-      this.speak(text, lang, rate, who); try { const u = this.last; if (u) u.onend = done; } catch (e) { /* ignore */ }
+      let fin = false; const done = () => { if (fin) return; fin = true; clearTimeout(t); res(); };
+      const t = setTimeout(done, 2500 + String(text).length * 300);
+      this.speak(text, lang, rate, who);
+      const hook = setInterval(() => { const u = this.last; if (u && u.text === String(text).trim()) { clearInterval(hook); u.onend = done; const er = u.onerror; u.onerror = e => { er && er(e); done(); }; } }, 30);
+      setTimeout(() => clearInterval(hook), 2000);
     });
   },
-  warn(lang, msg) { if (this.voices.length && !this.warned[lang]) { this.warned[lang] = 1; toast(msg); } }
+  warn(lang, msg) { if (!this.warned[lang]) { this.warned[lang] = 1; toast(msg); } }
 };
 
 /* ---------- 9. Speech: recognition (Web Speech API) ---------- */
@@ -3525,7 +3574,7 @@ function wireEcho(el, text, who) {
   const rec = el.querySelector('[data-echo-rec]'), play = el.querySelector('[data-echo-play]'); if (!rec) return;
   rec.onclick = async () => {
     if (Echo.rec) { Echo.stop(); return; }
-    try { window.speechSynthesis?.cancel(); rec.classList.add('on'); rec.lastChild.textContent = ' Recording… tap to stop'; await Echo.record(5000); rec.classList.remove('on'); rec.lastChild.textContent = ' Record again'; play.hidden = false; play.click(); }
+    try { Voice.stop(); rec.classList.add('on'); rec.lastChild.textContent = ' Recording… tap to stop'; await Echo.record(5000); rec.classList.remove('on'); rec.lastChild.textContent = ' Record again'; play.hidden = false; play.click(); }
     catch (e) { rec.classList.remove('on'); rec.lastChild.textContent = ' Record me'; toast('Microphone not available for recording here.'); }
   };
   play.onclick = async () => { await Voice.speakThen(text, course().tts, .9, who); await new Promise(r => setTimeout(r, 300)); await Echo.play(); };
@@ -3980,7 +4029,7 @@ const Call = {
   },
   close() {
     if (!this.on) return; this.on = false; clearInterval(this.tick);
-    try { Mic.stop(); window.speechSynthesis?.cancel(); } catch (e) { /* ignore */ }
+    try { Mic.stop(); Voice.stop(); } catch (e) { /* ignore */ }
     const p = P(), secs = Math.round((Date.now() - this.t0) / 1000), g = Buddy.state();
     p.handsFree = this.prevHands; p.stats.calls = (p.stats.calls || 0) + 1; p.stats.callSecs = (p.stats.callSecs || 0) + secs; Store.save();
     $('#call')?.remove();
@@ -4913,7 +4962,7 @@ const Runner = {
     paintMascot($('#l-boo'), P().mascot, 'happy', false);
     this.drawHearts(); this.render();
   },
-  close() { clearTimeout(this.advanceT); clearInterval(this.tick); $('#lesson').hidden = true; $('#modal').hidden = true; window.speechSynthesis?.cancel(); Mic.stop(); renderChrome(); showTab(UI.tab); },
+  close() { clearTimeout(this.advanceT); clearInterval(this.tick); $('#lesson').hidden = true; $('#modal').hidden = true; Voice.stop(); Mic.stop(); renderChrome(); showTab(UI.tab); },
   practiceMode() { return this.meta.mode === 'practice' || this.meta.mode === 'place'; },
   drawHearts() { if (this.meta?.speed) { const left = Math.max(0, Math.ceil((this.deadline - Date.now()) / 1000)); $('#l-hearts').innerHTML = `<span class="speed-clock ${left <= 10 ? 'hurry' : ''}">${left}s</span>`; return; } const h = this.practiceMode() ? Infinity : Hearts.left(); $('#l-hearts').innerHTML = `${ICON.heart}<span>${h === Infinity ? '∞' : h}</span>`; },
   render() {
@@ -5075,7 +5124,7 @@ function pronScore(target, alts) {
   return { pct: Math.round(score * 100), best, html, ok: score >= .7 };
 }
 /** Listen once and return the transcript alternatives, handling permission. */
-async function listenOnce(lang) { window.speechSynthesis?.cancel(); const alts = await Mic.listen(lang); P().micReady = true; Store.save(); return alts; }
+async function listenOnce(lang) { Voice.stop(); const alts = await Mic.listen(lang); P().micReady = true; Store.save(); return alts; }
 
 /* ---------- Exercise renderers: tapping an answer submits it ---------- */
 function bubblePrompt(el, inner, who) { el.insertAdjacentHTML('beforeend', `<div class="prompt-row"><div class="mascot" data-pm></div><div class="say-bubble">${who ? `<span class="who-tag">${esc(MASCOTS[who].name)}</span>` : ''}${inner}</div></div>`); paintMascot($('[data-pm]', el), who || P().mascot, 'happy'); }
@@ -5131,7 +5180,7 @@ const RENDER = {
     $('#st-en', el).onchange = e => el.querySelector('.story').classList.toggle('no-en', e.target.checked);
     let playing = false;
     $('#st-play', el).onclick = async () => {
-      if (playing) { playing = false; speechSynthesis?.cancel(); return; } playing = true;
+      if (playing) { playing = false; Voice.stop(); return; } playing = true;
       for (let i = 0; i < st.lines.length && playing && R.queue[R.i] === step; i++) {
         $$('.story-line', el).forEach(x => x.classList.toggle('now', +x.dataset.line === i));
         await Voice.speakThen(st.lines[i][1], c.tts, .9, who[st.lines[i][0]]);
