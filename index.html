@@ -1,17 +1,17 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1F6F83"><meta name="description" content="Speakaboo: a free, talk-first way to learn languages with a cheeky Boo buddy who listens, laughs and helps.">
+<meta name="theme-color" content="#1C1B2E"><meta name="description" content="Speakaboo: a free, talk-first way to learn languages with a cheeky Boo buddy who listens, laughs and helps.">
 <title>Speakaboo: Talk your way to fluent</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Speakaboo">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <script src="config.js"></script>
-
+<link rel="stylesheet" href="styles.css">
+</head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Jua&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="styles.css">
-</head><body>
+
 
 <!-- ======================= SCREENS ======================= -->
 <div id="profiles" class="profiles" hidden></div>
@@ -20,7 +20,8 @@
   <nav class="rail" id="rail" aria-label="Main"></nav>
   <header class="topbar" id="topbar"></header>
   <main class="main" id="main">
-    <section class="tab" id="tab-learn" aria-label="Learn"></section>
+    <section class="tab" id="tab-now" aria-label="Today"></section>
+    <section class="tab" id="tab-learn" aria-label="Journey" hidden></section>
     <section class="tab" id="tab-letters" aria-label="Letters" hidden></section>
     <section class="tab" id="tab-practice" aria-label="Practice" hidden></section>
     <section class="tab" id="tab-chat" aria-label="Chat with your tutor" hidden></section>
@@ -35,7 +36,7 @@
   <div class="l-top">
     <button class="icon-btn" id="l-close" aria-label="Quit lesson"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="trail" role="progressbar" aria-label="Lesson progress"><i id="l-bar" style="width:0%"></i><span class="trail-boo" id="l-boo"></span><span class="trail-flag" aria-hidden="true">★</span></div>
-    <button class="icon-btn" id="l-tr" aria-label="Translate this challenge" title="Translate"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h9M8.5 3v2M6 5c.5 3 2.5 6 6 8M12 5c-.5 3-3 6.500-7 8"/><path d="M13 21l4-9 4 9M14.500 18h5"/></svg></button>
+    <button class="icon-btn" id="l-tr" aria-label="Translate this challenge" title="Translate"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h9M8.5 3v2M6 5c.5 3 2.5 6 6 8M12 5c-.5 3-3 6.5-7 8"/><path d="M13 21l4-9 4 9M14.5 18h5"/></svg></button>
     <div class="hearts num" id="l-hearts"></div>
   </div>
   <div class="l-stage" id="l-stage"></div>
@@ -51,6 +52,5 @@
 <div class="sheet-wrap" id="sheet" hidden></div>
 <div class="overlay" id="modal" hidden></div>
 <div id="toasts" aria-live="polite"></div>
-<div id="gloss" class="gloss" role="status" hidden></div>
 <canvas id="confetti" hidden></canvas>
 <script src="app.js"></script></body></html>
