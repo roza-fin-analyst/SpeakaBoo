@@ -2960,6 +2960,432 @@ COURSES.ar.units.push(
     ] }
 );
 
+/* ------------------------------ TRAVELLER'S PHRASEBOOK: KOREAN ------------------------------ */
+COURSES.ko.units.push(
+  { id: 'ko-u26', s: 98, title: 'At the airport', icon: '공항',
+    guide: [
+      { h: 'Passport control', p: 'The officer may ask 방문 목적이 뭐예요? (What is the purpose of your visit?). Answer 관광이에요 (tourism) or 출장이에요 (business).', ex: [['여권 여기 있어요.', 'yeogwon yeogi isseoyo.', 'Here is my passport.'], ['관광하러 왔어요.', 'gwanganghareo wasseoyo.', 'I came to sightsee.']] },
+      { h: 'Finding things', p: 'Place + 이/가 어디예요? works everywhere. Useful places: 짐 찾는 곳 (baggage claim), 탑승구 (gate), 출구 (exit).', ex: [['탑승구가 어디예요?', 'tapseungguga eodiyeyo?', 'Where is the gate?']] }
+    ],
+    words: [
+      { t: '공항', r: 'gonghang', en: 'airport' }, { t: '여권', r: 'yeogwon', en: 'passport' }, { t: '비행기', r: 'bihaenggi', en: 'plane' }, { t: '짐', r: 'jim', en: 'luggage' },
+      { t: '탑승구', r: 'tapseunggu', en: 'gate' }, { t: '출구', r: 'chulgu', en: 'exit' }, { t: '관광', r: 'gwangwang', en: 'tourism' }, { t: '출장', r: 'chuljang', en: 'business trip' }, { t: '세관', r: 'segwan', en: 'customs' }
+    ],
+    sentences: [
+      { t: '여권 여기 있어요.', r: 'yeogwon yeogi isseoyo.', en: 'Here is my passport.', alt: ['here is my passport', 'my passport is here'] },
+      { t: '관광하러 왔어요.', r: 'gwanganghareo wasseoyo.', en: 'I came for sightseeing.', alt: ['i came to sightsee', 'i am here for tourism', 'i came for tourism'] },
+      { t: '일주일 동안 있을 거예요.', r: 'iljuil dongan isseul geoyeyo.', en: 'I will stay for a week.', alt: ['i will be here for a week', 'i am staying for one week'] },
+      { t: '짐 찾는 곳이 어디예요?', r: 'jim channeun gosi eodiyeyo?', en: 'Where is baggage claim?', alt: ['where is the baggage claim'] },
+      { t: '탑승구가 어디예요?', r: 'tapseungguga eodiyeyo?', en: 'Where is the gate?' },
+      { t: '제 짐이 안 왔어요.', r: 'je jimi an wasseoyo.', en: 'My luggage did not arrive.', alt: ['my luggage has not arrived', 'my bag did not come', 'my luggage didn’t arrive'] },
+      { t: '택시 타는 곳이 어디예요?', r: 'taeksi taneun gosi eodiyeyo?', en: 'Where is the taxi stand?', alt: ['where can i get a taxi'] }
+    ],
+    blanks: [
+      { t: '__ 여기 있어요.', en: 'Here is my passport.', options: ['여권', '우산'], answer: '여권', why: '여권 = passport. 우산 = umbrella.' },
+      { t: '탑승구가 __예요?', en: 'Where is the gate?', options: ['어디', '얼마'], answer: '어디', why: '어디 = where. 얼마 = how much.' },
+      { t: '일주일 __ 있을 거예요.', en: 'I will stay for a week.', options: ['동안', '에서'], answer: '동안', why: '동안 = for / during a length of time.' }
+    ] },
+  { id: 'ko-u27', s: 98, title: 'Money: exchange & ATM', icon: '환전',
+    guide: [
+      { h: 'Changing money', p: 'Say what you have and what you want: 달러를 원으로 바꾸고 싶어요 (I want to change dollars into won). 환율 is the exchange rate.', ex: [['환전하는 곳이 어디예요?', 'hwanjeonhaneun gosi eodiyeyo?', 'Where can I exchange money?'], ['환율이 얼마예요?', 'hwanyuri eolmayeyo?', 'What is the exchange rate?']] },
+      { h: 'At the ATM', p: 'ATM = 현금인출기 or just ATM. If it eats your card: 카드가 안 나와요. Ask 수수료가 있어요? to check for a fee.', ex: [['카드가 안 나와요.', 'kadeuga an nawayo.', 'My card won’t come out.']] }
+    ],
+    words: [
+      { t: '환전', r: 'hwanjeon', en: 'currency exchange' }, { t: '환율', r: 'hwanyul', en: 'exchange rate' }, { t: '달러', r: 'dalleo', en: 'dollar' }, { t: '현금', r: 'hyeongeum', en: 'cash' },
+      { t: '현금인출기', r: 'hyeongeum inchulgi', en: 'ATM' }, { t: '수수료', r: 'susuryo', en: 'fee' }, { t: '영수증', r: 'yeongsujeung', en: 'receipt' }, { t: '잔돈', r: 'jandon', en: 'small change' }
+    ],
+    sentences: [
+      { t: '환전하는 곳이 어디예요?', r: 'hwanjeonhaneun gosi eodiyeyo?', en: 'Where can I exchange money?', alt: ['where is the currency exchange', 'where is the exchange place'] },
+      { t: '달러를 원으로 바꾸고 싶어요.', r: 'dalleoreul woneuro bakkugo sipeoyo.', en: 'I want to change dollars into won.', alt: ['i want to exchange dollars to won', 'i would like to change dollars to won'] },
+      { t: '환율이 얼마예요?', r: 'hwanyuri eolmayeyo?', en: 'What is the exchange rate?', alt: ['how much is the exchange rate'] },
+      { t: '현금인출기가 어디예요?', r: 'hyeongeum inchulgiga eodiyeyo?', en: 'Where is the ATM?', alt: ['where is the atm'] },
+      { t: '카드가 안 나와요.', r: 'kadeuga an nawayo.', en: 'The card will not come out.', alt: ['my card will not come out', 'my card is stuck', 'the card does not come out'] },
+      { t: '수수료가 있어요?', r: 'susuryoga isseoyo?', en: 'Is there a fee?', alt: ['is there a fee', 'is there a commission', 'do you charge a fee'] },
+      { t: '잔돈으로 주세요.', r: 'jandoneuro juseyo.', en: 'Please give it to me in small change.', alt: ['small bills please', 'small change please', 'give me small change'] }
+    ],
+    blanks: [
+      { t: '현금인출기가 __예요?', en: 'Where is the ATM?', options: ['어디', '언제'], answer: '어디', why: '어디 = where, 언제 = when.' },
+      { t: '달러를 원__ 바꾸고 싶어요.', en: 'I want to change dollars into won.', options: ['으로', '에서'], answer: '으로', why: '(으)로 = into / by means of.' },
+      { t: '__이 얼마예요?', en: 'What is the exchange rate?', options: ['환율', '우산'], answer: '환율', why: '환율 = exchange rate.' }
+    ] },
+  { id: 'ko-u28', s: 98, title: 'Tickets & directions', icon: '표',
+    guide: [
+      { h: 'Buying tickets', p: 'Tickets are counted with 장: 표 두 장 주세요 (two tickets, please). 편도 = one-way, 왕복 = round trip.', ex: [['표 두 장 주세요.', 'pyo du jang juseyo.', 'Two tickets, please.'], ['왕복으로 주세요.', 'wangbogeuro juseyo.', 'Round trip, please.']] },
+      { h: 'Asking the way', p: '여기서 어떻게 가요? = How do I get there from here? Listen for 다음 역 (next station) and 갈아타세요 (transfer).', ex: [['여기서 어떻게 가요?', 'yeogiseo eotteoke gayo?', 'How do I get there from here?'], ['다음 역에서 내리세요.', 'daeum yeogeseo naeriseyo.', 'Get off at the next station.']] }
+    ],
+    words: [
+      { t: '표', r: 'pyo', en: 'ticket' }, { t: '편도', r: 'pyeondo', en: 'one-way' }, { t: '왕복', r: 'wangbok', en: 'round trip' }, { t: '승강장', r: 'seunggangjang', en: 'platform' },
+      { t: '버스 정류장', r: 'beoseu jeongnyujang', en: 'bus stop' }, { t: '다음', r: 'daeum', en: 'next' }, { t: '갈아타요', r: 'garatayo', en: 'transfer' }, { t: '내려요', r: 'naeryeoyo', en: 'get off' }
+    ],
+    sentences: [
+      { t: '표 두 장 주세요.', r: 'pyo du jang juseyo.', en: 'Two tickets, please.', alt: ['two tickets please'] },
+      { t: '왕복으로 주세요.', r: 'wangbogeuro juseyo.', en: 'Round trip, please.', alt: ['round trip please', 'a return ticket please'] },
+      { t: '몇 번 승강장이에요?', r: 'myeot beon seunggangjangieyo?', en: 'Which platform is it?', alt: ['which platform', 'what platform is it'] },
+      { t: '이 버스 서울역에 가요?', r: 'i beoseu seoullyeoge gayo?', en: 'Does this bus go to Seoul Station?', alt: ['does this bus go to seoul station'] },
+      { t: '여기서 어떻게 가요?', r: 'yeogiseo eotteoke gayo?', en: 'How do I get there from here?', alt: ['how do i get there from here', 'how do i go from here'] },
+      { t: '다음 역에서 내리세요.', r: 'daeum yeogeseo naeriseyo.', en: 'Get off at the next station.', alt: ['get off at the next stop', 'please get off at the next station'] },
+      { t: '여기서 얼마나 걸려요?', r: 'yeogiseo eolmana geollyeoyo?', en: 'How long does it take from here?', alt: ['how long does it take', 'how long is it from here'] }
+    ],
+    blanks: [
+      { t: '표 두 __ 주세요.', en: 'Two tickets, please.', options: ['장', '명'], answer: '장', why: '장 counts flat things like tickets and paper. 명 counts people.' },
+      { t: '__ 얼마나 걸려요?', en: 'How long does it take from here?', options: ['여기서', '어제'], answer: '여기서', why: '여기서 = from here.' },
+      { t: '다음 역에서 __.', en: 'Get off at the next station.', options: ['내리세요', '드세요'], answer: '내리세요', why: '내리다 = to get off. 드세요 = please eat.' }
+    ] },
+  { id: 'ko-u29', s: 98, title: 'Meeting people', icon: '만남',
+    guide: [
+      { h: 'Where are you from?', p: '어디에서 왔어요? Reply 저는 + country + 에서 왔어요: 저는 미국에서 왔어요 (I’m from the USA).', ex: [['어디에서 왔어요?', 'eodieseo wasseoyo?', 'Where are you from?'], ['저는 미국에서 왔어요.', 'jeoneun migugeseo wasseoyo.', 'I’m from the USA.']] },
+      { h: 'Asking about others', p: '무슨 일 하세요? = What do you do? 몇 살이에요? = How old are you? (ask only people your age or younger). Stuck? 천천히 말해 주세요 = please speak slowly.', ex: [['무슨 일 하세요?', 'museun il haseyo?', 'What do you do for work?'], ['천천히 말해 주세요.', 'cheoncheonhi malhae juseyo.', 'Please speak slowly.']] }
+    ],
+    words: [
+      { t: '나라', r: 'nara', en: 'country' }, { t: '미국', r: 'miguk', en: 'USA' }, { t: '영국', r: 'yeongguk', en: 'UK' }, { t: '일', r: 'il', en: 'work / job' },
+      { t: '몇 살', r: 'myeot sal', en: 'how old' }, { t: '영어', r: 'yeongeo', en: 'English' }, { t: '천천히', r: 'cheoncheonhi', en: 'slowly' }, { t: '다시', r: 'dasi', en: 'again' }
+    ],
+    sentences: [
+      { t: '어디에서 왔어요?', r: 'eodieseo wasseoyo?', en: 'Where are you from?', alt: ['where did you come from'] },
+      { t: '저는 미국에서 왔어요.', r: 'jeoneun migugeseo wasseoyo.', en: 'I am from the USA.', alt: ['i am from america', 'i come from the usa', 'i am from the united states'] },
+      { t: '무슨 일 하세요?', r: 'museun il haseyo?', en: 'What do you do for work?', alt: ['what do you do', 'what is your job'] },
+      { t: '몇 살이에요?', r: 'myeot sarieyo?', en: 'How old are you?', alt: ['how old are you'] },
+      { t: '영어 할 수 있어요?', r: 'yeongeo hal su isseoyo?', en: 'Can you speak English?', alt: ['can you speak english', 'do you speak english'] },
+      { t: '천천히 말해 주세요.', r: 'cheoncheonhi malhae juseyo.', en: 'Please speak slowly.', alt: ['speak slowly please', 'please speak more slowly'] },
+      { t: '다시 말해 주세요.', r: 'dasi malhae juseyo.', en: 'Please say it again.', alt: ['say it again please', 'please repeat that', 'say that again please'] }
+    ],
+    blanks: [
+      { t: '어디__ 왔어요?', en: 'Where are you from?', options: ['에서', '에게'], answer: '에서', why: '에서 = from (a place).' },
+      { t: '__ 말해 주세요.', en: 'Please speak slowly.', options: ['천천히', '어제'], answer: '천천히', why: '천천히 = slowly. 어제 = yesterday.' },
+      { t: '영어 할 수 __?', en: 'Can you speak English?', options: ['있어요', '먹어요'], answer: '있어요', why: '할 수 있어요 = can do.' }
+    ] },
+  { id: 'ko-u30', s: 98, title: 'Food needs & allergies', icon: '식당',
+    guide: [
+      { h: 'Special diets', p: '저는 채식주의자예요 = I’m vegetarian. 알레르기가 있어요 = I have an allergy: 땅콩 알레르기가 있어요 (peanut allergy).', ex: [['저는 채식주의자예요.', 'jeoneun chaesikjuuijayeyo.', 'I’m a vegetarian.'], ['땅콩 알레르기가 있어요.', 'ttangkong allereugiga isseoyo.', 'I have a peanut allergy.']] },
+      { h: 'Spicy food', p: 'Korean food can be very spicy. 안 맵게 해 주세요 = make it not spicy. 매운 거 못 먹어요 = I can’t eat spicy food.', ex: [['매운 거 못 먹어요.', 'maeun geo mot meogeoyo.', 'I can’t eat spicy food.']] }
+    ],
+    words: [
+      { t: '메뉴판', r: 'menupan', en: 'menu' }, { t: '채식주의자', r: 'chaesikjuuija', en: 'vegetarian' }, { t: '매운', r: 'maeun', en: 'spicy' }, { t: '알레르기', r: 'allereugi', en: 'allergy' },
+      { t: '땅콩', r: 'ttangkong', en: 'peanut' }, { t: '포장', r: 'pojang', en: 'takeout' }, { t: '계산서', r: 'gyesanseo', en: 'bill' }, { t: '물', r: 'mul', en: 'water' }
+    ],
+    sentences: [
+      { t: '메뉴판 주세요.', r: 'menupan juseyo.', en: 'Menu, please.', alt: ['menu please', 'the menu please'] },
+      { t: '저는 채식주의자예요.', r: 'jeoneun chaesikjuuijayeyo.', en: 'I am a vegetarian.', alt: ['i am vegetarian', 'i am a vegetarian'] },
+      { t: '매운 거 못 먹어요.', r: 'maeun geo mot meogeoyo.', en: 'I cannot eat spicy food.', alt: ['i cannot eat spicy things', 'i can’t eat spicy food', 'i cant eat spicy food'] },
+      { t: '땅콩 알레르기가 있어요.', r: 'ttangkong allereugiga isseoyo.', en: 'I have a peanut allergy.', alt: ['i am allergic to peanuts', 'i have an allergy to peanuts'] },
+      { t: '물 좀 주세요.', r: 'mul jom juseyo.', en: 'Some water, please.', alt: ['water please', 'please give me some water'] },
+      { t: '포장해 주세요.', r: 'pojanghae juseyo.', en: 'Takeout, please.', alt: ['to go please', 'takeout please', 'please wrap it up'] },
+      { t: '계산서 주세요.', r: 'gyesanseo juseyo.', en: 'The bill, please.', alt: ['bill please', 'check please', 'the check please'] }
+    ],
+    blanks: [
+      { t: '땅콩 __가 있어요.', en: 'I have a peanut allergy.', options: ['알레르기', '계산서'], answer: '알레르기', why: '알레르기 = allergy. 계산서 = bill.' },
+      { t: '매운 거 못 __.', en: 'I cannot eat spicy food.', options: ['먹어요', '가요'], answer: '먹어요', why: '못 + verb = cannot. 먹다 = to eat.' },
+      { t: '__ 주세요.', en: 'The bill, please.', options: ['계산서', '문'], answer: '계산서', why: '계산서 = bill.' }
+    ] },
+  { id: 'ko-u31', s: 98, title: 'Hotel & emergencies', icon: '호텔',
+    guide: [
+      { h: 'At the hotel', p: 'Say 예약했어요 (I have a booking) and your name. 체크인 = check-in, 체크아웃 = check-out.', ex: [['예약했어요.', 'yeyakhaesseoyo.', 'I have a reservation.'], ['체크아웃은 몇 시예요?', 'chekeu-auseun myeot siyeyo?', 'What time is check-out?']] },
+      { h: 'Asking for help', p: 'Name the problem, then ask for help: 여권을 잃어버렸어요 (I lost my passport). 의사가 필요해요 = I need a doctor. 대사관 = embassy.', ex: [['의사가 필요해요.', 'uisaga piryohaeyo.', 'I need a doctor.'], ['영어 하는 사람 있어요?', 'yeongeo haneun saram isseoyo?', 'Is there anyone who speaks English?']] }
+    ],
+    words: [
+      { t: '예약', r: 'yeyak', en: 'reservation' }, { t: '체크인', r: 'chekeu-in', en: 'check-in' }, { t: '체크아웃', r: 'chekeu-aut', en: 'check-out' }, { t: '방', r: 'bang', en: 'room' },
+      { t: '대사관', r: 'daesagwan', en: 'embassy' }, { t: '의사', r: 'uisa', en: 'doctor' }, { t: '필요해요', r: 'piryohaeyo', en: 'I need' }, { t: '구급차', r: 'gugeupcha', en: 'ambulance' }
+    ],
+    sentences: [
+      { t: '예약했어요.', r: 'yeyakhaesseoyo.', en: 'I have a reservation.', alt: ['i made a reservation', 'i have a booking', 'i booked'] },
+      { t: '체크아웃은 몇 시예요?', r: 'chekeu-auseun myeot siyeyo?', en: 'What time is check-out?', alt: ['what time is checkout'] },
+      { t: '방에 수건이 없어요.', r: 'bange sugeoni eopseoyo.', en: 'There are no towels in the room.', alt: ['there is no towel in the room', 'there are no towels in my room'] },
+      { t: '여권을 잃어버렸어요.', r: 'yeogwoneul ireobeoryeosseoyo.', en: 'I lost my passport.', alt: ['i have lost my passport'] },
+      { t: '의사가 필요해요.', r: 'uisaga piryohaeyo.', en: 'I need a doctor.', alt: ['i need a doctor'] },
+      { t: '대사관이 어디예요?', r: 'daesagwani eodiyeyo?', en: 'Where is the embassy?' },
+      { t: '구급차를 불러 주세요.', r: 'gugeupchareul bulleo juseyo.', en: 'Please call an ambulance.', alt: ['call an ambulance please', 'please call the ambulance'] }
+    ],
+    blanks: [
+      { t: '__했어요.', en: 'I have a reservation.', options: ['예약', '우산'], answer: '예약', why: '예약 = reservation.' },
+      { t: '__가 필요해요.', en: 'I need a doctor.', options: ['의사', '시계'], answer: '의사', why: '의사 = doctor. 시계 = watch.' },
+      { t: '대사관이 __예요?', en: 'Where is the embassy?', options: ['어디', '언제'], answer: '어디', why: '어디 = where.' }
+    ] }
+);
+
+/* ------------------------------ TRAVELLER'S PHRASEBOOK: SPANISH ------------------------------ */
+COURSES.es.units.push(
+  { id: 'es-u19', s: 98, title: 'At the airport', icon: 'Vuelo',
+    guide: [
+      { h: 'Passport control', p: 'The officer may ask ¿Motivo de su viaje? (Reason for your trip?). Answer Turismo (tourism) or Trabajo (work).', ex: [['Aquí está mi pasaporte.', 'ah-KEE ehs-TAH mee pah-sah-POHR-teh.', 'Here is my passport.'], ['Vengo de turista.', 'BEHN-goh deh too-REES-tah.', 'I’m here as a tourist.']] },
+      { h: 'Finding things', p: '¿Dónde está…? is the key question: la puerta de embarque (gate), la salida (exit), la aduana (customs).', ex: [['¿Dónde está la puerta de embarque?', 'DOHN-deh ehs-TAH lah PWEHR-tah deh ehm-BAR-keh?', 'Where is the gate?']] }
+    ],
+    words: [
+      { t: 'el aeropuerto', r: 'ehl ah-eh-roh-PWEHR-toh', en: 'airport' }, { t: 'el pasaporte', r: 'ehl pah-sah-POHR-teh', en: 'passport' }, { t: 'el vuelo', r: 'ehl BWEH-loh', en: 'flight' }, { t: 'la maleta', r: 'lah mah-LEH-tah', en: 'suitcase' },
+      { t: 'la puerta de embarque', r: 'lah PWEHR-tah deh ehm-BAR-keh', en: 'gate' }, { t: 'la salida', r: 'lah sah-LEE-dah', en: 'exit' }, { t: 'la aduana', r: 'lah ah-DWAH-nah', en: 'customs' }, { t: 'la tarjeta de embarque', r: 'lah tar-HEH-tah deh ehm-BAR-keh', en: 'boarding pass' }
+    ],
+    sentences: [
+      { t: 'Aquí está mi pasaporte.', r: 'ah-KEE ehs-TAH mee pah-sah-POHR-teh.', en: 'Here is my passport.', alt: ['here is my passport'] },
+      { t: 'Vengo de turista.', r: 'BEHN-goh deh too-REES-tah.', en: 'I am here as a tourist.', alt: ['i am here as a tourist', 'i come as a tourist', 'i am a tourist'] },
+      { t: 'Voy a quedarme una semana.', r: 'boy ah keh-DAR-meh OO-nah seh-MAH-nah.', en: 'I am going to stay one week.', alt: ['i will stay for a week', 'i am staying a week', 'i am staying for one week'] },
+      { t: '¿Dónde se recogen las maletas?', r: 'DOHN-deh seh rreh-KOH-hehn lahs mah-LEH-tahs?', en: 'Where do you pick up the luggage?', alt: ['where is the baggage claim', 'where is baggage claim', 'where can i pick up my suitcase'] },
+      { t: '¿Dónde está la puerta de embarque?', r: 'DOHN-deh ehs-TAH lah PWEHR-tah deh ehm-BAR-keh?', en: 'Where is the gate?', alt: ['where is the boarding gate'] },
+      { t: 'Mi maleta no ha llegado.', r: 'mee mah-LEH-tah noh ah yeh-GAH-doh.', en: 'My suitcase has not arrived.', alt: ['my suitcase did not arrive', 'my luggage has not arrived', 'my bag has not arrived'] },
+      { t: '¿Dónde está la parada de taxis?', r: 'DOHN-deh ehs-TAH lah pah-RAH-dah deh TAHK-sees?', en: 'Where is the taxi stand?', alt: ['where is the taxi stop'] }
+    ],
+    blanks: [
+      { t: 'Aquí __ mi pasaporte.', en: 'Here is my passport.', options: ['está', 'tengo'], answer: 'está', why: 'está = is (here). tengo = I have.' },
+      { t: '¿Dónde está la puerta de __?', en: 'Where is the gate?', options: ['embarque', 'comida'], answer: 'embarque', why: 'puerta de embarque = boarding gate.' },
+      { t: 'Voy a quedarme una __.', en: 'I am going to stay one week.', options: ['semana', 'ayer'], answer: 'semana', why: 'una semana = one week. ayer = yesterday.' }
+    ] },
+  { id: 'es-u20', s: 98, title: 'Money: exchange & ATM', icon: 'Cambio',
+    guide: [
+      { h: 'Changing money', p: 'Say what you have and want: Quiero cambiar dólares a euros. El tipo de cambio is the exchange rate. Airports usually have worse rates than city offices.', ex: [['¿Dónde puedo cambiar dinero?', 'DOHN-deh PWEH-doh kahm-BYAR dee-NEH-roh?', 'Where can I change money?'], ['¿Cuál es el tipo de cambio?', 'kwahl ehs ehl TEE-poh deh KAHM-byoh?', 'What is the exchange rate?']] },
+      { h: 'At the cash machine', p: 'El cajero automático = ATM. If it keeps your card: El cajero se ha tragado mi tarjeta. Ask ¿Hay comisión? to check for a fee.', ex: [['El cajero se ha tragado mi tarjeta.', 'ehl kah-HEH-roh seh ah trah-GAH-doh mee tar-HEH-tah.', 'The ATM swallowed my card.']] }
+    ],
+    words: [
+      { t: 'cambiar dinero', r: 'kahm-BYAR dee-NEH-roh', en: 'to exchange money' }, { t: 'el tipo de cambio', r: 'ehl TEE-poh deh KAHM-byoh', en: 'exchange rate' }, { t: 'el cajero automático', r: 'ehl kah-HEH-roh ow-toh-MAH-tee-koh', en: 'ATM' }, { t: 'el efectivo', r: 'ehl eh-fehk-TEE-boh', en: 'cash' },
+      { t: 'la comisión', r: 'lah koh-mee-SYOHN', en: 'fee' }, { t: 'el recibo', r: 'ehl rreh-SEE-boh', en: 'receipt' }, { t: 'los billetes', r: 'lohs bee-YEH-tehs', en: 'banknotes' }, { t: 'el dólar', r: 'ehl DOH-lar', en: 'dollar' }
+    ],
+    sentences: [
+      { t: '¿Dónde puedo cambiar dinero?', r: 'DOHN-deh PWEH-doh kahm-BYAR dee-NEH-roh?', en: 'Where can I change money?', alt: ['where can i exchange money'] },
+      { t: 'Quiero cambiar dólares a euros.', r: 'KYEH-roh kahm-BYAR DOH-lah-rehs ah EH-oo-rohs.', en: 'I want to change dollars into euros.', alt: ['i want to exchange dollars for euros', 'i want to change dollars to euros'] },
+      { t: '¿Cuál es el tipo de cambio?', r: 'kwahl ehs ehl TEE-poh deh KAHM-byoh?', en: 'What is the exchange rate?' },
+      { t: '¿Hay un cajero automático por aquí?', r: 'eye oon kah-HEH-roh ow-toh-MAH-tee-koh pohr ah-KEE?', en: 'Is there an ATM around here?', alt: ['is there an atm near here', 'is there an atm nearby'] },
+      { t: 'El cajero se ha tragado mi tarjeta.', r: 'ehl kah-HEH-roh seh ah trah-GAH-doh mee tar-HEH-tah.', en: 'The ATM swallowed my card.', alt: ['the atm ate my card', 'the atm kept my card'] },
+      { t: '¿Hay comisión?', r: 'eye koh-mee-SYOHN?', en: 'Is there a fee?', alt: ['is there a fee', 'is there a commission'] },
+      { t: 'Billetes pequeños, por favor.', r: 'bee-YEH-tehs peh-KEH-nyohs, pohr fah-BOHR.', en: 'Small bills, please.', alt: ['small notes please', 'small bills please'] }
+    ],
+    blanks: [
+      { t: '¿Dónde puedo __ dinero?', en: 'Where can I change money?', options: ['cambiar', 'comer'], answer: 'cambiar', why: 'cambiar = to change. comer = to eat.' },
+      { t: 'Quiero cambiar dólares __ euros.', en: 'I want to change dollars into euros.', options: ['a', 'con'], answer: 'a', why: 'cambiar X a Y = change X into Y.' },
+      { t: '¿Hay un cajero __ por aquí?', en: 'Is there an ATM around here?', options: ['automático', 'rápido'], answer: 'automático', why: 'cajero automático = ATM.' }
+    ] },
+  { id: 'es-u21', s: 98, title: 'Tickets & directions', icon: 'Billete',
+    guide: [
+      { h: 'Buying tickets', p: 'Un billete a… = a ticket to… (in Latin America often un boleto). De ida = one-way, de ida y vuelta = round trip.', ex: [['Un billete de ida y vuelta, por favor.', 'oon bee-YEH-teh deh EE-dah ee BWEHL-tah, pohr fah-BOHR.', 'A round-trip ticket, please.']] },
+      { h: 'Directions', p: 'Siga recto = go straight, gire a la derecha / izquierda = turn right / left. ¿Cómo llego a…? = how do I get to…?', ex: [['¿Cómo llego a la plaza?', 'KOH-moh YEH-goh ah lah PLAH-sah?', 'How do I get to the square?'], ['Siga recto y gire a la izquierda.', 'SEE-gah RREHK-toh ee HEE-reh ah lah ees-KYEHR-dah.', 'Go straight and turn left.']] }
+    ],
+    words: [
+      { t: 'el billete', r: 'ehl bee-YEH-teh', en: 'ticket' }, { t: 'de ida', r: 'deh EE-dah', en: 'one-way' }, { t: 'de ida y vuelta', r: 'deh EE-dah ee BWEHL-tah', en: 'round trip' }, { t: 'el andén', r: 'ehl ahn-DEHN', en: 'platform' },
+      { t: 'la parada de autobús', r: 'lah pah-RAH-dah deh ow-toh-BOOS', en: 'bus stop' }, { t: 'siga recto', r: 'SEE-gah RREHK-toh', en: 'go straight' }, { t: 'a la izquierda', r: 'ah lah ees-KYEHR-dah', en: 'to the left' }, { t: 'a la derecha', r: 'ah lah deh-REH-chah', en: 'to the right' }
+    ],
+    sentences: [
+      { t: 'Un billete de ida y vuelta, por favor.', r: 'oon bee-YEH-teh deh EE-dah ee BWEHL-tah, pohr fah-BOHR.', en: 'A round-trip ticket, please.', alt: ['a return ticket please', 'round trip ticket please'] },
+      { t: '¿De qué andén sale?', r: 'deh keh ahn-DEHN SAH-leh?', en: 'Which platform does it leave from?', alt: ['what platform does it leave from', 'which platform'] },
+      { t: '¿Cómo llego a la plaza?', r: 'KOH-moh YEH-goh ah lah PLAH-sah?', en: 'How do I get to the square?', alt: ['how do i get to the plaza'] },
+      { t: 'Siga recto y gire a la izquierda.', r: 'SEE-gah RREHK-toh ee HEE-reh ah lah ees-KYEHR-dah.', en: 'Go straight and turn left.', alt: ['go straight then turn left', 'continue straight and turn left'] },
+      { t: '¿Está lejos de aquí?', r: 'ehs-TAH LEH-hohs deh ah-KEE?', en: 'Is it far from here?', alt: ['is it far from here', 'is it far'] },
+      { t: '¿Cuánto tarda en autobús?', r: 'KWAHN-toh TAR-dah ehn ow-toh-BOOS?', en: 'How long does it take by bus?', alt: ['how long does the bus take', 'how long by bus'] },
+      { t: '¿Dónde está la parada de autobús?', r: 'DOHN-deh ehs-TAH lah pah-RAH-dah deh ow-toh-BOOS?', en: 'Where is the bus stop?' }
+    ],
+    blanks: [
+      { t: 'Siga __ y gire a la izquierda.', en: 'Go straight and turn left.', options: ['recto', 'rápido'], answer: 'recto', why: 'siga recto = keep going straight.' },
+      { t: '¿Cómo __ a la plaza?', en: 'How do I get to the square?', options: ['llego', 'como'], answer: 'llego', why: 'llegar = to arrive / get to. como = I eat.' },
+      { t: '¿__ lejos de aquí?', en: 'Is it far from here?', options: ['Está', 'Tiene'], answer: 'Está', why: 'está lejos = it is far (location).' }
+    ] },
+  { id: 'es-u22', s: 98, title: 'Meeting people', icon: 'Amigos',
+    guide: [
+      { h: 'Where are you from?', p: '¿De dónde eres? (informal) / ¿De dónde es usted? (formal). Answer Soy de + place: Soy de Estados Unidos.', ex: [['¿De dónde eres?', 'deh DOHN-deh EH-rehs?', 'Where are you from?'], ['Soy de Estados Unidos.', 'soy deh ehs-TAH-dohs oo-NEE-dohs.', 'I’m from the United States.']] },
+      { h: 'Asking about others', p: '¿A qué te dedicas? = What do you do? ¿Cuántos años tienes? = How old are you? If lost: Más despacio, por favor and ¿Puede repetir?', ex: [['¿A qué te dedicas?', 'ah keh teh deh-DEE-kahs?', 'What do you do for a living?'], ['Más despacio, por favor.', 'mahs dehs-PAH-syoh, pohr fah-BOHR.', 'Slower, please.']] }
+    ],
+    words: [
+      { t: 'el país', r: 'ehl pah-EES', en: 'country' }, { t: 'Estados Unidos', r: 'ehs-TAH-dohs oo-NEE-dohs', en: 'USA' }, { t: 'el trabajo', r: 'ehl trah-BAH-hoh', en: 'work / job' }, { t: 'los años', r: 'lohs AH-nyohs', en: 'years old' },
+      { t: 'el inglés', r: 'ehl een-GLEHS', en: 'English' }, { t: 'más despacio', r: 'mahs dehs-PAH-syoh', en: 'more slowly' }, { t: 'repetir', r: 'rreh-peh-TEER', en: 'to repeat' }, { t: 'no entiendo', r: 'noh ehn-TYEHN-doh', en: 'I don’t understand' }
+    ],
+    sentences: [
+      { t: '¿De dónde eres?', r: 'deh DOHN-deh EH-rehs?', en: 'Where are you from?' },
+      { t: 'Soy de Estados Unidos.', r: 'soy deh ehs-TAH-dohs oo-NEE-dohs.', en: 'I am from the United States.', alt: ['i am from the usa', 'i am from america', 'i come from the united states'] },
+      { t: '¿A qué te dedicas?', r: 'ah keh teh deh-DEE-kahs?', en: 'What do you do for a living?', alt: ['what do you do', 'what is your job'] },
+      { t: '¿Cuántos años tienes?', r: 'KWAHN-tohs AH-nyohs TYEH-nehs?', en: 'How old are you?' },
+      { t: '¿Hablas inglés?', r: 'AH-blahs een-GLEHS?', en: 'Do you speak English?', alt: ['do you speak english', 'can you speak english'] },
+      { t: 'Más despacio, por favor.', r: 'mahs dehs-PAH-syoh, pohr fah-BOHR.', en: 'More slowly, please.', alt: ['slower please', 'more slowly please', 'slowly please'] },
+      { t: '¿Puede repetir, por favor?', r: 'PWEH-deh rreh-peh-TEER, pohr fah-BOHR?', en: 'Can you repeat, please?', alt: ['can you repeat that please', 'could you repeat please', 'can you say that again'] }
+    ],
+    blanks: [
+      { t: '¿__ dónde eres?', en: 'Where are you from?', options: ['De', 'A'], answer: 'De', why: 'de = from. ¿De dónde eres? = where are you from?' },
+      { t: 'Soy __ Estados Unidos.', en: 'I am from the United States.', options: ['de', 'en'], answer: 'de', why: 'ser de = to be from.' },
+      { t: '¿Hablas __?', en: 'Do you speak English?', options: ['inglés', 'comida'], answer: 'inglés', why: 'inglés = English. comida = food.' }
+    ] },
+  { id: 'es-u23', s: 98, title: 'Food needs & allergies', icon: 'Comida',
+    guide: [
+      { h: 'Special diets', p: 'Soy vegetariano (m) / vegetariana (f). Soy alérgico (m) / alérgica (f) a… = I’m allergic to… ¿Tiene sin gluten? = Do you have gluten-free?', ex: [['Soy alérgico a los cacahuetes.', 'soy ah-LEHR-hee-koh ah lohs kah-kah-WEH-tehs.', 'I’m allergic to peanuts.']] },
+      { h: 'Ordering', p: 'La carta, por favor. Sin = without: sin picante (no spice), sin carne (no meat). Para llevar = to take away.', ex: [['Sin carne, por favor.', 'seen KAR-neh, pohr fah-BOHR.', 'Without meat, please.']] }
+    ],
+    words: [
+      { t: 'la carta', r: 'lah KAR-tah', en: 'menu' }, { t: 'vegetariano', r: 'beh-heh-tah-RYAH-noh', en: 'vegetarian' }, { t: 'picante', r: 'pee-KAHN-teh', en: 'spicy' }, { t: 'alérgico', r: 'ah-LEHR-hee-koh', en: 'allergic' },
+      { t: 'los cacahuetes', r: 'lohs kah-kah-WEH-tehs', en: 'peanuts' }, { t: 'sin gluten', r: 'seen GLOO-tehn', en: 'gluten-free' }, { t: 'para llevar', r: 'PAH-rah yeh-BAR', en: 'takeout' }, { t: 'la cuenta', r: 'lah KWEHN-tah', en: 'bill' }
+    ],
+    sentences: [
+      { t: 'La carta, por favor.', r: 'lah KAR-tah, pohr fah-BOHR.', en: 'The menu, please.', alt: ['menu please', 'the menu please'] },
+      { t: 'Soy vegetariano.', r: 'soy beh-heh-tah-RYAH-noh.', en: 'I am vegetarian.', alt: ['i am a vegetarian', 'i am vegetarian'] },
+      { t: 'No como picante.', r: 'noh KOH-moh pee-KAHN-teh.', en: 'I do not eat spicy food.', alt: ['i do not eat spicy', 'i do not eat spicy things', 'i dont eat spicy food'] },
+      { t: 'Soy alérgico a los cacahuetes.', r: 'soy ah-LEHR-hee-koh ah lohs kah-kah-WEH-tehs.', en: 'I am allergic to peanuts.', alt: ['i am allergic to peanut'] },
+      { t: '¿Tiene algo sin gluten?', r: 'TYEH-neh AHL-goh seen GLOO-tehn?', en: 'Do you have anything gluten-free?', alt: ['do you have something gluten free', 'do you have gluten free options', 'do you have anything gluten free'] },
+      { t: 'Para llevar, por favor.', r: 'PAH-rah yeh-BAR, pohr fah-BOHR.', en: 'To go, please.', alt: ['takeaway please', 'to go please', 'takeout please', 'for takeaway please'] },
+      { t: 'La cuenta, por favor.', r: 'lah KWEHN-tah, pohr fah-BOHR.', en: 'The bill, please.', alt: ['the check please', 'bill please', 'check please'] }
+    ],
+    blanks: [
+      { t: 'Soy __ a los cacahuetes.', en: 'I am allergic to peanuts.', options: ['alérgico', 'cansado'], answer: 'alérgico', why: 'alérgico = allergic. cansado = tired.' },
+      { t: 'No como __.', en: 'I do not eat spicy food.', options: ['picante', 'mañana'], answer: 'picante', why: 'picante = spicy.' },
+      { t: 'La __, por favor.', en: 'The bill, please.', options: ['cuenta', 'puerta'], answer: 'cuenta', why: 'la cuenta = the bill. la puerta = the door.' }
+    ] },
+  { id: 'es-u24', s: 98, title: 'Hotel & emergencies', icon: 'Hotel',
+    guide: [
+      { h: 'At the hotel', p: 'Tengo una reserva a nombre de… = I have a booking under the name… El check-out is also called la salida.', ex: [['Tengo una reserva.', 'TEHN-goh OO-nah rreh-SEHR-bah.', 'I have a reservation.'], ['¿A qué hora es el check-out?', 'ah keh OH-rah ehs ehl chehk-OWT?', 'What time is check-out?']] },
+      { h: 'Asking for help', p: 'He perdido mi pasaporte = I’ve lost my passport. Necesito un médico = I need a doctor. In Spain and much of Europe the emergency number is 112.', ex: [['Necesito un médico.', 'neh-seh-SEE-toh oon MEH-dee-koh.', 'I need a doctor.'], ['¿Alguien habla inglés?', 'AHL-gyehn AH-blah een-GLEHS?', 'Does anyone speak English?']] }
+    ],
+    words: [
+      { t: 'la reserva', r: 'lah rreh-SEHR-bah', en: 'reservation' }, { t: 'la habitación', r: 'lah ah-bee-tah-SYOHN', en: 'room' }, { t: 'el check-out', r: 'ehl chehk-OWT', en: 'check-out' }, { t: 'la toalla', r: 'lah toh-AH-yah', en: 'towel' },
+      { t: 'la embajada', r: 'lah ehm-bah-HAH-dah', en: 'embassy' }, { t: 'el médico', r: 'ehl MEH-dee-koh', en: 'doctor' }, { t: 'la ambulancia', r: 'lah ahm-boo-LAHN-syah', en: 'ambulance' }, { t: 'necesito', r: 'neh-seh-SEE-toh', en: 'I need' }
+    ],
+    sentences: [
+      { t: 'Tengo una reserva.', r: 'TEHN-goh OO-nah rreh-SEHR-bah.', en: 'I have a reservation.', alt: ['i have a booking', 'i have a reservation'] },
+      { t: '¿A qué hora es el check-out?', r: 'ah keh OH-rah ehs ehl chehk-OWT?', en: 'What time is check-out?', alt: ['what time is checkout', 'at what time is check-out'] },
+      { t: 'Necesito otra toalla, por favor.', r: 'neh-seh-SEE-toh OH-trah toh-AH-yah, pohr fah-BOHR.', en: 'I need another towel, please.', alt: ['another towel please', 'i need one more towel please'] },
+      { t: 'He perdido mi pasaporte.', r: 'eh pehr-DEE-doh mee pah-sah-POHR-teh.', en: 'I have lost my passport.', alt: ['i lost my passport'] },
+      { t: 'Necesito un médico.', r: 'neh-seh-SEE-toh oon MEH-dee-koh.', en: 'I need a doctor.', alt: ['i need a doctor'] },
+      { t: '¿Dónde está la embajada?', r: 'DOHN-deh ehs-TAH lah ehm-bah-HAH-dah?', en: 'Where is the embassy?' },
+      { t: 'Llame a una ambulancia, por favor.', r: 'YAH-meh ah OO-nah ahm-boo-LAHN-syah, pohr fah-BOHR.', en: 'Call an ambulance, please.', alt: ['please call an ambulance', 'call an ambulance please'] }
+    ],
+    blanks: [
+      { t: 'Tengo una __.', en: 'I have a reservation.', options: ['reserva', 'toalla'], answer: 'reserva', why: 'reserva = reservation. toalla = towel.' },
+      { t: '__ un médico.', en: 'I need a doctor.', options: ['Necesito', 'Tengo'], answer: 'Necesito', why: 'necesitar = to need. Tengo = I have.' },
+      { t: '¿Dónde __ la embajada?', en: 'Where is the embassy?', options: ['está', 'tiene'], answer: 'está', why: 'está = is (location).' }
+    ] }
+);
+
+/* ------------------------------ TRAVELLER'S PHRASEBOOK: ARABIC ------------------------------ */
+COURSES.ar.units.push(
+  { id: 'ar-u20', s: 98, title: 'At the airport', icon: 'مطار',
+    guide: [
+      { h: 'Passport control', p: 'The officer may ask ما سبب الزيارة؟ (What is the reason for your visit?). Answer للسياحة (for tourism) or للعمل (for work).', ex: [['هذا جواز سفري.', 'hādhā jawāz safarī.', 'This is my passport.'], ['جئت للسياحة.', 'jiʾtu lis-siyāḥa.', 'I came for tourism.']] },
+      { h: 'Finding things', p: 'أين…؟ finds anything: البوابة (the gate), المخرج (the exit), استلام الأمتعة (baggage claim).', ex: [['أين البوابة؟', 'ayna al-bawwāba?', 'Where is the gate?']] }
+    ],
+    words: [
+      { t: 'مطار', r: 'maṭār', en: 'airport' }, { t: 'جواز سفر', r: 'jawāz safar', en: 'passport' }, { t: 'رحلة', r: 'riḥla', en: 'flight' }, { t: 'أمتعة', r: 'amtiʿa', en: 'luggage' },
+      { t: 'بوابة', r: 'bawwāba', en: 'gate' }, { t: 'مخرج', r: 'makhraj', en: 'exit' }, { t: 'جمارك', r: 'jamārik', en: 'customs' }, { t: 'بطاقة الصعود', r: 'biṭāqat aṣ-ṣuʿūd', en: 'boarding pass' }
+    ],
+    sentences: [
+      { t: 'هذا جواز سفري.', r: 'hādhā jawāz safarī.', en: 'This is my passport.', alt: ['here is my passport', 'this is my passport'] },
+      { t: 'جئت للسياحة.', r: 'jiʾtu lis-siyāḥa.', en: 'I came for tourism.', alt: ['i came for sightseeing', 'i am here for tourism', 'i came as a tourist'] },
+      { t: 'سأبقى أسبوعا.', r: 'sa-abqā usbūʿan.', en: 'I will stay a week.', alt: ['i will stay for a week', 'i am staying a week'] },
+      { t: 'أين استلام الأمتعة؟', r: 'ayna istilām al-amtiʿa?', en: 'Where is baggage claim?', alt: ['where is the baggage claim', 'where do i get my luggage'] },
+      { t: 'أين البوابة؟', r: 'ayna al-bawwāba?', en: 'Where is the gate?' },
+      { t: 'حقيبتي لم تصل.', r: 'ḥaqībatī lam taṣil.', en: 'My bag has not arrived.', alt: ['my bag did not arrive', 'my luggage has not arrived', 'my suitcase has not arrived'] },
+      { t: 'أين موقف سيارات الأجرة؟', r: 'ayna mawqif sayyārāt al-ujra?', en: 'Where is the taxi stand?', alt: ['where is the taxi stop', 'where can i get a taxi'] }
+    ],
+    blanks: [
+      { t: 'هذا __ سفري.', en: 'This is my passport.', options: ['جواز', 'شاي'], answer: 'جواز', why: 'جواز سفر = passport.' },
+      { t: 'أين __؟', en: 'Where is the gate?', options: ['البوابة', 'أمس'], answer: 'البوابة', why: 'البوابة = the gate. أمس = yesterday.' },
+      { t: 'سأبقى __.', en: 'I will stay a week.', options: ['أسبوعا', 'مساء'], answer: 'أسبوعا', why: 'أسبوعا = a week.' }
+    ] },
+  { id: 'ar-u21', s: 98, title: 'Money: exchange & ATM', icon: 'صرف',
+    guide: [
+      { h: 'Changing money', p: 'صرف / تغيير العملة = currency exchange. Say أريد صرف دولارات (I want to exchange dollars). سعر الصرف = exchange rate.', ex: [['أين يمكنني تغيير العملة؟', 'ayna yumkinunī taghyīr al-ʿumla?', 'Where can I change money?'], ['ما هو سعر الصرف؟', 'mā huwa siʿr aṣ-ṣarf?', 'What is the exchange rate?']] },
+      { h: 'At the ATM', p: 'الصراف الآلي = ATM. If it keeps your card: الصراف أخذ بطاقتي. هل هناك عمولة؟ = is there a fee?', ex: [['الصراف أخذ بطاقتي.', 'aṣ-ṣarrāf akhadha biṭāqatī.', 'The ATM took my card.']] }
+    ],
+    words: [
+      { t: 'عملة', r: 'ʿumla', en: 'currency' }, { t: 'سعر الصرف', r: 'siʿr aṣ-ṣarf', en: 'exchange rate' }, { t: 'الصراف الآلي', r: 'aṣ-ṣarrāf al-ālī', en: 'ATM' }, { t: 'نقد', r: 'naqd', en: 'cash' },
+      { t: 'عمولة', r: 'ʿumūla', en: 'fee' }, { t: 'إيصال', r: 'īṣāl', en: 'receipt' }, { t: 'دولار', r: 'dūlār', en: 'dollar' }, { t: 'فئات صغيرة', r: 'fiʾāt ṣaghīra', en: 'small bills' }
+    ],
+    sentences: [
+      { t: 'أين يمكنني تغيير العملة؟', r: 'ayna yumkinunī taghyīr al-ʿumla?', en: 'Where can I change money?', alt: ['where can i exchange money', 'where can i exchange currency'] },
+      { t: 'أريد صرف دولارات.', r: 'urīdu ṣarf dūlārāt.', en: 'I want to exchange dollars.', alt: ['i want to change dollars', 'i would like to exchange dollars'] },
+      { t: 'ما هو سعر الصرف؟', r: 'mā huwa siʿr aṣ-ṣarf?', en: 'What is the exchange rate?' },
+      { t: 'أين الصراف الآلي؟', r: 'ayna aṣ-ṣarrāf al-ālī?', en: 'Where is the ATM?', alt: ['where is the atm'] },
+      { t: 'الصراف أخذ بطاقتي.', r: 'aṣ-ṣarrāf akhadha biṭāqatī.', en: 'The ATM took my card.', alt: ['the atm kept my card', 'the atm swallowed my card', 'the atm ate my card'] },
+      { t: 'هل هناك عمولة؟', r: 'hal hunāka ʿumūla?', en: 'Is there a fee?', alt: ['is there a fee', 'is there a commission'] },
+      { t: 'أريد فئات صغيرة، من فضلك.', r: 'urīdu fiʾāt ṣaghīra, min faḍlak.', en: 'I want small bills, please.', alt: ['small bills please', 'small notes please', 'i want small notes please'] }
+    ],
+    blanks: [
+      { t: 'أين الصراف __؟', en: 'Where is the ATM?', options: ['الآلي', 'اليوم'], answer: 'الآلي', why: 'الصراف الآلي = the ATM (literally “automatic teller”).' },
+      { t: 'ما هو سعر __؟', en: 'What is the exchange rate?', options: ['الصرف', 'الباب'], answer: 'الصرف', why: 'سعر الصرف = exchange rate.' },
+      { t: 'هل هناك __؟', en: 'Is there a fee?', options: ['عمولة', 'سرير'], answer: 'عمولة', why: 'عمولة = fee / commission.' }
+    ] },
+  { id: 'ar-u22', s: 98, title: 'Tickets & directions', icon: 'تذكرة',
+    guide: [
+      { h: 'Buying tickets', p: 'تذكرة = ticket. ذهاب فقط = one-way, ذهاب وإياب = round trip.', ex: [['تذكرة ذهاب وإياب، من فضلك.', 'tadhkirat dhahāb wa-iyāb, min faḍlak.', 'A round-trip ticket, please.']] },
+      { h: 'Directions', p: 'سر مباشرة = go straight, انعطف يمينا / يسارا = turn right / left. كيف أصل إلى…؟ = how do I get to…?', ex: [['كيف أصل إلى المحطة؟', 'kayfa aṣilu ilā al-maḥaṭṭa?', 'How do I get to the station?'], ['سر مباشرة ثم انعطف يسارا.', 'sir mubāsharatan thumma inʿaṭif yasāran.', 'Go straight, then turn left.']] }
+    ],
+    words: [
+      { t: 'تذكرة', r: 'tadhkira', en: 'ticket' }, { t: 'ذهاب فقط', r: 'dhahāb faqaṭ', en: 'one-way' }, { t: 'ذهاب وإياب', r: 'dhahāb wa-iyāb', en: 'round trip' }, { t: 'رصيف', r: 'raṣīf', en: 'platform' },
+      { t: 'موقف الحافلة', r: 'mawqif al-ḥāfila', en: 'bus stop' }, { t: 'سر مباشرة', r: 'sir mubāsharatan', en: 'go straight' }, { t: 'يسارا', r: 'yasāran', en: 'to the left' }, { t: 'يمينا', r: 'yamīnan', en: 'to the right' }
+    ],
+    sentences: [
+      { t: 'تذكرة ذهاب وإياب، من فضلك.', r: 'tadhkirat dhahāb wa-iyāb, min faḍlak.', en: 'A round-trip ticket, please.', alt: ['a return ticket please', 'round trip ticket please'] },
+      { t: 'من أي رصيف؟', r: 'min ayyi raṣīf?', en: 'From which platform?', alt: ['which platform', 'what platform'] },
+      { t: 'كيف أصل إلى المحطة؟', r: 'kayfa aṣilu ilā al-maḥaṭṭa?', en: 'How do I get to the station?' },
+      { t: 'سر مباشرة ثم انعطف يسارا.', r: 'sir mubāsharatan thumma inʿaṭif yasāran.', en: 'Go straight, then turn left.', alt: ['go straight and turn left', 'walk straight then turn left'] },
+      { t: 'هل هو بعيد من هنا؟', r: 'hal huwa baʿīd min hunā?', en: 'Is it far from here?', alt: ['is it far from here', 'is it far'] },
+      { t: 'كم يستغرق بالحافلة؟', r: 'kam yastaghriq bil-ḥāfila?', en: 'How long does it take by bus?', alt: ['how long does the bus take', 'how long by bus'] },
+      { t: 'أين موقف الحافلة؟', r: 'ayna mawqif al-ḥāfila?', en: 'Where is the bus stop?' }
+    ],
+    blanks: [
+      { t: 'سر __ ثم انعطف يسارا.', en: 'Go straight, then turn left.', options: ['مباشرة', 'أمس'], answer: 'مباشرة', why: 'سر مباشرة = go straight.' },
+      { t: 'كيف __ إلى المحطة؟', en: 'How do I get to the station?', options: ['أصل', 'آكل'], answer: 'أصل', why: 'أصل = I arrive / get to. آكل = I eat.' },
+      { t: 'هل هو __ من هنا؟', en: 'Is it far from here?', options: ['بعيد', 'لذيذ'], answer: 'بعيد', why: 'بعيد = far. لذيذ = delicious.' }
+    ] },
+  { id: 'ar-u23', s: 98, title: 'Meeting people', icon: 'تعارف',
+    guide: [
+      { h: 'Where are you from?', p: 'من أين أنت؟ (to a man) / من أين أنتِ؟ (to a woman). Reply أنا من + country: أنا من أمريكا.', ex: [['من أين أنت؟', 'min ayna anta?', 'Where are you from?'], ['أنا من أمريكا.', 'anā min amrīkā.', 'I am from America.']] },
+      { h: 'Asking about others', p: 'ماذا تعمل؟ = What do you do? كم عمرك؟ = How old are you? If you’re lost: تكلم ببطء من فضلك (speak slowly) and لا أفهم (I don’t understand).', ex: [['ماذا تعمل؟', 'mādhā taʿmal?', 'What do you do?'], ['من فضلك، تكلم ببطء.', 'min faḍlak, takallam bi-buṭʾ.', 'Please speak slowly.']] }
+    ],
+    words: [
+      { t: 'بلد', r: 'balad', en: 'country' }, { t: 'أمريكا', r: 'amrīkā', en: 'USA' }, { t: 'عمل', r: 'ʿamal', en: 'work / job' }, { t: 'عمر', r: 'ʿumr', en: 'age' },
+      { t: 'الإنجليزية', r: 'al-injlīziyya', en: 'English' }, { t: 'ببطء', r: 'bi-buṭʾ', en: 'slowly' }, { t: 'أعد', r: 'aʿid', en: 'repeat' }, { t: 'لا أفهم', r: 'lā afham', en: 'I don’t understand' }
+    ],
+    sentences: [
+      { t: 'من أين أنت؟', r: 'min ayna anta?', en: 'Where are you from?' },
+      { t: 'أنا من أمريكا.', r: 'anā min amrīkā.', en: 'I am from America.', alt: ['i am from the usa', 'i am from the united states', 'i come from america'] },
+      { t: 'ماذا تعمل؟', r: 'mādhā taʿmal?', en: 'What do you do?', alt: ['what is your job', 'what do you do for work'] },
+      { t: 'كم عمرك؟', r: 'kam ʿumruk?', en: 'How old are you?' },
+      { t: 'هل تتكلم الإنجليزية؟', r: 'hal tatakallamu al-injlīziyya?', en: 'Do you speak English?', alt: ['do you speak english', 'can you speak english'] },
+      { t: 'من فضلك، تكلم ببطء.', r: 'min faḍlak, takallam bi-buṭʾ.', en: 'Please speak slowly.', alt: ['speak slowly please', 'slowly please'] },
+      { t: 'هل يمكن أن تعيد؟', r: 'hal yumkin an tuʿīd?', en: 'Can you repeat?', alt: ['can you repeat that', 'could you repeat', 'can you say it again'] }
+    ],
+    blanks: [
+      { t: 'من __ أنت؟', en: 'Where are you from?', options: ['أين', 'متى'], answer: 'أين', why: 'من أين = from where. متى = when.' },
+      { t: 'أنا __ أمريكا.', en: 'I am from America.', options: ['من', 'في'], answer: 'من', why: 'من = from. في = in.' },
+      { t: 'تكلم __.', en: 'Speak slowly.', options: ['ببطء', 'غدا'], answer: 'ببطء', why: 'ببطء = slowly. غدا = tomorrow.' }
+    ] },
+  { id: 'ar-u24', s: 98, title: 'Food needs & allergies', icon: 'طعام',
+    guide: [
+      { h: 'Special diets', p: 'أنا نباتي (m) / نباتية (f) = I’m vegetarian. عندي حساسية من… = I have an allergy to… Most restaurants in Arab countries are halal: هل هذا حلال؟', ex: [['أنا نباتي.', 'anā nabātī.', 'I am vegetarian.'], ['عندي حساسية من الفول السوداني.', 'ʿindī ḥassāsiyya min al-fūl as-sūdānī.', 'I have an allergy to peanuts.']] },
+      { h: 'Ordering', p: 'بدون = without: بدون حار (no spice). للأخذ = takeaway. القائمة = the menu.', ex: [['بدون حار، من فضلك.', 'bidūn ḥārr, min faḍlak.', 'Without spice, please.']] }
+    ],
+    words: [
+      { t: 'القائمة', r: 'al-qāʾima', en: 'menu' }, { t: 'نباتي', r: 'nabātī', en: 'vegetarian' }, { t: 'حار', r: 'ḥārr', en: 'spicy' }, { t: 'حساسية', r: 'ḥassāsiyya', en: 'allergy' },
+      { t: 'الفول السوداني', r: 'al-fūl as-sūdānī', en: 'peanuts' }, { t: 'حلال', r: 'ḥalāl', en: 'halal' }, { t: 'للأخذ', r: 'lil-akhdh', en: 'takeout' }, { t: 'ماء', r: 'māʾ', en: 'water' }
+    ],
+    sentences: [
+      { t: 'القائمة، من فضلك.', r: 'al-qāʾima, min faḍlak.', en: 'The menu, please.', alt: ['menu please', 'the menu please'] },
+      { t: 'أنا نباتي.', r: 'anā nabātī.', en: 'I am vegetarian.', alt: ['i am a vegetarian'] },
+      { t: 'بدون حار، من فضلك.', r: 'bidūn ḥārr, min faḍlak.', en: 'Without spice, please.', alt: ['not spicy please', 'no spice please', 'without spicy please'] },
+      { t: 'عندي حساسية من الفول السوداني.', r: 'ʿindī ḥassāsiyya min al-fūl as-sūdānī.', en: 'I have an allergy to peanuts.', alt: ['i am allergic to peanuts', 'i have a peanut allergy'] },
+      { t: 'هل هذا حلال؟', r: 'hal hādhā ḥalāl?', en: 'Is this halal?', alt: ['is this halal'] },
+      { t: 'ماء، من فضلك.', r: 'māʾ, min faḍlak.', en: 'Water, please.', alt: ['water please'] },
+      { t: 'للأخذ، من فضلك.', r: 'lil-akhdh, min faḍlak.', en: 'Takeaway, please.', alt: ['to go please', 'takeout please', 'takeaway please', 'for takeaway please'] }
+    ],
+    blanks: [
+      { t: 'أنا __.', en: 'I am vegetarian.', options: ['نباتي', 'لذيذ'], answer: 'نباتي', why: 'نباتي = vegetarian. لذيذ = delicious.' },
+      { t: 'عندي __ من الفول السوداني.', en: 'I have an allergy to peanuts.', options: ['حساسية', 'سيارة'], answer: 'حساسية', why: 'حساسية = allergy.' },
+      { t: '__ حار، من فضلك.', en: 'Without spice, please.', options: ['بدون', 'مع'], answer: 'بدون', why: 'بدون = without. مع = with.' }
+    ] },
+  { id: 'ar-u25', s: 98, title: 'Hotel & emergencies', icon: 'فندق',
+    guide: [
+      { h: 'At the hotel', p: 'عندي حجز = I have a booking. تسجيل الوصول = check-in, المغادرة = check-out.', ex: [['عندي حجز.', 'ʿindī ḥajz.', 'I have a reservation.'], ['متى موعد المغادرة؟', 'matā mawʿid al-mughādara?', 'When is check-out?']] },
+      { h: 'Asking for help', p: 'أضعت جواز سفري = I lost my passport. أحتاج إلى طبيب = I need a doctor. السفارة = the embassy. الإسعاف = ambulance.', ex: [['أحتاج إلى طبيب.', 'aḥtāju ilā ṭabīb.', 'I need a doctor.'], ['هل يتكلم أحد الإنجليزية؟', 'hal yatakallamu aḥad al-injlīziyya?', 'Does anyone speak English?']] }
+    ],
+    words: [
+      { t: 'حجز', r: 'ḥajz', en: 'reservation' }, { t: 'غرفة', r: 'ghurfa', en: 'room' }, { t: 'مغادرة', r: 'mughādara', en: 'check-out' }, { t: 'منشفة', r: 'minshafa', en: 'towel' },
+      { t: 'سفارة', r: 'sifāra', en: 'embassy' }, { t: 'طبيب', r: 'ṭabīb', en: 'doctor' }, { t: 'إسعاف', r: 'isʿāf', en: 'ambulance' }, { t: 'أحتاج', r: 'aḥtāj', en: 'I need' }
+    ],
+    sentences: [
+      { t: 'عندي حجز.', r: 'ʿindī ḥajz.', en: 'I have a reservation.', alt: ['i have a booking', 'i have a reservation'] },
+      { t: 'متى موعد المغادرة؟', r: 'matā mawʿid al-mughādara?', en: 'When is check-out?', alt: ['what time is check-out', 'what time is checkout'] },
+      { t: 'أحتاج إلى منشفة إضافية.', r: 'aḥtāju ilā minshafa iḍāfiyya.', en: 'I need an extra towel.', alt: ['i need another towel', 'i need one more towel'] },
+      { t: 'أضعت جواز سفري.', r: 'aḍaʿtu jawāz safarī.', en: 'I lost my passport.', alt: ['i have lost my passport'] },
+      { t: 'أحتاج إلى طبيب.', r: 'aḥtāju ilā ṭabīb.', en: 'I need a doctor.', alt: ['i need a doctor'] },
+      { t: 'أين السفارة؟', r: 'ayna as-sifāra?', en: 'Where is the embassy?' },
+      { t: 'اتصل بالإسعاف، من فضلك.', r: 'ittaṣil bil-isʿāf, min faḍlak.', en: 'Call an ambulance, please.', alt: ['please call an ambulance', 'call an ambulance please', 'call the ambulance please'] }
+    ],
+    blanks: [
+      { t: 'عندي __.', en: 'I have a reservation.', options: ['حجز', 'شاي'], answer: 'حجز', why: 'حجز = reservation / booking.' },
+      { t: 'أحتاج إلى __.', en: 'I need a doctor.', options: ['طبيب', 'سرير'], answer: 'طبيب', why: 'طبيب = doctor. سرير = bed.' },
+      { t: 'أين __؟', en: 'Where is the embassy?', options: ['السفارة', 'أمس'], answer: 'السفارة', why: 'السفارة = the embassy.' }
+    ] }
+);
+
 for (const k of ['ko', 'ar', 'es']) EXTRA_SECTIONS[k].push({ title: 'Daily essentials', blurb: 'Days, groceries, things at home, phone and Wi-Fi, help, and clothes: the words you use every single day.' });
 const EN_EMOJI = {
   "a cold": "🤧",
@@ -3390,6 +3816,7 @@ function emojiArt(e) { if (!ART[e]) ART[e] = () => `<text x="50" y="74" font-siz
 /* =====================================================================
    SPEAKABOO — FINALIZE: runs after all content files are loaded.
    ===================================================================== */
+const TRAVEL_SECTION = { title: 'Traveller’s phrasebook', blurb: 'Airport, money, directions, meeting people, food, hotel and help: what you need on day one in a new country.' };
 const NUM_PIC = { 'واحد': 'n1', 'اثنان': 'n2', 'ثلاثة': 'n3', 'أربعة': 'n4', 'خمسة': 'n5', 'ستة': 'n6', 'سبعة': 'n7', 'ثمانية': 'n8', 'تسعة': 'n9', 'عشرة': 'n10',
   uno: 'n1', dos: 'n2', tres: 'n3', cuatro: 'n4', cinco: 'n5', seis: 'n6', siete: 'n7', ocho: 'n8', nueve: 'n9', diez: 'n10', veinte: 'n20' };
 Object.keys(NUM_PIC).forEach(k => { if (!PICS[k]) PICS[k] = NUM_PIC[k]; });
@@ -3408,7 +3835,11 @@ for (const c of Object.values(COURSES)) {
   c.letterUnits = all.filter(u => u.letters);
   c.units = all.filter(u => !u.letters);
   c.sections = MAIN_SECTIONS[c.code] || c.sections;
-  c.units.forEach(u => { u.s = MAIN_SECTION_OF[u.id] ?? u.s ?? 0; u.dialog = UNIT_DIALOG[u.id] ?? u.dialog; if (u.s === 99) u.s = c.sections.length - 1; });
+  c.units.forEach(u => { u.s = MAIN_SECTION_OF[u.id] ?? u.s ?? 0; u.dialog = UNIT_DIALOG[u.id] ?? u.dialog; });
+  /* Traveller's phrasebook sits right after the first season so a new visitor gets the survival phrases early. */
+  c.sections = c.sections.slice(); c.sections.splice(1, 0, TRAVEL_SECTION);
+  c.units.forEach(u => { u.s = u.s === 98 ? 1 : u.s === 99 ? c.sections.length - 1 : u.s >= 1 ? u.s + 1 : u.s; });
+  c.units = c.units.map((u, i) => [u, i]).sort((a, b) => (a[0].s - b[0].s) || (a[1] - b[1])).map(x => x[0]);
   c.letterUnits.forEach(u => { u.s = 0; });
   const seenC = new Set(['ㅇ']), seenV = new Set();
   [[c.letterUnits, 'letters'], [c.units, 'main']].forEach(([list, track]) => list.forEach((u, i) => {
@@ -3614,7 +4045,7 @@ function upgradeProfile(p) {
   const d = {
     xp: 0, streak: 0, bestStreak: 0, lastDay: null, today: { day: null, xp: 0 }, dailyGoal: 50,
     sound: true, autoVoice: true, showEnglish: true, hearts: 5, heartAt: Date.now(), unlimitedHearts: false,
-    gems: 50, freezes: 0, quests: null, micReady: false,
+    gems: 50, freezes: 0, quests: null, micReady: false, myLang: 'en',
     stats: {}, achievements: {}, jokes: [], langs: {}
   };
   for (const k in d) if (p[k] === undefined) p[k] = d[k];
@@ -5190,6 +5621,84 @@ function openSheet(html, mount) {
 }
 function closeSheet() { const w = $('#sheet'); w.hidden = true; w.innerHTML = ''; }
 
+
+/* =====================================================================
+   MY LANGUAGE — translations on demand
+   Learners pick the language they already speak. Tapping a word outside a
+   lesson shows its meaning; inside a lesson the Translate button explains
+   the whole challenge. English comes from the course data; other languages
+   come from a free online translator and are remembered for offline use.
+   ===================================================================== */
+const MY_LANGS = [['en', 'English'], ['bn', 'বাংলা (Bangla)'], ['ar', 'العربية (Arabic)'], ['hi', 'हिन्दी (Hindi)'], ['ur', 'اردو (Urdu)'], ['es', 'Español'], ['fr', 'Français'], ['pt', 'Português'], ['id', 'Bahasa Indonesia'], ['tr', 'Türkçe'], ['ru', 'Русский'], ['zh-CN', '中文 (Chinese)'], ['ko', '한국어 (Korean)'], ['ja', '日本語 (Japanese)'], ['ne', 'नेपाली (Nepali)'], ['ta', 'தமிழ் (Tamil)'], ['tl', 'Filipino'], ['vi', 'Tiếng Việt'], ['sw', 'Kiswahili']];
+const myLangName = code => (MY_LANGS.find(x => x[0] === code) || MY_LANGS[0])[1];
+const Tr = {
+  cache: (() => { try { return JSON.parse(localStorage.getItem('speakaboo.tr.v1') || '{}'); } catch (e) { return {}; } })(),
+  save() { try { const k = Object.keys(this.cache); if (k.length > 3000) k.slice(0, 600).forEach(x => delete this.cache[x]); localStorage.setItem('speakaboo.tr.v1', JSON.stringify(this.cache)); } catch (e) { /* storage full or blocked */ } },
+  /** Resolves with the translation, or rejects when offline / the service is busy. */
+  async get(text, to) {
+    text = String(text || '').trim(); if (!text || to === 'en') return text;
+    const key = `${to}|${text}`; if (this.cache[key]) return this.cache[key];
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 9000);
+    try {
+      const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${encodeURIComponent(to)}`, { signal: ctl.signal });
+      const j = await r.json(), out = j && j.responseData && j.responseData.translatedText;
+      if (!out || /MYMEMORY WARNING|INVALID|QUERY LENGTH/i.test(out)) throw new Error('no translation');
+      this.cache[key] = out; this.save(); return out;
+    } finally { clearTimeout(t); }
+  }
+};
+let _enIndex = null, _romSet = new Set();
+/** English meaning for a target-language word or sentence, from the course data. */
+function englishFor(text) {
+  if (!_enIndex) {
+    _enIndex = {};
+    const clean = s => String(s).replace(/→.*/, '').replace(/[.!?¿¡؟،,。]/g, '').trim();
+    for (const c of Object.values(COURSES)) for (const u of [...c.units, ...c.letterUnits]) {
+      (u.words || []).forEach(w => { _enIndex[clean(w.t)] ||= w.en; _romSet.add(clean(w.r)); });
+      (u.sentences || []).forEach(s => { _enIndex[clean(s.t)] ||= s.en; _romSet.add(clean(s.r)); });
+      (u.letters || []).forEach(l => { if (l.g && l.r) _enIndex[clean(l.g)] ||= `sounds like “${l.r}”`; });
+    }
+  }
+  return _enIndex[String(text).replace(/→.*/, '').replace(/[.!?¿¡؟،,。]/g, '').trim()] || '';
+}
+let _glossT = null;
+function showGloss(text) {
+  const p = P(), en = englishFor(text), box = $('#gloss'); if (!en || !box) return;
+  const to = p.myLang || 'en';
+  box.hidden = false; box.innerHTML = `<div class="g-en">${esc(en)}</div>${to !== 'en' ? `<div class="g-my muted">…</div>` : ''}`;
+  clearTimeout(_glossT); _glossT = setTimeout(() => { box.hidden = true; }, 7000);
+  if (to !== 'en') Tr.get(en, to).then(out => { if (!box.hidden && box.firstChild && $('.g-en', box)?.textContent === en) $('.g-my', box).textContent = out; }).catch(() => { const g = $('.g-my', box); if (g) g.textContent = 'Needs an internet connection for ' + myLangName(to) + '.'; });
+}
+/** Lesson Translate button: explain everything on the current challenge in the learner's language. */
+function translateHelp() {
+  const p = P(), stage = $('#l-stage'); if (!stage) return;
+  const items = [], seen = new Set();
+  const add = (text, en) => { text = String(text).trim(); if (!text || seen.has(text) || items.length >= 10) return; seen.add(text); items.push({ text, en }); };
+  $$('[data-say]', stage).forEach(el => { const en = englishFor(el.dataset.say); if (en) add(el.dataset.say, en); });
+  $$('.script, .prompt-text, .say-bubble span, .t-main', stage).forEach(el => { const tx = el.textContent.trim(), en = englishFor(tx); if (en) add(tx, en); });
+  const isEnglish = s => /^[\x20-\x7E’“”‘—–…]+$/.test(s) && /[A-Za-z]{2,}/.test(s) && s.length < 200;
+  $$('h1, h2, h3, p, span, small, div, button', stage).forEach(el => {
+    if (el.children.length || el.closest('.mascot, svg, .eyebrow, .tag, .intro-card .note')) return;
+    const tx = el.textContent.trim(); englishFor(tx); if (!_romSet.has(tx.replace(/[.!?,]/g, '').trim()) && isEnglish(tx) && !/^(Check|Skip|Continue|Got it|Next)$/i.test(tx)) add(tx, null);
+  });
+  const rows = () => items.map((it, i) => `<div class="tr-row"><div class="tr-src ${it.en ? 'script' : ''}" ${it.en ? attrs(course()) : ''}>${esc(it.text)}</div>${it.en ? `<div class="tr-en">${esc(it.en)}</div>` : ''}<div class="tr-my muted" data-tr="${i}">${(p.myLang || 'en') === 'en' ? '' : '…'}</div></div>`).join('') || '<p class="note">Nothing to translate on this screen.</p>';
+  openSheet(`<div class="sheet-head"><h2>Translate</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
+    <label class="row">My language<select id="tr-lang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (p.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+    <div id="tr-list">${rows()}</div>`, sheet => {
+    const run = () => {
+      const to = p.myLang || 'en';
+      items.forEach((it, i) => {
+        const el = $(`[data-tr="${i}"]`, sheet); if (!el) return;
+        if (to === 'en') { el.textContent = ''; return; }
+        el.textContent = '…';
+        Tr.get(it.en || it.text, to).then(out => { el.textContent = out; }).catch(() => { el.textContent = 'Needs an internet connection.'; });
+      });
+    };
+    $('#tr-lang', sheet).onchange = e => { p.myLang = e.target.value; Store.save(); run(); };
+    run();
+  });
+}
+
 /* ---------- Toasts & confetti ---------- */
 function toast(msg, g) {
   const el = document.createElement('div'); el.className = 'toast';
@@ -5240,7 +5749,7 @@ function renderProfiles() {
   $$('[data-art]', root).forEach(el => paintMascot(el, el.dataset.art, 'happy', false));
   if (creating) wireCreateForm(!list.length);
   $('#p-manage', root)?.addEventListener('click', () => { UI.manage = !UI.manage; UI.confirmDel = null; renderProfiles(); });
-  $('#p-add', root)?.addEventListener('click', () => { UI.creating = true; UI.draft = { name: '', mascot: 'mandu', lang: 'ko' }; renderProfiles(); });
+  $('#p-add', root)?.addEventListener('click', () => { UI.creating = true; UI.draft = { name: '', mascot: 'mandu', lang: 'ko', myLang: 'en' }; renderProfiles(); });
   $$('[data-open]', root).forEach(b => b.onclick = () => { if (!UI.manage) enterApp(b.dataset.open); });
   $$('[data-del]', root).forEach(b => b.onclick = () => { UI.confirmDel = b.dataset.del; renderProfiles(); });
   $$('[data-del-no]', root).forEach(b => b.onclick = () => { UI.confirmDel = null; renderProfiles(); });
@@ -5254,6 +5763,7 @@ function createFormHTML(first) {
     <div class="field"><span>Pick your tutor</span><div class="pick-grid">
       ${MASCOT_ORDER.map(k => `<button type="button" class="pick" data-m="${k}" aria-pressed="${k === dr.mascot}"><div class="mascot" data-pick-art="${k}"></div><b>${MASCOTS[k].name}</b><small>${MASCOTS[k].tagline}</small></button>`).join('')}
     </div></div>
+    <label class="field"><span>My language <small class="muted">(for translations when you get stuck)</small></span><select class="input" id="p-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (dr.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
     <div class="field"><span>Start with</span><div class="seg">
       ${Object.values(COURSES).map(c => `<button type="button" data-l="${c.code}" aria-pressed="${c.code === dr.lang}">${c.name} <span class="n script" ${attrs(c)} style="font-family:${c.font}">${c.native}</span>${c.status === 'preview' ? '<span class="tag">Preview</span>' : ''}</button>`).join('')}
     </div></div>
@@ -5264,13 +5774,14 @@ function wireCreateForm() {
   const f = $('#p-form'); const paintPicks = () => $$('[data-pick-art]', f).forEach(el => paintMascot(el, el.dataset.pickArt, el.dataset.pickArt === UI.draft.mascot ? 'cheer' : 'happy', el.dataset.pickArt === UI.draft.mascot));
   paintPicks();
   $('#p-name', f).oninput = e => { UI.draft.name = e.target.value; };
+  $('#p-mylang', f).onchange = e => { UI.draft.myLang = e.target.value; };
   $$('[data-m]', f).forEach(b => b.onclick = () => { UI.draft.mascot = b.dataset.m; $$('[data-m]', f).forEach(x => x.setAttribute('aria-pressed', x === b)); paintPicks(); Sfx.pop(); });
   $$('[data-l]', f).forEach(b => b.onclick = () => { UI.draft.lang = b.dataset.l; $$('[data-l]', f).forEach(x => x.setAttribute('aria-pressed', x === b)); });
   $('#p-cancel', f)?.addEventListener('click', () => { UI.creating = false; renderProfiles(); });
   f.onsubmit = e => {
     e.preventDefault();
     const name = UI.draft.name.trim(); if (!name) { $('#p-name', f).focus(); return; }
-    const p = newProfile(name, UI.draft.mascot, UI.draft.lang);
+    const p = newProfile(name, UI.draft.mascot, UI.draft.lang); p.myLang = UI.draft.myLang || 'en';
     Store.data.profiles[p.id] = p; Store.data.order.push(p.id); UI.creating = false; Store.save();
     enterApp(p.id);
   };
@@ -6392,6 +6903,7 @@ function renderProfile() {
       <div class="field"><span>Tutor</span><div class="pick-grid">${MASCOT_ORDER.map(k => `<button type="button" class="pick" data-me-m="${k}" aria-pressed="${k === p.mascot}"><div class="mascot" data-art="${k}"></div><b>${MASCOTS[k].name}</b></button>`).join('')}</div></div>
     </div>
     <div class="card settings"><h3>Preferences</h3>
+      <label class="row">My language<select id="me-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (p.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
       <label class="row">Daily goal<select id="me-goal">${[20, 50, 100, 150].map(g => `<option value="${g}" ${p.dailyGoal === g ? 'selected' : ''}>${g} XP</option>`).join('')}</select></label>
       <label class="row">Sound effects<input type="checkbox" class="toggle" id="me-sound" ${p.sound ? 'checked' : ''}></label>
       <label class="row">Tutor reads lines aloud<input type="checkbox" class="toggle" id="me-voice" ${p.autoVoice ? 'checked' : ''}></label>
@@ -6419,6 +6931,7 @@ function renderProfile() {
   $('#mic-test').onclick = async () => { const ok = await Mic.prepare(); toast(ok ? 'Microphone ready. You can answer by voice.' : Mic.explain('not-allowed')); renderProfile(); };
   $('#me-name').onchange = e => { const v = e.target.value.trim(); if (v) { p.name = v; Store.save(); renderChrome(); } };
   $$('[data-me-m]', root).forEach(b => b.onclick = () => { p.mascot = b.dataset.meM; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', `${MASCOTS[p.mascot].name} reporting for duty!`); Sfx.pop(); Voice.speak(`Hi, I’m ${MASCOTS[p.mascot].name}! ${MASCOTS[p.mascot].tagline}. Let’s talk!`, 'en-US', 1, p.mascot); });
+  $('#me-mylang').onchange = e => { p.myLang = e.target.value; Store.save(); toast(`Translations will appear in ${(MY_LANGS.find(x => x[0] === p.myLang) || [])[1] || 'English'}.`); };
   $('#me-goal').onchange = e => { p.dailyGoal = +e.target.value; Store.save(); renderChrome(); };
   $('#me-sound').onchange = e => { p.sound = e.target.checked; Store.save(); };
   $('#me-voice').onchange = e => { p.autoVoice = e.target.checked; Store.save(); };
@@ -6485,7 +6998,7 @@ document.addEventListener('click', e => {
   const feel = t.closest('[data-feel]'); if (feel) { startMood(feel.dataset.feel); return; }
   const star = t.closest('[data-star]'); if (star) { const on = Phrases.toggle(JSON.parse(star.dataset.star)); star.classList.toggle('on', on); if (UI.tab === 'practice' && $('#lesson').hidden) renderPractice(); return; }
   const stamp = t.closest('[data-stamp]'); if (stamp) { cultureSheet(stamp.dataset.stamp); return; }
-  const say = t.closest('[data-say]'); if (say) { Voice.speak(say.dataset.say, say.dataset.tts || course().tts, say.dataset.rate ? +say.dataset.rate : .9, say.dataset.who || null); if (!say.closest('.hw')) return; }
+  const say = t.closest('[data-say]'); if (say) { Voice.speak(say.dataset.say, say.dataset.tts || course().tts, say.dataset.rate ? +say.dataset.rate : .9, say.dataset.who || null); if (!say.closest('#lesson') && !say.dataset.tts) showGloss(say.dataset.say); if (!say.closest('.hw')) return; }
   const node = t.closest('[data-node]'); if (node) { showNodePop(node.dataset.node); Sfx.tap(); return; }
   const go = t.closest('[data-go]'); if (go) { const [uid, i, mode] = go.dataset.go.split(':'); startLesson(uid, +i, mode); return; }
   const tab = t.closest('[data-tab]'); if (tab) { showTab(tab.dataset.tab); return; }
@@ -6507,6 +7020,7 @@ document.addEventListener('click', e => {
 });
 $('#l-main').onclick = () => Runner.main();
 $('#l-close').onclick = () => Runner.askQuit();
+$('#l-tr').onclick = () => translateHelp();
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !$('#sheet').hidden) return closeSheet();
   if ($('#lesson').hidden || !$('#modal').hidden) return;

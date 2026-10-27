@@ -979,3 +979,9 @@ details.more > .drills, details.more > .card { margin-bottom: 12px; }
 .daily.phrase .daily-word svg.i { width: 28px; height: 28px; color: var(--berry-text); }
 .phrase-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .phrase-actions .good { color: var(--jade); }
+
+/* Translations */
+.gloss { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 85; max-width: min(92vw, 420px); background: var(--ink); color: var(--bg); border-radius: var(--r-md); padding: 10px 16px; box-shadow: var(--shadow); text-align: center; }
+.gloss .g-en { font: 700 17px var(--font-display); } .gloss .g-my { color: inherit; opacity: .85; margin-top: 2px; font-size: 16px; }
+.tr-row { padding: 10px 0; border-bottom: 1px solid var(--line); } .tr-row:last-child { border-bottom: 0; }
+.tr-src { font-size: 20px; font-weight: 700; } .tr-src:not(.script) { font-size: 16px; } .tr-en { color: var(--ink-2); font-size: 15px; } .tr-my { font-size: 17px; font-weight: 700; color: var(--berry-text); }

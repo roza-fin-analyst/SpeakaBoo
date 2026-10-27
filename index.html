@@ -35,6 +35,7 @@
   <div class="l-top">
     <button class="icon-btn" id="l-close" aria-label="Quit lesson"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="trail" role="progressbar" aria-label="Lesson progress"><i id="l-bar" style="width:0%"></i><span class="trail-boo" id="l-boo"></span><span class="trail-flag" aria-hidden="true">★</span></div>
+    <button class="icon-btn" id="l-tr" aria-label="Translate this challenge" title="Translate"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h9M8.5 3v2M6 5c.5 3 2.5 6 6 8M12 5c-.5 3-3 6.500-7 8"/><path d="M13 21l4-9 4 9M14.500 18h5"/></svg></button>
     <div class="hearts num" id="l-hearts"></div>
   </div>
   <div class="l-stage" id="l-stage"></div>
@@ -50,5 +51,6 @@
 <div class="sheet-wrap" id="sheet" hidden></div>
 <div class="overlay" id="modal" hidden></div>
 <div id="toasts" aria-live="polite"></div>
+<div id="gloss" class="gloss" role="status" hidden></div>
 <canvas id="confetti" hidden></canvas>
 <script src="app.js"></script></body></html>
