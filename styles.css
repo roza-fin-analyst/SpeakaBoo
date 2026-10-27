@@ -821,7 +821,6 @@ body[data-boo="glow"] .stage-boo svg { filter: drop-shadow(0 0 12px rgb(255 194 
 @keyframes wave { to { transform: rotate(-35deg) translateY(-4px); } }
 
 /* ---------- Call Boo ---------- */
-.stage-btn.call { grid-column: 1 / -1; }
 .call-chip { border-color: #FF6B6B; color: #C94848; }
 .call-screen { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: calc(18px + env(safe-area-inset-top, 0px)) 18px calc(24px + env(safe-area-inset-bottom, 0px));
   background: radial-gradient(circle at 50% 30%, #FFF2E1, #DDF1F3 60%, #CDE9EE); color: var(--ink); overflow-y: auto; animation: cardUp .35s cubic-bezier(.3, 1.4, .5, 1); }
@@ -966,3 +965,12 @@ body { background: radial-gradient(1200px 600px at 110% -10%, #FFE6CC 0, transpa
 .stage-btn.next { background: linear-gradient(180deg, #6CC6D3, #46A9B8); color: #08323F; box-shadow: 0 5px 0 #2B7F8C, inset 0 2px 0 rgb(255 255 255 / .25); }
 .stage-btn.call { background: linear-gradient(180deg, #FF8585, #FF6B6B); box-shadow: 0 5px 0 #C94848, inset 0 2px 0 rgb(255 255 255 / .3); }
 .stage-btn svg { transition: transform .2s; } .stage-btn:hover svg { transform: rotate(-10deg) scale(1.1); }
+
+/* Collapsible sections keep Practice and Me short. */
+details.more { margin-top: 4px; }
+details.more > summary { list-style: none; cursor: pointer; min-height: var(--tap); display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border: 2px dashed var(--line); border-radius: var(--r-md); font-weight: 800; color: var(--ink-2); }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::after { content: "+"; font-size: 20px; }
+details.more[open] > summary::after { content: "–"; }
+details.more[open] > summary { margin-bottom: 12px; }
+details.more > .drills, details.more > .card { margin-bottom: 12px; }

@@ -3079,7 +3079,7 @@ const Voice = {
         u.volume = 1;
         const v = this.find(lang, who);
         if (v) { u.voice = v; u.lang = v.lang; } else if (this.voices.length) this.warn(lang, `No ${({ ko: 'Korean', ar: 'Arabic', es: 'Spanish' })[lang.slice(0, 2)] || lang} voice on this device. Install one in your system’s language settings for native audio.`);
-        u.onerror = e => { if (e.error && !/interrupted|canceled/.test(e.error)) this.warn(lang, 'Audio didn’t play. Check your volume and silent mode, then tap again.'); };
+        u.onerror = e => { if (/synthesis|hardware|busy/.test(e.error || '')) this.warn(lang, 'Audio didn’t play. Check your volume and silent mode, then tap again.'); };
         this.last = u;
         speechSynthesis.resume();
         speechSynthesis.speak(u);
@@ -4658,10 +4658,9 @@ function heroHTML() {
     <div class="stage-bubble" id="stage-bubble"><b>${esc(mc.name)}</b><span>${esc(pick(lines))}</span></div>
     <button class="stage-boo" data-hero-boo aria-label="Tap ${esc(mc.name)} for a peekaboo word"></button>
     <div class="stage-actions">
-      <button class="stage-btn talk" data-tab="chat">${ICON.mic}<span><b>Talk with ${esc(mc.name)}</b><small>Speak, get roasted, get better</small></span></button>
       ${cur ? `<button class="stage-btn next" data-go="${cur.u.id}:${cur.i}:lesson">${ICON.starI}<span><b>Next scene</b><small>${esc(cur.u.title)} · ${cur.i + 1}/${UNIT_LESSONS}</small></span></button>`
         : `<button class="stage-btn next" data-practice="mix">${ICON.starI}<span><b>Practice</b><small>Keep your words fresh</small></span></button>`}
-      <button class="stage-btn call" data-call><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span><b>Call ${esc(mc.name)}</b><small>Hands-free voice practice. Boo talks, you answer, no tapping.</small></span></button>
+      <button class="stage-btn call" data-call><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span><b>Call ${esc(mc.name)}</b><small>Hands-free voice chat</small></span></button>
     </div></div>`;
 }
 let _peekBusy = false;
@@ -5522,17 +5521,21 @@ function renderPractice() {
       <button class="drill" data-practice="mistakes"><span class="ic art-ic">${artSVG('no')}</span><b>Fix my mistakes</b><small>Only the words you got wrong</small></button>
       <button class="drill" data-practice="speed"><span class="ic art-ic">${artSVG('clock')}</span><b>60-second sprint</b><small>${p.stats.speedBest ? `Your record: ${p.stats.speedBest}` : 'How many can you get right?'}</small></button>
       <button class="drill" data-practice="soundlab"><span class="ic art-ic">${artSVG('mic')}</span><b>Sound Lab</b><small>Your trickiest words to say</small></button>
+    </div>
+    <details class="more"><summary>More games</summary><div class="drills">
       <button class="drill" data-practice="story" ${c.units.some(u => u.story) ? '' : 'disabled'}><span class="ic art-ic">${artSVG('book')}</span><b>Story time</b><small>Read, listen and answer</small></button>
       <button class="drill" data-practice="pictures"><span class="ic art-ic">${artSVG('apple')}</span><b>Picture quiz</b><small>See it, name it</small></button>
       <button class="drill" data-practice="matching"><span class="ic art-ic">${artSVG('handshake')}</span><b>Match madness</b><small>Pair words with meanings, fast</small></button>
       <button class="drill" data-practice="grammar"><span class="ic art-ic">${artSVG('pen')}</span><b>Grammar gym</b><small>Fill the gap, learn the why</small></button>
       <button class="drill" data-practice="catch"><span class="ic art-ic">${artSVG('question')}</span><b>Catch Boo out</b><small>Spot the word Boo got wrong</small></button>
       <button class="drill" data-practice="roleplay"><span class="ic art-ic">${artSVG('speak')}</span><b>Role-play replay</b><small>Pick the right reply in real scenes</small></button>
-    </div>
+    </div></details>
+    <details class="more"><summary>My stuff: voice journal, phrasebook, garden, jokes</summary>
     ${voiceJournalHTML()}
     ${phrasebookHTML()}
     ${gardenHTML()}
     <div class="card jokes"><h3>Joke jar <span class="muted num" style="font:700 14px var(--font-body)">${p.jokes.length}</span></h3>${p.jokes.length ? `<ul>${p.jokes.slice(0, 40).map(j => `<li>${esc(j.text)}</li>`).join('')}</ul>` : '<p class="note">Every mistake unlocks a joke from your tutor.</p>'}</div>
+    </details>
   </div>`;
   paintMascot($('[data-pr-m]'), p.mascot, 'cheer', false);
 }
@@ -5617,7 +5620,6 @@ function renderProfile() {
     ${wardrobeHTML()}
     <div class="card settings"><h3>Microphone & app</h3>
       <label class="row">Microphone<span style="display:flex;gap:8px;align-items:center"><span class="note">${micState}</span><button class="btn ghost sm" id="mic-test" ${Mic.SR && !Mic.blocked ? '' : 'disabled'}>${p.micReady ? 'Test' : 'Allow'}</button></span></label>
-      <label class="row">Install on this device<button class="btn ghost sm" data-install ${IS_STANDALONE ? 'disabled' : ''}>${IS_STANDALONE ? 'Installed' : 'Install'}</button></label>
       ${IN_ARTIFACT ? `<p class="note">You’re viewing Speakaboo inside claude.ai, where the microphone is always blocked.${APP_URL ? ` For voice, open <b style="user-select:all">${esc(APP_URL)}</b> and add it to your home screen.` : ''}</p>` : ''}
     </div>
     <div class="card settings"><h3>Profile</h3>
@@ -5629,8 +5631,9 @@ function renderProfile() {
       <label class="row">Sound effects<input type="checkbox" class="toggle" id="me-sound" ${p.sound ? 'checked' : ''}></label>
       <label class="row">Tutor reads lines aloud<input type="checkbox" class="toggle" id="me-voice" ${p.autoVoice ? 'checked' : ''}></label>
       <label class="row">Show English in chat<input type="checkbox" class="toggle" id="me-en" ${p.showEnglish ? 'checked' : ''}></label>
-      <label class="row">Unlimited hearts<input type="checkbox" class="toggle" id="me-hearts" ${p.unlimitedHearts ? 'checked' : ''}></label>
     </div>
+    <details class="more"><summary>Advanced</summary>
+    <div class="card settings"><label class="row">Unlimited hearts<input type="checkbox" class="toggle" id="me-hearts" ${p.unlimitedHearts ? 'checked' : ''}></label></div>
     <div class="card settings" id="ai-panel"><h3>Chat tutor brain</h3>
       <p class="note">Now using: <b>${esc(Tutor.label())}</b>. Claude works when Speakaboo is opened inside claude.ai. Anywhere else, paste a free Gemini key from Google AI Studio. Offline scenes always work.</p>
       <label class="row">Brain<select id="ai-provider">${[['auto', 'Automatic'], ['claude', 'Claude (inside claude.ai)'], ['gemini', 'Gemini (your key)'], ['offline', 'Offline scenes']].map(([v, l]) => `<option value="${v}" ${ai.provider === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
@@ -5643,13 +5646,14 @@ function renderProfile() {
       ${UI.meConfirm === 'reset' ? `<div class="p-row"><span class="note">Erase ${esc(p.name)}’s progress?</span><button class="btn danger sm" id="me-reset-yes">Erase</button><button class="btn ghost sm" data-me-cancel>Keep</button></div>` : `<button class="btn ghost sm" id="me-reset">Reset my progress</button>`}
       ${UI.meConfirm === 'delete' ? `<div class="p-row"><span class="note">Delete this learner?</span><button class="btn danger sm" id="me-del-yes">Delete</button><button class="btn ghost sm" data-me-cancel>Keep</button></div>` : `<button class="btn ghost sm" id="me-del">Delete this learner</button>`}
     </div>
+    </details>
   </div>`;
   const root = $('#tab-profile');
   $$('[data-mascot-live]', root).forEach(el => paintMascot(el, p.mascot, Mascot.mood));
   $$('[data-art]', root).forEach(el => paintMascot(el, el.dataset.art, 'happy', false));
   $('#mic-test').onclick = async () => { const ok = await Mic.prepare(); toast(ok ? 'Microphone ready. You can answer by voice.' : Mic.explain('not-allowed')); renderProfile(); };
   $('#me-name').onchange = e => { const v = e.target.value.trim(); if (v) { p.name = v; Store.save(); renderChrome(); } };
-  $$('[data-me-m]', root).forEach(b => b.onclick = () => { p.mascot = b.dataset.meM; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', `${MASCOTS[p.mascot].name} reporting for duty!`); Sfx.pop(); });
+  $$('[data-me-m]', root).forEach(b => b.onclick = () => { p.mascot = b.dataset.meM; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', `${MASCOTS[p.mascot].name} reporting for duty!`); Sfx.pop(); Voice.speak(`Hi, I’m ${MASCOTS[p.mascot].name}! ${MASCOTS[p.mascot].tagline}. Let’s talk!`, 'en-US', 1, p.mascot); });
   $('#me-goal').onchange = e => { p.dailyGoal = +e.target.value; Store.save(); renderChrome(); };
   $('#me-sound').onchange = e => { p.sound = e.target.checked; Store.save(); };
   $('#me-voice').onchange = e => { p.autoVoice = e.target.checked; Store.save(); };
