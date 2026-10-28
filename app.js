@@ -9861,8 +9861,16 @@ const Acct = {
 const isOwner = () => OWNERS.includes(String(Acct.email() || '').toLowerCase());
 
 /* ---------- Who gets what ---------- */
+/* Guest mode: try Speakaboo on this phone without an email. Everything is unlocked and saved on this device only. */
+const GUEST_EMAIL = 'guest@this-device.local';
+const isGuest = () => { try { return !Acct.cloud() && DeviceAcct.session() === GUEST_EMAIL; } catch (e) { return false; } };
+async function startGuest() {
+  try { await DeviceAcct.create(GUEST_EMAIL, Math.random().toString(36).slice(2) + Date.now()); }
+  catch (e) { DeviceAcct.open(GUEST_EMAIL, false); }
+}
 Access.state = function () {
   if (QA || Tester.on() || isOwner()) return { ok: true, mode: 'owner' };
+  if (isGuest()) return { ok: true, mode: 'local' };
   const now = Date.now();
   let start, until;
   if (Acct.cloud()) { if (!Account.user) return { ok: false, mode: 'signedout' }; until = Account.ms(Account.meta.premiumUntil); start = Account.ms(Account.meta.trialStart) || now; }
@@ -9932,12 +9940,14 @@ authScreen = function (mode, msg = '') {
       <p class="auth-err" id="au-err" role="alert">${esc(msg)}</p>
       <button class="btn primary" type="submit">${cta}</button>
     </form>
+    ${!Acct.cloud() && mode !== 'reset' ? '<div class="auth-links"><button class="link" data-guest>Skip for now · use without an email</button></div>' : ''}
     <div class="auth-links">${mode === 'signup' ? '<button class="link" data-auth="signin">I already have an account</button>' : '<button class="link" data-auth="signup">Create a new account</button>'}
       ${mode === 'signin' ? '<button class="link" data-auth="reset">Forgot password?</button>' : mode === 'reset' ? '<button class="link" data-auth="signin">Back to sign in</button>' : ''}</div>
     ${mode === 'signup' ? `<details class="auth-why"><summary>What makes Speakaboo different?</summary>${whyHTML(true)}</details>
       <p class="auth-fine">By creating an account you agree to the Terms and Privacy policy. After the ${TRIAL_DAYS}-day trial you keep a free plan, or subscribe monthly or yearly through Google Play to unlock everything. Cancel any time.</p>` : ''}</div>`;
   paintMascot($('#auth-m'), 'mandu', mode === 'signup' ? 'cheer' : 'happy', true);
   $$('[data-auth]', el).forEach(b => b.onclick = () => authScreen(b.dataset.auth));
+  $('[data-guest]', el) && ($('[data-guest]', el).onclick = async () => { await startGuest(); el.hidden = true; Starter.go(); });
   $('#au-eye') && ($('#au-eye').onclick = () => { const i = $('#au-pw'); i.type = i.type === 'password' ? 'text' : 'password'; $('#au-eye').textContent = i.type === 'password' ? 'Show' : 'Hide'; });
   $('#auth-form').onsubmit = async e => {
     e.preventDefault(); const err = $('#au-err'), btn = $('#auth-form button[type=submit]');
@@ -10085,6 +10095,7 @@ const Onboard2 = {
           <p class="auth-err" id="ob-err" role="alert"></p>
           <button class="btn primary big" type="submit">Create my account</button></form>
         <button class="link-btn" data-ob-signin>I already have an account</button>
+        ${Acct.cloud() ? '' : '<button class="link-btn" data-ob-guest>Skip for now · use without an email</button>'}
         <p class="ob-fine">After the trial you keep a free plan, or subscribe monthly or yearly through Google Play. Cancel any time.</p></div>`,
       () => `<div class="ob-s"><h1>Last thing: who are you?</h1>
         <input class="input ob-name" id="ob-name" maxlength="20" placeholder="Your name" value="${esc(d.name)}" autocomplete="given-name" enterkeyhint="done">
@@ -10130,6 +10141,7 @@ const Onboard2 = {
     }
     if (this.step === this.ACCOUNT) {
       $('#ob-eye', el).onclick = () => { const i = $('#ob-pw'); i.type = i.type === 'password' ? 'text' : 'password'; $('#ob-eye').textContent = i.type === 'password' ? 'Show' : 'Hide'; };
+      $('[data-ob-guest]', el) && ($('[data-ob-guest]', el).onclick = async () => { await startGuest(); this.step = this.PROFILE; this.show(); });
       $('[data-ob-signin]', el).onclick = () => { try { localStorage.setItem('speakaboo.intro', '1'); } catch (e) { /* ignore */ } $('#ob')?.remove(); authScreen('signin'); };
       $('#ob-acct', el).onsubmit = async e => {
         e.preventDefault(); const err = $('#ob-err'), btn = $('#ob-acct button[type=submit]');
