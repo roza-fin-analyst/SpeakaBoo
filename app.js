@@ -4531,7 +4531,7 @@ const Voice = {
   /** Speak; returns a promise that resolves when the line has finished. who: character id / mascot id / {id, pitch, rate, volume}; emo: an EMO_TTS key. */
   play(text, lang = course().tts, rate = .9, who = null, emo = null) {
     if (!text) return Promise.resolve();
-    const prof = voiceProfile(who), e = EMO_TTS[emo || (who && who.emotion)] || null, seq = ++this.seq;
+    const prof = voiceProfile(who), e = EMO_TTS[emo || (who && who.emotion) || autoEmo(text)] || null, seq = ++this.seq;
     this.lastText = text; this.lastAt = Date.now();
     const en = /^en/i.test(lang);
     if (Studio.on() && !en) {
@@ -6223,6 +6223,61 @@ function rtFromBank(r, opt) {
   };
 }
 
+/* =====================================================================
+   HEAR IT + WORD BY WORD
+   A speaker and a "words" button on every line a learner might not be
+   able to say or read yet. Tone follows the situation (question, excited,
+   hesitant…) so lines are heard the way a local would say them.
+   ===================================================================== */
+function autoEmo(text) {
+  const t = String(text || '').trim(); if (!t) return null;
+  if (/[?？؟]\s*$/.test(t)) return 'question';
+  if (/(…|\.\.\.)\s*$/.test(t)) return 'hesitant';
+  if (/!/.test(t)) return /(대박|미쳤|최고|야호|와[!, ]|¡qué|increíble|genial|ما شاء|رائع)/i.test(t) ? 'excited' : 'happy';
+  return null;
+}
+/** Tone for a scene, from its description ("a fan screams next to you" → excited). */
+function emoHint(ctx) {
+  const t = String(ctx || '').toLowerCase();
+  const map = [[/scream|hyped|excited|concert|party|congrat|celebrat|birthday/, 'excited'], [/angry|furious|yell|shout|complain/, 'angry'], [/sad|cry|funeral|apolog|sorry/, 'sad'],
+    [/whisper|secret|library|quiet|asleep|sleeping/, 'whisper'], [/late|rush|hurry|running|missed|emergency|lost/, 'panicked'], [/sarcas|joke|tease/, 'sarcastic'],
+    [/yawn|sleepy|tired|morning/, 'calm'], [/boss|teacher|elder|grand|formal|stranger|official|doctor/, 'calm'], [/friend|sibling|cat|casual|chat/, 'happy']];
+  for (const [re, e] of map) if (re.test(t)) return e;
+  return null;
+}
+/** Two small buttons: hear the line, or open it word by word. Use inside a card or beside a line. */
+function hearBar(t, r, en, emo) {
+  if (!t) return '';
+  const a = k => esc(String(k || ''));
+  return `<span class="hear-bar"><span class="hear" role="button" tabindex="0" aria-label="Hear it" data-say="${a(t)}" ${emo ? `data-emo="${a(emo)}"` : ''}>${ICON.speaker}</span>`
+    + `<span class="hear words" role="button" tabindex="0" aria-label="Word by word" data-words data-t="${a(t)}" data-r="${a(r)}" data-en="${a(en)}">${ICON.chat}<b>Aa</b></span></span>`;
+}
+function wordsSheet(text, rom, en, emo) {
+  const c = course(), p = P(), my = p.myLang || 'en';
+  const toks = String(text).trim().split(/\s+/).filter(Boolean), rt = String(rom || '').trim().split(/\s+/).filter(Boolean), align = rt.length === toks.length;
+  const whole = en || englishFor(text) || '';
+  const rows = toks.map((tok, i) => { const w = Gloss.lookup(tok); return { tok, r: align ? rt[i] : (w && w.r) || '', en: w ? cleanEn(w.en) : '' }; });
+  openSheet(`<div class="sheet-head"><h2>Word by word</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
+    <div class="wd-top"><div class="script wd-line" ${attrs(c)}>${esc(text)}</div>${rom ? `<small class="wd-rom">${esc(rom)}</small>` : ''}${whole ? `<b class="wd-en">${esc(whole)}</b>` : ''}${my !== 'en' && whole ? `<b class="wd-my" id="wd-my">…</b>` : ''}
+      <div class="wd-btns"><button class="btn primary sm" data-say="${esc(text)}" ${emo ? `data-emo="${esc(emo)}"` : ''}>${ICON.speaker} Hear it</button><button class="btn ghost sm" data-say="${esc(text)}" data-rate=".6">${ICON.turtle} Slow</button></div></div>
+    <div class="wd-list">${rows.map((x, i) => `<div class="wd-row"><button class="hear" data-say="${esc(Gloss.norm(x.tok))}" aria-label="Hear ${esc(x.tok)}">${ICON.speaker}</button><span class="script wd-w" ${attrs(c)}>${esc(x.tok)}</span><span class="wd-m"><small>${esc(x.r)}</small>${x.en ? `<b>${esc(x.en)}</b>` : `<button class="chip-btn" data-ask-word="${esc(x.tok)}" data-ask-sent="${esc(text)}">${ICON.chat} Ask Boo</button>`}<i class="wd-my2" data-i="${i}"></i></span></div>`).join('')}</div>`,
+  sheet => {
+    if (whole && my !== 'en') Tr.get(whole, my).then(o => { const el = $('#wd-my', sheet); if (el) el.textContent = o; }).catch(() => { const el = $('#wd-my', sheet); if (el) el.textContent = 'Needs internet for ' + myLangName(my); });
+    rows.forEach((x, i) => {
+      const slot = $(`.wd-my2[data-i="${i}"]`, sheet); if (!slot) return;
+      if (x.en) { if (my !== 'en') Tr.get(x.en, my).then(o => { slot.textContent = o; }).catch(() => {}); return; }
+      Tr.get(Gloss.norm(x.tok), my === 'en' ? 'en' : my, c.code).then(o => { slot.textContent = o + ' (auto)'; }).catch(() => {});
+    });
+  });
+}
+document.addEventListener('click', e => {
+  const h = e.target.closest && e.target.closest('.hear'); if (!h) return;
+  e.stopPropagation(); e.preventDefault();
+  if (h.hasAttribute('data-words')) { wordsSheet(h.dataset.t, h.dataset.r, h.dataset.en, h.dataset.emo); return; }
+  if (h.dataset.say) Voice.speak(h.dataset.say, h.dataset.tts || course().tts, h.dataset.rate ? +h.dataset.rate : .9, h.dataset.who || null, h.dataset.emo || null);
+}, true);
+document.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('hear')) { e.preventDefault(); e.target.click(); } }, true);
+
 const RealTalk = {
   on: false, list: [], i: 0, stakes: 50, wins: 0, cast: 'mandu', timer: null, busy: false,
   aiReady() { return Tutor.brain === 'claude' || Tutor.brain === 'gemini'; },
@@ -6283,15 +6338,15 @@ const RealTalk = {
       ${j.game_mode === 'TONE_SLIDER' ? `<div class="rt-tone"><div class="rt-tone-track"><i style="left:${toneIdx * 50}%"></i></div><div class="rt-tone-lbl">${['Formal', 'Casual native', 'Street slang'].map((x, k) => `<span class="${k === toneIdx ? 'on' : ''}">${x}</span>`).join('')}</div></div>` : ''}
       <div class="rt-scene"><div class="mascot rt-char" id="rt-char"></div>
         <div class="rt-say">${j.setup.character_persona ? `<small>${esc(j.setup.character_persona)}</small>` : ''}
-          ${loading ? '<span class="typing"><i></i><i></i><i></i></span>' : p ? `<button class="rt-line" ${isTarget ? `data-say="${esc(p[0])}"` : ''}><span class="${isTarget ? 'script' : ''}" ${isTarget ? attrs(c) : ''}>${esc(p[0])}</span>${isTarget ? `<small>${esc(p[1])}${p[2] && p[2] !== '?' ? ' · ' + esc(p[2]) : ''}</small>` : ''}</button>` : `<b class="rt-line ai">${esc(j.setup.prompt_text)}</b>`}</div></div>
+          ${loading ? '<span class="typing"><i></i><i></i><i></i></span>' : p ? `<button class="rt-line" ${isTarget ? `data-say="${esc(p[0])}"` : ''}><span class="${isTarget ? 'script' : ''}" ${isTarget ? attrs(c) : ''}>${esc(p[0])}</span>${isTarget ? `<small>${esc(p[1])}${p[2] && p[2] !== '?' ? ' · ' + esc(p[2]) : ''}</small>` : ''}</button>${isTarget ? hearBar(p[0], p[1], p[2] && p[2] !== '?' ? p[2] : '', emoHint(j.setup.context + ' ' + (j.setup.character_persona || ''))) : ''}` : `<b class="rt-line ai">${esc(j.setup.prompt_text)}</b>`}</div></div>
       ${j.game_mode === 'SPEED_ROUND' && !loading ? `<div class="rt-timer"><i id="rt-timer"></i></div><p class="rt-q">Quick! What does it really mean?</p>` : ''}
-      <div class="rt-opts" id="rt-opts">${r && !r.ai ? shuffle(r.options.map((o, k) => ({ o, k }))).map(({ o, k }, n) => `<button class="rt-opt" data-k="${k}" style="animation-delay:${n * 60}ms"><span class="${o.r ? 'script' : ''}" ${o.r ? attrs(c) : ''}>${esc(o.t)}</span>${o.r ? `<small>${esc(o.r)}</small>` : ''}</button>`).join('') : ''}</div>
+      <div class="rt-opts" id="rt-opts">${r && !r.ai ? shuffle(r.options.map((o, k) => ({ o, k }))).map(({ o, k }, n) => `<button class="rt-opt" data-k="${k}" style="animation-delay:${n * 60}ms"><span class="${o.r ? 'script' : ''}" ${o.r ? attrs(c) : ''}>${esc(o.t)}</span>${o.r ? `<small>${esc(o.r)}</small>` : ''}${o.r ? hearBar(o.t, o.r, o.en, '') : ''}</button>`).join('') : ''}</div>
       ${!loading && (r?.ai || this.aiReady()) ? `<form class="rt-own ${r?.ai ? 'open' : ''}" id="rt-own">${r?.ai ? '' : '<button type="button" class="rt-own-toggle" id="rt-own-t">✎ Or say it your way</button>'}
         <div class="rt-own-row"><input class="input script" id="rt-in" lang="${c.code}" dir="auto" placeholder="Your reply in ${esc(c.name)}…" autocomplete="off">${Mic.SR && !Mic.blocked ? `<button type="button" class="round" id="rt-mic" aria-label="Speak">${ICON.mic}</button>` : ''}<button class="round send" aria-label="Send">${ICON.send}</button></div></form>` : ''}
     </div><div class="rt-fb" id="rt-fb" hidden></div>`;
     paintMascot($('#rt-char'), this.cast, loading ? 'think' : 'peek', true);
     if (loading) return;
-    if (isTarget) setTimeout(() => Voice.speak(p[0]), 300);
+    if (isTarget) setTimeout(() => Voice.speak(p[0], undefined, undefined, undefined, emoHint(j.setup.context + ' ' + (j.setup.character_persona || ''))), 300);
     $$('.rt-opt', body).forEach(b => b.onclick = () => this.pickOpt(r, +b.dataset.k, b));
     const own = $('#rt-own');
     if (own) {
@@ -6937,7 +6992,7 @@ const Live = {
       });
     } else {
       body.innerHTML = `<div class="live-card"><div class="live-boo mascot" id="live-m"></div><p class="live-q">${esc(s.x.when)}</p><p class="live-when">What do you say?</p>
-        <div class="live-opts">${s.opts.map((o, k) => `<button class="adv-ch" data-k="${k}"><span class="script" ${attrs(c)}>${esc(o.t)}</span><small>${esc(o.r)}</small></button>`).join('')}</div></div>`;
+        <div class="live-opts">${s.opts.map((o, k) => `<button class="adv-ch" data-k="${k}"><span class="script" ${attrs(c)}>${esc(o.t)}</span><small>${esc(o.r)}</small>${hearBar(o.t, o.r, o.en, '')}</button>`).join('')}</div></div>`;
       paintMascot($('#live-m'), p.mascot, 'think', true);
       $$('.live-opts .adv-ch', body).forEach(b => b.onclick = () => {
         const o = s.opts[+b.dataset.k], ok = o === s.x;
@@ -6976,6 +7031,22 @@ function skyBooTap() {
    SPEAKABOO — UI: shell & navigation, learn path, lesson engine, practice,
    quests & shop, profile & settings, chat, install & microphone helpers.
    ===================================================================== */
+/* ---------- Theme: Auto / Light / Dark ---------- */
+const Theme = {
+  get() { try { const t = localStorage.getItem('speakaboo.theme'); return t === 'light' || t === 'dark' ? t : 'auto'; } catch (e) { return 'auto'; } },
+  set(v) {
+    try { v === 'auto' ? localStorage.removeItem('speakaboo.theme') : localStorage.setItem('speakaboo.theme', v); } catch (e) { /* ignore */ }
+    this.apply();
+  },
+  apply() {
+    const t = this.get(), root = document.documentElement;
+    t === 'auto' ? root.removeAttribute('data-theme') : root.setAttribute('data-theme', t);
+    const dark = t === 'dark' || (t === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+    const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = dark ? '#11111C' : '#FFF8EE';
+  }
+};
+Theme.apply();
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => Theme.apply()); } catch (e) { /* older browsers */ }
 const BRAND_SVG = `<span class="brand-boo" aria-hidden="true">${mascotSVG('mandu', 'peek')}</span>`;
 const SPEAKABOO_VERSION = '2026.10.25-a';
 const UI = { tab: 'now', manage: false, creating: false, confirmDel: null, draft: { name: '', mascot: 'mandu', lang: 'ko' }, meConfirm: null };
@@ -7030,12 +7101,12 @@ const Tr = {
   cache: (() => { try { return JSON.parse(localStorage.getItem('speakaboo.tr.v1') || '{}'); } catch (e) { return {}; } })(),
   save() { try { const k = Object.keys(this.cache); if (k.length > 3000) k.slice(0, 600).forEach(x => delete this.cache[x]); localStorage.setItem('speakaboo.tr.v1', JSON.stringify(this.cache)); } catch (e) { /* storage full or blocked */ } },
   /** Resolves with the translation, or rejects when offline / the service is busy. */
-  async get(text, to) {
-    text = String(text || '').trim(); if (!text || to === 'en') return text;
-    const key = `${to}|${text}`; if (this.cache[key]) return this.cache[key];
+  async get(text, to, from = 'en') {
+    text = String(text || '').trim(); if (!text || to === from) return text;
+    const key = from === 'en' ? `${to}|${text}` : `${from}>${to}|${text}`; if (this.cache[key]) return this.cache[key];
     const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 9000);
     try {
-      const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${encodeURIComponent(to)}`, { signal: ctl.signal });
+      const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${encodeURIComponent(from)}|${encodeURIComponent(to)}`, { signal: ctl.signal });
       const j = await r.json(), out = j && j.responseData && j.responseData.translatedText;
       if (!out || /MYMEMORY WARNING|INVALID|QUERY LENGTH/i.test(out)) throw new Error('no translation');
       this.cache[key] = out; this.save(); return out;
@@ -8350,6 +8421,7 @@ function renderProfile() {
       <div class="field"><span>Tutor</span><div class="pick-grid">${MASCOT_ORDER.map(k => `<button type="button" class="pick" data-me-m="${k}" aria-pressed="${k === p.mascot}"><div class="mascot" data-art="${k}"></div><b>${MASCOTS[k].name}</b></button>`).join('')}</div></div>
     </div>
     <div class="card settings"><h3>Preferences</h3>
+      <label class="row">Theme<select id="me-theme">${[['auto', 'Automatic (follows your phone)'], ['light', 'Light'], ['dark', 'Dark']].map(([v, l]) => `<option value="${v}" ${Theme.get() === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
       <label class="row">My language<select id="me-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (p.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
       <label class="row">Daily goal<select id="me-goal">${[20, 50, 100, 150].map(g => `<option value="${g}" ${p.dailyGoal === g ? 'selected' : ''}>${g} XP</option>`).join('')}</select></label>
       <label class="row">Sound effects<input type="checkbox" class="toggle" id="me-sound" ${p.sound ? 'checked' : ''}></label>
@@ -8381,6 +8453,7 @@ function renderProfile() {
   $('#mic-test').onclick = async () => { const ok = await Mic.prepare(); toast(ok ? 'Microphone ready. You can answer by voice.' : Mic.explain('not-allowed')); renderProfile(); };
   $('#me-name').onchange = e => { const v = e.target.value.trim(); if (v) { p.name = v; Store.save(); renderChrome(); } };
   $$('[data-me-m]', root).forEach(b => b.onclick = () => { p.mascot = b.dataset.meM; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', `${MASCOTS[p.mascot].name} reporting for duty!`); Sfx.pop(); Voice.speak(`Hi, I’m ${MASCOTS[p.mascot].name}! ${MASCOTS[p.mascot].tagline}. Let’s talk!`, 'en-US', 1, p.mascot); });
+  $('#me-theme').onchange = e => { Theme.set(e.target.value); Sfx.pop(); };
   $('#me-mylang').onchange = e => { p.myLang = e.target.value; Store.save(); toast(`Translations will appear in ${(MY_LANGS.find(x => x[0] === p.myLang) || [])[1] || 'English'}.`); };
   $('#me-goal').onchange = e => { p.dailyGoal = +e.target.value; Store.save(); renderChrome(); };
   $('#me-sound').onchange = e => { p.sound = e.target.checked; Store.save(); };
@@ -8455,7 +8528,7 @@ document.addEventListener('click', e => {
   const feel = t.closest('[data-feel]'); if (feel) { startMood(feel.dataset.feel); return; }
   const star = t.closest('[data-star]'); if (star) { const on = Phrases.toggle(JSON.parse(star.dataset.star)); star.classList.toggle('on', on); if (UI.tab === 'practice' && $('#lesson').hidden) renderPractice(); return; }
   const stamp = t.closest('[data-stamp]'); if (stamp) { cultureSheet(stamp.dataset.stamp); return; }
-  const say = t.closest('[data-say]'); if (say) { Voice.speak(say.dataset.say, say.dataset.tts || course().tts, say.dataset.rate ? +say.dataset.rate : .9, say.dataset.who || null); if (!say.closest('.hw')) return; }
+  const say = t.closest('[data-say]'); if (say) { Voice.speak(say.dataset.say, say.dataset.tts || course().tts, say.dataset.rate ? +say.dataset.rate : .9, say.dataset.who || null, say.dataset.emo || null); if (!say.closest('.hw')) return; }
   const node = t.closest('[data-node]'); if (node) { showNodePop(node.dataset.node); Sfx.tap(); return; }
   const go = t.closest('[data-go]'); if (go) { const [uid, i, mode] = go.dataset.go.split(':'); startLesson(uid, +i, mode); return; }
   const tab = t.closest('[data-tab]'); if (tab) { showTab(tab.dataset.tab); return; }
