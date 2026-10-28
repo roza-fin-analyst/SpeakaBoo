@@ -1657,7 +1657,7 @@ function booBody(o) {
     ${o.acc === 'gills' || o.acc === 'ears' ? '' : acc}${front}`;
 }
 const BOO_LOOK = {
-  mandu: { c: '#FFFFFF', d: '#08323F', shade: '#CFE6EB', sw: 3.4, ink: '#08232C' },          // Boo
+  mandu: { c: '#FFFFFF', d: '#1C1B2E', shade: '#DCDDF0', sw: 3.4, ink: '#1C1B2E' },          // Boo
   tokki: { c: '#E4DAFF', d: '#8E74E6', acc: 'ears' },                                     // Peeka
   horangi: { c: '#FFB870', d: '#E07A1F', acc: 'bolt' },                                    // Zap
   byte: { c: '#DCE4EE', d: '#7E8FA6', acc: 'antenna', ink: '#24384F' },                    // Blip
@@ -2605,7 +2605,7 @@ Object.assign(CULTURE, {
 
 /* ------------------------------ DAILY ESSENTIALS: KOREAN ------------------------------ */
 COURSES.ko.units.push(
-  { id: 'ko-u21', s: 99, title: 'Days & dates', icon: '요일',
+  { id: 'ko-e1', s: 99, title: 'Days & dates', icon: '요일',
     guide: [
       { h: 'Days of the week', p: 'Every day ends in 요일 (day of the week): 월요일 Monday, 화요일 Tuesday, 수요일 Wednesday, 목요일 Thursday, 금요일 Friday, 토요일 Saturday, 일요일 Sunday.', ex: [['오늘은 무슨 요일이에요?', 'oneureun museun yoirieyo?', 'What day is it today?'], ['오늘은 금요일이에요.', 'oneureun geumyoirieyo.', 'Today is Friday.']] },
       { h: 'Months and dates', p: 'Month = number + 월, day = number + 일, using the Sino-Korean numbers: 삼월 십오일 = March 15.', ex: [['제 생일은 삼월 십오일이에요.', 'je saengireun samwol sibo irieyo.', 'My birthday is March 15.']] }
@@ -2628,7 +2628,7 @@ COURSES.ko.units.push(
       { t: '생일이 __예요?', en: 'When is your birthday?', options: ['언제', '어디'], answer: '언제', why: '언제 = when, 어디 = where.' },
       { t: '일요일__ 쉬어요.', en: 'I rest on Sunday.', options: ['에', '을'], answer: '에', why: '에 marks a point in time: 일요일에 = on Sunday.' }
     ] },
-  { id: 'ko-u22', s: 99, title: 'Groceries & fruit', icon: '시장',
+  { id: 'ko-e2', s: 99, title: 'Groceries & fruit', icon: '시장',
     guide: [
       { h: 'Counting things: 개', p: 'Use 개 to count most objects: 한 개, 두 개, 세 개 (one, two, three). Say the item first: 사과 두 개 주세요.', ex: [['사과 두 개 주세요.', 'sagwa du gae juseyo.', 'Two apples, please.']] },
       { h: 'Shopping places', p: '시장 is a traditional market, 마트 is a supermarket. 에서 marks where an action happens: 시장에서 사요 (I buy at the market).', ex: [['시장에서 과일을 사요.', 'sijangeseo gwaireul sayo.', 'I buy fruit at the market.']] }
@@ -2651,7 +2651,7 @@ COURSES.ko.units.push(
       { t: '시장__ 과일을 사요.', en: 'I buy fruit at the market.', options: ['에서', '에'], answer: '에서', why: '에서 = at (where an action happens).' },
       { t: '계란 __?', en: 'Do you have eggs?', options: ['있어요', '없어요'], answer: '있어요', why: '있어요 = have / there is. 없어요 = don’t have.' }
     ] },
-  { id: 'ko-u23', s: 99, title: 'Home & everyday things', icon: '열쇠',
+  { id: 'ko-e3', s: 99, title: 'Home & everyday things', icon: '열쇠',
     guide: [
       { h: 'Where is my…?', p: 'Thing + 이/가 어디에 있어요? asks where something is. Answer with place + 에 있어요: 가방 안에 있어요 (it’s inside the bag).', ex: [['제 열쇠가 어디에 있어요?', 'je yeolsoega eodie isseoyo?', 'Where is my key?'], ['열쇠는 가방 안에 있어요.', 'yeolsoeneun gabang ane isseoyo.', 'The key is inside the bag.']] },
       { h: 'Polite requests', p: 'Verb + 아/어 주세요 = please do it for me: 문을 열어 주세요 (please open the door).', ex: [['문을 열어 주세요.', 'muneul yeoreo juseyo.', 'Please open the door.']] }
@@ -2674,7 +2674,7 @@ COURSES.ko.units.push(
       { t: '문을 __ 주세요.', en: 'Please open the door.', options: ['열어', '먹어'], answer: '열어', why: '열다 = to open. 먹다 = to eat.' },
       { t: '이거 제 안경__.', en: 'These are my glasses.', options: ['이에요', '예요'], answer: '이에요', why: '안경 ends in a consonant, so use 이에요.' }
     ] },
-  { id: 'ko-u24', s: 99, title: 'Phone, Wi-Fi & getting help', icon: '도움',
+  { id: 'ko-e4', s: 99, title: 'Phone, Wi-Fi & getting help', icon: '도움',
     guide: [
       { h: 'Wi-Fi and charging', p: 'Cafés in Korea almost always have Wi-Fi. Ask: 와이파이 비밀번호가 뭐예요? (What’s the Wi-Fi password?). 충전기 있어요? asks if they have a charger.', ex: [['와이파이 비밀번호가 뭐예요?', 'waipai bimilbeonhoga mwoyeyo?', 'What’s the Wi-Fi password?']] },
       { h: 'Emergencies', p: '도와주세요! means “help me!”. Police is 112 and ambulance is 119 in Korea. 길을 잃었어요 = I’m lost.', ex: [['도와주세요!', 'dowajuseyo!', 'Help me!'], ['길을 잃었어요.', 'gireul ireosseoyo.', 'I’m lost.']] }
@@ -2697,7 +2697,7 @@ COURSES.ko.units.push(
       { t: '약국이 __예요?', en: 'Where is the pharmacy?', options: ['어디', '언제'], answer: '어디', why: '어디 = where, 언제 = when.' },
       { t: '경찰을 불러 __.', en: 'Please call the police.', options: ['주세요', '있어요'], answer: '주세요', why: '아/어 주세요 = please do it for me.' }
     ] },
-  { id: 'ko-u25', s: 99, title: 'Clothes & shopping', icon: '옷',
+  { id: 'ko-e5', s: 99, title: 'Clothes & shopping', icon: '옷',
     guide: [
       { h: 'Trying things on', p: '입어 봐도 돼요? = Can I try it on? (아/어 봐도 돼요? = may I try…?).', ex: [['이거 입어 봐도 돼요?', 'igeo ibeo bwado dwaeyo?', 'Can I try this on?']] },
       { h: 'Size, colour, discount', p: '사이즈 = size, 색깔 = colour. 더 큰 = bigger, 더 작은 = smaller. In markets you can ask 좀 깎아 주세요 (a little discount, please).', ex: [['더 큰 사이즈 있어요?', 'deo keun saijeu isseoyo?', 'Do you have a bigger size?'], ['좀 깎아 주세요.', 'jom kkakka juseyo.', 'Please give me a discount.']] }
@@ -2724,7 +2724,7 @@ COURSES.ko.units.push(
 
 /* ------------------------------ DAILY ESSENTIALS: SPANISH ------------------------------ */
 COURSES.es.units.push(
-  { id: 'es-u14', s: 99, title: 'Days & dates',  icon: 'Lunes',
+  { id: 'es-e1', s: 99, title: 'Days & dates',  icon: 'Lunes',
     guide: [
       { h: 'Days and months', p: 'Days and months are written in lowercase in Spanish: lunes, martes, miércoles, jueves, viernes, sábado, domingo. The week starts on Monday.', ex: [['¿Qué día es hoy?', 'keh DEE-ah ehs oy?', 'What day is it today?'], ['Hoy es viernes.', 'oy ehs BYEHR-nehs.', 'Today is Friday.']] },
       { h: 'On a day: el / los', p: 'Use el before a day to say “on”: el lunes = on Monday. Use los for “every”: los lunes = on Mondays.', ex: [['El lunes trabajo.', 'ehl LOO-nehs trah-BAH-hoh.', 'On Monday I work.']] }
@@ -2747,7 +2747,7 @@ COURSES.es.units.push(
       { t: 'Hoy __ viernes.', en: 'Today is Friday.', options: ['es', 'son'], answer: 'es', why: 'es = is (singular). son = are.' },
       { t: 'Mi cumpleaños es __ marzo.', en: 'My birthday is in March.', options: ['en', 'a'], answer: 'en', why: 'en = in (a month).' }
     ] },
-  { id: 'es-u15', s: 99, title: 'Groceries & fruit', icon: 'Fruta',
+  { id: 'es-e2', s: 99, title: 'Groceries & fruit', icon: 'Fruta',
     guide: [
       { h: 'Asking for amounts', p: 'Use un kilo de, medio kilo de or un poco de + item: un kilo de manzanas (a kilo of apples).', ex: [['Quiero un kilo de manzanas.', 'KYEH-roh oon KEE-loh deh mahn-SAH-nahs.', 'I want a kilo of apples.']] },
       { h: 'Shops', p: 'El mercado is a market, el supermercado a supermarket. ¿Cuánto cuesta(n)…? asks the price: cuesta for one, cuestan for many.', ex: [['¿Cuánto cuestan las naranjas?', 'KWAHN-toh KWEHS-tahn lahs nah-RAHN-hahs?', 'How much are the oranges?']] }
@@ -2770,7 +2770,7 @@ COURSES.es.units.push(
       { t: '¿Cuánto __ las naranjas?', en: 'How much are the oranges?', options: ['cuestan', 'cuesta'], answer: 'cuestan', why: 'Plural things (naranjas) take cuestan.' },
       { t: 'Necesito cebolla __ ajo.', en: 'I need onion and garlic.', options: ['y', 'o'], answer: 'y', why: 'y = and, o = or.' }
     ] },
-  { id: 'es-u16', s: 99, title: 'Home & everyday things', icon: 'Casa',
+  { id: 'es-e3', s: 99, title: 'Home & everyday things', icon: 'Casa',
     guide: [
       { h: 'Where is my…?', p: '¿Dónde está + thing? asks where something is. Use está (not es) for location: La llave está en el bolso.', ex: [['¿Dónde está mi llave?', 'DOHN-deh ehs-TAH mee YAH-beh?', 'Where is my key?']] },
       { h: 'Polite commands', p: 'Add por favor to a command: Abre la puerta, por favor. Cierra la ventana, por favor.', ex: [['Abre la puerta, por favor.', 'AH-breh lah PWEHR-tah, pohr fah-BOHR.', 'Open the door, please.']] }
@@ -2793,7 +2793,7 @@ COURSES.es.units.push(
       { t: '__ la puerta, por favor.', en: 'Open the door, please.', options: ['Abre', 'Come'], answer: 'Abre', why: 'abrir = to open. comer = to eat.' },
       { t: 'La llave está __ el bolso.', en: 'The key is in the bag.', options: ['en', 'de'], answer: 'en', why: 'en = in / on / at.' }
     ] },
-  { id: 'es-u17', s: 99, title: 'Phone, Wi-Fi & getting help', icon: 'Wifi',
+  { id: 'es-e4', s: 99, title: 'Phone, Wi-Fi & getting help', icon: 'Wifi',
     guide: [
       { h: 'Wi-Fi and charging', p: 'Ask ¿Cuál es la contraseña del wifi? (What is the Wi-Fi password?) and ¿Tiene un cargador? (Do you have a charger?). Cafés usually put the password on the receipt or wall.', ex: [['¿Cuál es la contraseña del wifi?', 'kwahl ehs lah kohn-trah-SEH-nyah dehl WEE-fee?', 'What is the Wi-Fi password?']] },
       { h: 'Emergencies', p: '¡Ayuda! = help! The European emergency number is 112, also used in Spain. Estoy perdido (m) / perdida (f) = I’m lost.', ex: [['¡Ayuda!', 'ah-YOO-dah!', 'Help!'], ['Estoy perdido.', 'ehs-TOY pehr-DEE-doh.', 'I’m lost.']] }
@@ -2816,7 +2816,7 @@ COURSES.es.units.push(
       { t: 'Llame a la __.', en: 'Call the police.', options: ['policía', 'mesa'], answer: 'policía', why: 'la policía = the police.' },
       { t: '¿Dónde __ la farmacia?', en: 'Where is the pharmacy?', options: ['está', 'tiene'], answer: 'está', why: 'está = is (location). tiene = has.' }
     ] },
-  { id: 'es-u18', s: 99, title: 'Clothes & shopping', icon: 'Ropa',
+  { id: 'es-e5', s: 99, title: 'Clothes & shopping', icon: 'Ropa',
     guide: [
       { h: 'Trying things on', p: '¿Puedo probármelo? = Can I try it on? Fitting rooms are probadores.', ex: [['¿Puedo probármelo?', 'PWEH-doh proh-BAR-meh-loh?', 'Can I try it on?']] },
       { h: 'Size, colour, discount', p: 'La talla = size, el color = colour. más grande = bigger, más pequeño = smaller. ¿Hay descuento? = Is there a discount?', ex: [['¿Tiene una talla más grande?', 'TYEH-neh OO-nah TAH-yah mahs GRAHN-deh?', 'Do you have a bigger size?']] }
@@ -2843,7 +2843,7 @@ COURSES.es.units.push(
 
 /* ------------------------------ DAILY ESSENTIALS: ARABIC ------------------------------ */
 COURSES.ar.units.push(
-  { id: 'ar-u15', s: 99, title: 'Days & dates', icon: 'أيام',
+  { id: 'ar-e1', s: 99, title: 'Days & dates', icon: 'أيام',
     guide: [
       { h: 'Days of the week', p: 'السبت Saturday, الأحد Sunday, الاثنين Monday, الثلاثاء Tuesday, الأربعاء Wednesday, الخميس Thursday, الجمعة Friday. Ask ما هو اليوم؟ (What day is it?).', ex: [['ما هو اليوم؟', 'mā huwa al-yawm?', 'What day is it?'], ['اليوم الخميس.', 'al-yawm al-khamīs.', 'Today is Thursday.']] },
       { h: 'Birthday', p: 'عيد ميلاد = birthday (literally “feast of birth”). Add ي for “my” and ك for “your”: عيد ميلادي، عيد ميلادك.', ex: [['متى عيد ميلادك؟', 'matā ʿīd mīlādak?', 'When is your birthday?']] }
@@ -2866,7 +2866,7 @@ COURSES.ar.units.push(
       { t: 'متى عيد __؟', en: 'When is your birthday?', options: ['ميلادك', 'سيارة'], answer: 'ميلادك', why: 'عيد ميلادك = your birthday.' },
       { t: 'عيد ميلادي __ مارس.', en: 'My birthday is in March.', options: ['في', 'من'], answer: 'في', why: 'في = in. من = from.' }
     ] },
-  { id: 'ar-u16', s: 99, title: 'Groceries & fruit', icon: 'سوق',
+  { id: 'ar-e2', s: 99, title: 'Groceries & fruit', icon: 'سوق',
     guide: [
       { h: 'Asking for amounts', p: 'أريد = I want. Say the amount first: كيلو تفاح (a kilo of apples), نصف كيلو (half a kilo).', ex: [['أريد كيلو تفاح.', 'urīdu kīlū tuffāḥ.', 'I want a kilo of apples.']] },
       { h: 'Asking the price', p: 'بكم…؟ = how much is…? In the souk, bargaining is normal and friendly.', ex: [['بكم البرتقال؟', 'bikam al-burtuqāl?', 'How much are the oranges?']] }
@@ -2889,7 +2889,7 @@ COURSES.ar.units.push(
       { t: '__ البرتقال؟', en: 'How much are the oranges?', options: ['بكم', 'أين'], answer: 'بكم', why: 'بكم = how much. أين = where.' },
       { t: 'أحتاج بصل __ ثوم.', en: 'I need onion and garlic.', options: ['و', 'في'], answer: 'و', why: 'و = and (it attaches to the next word: وثوم).' }
     ] },
-  { id: 'ar-u17', s: 99, title: 'Home & everyday things', icon: 'بيت',
+  { id: 'ar-e3', s: 99, title: 'Home & everyday things', icon: 'بيت',
     guide: [
       { h: 'Where is my…?', p: 'أين + thing asks where it is. Add ي to mean “my”: مفتاح → مفتاحي (my key).', ex: [['أين مفتاحي؟', 'ayna miftāḥī?', 'Where is my key?'], ['المفتاح في الحقيبة.', 'al-miftāḥ fī al-ḥaqība.', 'The key is in the bag.']] },
       { h: 'Polite requests', p: 'Use the command form + من فضلك: افتح الباب، من فضلك (open the door, please). To a woman: افتحي.', ex: [['افتح الباب، من فضلك.', 'iftaḥ al-bāb, min faḍlak.', 'Open the door, please.']] }
@@ -2912,7 +2912,7 @@ COURSES.ar.units.push(
       { t: 'المفتاح __ الحقيبة.', en: 'The key is in the bag.', options: ['في', 'مع'], answer: 'في', why: 'في = in. مع = with.' },
       { t: '__ الباب، من فضلك.', en: 'Open the door, please.', options: ['افتح', 'كل'], answer: 'افتح', why: 'افتح = open! كل = eat!' }
     ] },
-  { id: 'ar-u18', s: 99, title: 'Phone, Wi-Fi & getting help', icon: 'نجدة',
+  { id: 'ar-e4', s: 99, title: 'Phone, Wi-Fi & getting help', icon: 'نجدة',
     guide: [
       { h: 'Wi-Fi and charging', p: 'Cafés and hotels often share the code if you ask: ما هي كلمة سر الواي فاي؟ (What is the Wi-Fi password?). هل عندك شاحن؟ = do you have a charger?', ex: [['ما هي كلمة سر الواي فاي؟', 'mā hiya kalimat sirr al-wāy fāy?', 'What is the Wi-Fi password?']] },
       { h: 'Emergencies', p: 'النجدة! means “help!”. Say أنا ضائع (I’m lost, a man speaking) or أنا ضائعة (a woman speaking). Police: شرطة.', ex: [['النجدة!', 'an-najda!', 'Help!'], ['أنا ضائع.', 'anā ḍāʾiʿ.', 'I’m lost.']] }
@@ -2935,7 +2935,7 @@ COURSES.ar.units.push(
       { t: 'هل __ شاحن؟', en: 'Do you have a charger?', options: ['عندك', 'أمس'], answer: 'عندك', why: 'عندك = you have (literally “at you”).' },
       { t: 'ما هي كلمة __ الواي فاي؟', en: 'What is the Wi-Fi password?', options: ['سر', 'باب'], answer: 'سر', why: 'كلمة السر = password (literally “word of the secret”).' }
     ] },
-  { id: 'ar-u19', s: 99, title: 'Clothes & shopping', icon: 'ملابس',
+  { id: 'ar-e5', s: 99, title: 'Clothes & shopping', icon: 'ملابس',
     guide: [
       { h: 'Trying things on', p: 'هل أستطيع أن أجرب هذا؟ = Can I try this on? Shorter: هل يمكن أن أجرب؟', ex: [['هل أستطيع أن أجرب هذا؟', 'hal astaṭīʿu an ujarriba hādhā?', 'Can I try this on?']] },
       { h: 'Size, colour, discount', p: 'مقاس = size, لون = colour, أكبر = bigger, أصغر = smaller, تخفيض = discount.', ex: [['هل عندك مقاس أكبر؟', 'hal ʿindak maqās akbar?', 'Do you have a bigger size?']] }
@@ -2962,7 +2962,7 @@ COURSES.ar.units.push(
 
 /* ------------------------------ TRAVELLER'S PHRASEBOOK: KOREAN ------------------------------ */
 COURSES.ko.units.push(
-  { id: 'ko-u26', s: 98, title: 'At the airport', icon: '공항',
+  { id: 'ko-t1', s: 98, title: 'At the airport', icon: '공항',
     guide: [
       { h: 'Passport control', p: 'The officer may ask 방문 목적이 뭐예요? (What is the purpose of your visit?). Answer 관광이에요 (tourism) or 출장이에요 (business).', ex: [['여권 여기 있어요.', 'yeogwon yeogi isseoyo.', 'Here is my passport.'], ['관광하러 왔어요.', 'gwanganghareo wasseoyo.', 'I came to sightsee.']] },
       { h: 'Finding things', p: 'Place + 이/가 어디예요? works everywhere. Useful places: 짐 찾는 곳 (baggage claim), 탑승구 (gate), 출구 (exit).', ex: [['탑승구가 어디예요?', 'tapseungguga eodiyeyo?', 'Where is the gate?']] }
@@ -2985,7 +2985,7 @@ COURSES.ko.units.push(
       { t: '탑승구가 __예요?', en: 'Where is the gate?', options: ['어디', '얼마'], answer: '어디', why: '어디 = where. 얼마 = how much.' },
       { t: '일주일 __ 있을 거예요.', en: 'I will stay for a week.', options: ['동안', '에서'], answer: '동안', why: '동안 = for / during a length of time.' }
     ] },
-  { id: 'ko-u27', s: 98, title: 'Money: exchange & ATM', icon: '환전',
+  { id: 'ko-t2', s: 98, title: 'Money: exchange & ATM', icon: '환전',
     guide: [
       { h: 'Changing money', p: 'Say what you have and what you want: 달러를 원으로 바꾸고 싶어요 (I want to change dollars into won). 환율 is the exchange rate.', ex: [['환전하는 곳이 어디예요?', 'hwanjeonhaneun gosi eodiyeyo?', 'Where can I exchange money?'], ['환율이 얼마예요?', 'hwanyuri eolmayeyo?', 'What is the exchange rate?']] },
       { h: 'At the ATM', p: 'ATM = 현금인출기 or just ATM. If it eats your card: 카드가 안 나와요. Ask 수수료가 있어요? to check for a fee.', ex: [['카드가 안 나와요.', 'kadeuga an nawayo.', 'My card won’t come out.']] }
@@ -3008,7 +3008,7 @@ COURSES.ko.units.push(
       { t: '달러를 원__ 바꾸고 싶어요.', en: 'I want to change dollars into won.', options: ['으로', '에서'], answer: '으로', why: '(으)로 = into / by means of.' },
       { t: '__이 얼마예요?', en: 'What is the exchange rate?', options: ['환율', '우산'], answer: '환율', why: '환율 = exchange rate.' }
     ] },
-  { id: 'ko-u28', s: 98, title: 'Tickets & directions', icon: '표',
+  { id: 'ko-t3', s: 98, title: 'Tickets & directions', icon: '표',
     guide: [
       { h: 'Buying tickets', p: 'Tickets are counted with 장: 표 두 장 주세요 (two tickets, please). 편도 = one-way, 왕복 = round trip.', ex: [['표 두 장 주세요.', 'pyo du jang juseyo.', 'Two tickets, please.'], ['왕복으로 주세요.', 'wangbogeuro juseyo.', 'Round trip, please.']] },
       { h: 'Asking the way', p: '여기서 어떻게 가요? = How do I get there from here? Listen for 다음 역 (next station) and 갈아타세요 (transfer).', ex: [['여기서 어떻게 가요?', 'yeogiseo eotteoke gayo?', 'How do I get there from here?'], ['다음 역에서 내리세요.', 'daeum yeogeseo naeriseyo.', 'Get off at the next station.']] }
@@ -3031,7 +3031,7 @@ COURSES.ko.units.push(
       { t: '__ 얼마나 걸려요?', en: 'How long does it take from here?', options: ['여기서', '어제'], answer: '여기서', why: '여기서 = from here.' },
       { t: '다음 역에서 __.', en: 'Get off at the next station.', options: ['내리세요', '드세요'], answer: '내리세요', why: '내리다 = to get off. 드세요 = please eat.' }
     ] },
-  { id: 'ko-u29', s: 98, title: 'Meeting people', icon: '만남',
+  { id: 'ko-t4', s: 98, title: 'Meeting people', icon: '만남',
     guide: [
       { h: 'Where are you from?', p: '어디에서 왔어요? Reply 저는 + country + 에서 왔어요: 저는 미국에서 왔어요 (I’m from the USA).', ex: [['어디에서 왔어요?', 'eodieseo wasseoyo?', 'Where are you from?'], ['저는 미국에서 왔어요.', 'jeoneun migugeseo wasseoyo.', 'I’m from the USA.']] },
       { h: 'Asking about others', p: '무슨 일 하세요? = What do you do? 몇 살이에요? = How old are you? (ask only people your age or younger). Stuck? 천천히 말해 주세요 = please speak slowly.', ex: [['무슨 일 하세요?', 'museun il haseyo?', 'What do you do for work?'], ['천천히 말해 주세요.', 'cheoncheonhi malhae juseyo.', 'Please speak slowly.']] }
@@ -3054,7 +3054,7 @@ COURSES.ko.units.push(
       { t: '__ 말해 주세요.', en: 'Please speak slowly.', options: ['천천히', '어제'], answer: '천천히', why: '천천히 = slowly. 어제 = yesterday.' },
       { t: '영어 할 수 __?', en: 'Can you speak English?', options: ['있어요', '먹어요'], answer: '있어요', why: '할 수 있어요 = can do.' }
     ] },
-  { id: 'ko-u30', s: 98, title: 'Food needs & allergies', icon: '식당',
+  { id: 'ko-t5', s: 98, title: 'Food needs & allergies', icon: '식당',
     guide: [
       { h: 'Special diets', p: '저는 채식주의자예요 = I’m vegetarian. 알레르기가 있어요 = I have an allergy: 땅콩 알레르기가 있어요 (peanut allergy).', ex: [['저는 채식주의자예요.', 'jeoneun chaesikjuuijayeyo.', 'I’m a vegetarian.'], ['땅콩 알레르기가 있어요.', 'ttangkong allereugiga isseoyo.', 'I have a peanut allergy.']] },
       { h: 'Spicy food', p: 'Korean food can be very spicy. 안 맵게 해 주세요 = make it not spicy. 매운 거 못 먹어요 = I can’t eat spicy food.', ex: [['매운 거 못 먹어요.', 'maeun geo mot meogeoyo.', 'I can’t eat spicy food.']] }
@@ -3077,7 +3077,7 @@ COURSES.ko.units.push(
       { t: '매운 거 못 __.', en: 'I cannot eat spicy food.', options: ['먹어요', '가요'], answer: '먹어요', why: '못 + verb = cannot. 먹다 = to eat.' },
       { t: '__ 주세요.', en: 'The bill, please.', options: ['계산서', '문'], answer: '계산서', why: '계산서 = bill.' }
     ] },
-  { id: 'ko-u31', s: 98, title: 'Hotel & emergencies', icon: '호텔',
+  { id: 'ko-t6', s: 98, title: 'Hotel & emergencies', icon: '호텔',
     guide: [
       { h: 'At the hotel', p: 'Say 예약했어요 (I have a booking) and your name. 체크인 = check-in, 체크아웃 = check-out.', ex: [['예약했어요.', 'yeyakhaesseoyo.', 'I have a reservation.'], ['체크아웃은 몇 시예요?', 'chekeu-auseun myeot siyeyo?', 'What time is check-out?']] },
       { h: 'Asking for help', p: 'Name the problem, then ask for help: 여권을 잃어버렸어요 (I lost my passport). 의사가 필요해요 = I need a doctor. 대사관 = embassy.', ex: [['의사가 필요해요.', 'uisaga piryohaeyo.', 'I need a doctor.'], ['영어 하는 사람 있어요?', 'yeongeo haneun saram isseoyo?', 'Is there anyone who speaks English?']] }
@@ -3104,7 +3104,7 @@ COURSES.ko.units.push(
 
 /* ------------------------------ TRAVELLER'S PHRASEBOOK: SPANISH ------------------------------ */
 COURSES.es.units.push(
-  { id: 'es-u19', s: 98, title: 'At the airport', icon: 'Vuelo',
+  { id: 'es-t1', s: 98, title: 'At the airport', icon: 'Vuelo',
     guide: [
       { h: 'Passport control', p: 'The officer may ask ¿Motivo de su viaje? (Reason for your trip?). Answer Turismo (tourism) or Trabajo (work).', ex: [['Aquí está mi pasaporte.', 'ah-KEE ehs-TAH mee pah-sah-POHR-teh.', 'Here is my passport.'], ['Vengo de turista.', 'BEHN-goh deh too-REES-tah.', 'I’m here as a tourist.']] },
       { h: 'Finding things', p: '¿Dónde está…? is the key question: la puerta de embarque (gate), la salida (exit), la aduana (customs).', ex: [['¿Dónde está la puerta de embarque?', 'DOHN-deh ehs-TAH lah PWEHR-tah deh ehm-BAR-keh?', 'Where is the gate?']] }
@@ -3127,7 +3127,7 @@ COURSES.es.units.push(
       { t: '¿Dónde está la puerta de __?', en: 'Where is the gate?', options: ['embarque', 'comida'], answer: 'embarque', why: 'puerta de embarque = boarding gate.' },
       { t: 'Voy a quedarme una __.', en: 'I am going to stay one week.', options: ['semana', 'ayer'], answer: 'semana', why: 'una semana = one week. ayer = yesterday.' }
     ] },
-  { id: 'es-u20', s: 98, title: 'Money: exchange & ATM', icon: 'Cambio',
+  { id: 'es-t2', s: 98, title: 'Money: exchange & ATM', icon: 'Cambio',
     guide: [
       { h: 'Changing money', p: 'Say what you have and want: Quiero cambiar dólares a euros. El tipo de cambio is the exchange rate. Airports usually have worse rates than city offices.', ex: [['¿Dónde puedo cambiar dinero?', 'DOHN-deh PWEH-doh kahm-BYAR dee-NEH-roh?', 'Where can I change money?'], ['¿Cuál es el tipo de cambio?', 'kwahl ehs ehl TEE-poh deh KAHM-byoh?', 'What is the exchange rate?']] },
       { h: 'At the cash machine', p: 'El cajero automático = ATM. If it keeps your card: El cajero se ha tragado mi tarjeta. Ask ¿Hay comisión? to check for a fee.', ex: [['El cajero se ha tragado mi tarjeta.', 'ehl kah-HEH-roh seh ah trah-GAH-doh mee tar-HEH-tah.', 'The ATM swallowed my card.']] }
@@ -3150,7 +3150,7 @@ COURSES.es.units.push(
       { t: 'Quiero cambiar dólares __ euros.', en: 'I want to change dollars into euros.', options: ['a', 'con'], answer: 'a', why: 'cambiar X a Y = change X into Y.' },
       { t: '¿Hay un cajero __ por aquí?', en: 'Is there an ATM around here?', options: ['automático', 'rápido'], answer: 'automático', why: 'cajero automático = ATM.' }
     ] },
-  { id: 'es-u21', s: 98, title: 'Tickets & directions', icon: 'Billete',
+  { id: 'es-t3', s: 98, title: 'Tickets & directions', icon: 'Billete',
     guide: [
       { h: 'Buying tickets', p: 'Un billete a… = a ticket to… (in Latin America often un boleto). De ida = one-way, de ida y vuelta = round trip.', ex: [['Un billete de ida y vuelta, por favor.', 'oon bee-YEH-teh deh EE-dah ee BWEHL-tah, pohr fah-BOHR.', 'A round-trip ticket, please.']] },
       { h: 'Directions', p: 'Siga recto = go straight, gire a la derecha / izquierda = turn right / left. ¿Cómo llego a…? = how do I get to…?', ex: [['¿Cómo llego a la plaza?', 'KOH-moh YEH-goh ah lah PLAH-sah?', 'How do I get to the square?'], ['Siga recto y gire a la izquierda.', 'SEE-gah RREHK-toh ee HEE-reh ah lah ees-KYEHR-dah.', 'Go straight and turn left.']] }
@@ -3173,7 +3173,7 @@ COURSES.es.units.push(
       { t: '¿Cómo __ a la plaza?', en: 'How do I get to the square?', options: ['llego', 'como'], answer: 'llego', why: 'llegar = to arrive / get to. como = I eat.' },
       { t: '¿__ lejos de aquí?', en: 'Is it far from here?', options: ['Está', 'Tiene'], answer: 'Está', why: 'está lejos = it is far (location).' }
     ] },
-  { id: 'es-u22', s: 98, title: 'Meeting people', icon: 'Amigos',
+  { id: 'es-t4', s: 98, title: 'Meeting people', icon: 'Amigos',
     guide: [
       { h: 'Where are you from?', p: '¿De dónde eres? (informal) / ¿De dónde es usted? (formal). Answer Soy de + place: Soy de Estados Unidos.', ex: [['¿De dónde eres?', 'deh DOHN-deh EH-rehs?', 'Where are you from?'], ['Soy de Estados Unidos.', 'soy deh ehs-TAH-dohs oo-NEE-dohs.', 'I’m from the United States.']] },
       { h: 'Asking about others', p: '¿A qué te dedicas? = What do you do? ¿Cuántos años tienes? = How old are you? If lost: Más despacio, por favor and ¿Puede repetir?', ex: [['¿A qué te dedicas?', 'ah keh teh deh-DEE-kahs?', 'What do you do for a living?'], ['Más despacio, por favor.', 'mahs dehs-PAH-syoh, pohr fah-BOHR.', 'Slower, please.']] }
@@ -3196,7 +3196,7 @@ COURSES.es.units.push(
       { t: 'Soy __ Estados Unidos.', en: 'I am from the United States.', options: ['de', 'en'], answer: 'de', why: 'ser de = to be from.' },
       { t: '¿Hablas __?', en: 'Do you speak English?', options: ['inglés', 'comida'], answer: 'inglés', why: 'inglés = English. comida = food.' }
     ] },
-  { id: 'es-u23', s: 98, title: 'Food needs & allergies', icon: 'Comida',
+  { id: 'es-t5', s: 98, title: 'Food needs & allergies', icon: 'Comida',
     guide: [
       { h: 'Special diets', p: 'Soy vegetariano (m) / vegetariana (f). Soy alérgico (m) / alérgica (f) a… = I’m allergic to… ¿Tiene sin gluten? = Do you have gluten-free?', ex: [['Soy alérgico a los cacahuetes.', 'soy ah-LEHR-hee-koh ah lohs kah-kah-WEH-tehs.', 'I’m allergic to peanuts.']] },
       { h: 'Ordering', p: 'La carta, por favor. Sin = without: sin picante (no spice), sin carne (no meat). Para llevar = to take away.', ex: [['Sin carne, por favor.', 'seen KAR-neh, pohr fah-BOHR.', 'Without meat, please.']] }
@@ -3219,7 +3219,7 @@ COURSES.es.units.push(
       { t: 'No como __.', en: 'I do not eat spicy food.', options: ['picante', 'mañana'], answer: 'picante', why: 'picante = spicy.' },
       { t: 'La __, por favor.', en: 'The bill, please.', options: ['cuenta', 'puerta'], answer: 'cuenta', why: 'la cuenta = the bill. la puerta = the door.' }
     ] },
-  { id: 'es-u24', s: 98, title: 'Hotel & emergencies', icon: 'Hotel',
+  { id: 'es-t6', s: 98, title: 'Hotel & emergencies', icon: 'Hotel',
     guide: [
       { h: 'At the hotel', p: 'Tengo una reserva a nombre de… = I have a booking under the name… El check-out is also called la salida.', ex: [['Tengo una reserva.', 'TEHN-goh OO-nah rreh-SEHR-bah.', 'I have a reservation.'], ['¿A qué hora es el check-out?', 'ah keh OH-rah ehs ehl chehk-OWT?', 'What time is check-out?']] },
       { h: 'Asking for help', p: 'He perdido mi pasaporte = I’ve lost my passport. Necesito un médico = I need a doctor. In Spain and much of Europe the emergency number is 112.', ex: [['Necesito un médico.', 'neh-seh-SEE-toh oon MEH-dee-koh.', 'I need a doctor.'], ['¿Alguien habla inglés?', 'AHL-gyehn AH-blah een-GLEHS?', 'Does anyone speak English?']] }
@@ -3246,7 +3246,7 @@ COURSES.es.units.push(
 
 /* ------------------------------ TRAVELLER'S PHRASEBOOK: ARABIC ------------------------------ */
 COURSES.ar.units.push(
-  { id: 'ar-u20', s: 98, title: 'At the airport', icon: 'مطار',
+  { id: 'ar-t1', s: 98, title: 'At the airport', icon: 'مطار',
     guide: [
       { h: 'Passport control', p: 'The officer may ask ما سبب الزيارة؟ (What is the reason for your visit?). Answer للسياحة (for tourism) or للعمل (for work).', ex: [['هذا جواز سفري.', 'hādhā jawāz safarī.', 'This is my passport.'], ['جئت للسياحة.', 'jiʾtu lis-siyāḥa.', 'I came for tourism.']] },
       { h: 'Finding things', p: 'أين…؟ finds anything: البوابة (the gate), المخرج (the exit), استلام الأمتعة (baggage claim).', ex: [['أين البوابة؟', 'ayna al-bawwāba?', 'Where is the gate?']] }
@@ -3269,7 +3269,7 @@ COURSES.ar.units.push(
       { t: 'أين __؟', en: 'Where is the gate?', options: ['البوابة', 'أمس'], answer: 'البوابة', why: 'البوابة = the gate. أمس = yesterday.' },
       { t: 'سأبقى __.', en: 'I will stay a week.', options: ['أسبوعا', 'مساء'], answer: 'أسبوعا', why: 'أسبوعا = a week.' }
     ] },
-  { id: 'ar-u21', s: 98, title: 'Money: exchange & ATM', icon: 'صرف',
+  { id: 'ar-t2', s: 98, title: 'Money: exchange & ATM', icon: 'صرف',
     guide: [
       { h: 'Changing money', p: 'صرف / تغيير العملة = currency exchange. Say أريد صرف دولارات (I want to exchange dollars). سعر الصرف = exchange rate.', ex: [['أين يمكنني تغيير العملة؟', 'ayna yumkinunī taghyīr al-ʿumla?', 'Where can I change money?'], ['ما هو سعر الصرف؟', 'mā huwa siʿr aṣ-ṣarf?', 'What is the exchange rate?']] },
       { h: 'At the ATM', p: 'الصراف الآلي = ATM. If it keeps your card: الصراف أخذ بطاقتي. هل هناك عمولة؟ = is there a fee?', ex: [['الصراف أخذ بطاقتي.', 'aṣ-ṣarrāf akhadha biṭāqatī.', 'The ATM took my card.']] }
@@ -3292,7 +3292,7 @@ COURSES.ar.units.push(
       { t: 'ما هو سعر __؟', en: 'What is the exchange rate?', options: ['الصرف', 'الباب'], answer: 'الصرف', why: 'سعر الصرف = exchange rate.' },
       { t: 'هل هناك __؟', en: 'Is there a fee?', options: ['عمولة', 'سرير'], answer: 'عمولة', why: 'عمولة = fee / commission.' }
     ] },
-  { id: 'ar-u22', s: 98, title: 'Tickets & directions', icon: 'تذكرة',
+  { id: 'ar-t3', s: 98, title: 'Tickets & directions', icon: 'تذكرة',
     guide: [
       { h: 'Buying tickets', p: 'تذكرة = ticket. ذهاب فقط = one-way, ذهاب وإياب = round trip.', ex: [['تذكرة ذهاب وإياب، من فضلك.', 'tadhkirat dhahāb wa-iyāb, min faḍlak.', 'A round-trip ticket, please.']] },
       { h: 'Directions', p: 'سر مباشرة = go straight, انعطف يمينا / يسارا = turn right / left. كيف أصل إلى…؟ = how do I get to…?', ex: [['كيف أصل إلى المحطة؟', 'kayfa aṣilu ilā al-maḥaṭṭa?', 'How do I get to the station?'], ['سر مباشرة ثم انعطف يسارا.', 'sir mubāsharatan thumma inʿaṭif yasāran.', 'Go straight, then turn left.']] }
@@ -3315,7 +3315,7 @@ COURSES.ar.units.push(
       { t: 'كيف __ إلى المحطة؟', en: 'How do I get to the station?', options: ['أصل', 'آكل'], answer: 'أصل', why: 'أصل = I arrive / get to. آكل = I eat.' },
       { t: 'هل هو __ من هنا؟', en: 'Is it far from here?', options: ['بعيد', 'لذيذ'], answer: 'بعيد', why: 'بعيد = far. لذيذ = delicious.' }
     ] },
-  { id: 'ar-u23', s: 98, title: 'Meeting people', icon: 'تعارف',
+  { id: 'ar-t4', s: 98, title: 'Meeting people', icon: 'تعارف',
     guide: [
       { h: 'Where are you from?', p: 'من أين أنت؟ (to a man) / من أين أنتِ؟ (to a woman). Reply أنا من + country: أنا من أمريكا.', ex: [['من أين أنت؟', 'min ayna anta?', 'Where are you from?'], ['أنا من أمريكا.', 'anā min amrīkā.', 'I am from America.']] },
       { h: 'Asking about others', p: 'ماذا تعمل؟ = What do you do? كم عمرك؟ = How old are you? If you’re lost: تكلم ببطء من فضلك (speak slowly) and لا أفهم (I don’t understand).', ex: [['ماذا تعمل؟', 'mādhā taʿmal?', 'What do you do?'], ['من فضلك، تكلم ببطء.', 'min faḍlak, takallam bi-buṭʾ.', 'Please speak slowly.']] }
@@ -3338,7 +3338,7 @@ COURSES.ar.units.push(
       { t: 'أنا __ أمريكا.', en: 'I am from America.', options: ['من', 'في'], answer: 'من', why: 'من = from. في = in.' },
       { t: 'تكلم __.', en: 'Speak slowly.', options: ['ببطء', 'غدا'], answer: 'ببطء', why: 'ببطء = slowly. غدا = tomorrow.' }
     ] },
-  { id: 'ar-u24', s: 98, title: 'Food needs & allergies', icon: 'طعام',
+  { id: 'ar-t5', s: 98, title: 'Food needs & allergies', icon: 'طعام',
     guide: [
       { h: 'Special diets', p: 'أنا نباتي (m) / نباتية (f) = I’m vegetarian. عندي حساسية من… = I have an allergy to… Most restaurants in Arab countries are halal: هل هذا حلال؟', ex: [['أنا نباتي.', 'anā nabātī.', 'I am vegetarian.'], ['عندي حساسية من الفول السوداني.', 'ʿindī ḥassāsiyya min al-fūl as-sūdānī.', 'I have an allergy to peanuts.']] },
       { h: 'Ordering', p: 'بدون = without: بدون حار (no spice). للأخذ = takeaway. القائمة = the menu.', ex: [['بدون حار، من فضلك.', 'bidūn ḥārr, min faḍlak.', 'Without spice, please.']] }
@@ -3361,7 +3361,7 @@ COURSES.ar.units.push(
       { t: 'عندي __ من الفول السوداني.', en: 'I have an allergy to peanuts.', options: ['حساسية', 'سيارة'], answer: 'حساسية', why: 'حساسية = allergy.' },
       { t: '__ حار، من فضلك.', en: 'Without spice, please.', options: ['بدون', 'مع'], answer: 'بدون', why: 'بدون = without. مع = with.' }
     ] },
-  { id: 'ar-u25', s: 98, title: 'Hotel & emergencies', icon: 'فندق',
+  { id: 'ar-t6', s: 98, title: 'Hotel & emergencies', icon: 'فندق',
     guide: [
       { h: 'At the hotel', p: 'عندي حجز = I have a booking. تسجيل الوصول = check-in, المغادرة = check-out.', ex: [['عندي حجز.', 'ʿindī ḥajz.', 'I have a reservation.'], ['متى موعد المغادرة؟', 'matā mawʿid al-mughādara?', 'When is check-out?']] },
       { h: 'Asking for help', p: 'أضعت جواز سفري = I lost my passport. أحتاج إلى طبيب = I need a doctor. السفارة = the embassy. الإسعاف = ambulance.', ex: [['أحتاج إلى طبيب.', 'aḥtāju ilā ṭabīb.', 'I need a doctor.'], ['هل يتكلم أحد الإنجليزية؟', 'hal yatakallamu aḥad al-injlīziyya?', 'Does anyone speak English?']] }
@@ -3386,7 +3386,7 @@ COURSES.ar.units.push(
     ] }
 );
 
-for (const k of ['ko', 'ar', 'es']) EXTRA_SECTIONS[k].push({ title: 'Daily essentials', blurb: 'Days, groceries, things at home, phone and Wi-Fi, help, and clothes: the words you use every single day.' });
+const DAILY_SECTION = { title: 'Daily essentials', blurb: 'Days, groceries, things at home, phone and Wi-Fi, help, and clothes: the words you use every single day.' };
 const EN_EMOJI = {
   "a cold": "🤧",
   "a latte, please.": "☕",
@@ -3814,7 +3814,173 @@ function emojiFor(gloss) {
 const NO_PIC = new Set(['he', 'she', 'really', 'I live', 'I want', 'I have', 'please give me', 'have / there is', 'don’t have / there isn’t', 'it is not', 'how much', 'where', 'what', 'this', 'go', 'come', 'I', 'I (polite)', 'fine / well']);
 function emojiArt(e) { if (!ART[e]) ART[e] = () => `<text x="50" y="74" font-size="76" text-anchor="middle" font-family="'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">${e}</text>`; return e; }
 /* =====================================================================
-   SPEAKABOO — FINALIZE: runs after all content files are loaded.
+   SPEAKABOO — SEASONS 5 & 6: from "getting by" to "speaking your mind"
+   Season 5 "Real life": shopping & sizes, phone & messages.
+   Season 6 "Speak your mind": opinions, and telling a story in the past.
+   ===================================================================== */
+for (const k of ['ko', 'ar', 'es']) EXTRA_SECTIONS[k].push(
+  { title: 'Real life', blurb: 'Try things on, haggle, answer the phone, say you’re running late.' },
+  { title: 'Speak your mind', blurb: 'Share opinions, agree and disagree, and tell a story about your week.' });
+const W5 = (t, r, en, pic) => pic ? { t, r, en, pic } : { t, r, en };
+const S5 = (t, r, en, alt) => alt ? { t, r, en, alt } : { t, r, en };
+
+/* ------------------------------ KOREAN ------------------------------ */
+COURSES.ko.units.push(
+  { id: 'ko-d1', s: 4, title: 'Shopping & sizes', icon: '쇼핑',
+    guide: [
+      { h: 'Can I try it?', p: 'Verb + 아/어 봐도 돼요? = “Can I try…?” 입다 (wear) → 입어 봐도 돼요?', ex: [['신어 봐도 돼요?', 'sineo bwado dwaeyo?', 'Can I try these shoes on?']] },
+      { h: 'Haggling, gently', p: '좀 깎아 주세요 means “please knock a little off”. Great at markets, not in big department stores.', ex: [['좀 깎아 주세요.', 'jom kkakka juseyo.', 'Could you lower the price a bit?']] }
+    ],
+    words: [W5('입어 봐도 돼요?', 'ibeo bwado dwaeyo?', 'can I try it on?'), W5('커요', 'keoyo', 'it’s big'), W5('작아요', 'jagayo', 'it’s small'), W5('사이즈', 'saijeu', 'size'), W5('다른 색', 'dareun saek', 'another colour'),
+      W5('비싸요', 'bissayo', 'it’s expensive'), W5('깎아 주세요', 'kkakka juseyo', 'please give me a discount'), W5('할인', 'harin', 'discount / sale'), W5('교환', 'gyohwan', 'exchange'), W5('영수증', 'yeongsujeung', 'receipt', 'receipt')],
+    sentences: [S5('이거 입어 봐도 돼요?', 'igeo ibeo bwado dwaeyo?', 'Can I try this on?'), S5('조금 커요. 작은 사이즈 있어요?', 'jogeum keoyo. jageun saijeu isseoyo?', 'It’s a bit big. Do you have a small size?', ['it is a bit big do you have a smaller size']),
+      S5('다른 색도 있어요?', 'dareun saekdo isseoyo?', 'Do you have other colours too?', ['do you have another color', 'do you have other colors']), S5('너무 비싸요. 좀 깎아 주세요.', 'neomu bissayo. jom kkakka juseyo.', 'It’s too expensive. Please give me a discount.'),
+      S5('교환할 수 있어요?', 'gyohwanhal su isseoyo?', 'Can I exchange it?'), S5('영수증 여기 있어요.', 'yeongsujeung yeogi isseoyo.', 'Here’s the receipt.', ['here is the receipt'])],
+    blanks: [{ t: '입어 __ 돼요?', en: 'Can I try it on?', options: ['봐도', '봐요'], answer: '봐도', why: '-아/어 봐도 돼요? = may I try (doing it)?' },
+      { t: '다른 색__ 있어요?', en: 'Do you have other colours too?', options: ['도', '를'], answer: '도', why: '도 = also / too.' }] },
+  { id: 'ko-d2', s: 4, title: 'Phone & messages', icon: '전화',
+    guide: [
+      { h: 'Phone hello', p: '여보세요 is only for the phone. Face to face, it’s 안녕하세요.', ex: [['여보세요?', 'yeoboseyo?', 'Hello? (on the phone)']] },
+      { h: 'I will: -ㄹ게요', p: 'Stem + ㄹ게요 promises something to the person you’re talking to. 전화하다 → 전화할게요 (I’ll call).', ex: [['문자할게요.', 'munjahalgeyo.', 'I’ll text you.']] }
+    ],
+    words: [W5('여보세요', 'yeoboseyo', 'hello (on the phone)'), W5('누구세요?', 'nuguseyo?', 'who is it?'), W5('잠깐만요', 'jamkkanmanyo', 'just a moment'), W5('바빠요', 'bappayo', 'I’m busy'), W5('나중에', 'najunge', 'later'),
+      W5('전화할게요', 'jeonhwahalgeyo', 'I’ll call you'), W5('문자', 'munja', 'text message'), W5('늦어요', 'neujeoyo', 'I’m late'), W5('배터리', 'baeteori', 'battery'), W5('도착했어요', 'dochakhaesseoyo', 'I’ve arrived')],
+    sentences: [S5('여보세요? 누구세요?', 'yeoboseyo? nuguseyo?', 'Hello? Who is this?', ['hello who is it']), S5('지금 바빠요. 나중에 전화할게요.', 'jigeum bappayo. najunge jeonhwahalgeyo.', 'I’m busy now. I’ll call you later.'),
+      S5('잠깐만요!', 'jamkkanmanyo!', 'Just a moment!', ['one moment', 'wait a moment']), S5('문자 보내 주세요.', 'munja bonae juseyo.', 'Please send me a text.', ['please text me']),
+      S5('미안해요, 10분 늦어요.', 'mianhaeyo, sip bun neujeoyo.', 'Sorry, I’m 10 minutes late.', ['sorry i am ten minutes late']), S5('배터리가 없어요.', 'baeteoriga eopseoyo.', 'My battery is dead.', ['i have no battery'])],
+    blanks: [{ t: '나중에 전화__.', en: 'I’ll call you later.', options: ['할게요', '했어요'], answer: '할게요', why: '-ㄹ게요 = I will (a promise to the listener).' },
+      { t: '10분 __요.', en: 'I’m 10 minutes late.', options: ['늦어', '빨라'], answer: '늦어', why: '늦어요 = (I’m) late.' }] },
+  { id: 'ko-d3', s: 5, title: 'Opinions', icon: '생각',
+    guide: [
+      { h: 'Soften it', p: 'Koreans soften opinions. 글쎄요 (“well…”) buys you time, and 잘 모르겠어요 means “I’m not sure”.', ex: [['글쎄요… 잘 모르겠어요.', 'geulsseyo… jal moreugesseoyo.', 'Well… I’m not sure.']] },
+      { h: 'Me too: 도', p: 'Add 도 for “too”: 저도 (me too). 저도 그렇게 생각해요 = I think so too.', ex: [['저도요!', 'jeodoyo!', 'Me too!']] }
+    ],
+    words: [W5('생각해요', 'saenggakaeyo', 'I think'), W5('맞아요', 'majayo', 'that’s right'), W5('저도요', 'jeodoyo', 'me too'), W5('글쎄요', 'geulsseyo', 'well… / hmm'), W5('솔직히', 'soljiki', 'honestly'),
+      W5('아마', 'ama', 'probably / maybe'), W5('별로예요', 'byeolloyeyo', 'it’s not great'), W5('최고예요', 'choegoyeyo', 'it’s the best'), W5('잘 모르겠어요', 'jal moreugesseoyo', 'I’m not sure'), W5('왜냐하면', 'waenyahamyeon', 'because')],
+    sentences: [S5('저는 그렇게 생각해요.', 'jeoneun geureoke saenggakaeyo.', 'I think so.'), S5('맞아요! 저도 그렇게 생각해요.', 'majayo! jeodo geureoke saenggakaeyo.', 'That’s right! I think so too.'),
+      S5('글쎄요… 잘 모르겠어요.', 'geulsseyo… jal moreugesseoyo.', 'Well… I’m not sure.'), S5('솔직히 그 영화는 별로였어요.', 'soljiki geu yeonghwaneun byeolloyeosseoyo.', 'Honestly, that movie wasn’t great.'),
+      S5('이 식당 최고예요!', 'i sikdang choegoyeyo!', 'This restaurant is the best!'), S5('아마 내일 비가 올 거예요.', 'ama naeil biga ol geoyeyo.', 'It will probably rain tomorrow.')],
+    blanks: [{ t: '저__ 그렇게 생각해요.', en: 'I think so too.', options: ['도', '를'], answer: '도', why: '저도 = me too.' },
+      { t: '아마 비가 올 __예요.', en: 'It will probably rain.', options: ['거', '게'], answer: '거', why: '-ㄹ 거예요 = will probably.' }] },
+  { id: 'ko-d4', s: 5, title: 'Telling a story', icon: '이야기',
+    guide: [
+      { h: 'Past tense', p: 'Swap -아요/어요 for -았어요/었어요: 가요 → 갔어요 (went), 먹어요 → 먹었어요 (ate).', ex: [['어제 영화를 봤어요.', 'eoje yeonghwareul bwasseoyo.', 'I watched a movie yesterday.']] },
+      { h: 'Story glue', p: '갑자기 (suddenly), 그래서 (so), 그런데 (but), 결국 (in the end) turn sentences into a story.', ex: [['그래서 집에 갔어요.', 'geuraeseo jibe gasseoyo.', 'So I went home.']] }
+    ],
+    words: [W5('갔어요', 'gasseoyo', 'I went'), W5('먹었어요', 'meogeosseoyo', 'I ate'), W5('봤어요', 'bwasseoyo', 'I saw'), W5('재미있었어요', 'jaemiisseosseoyo', 'it was fun'), W5('지난주', 'jinanju', 'last week'),
+      W5('갑자기', 'gapjagi', 'suddenly'), W5('그래서', 'geuraeseo', 'so / that’s why'), W5('그런데', 'geureonde', 'but / by the way'), W5('결국', 'gyeolguk', 'in the end'), W5('깜짝 놀랐어요', 'kkamjjak nollasseoyo', 'I was so surprised')],
+    sentences: [S5('지난주에 부산에 갔어요.', 'jinanjue busane gasseoyo.', 'I went to Busan last week.'), S5('정말 재미있었어요!', 'jeongmal jaemiisseosseoyo!', 'It was really fun!', ['it was so fun']),
+      S5('갑자기 비가 왔어요.', 'gapjagi biga wasseoyo.', 'Suddenly it rained.', ['suddenly it started raining']), S5('그래서 카페에 들어갔어요.', 'geuraeseo kapee deureogasseoyo.', 'So we went into a café.', ['so i went into a cafe', 'so we went into a cafe']),
+      S5('거기서 연예인을 봤어요!', 'geogiseo yeonyeineul bwasseoyo!', 'We saw a celebrity there!', ['i saw a celebrity there']), S5('깜짝 놀랐어요.', 'kkamjjak nollasseoyo.', 'I was so surprised.')],
+    blanks: [{ t: '어제 영화를 __.', en: 'I watched a movie yesterday.', options: ['봤어요', '봐요'], answer: '봤어요', why: '-았/었어요 = past tense.' },
+      { t: '비가 왔어요. __ 카페에 갔어요.', en: 'It rained. So I went to a café.', options: ['그래서', '그런데'], answer: '그래서', why: '그래서 = so / that’s why.' }] }
+);
+
+/* ------------------------------ ARABIC ------------------------------ */
+COURSES.ar.units.push(
+  { id: 'ar-d1', s: 4, title: 'Shopping & sizes', icon: 'تسوق',
+    guide: [
+      { h: 'Bigger, smaller', p: 'Comparatives follow the pattern أفعل: كبير → أكبر (bigger), صغير → أصغر (smaller), رخيص → أرخص (cheaper).', ex: [['أرخص من فضلك', 'arkhaṣ min faḍlik', 'cheaper, please']] },
+      { h: 'Can I…?', p: 'هل يمكنني أن + verb = “Can I…?”. In Egypt you’ll hear the shortcut ممكن أجرّب؟ (mumkin agarrab?).', ex: [['ممكن أجرّب؟', 'mumkin agarrab?', 'Can I try it? (Egyptian)']] }
+    ],
+    words: [W5('أجرّب', 'ujarrib', 'I try (on)'), W5('مقاس', 'maqās', 'size'), W5('كبير', 'kabīr', 'big'), W5('صغير', 'ṣaghīr', 'small'), W5('أصغر', 'aṣghar', 'smaller'),
+      W5('لون آخر', 'lawn ākhar', 'another colour'), W5('خصم', 'khaṣm', 'discount'), W5('أرخص', 'arkhaṣ', 'cheaper'), W5('أستبدل', 'astabdil', 'I exchange'), W5('إيصال', 'īṣāl', 'receipt', 'receipt')],
+    sentences: [S5('هل يمكنني أن أجرّب هذا؟', 'hal yumkinunī an ujarriba hādhā?', 'Can I try this on?'), S5('هذا كبير جدا.', 'hādhā kabīr jiddan.', 'This is very big.', ['this is too big']),
+      S5('هل عندك مقاس أصغر؟', 'hal ʿindak maqās aṣghar?', 'Do you have a smaller size?'), S5('هل يوجد لون آخر؟', 'hal yūjad lawn ākhar?', 'Is there another colour?', ['is there another color']),
+      S5('هل هناك خصم؟', 'hal hunāka khaṣm?', 'Is there a discount?'), S5('أريد أن أستبدل هذا.', 'urīd an astabdil hādhā.', 'I want to exchange this.')],
+    blanks: [{ t: 'هذا كبير __.', en: 'This is very big.', options: ['جدا', 'لا'], answer: 'جدا', why: 'جدا = very.' },
+      { t: 'هل عندك مقاس __؟', en: 'Do you have a smaller size?', options: ['أصغر', 'صغير'], answer: 'أصغر', why: 'أصغر = smaller (comparative pattern أفعل).' }] },
+  { id: 'ar-d2', s: 4, title: 'Phone & messages', icon: 'هاتف',
+    guide: [
+      { h: 'Phone hello', p: 'ألو is only for the phone. It came from French “allô”.', ex: [['ألو؟ من معي؟', 'alō? man maʿī?', 'Hello? Who’s speaking?']] },
+      { h: 'Will: سـ', p: 'Put سـ in front of a present verb for the future: أتصل (I call) → سأتصل (I will call).', ex: [['سأرسل رسالة.', 'saʾursil risāla.', 'I will send a message.']] }
+    ],
+    words: [W5('ألو', 'alō', 'hello (on the phone)'), W5('من معي؟', 'man maʿī?', 'who’s speaking?'), W5('لحظة', 'laḥẓa', 'one moment'), W5('مشغول', 'mashghūl', 'busy'), W5('لاحقا', 'lāḥiqan', 'later'),
+      W5('سأتصل بك', 'saʾattaṣil bik', 'I’ll call you'), W5('رسالة', 'risāla', 'message'), W5('متأخر', 'mutaʾakhkhir', 'late'), W5('البطارية', 'al-baṭṭāriyya', 'the battery'), W5('وصلت', 'waṣaltu', 'I’ve arrived')],
+    sentences: [S5('ألو؟ من معي؟', 'alō? man maʿī?', 'Hello? Who’s speaking?', ['hello who is this']), S5('أنا مشغول الآن، سأتصل بك لاحقا.', 'anā mashghūl al-ān, saʾattaṣil bika lāḥiqan.', 'I’m busy now, I’ll call you later.'),
+      S5('لحظة من فضلك.', 'laḥẓa min faḍlik.', 'One moment, please.'), S5('أرسل لي رسالة.', 'arsil lī risāla.', 'Send me a message.'),
+      S5('آسف، أنا متأخر عشر دقائق.', 'āsif, anā mutaʾakhkhir ʿashr daqāʾiq.', 'Sorry, I’m ten minutes late.'), S5('وصلت!', 'waṣaltu!', 'I’ve arrived!', ['i arrived', 'i am here'])],
+    blanks: [{ t: 'سأتصل بك __.', en: 'I’ll call you later.', options: ['لاحقا', 'أمس'], answer: 'لاحقا', why: 'لاحقا = later. سـ + verb = will.' },
+      { t: '__ من فضلك.', en: 'One moment, please.', options: ['لحظة', 'مع السلامة'], answer: 'لحظة', why: 'لحظة = one moment.' }] },
+  { id: 'ar-d3', s: 5, title: 'Opinions', icon: 'رأي',
+    guide: [
+      { h: 'I think that…', p: 'أعتقد أن + sentence. In Egypt people often say أنا شايف إن… (ana shāyif inn…).', ex: [['أعتقد أنها فكرة جيدة.', 'aʿtaqid annahā fikra jayyida.', 'I think it’s a good idea.']] },
+      { h: 'Better than', p: 'أفضل من = better than. Comparative + من works for any comparison.', ex: [['الشاي أفضل من القهوة.', 'ash-shāy afḍal min al-qahwa.', 'Tea is better than coffee.']] }
+    ],
+    words: [W5('أعتقد', 'aʿtaqid', 'I think'), W5('صحيح', 'ṣaḥīḥ', 'true / right'), W5('أوافق', 'uwāfiq', 'I agree'), W5('ربما', 'rubbamā', 'maybe'), W5('بصراحة', 'bi-ṣarāḥa', 'honestly'),
+      W5('لا أعرف', 'lā aʿrif', 'I don’t know'), W5('رائع', 'rāʾiʿ', 'amazing'), W5('ممل', 'mumill', 'boring'), W5('في رأيي', 'fī raʾyī', 'in my opinion'), W5('طبعا', 'ṭabʿan', 'of course')],
+    sentences: [S5('أعتقد أن الفيلم رائع.', 'aʿtaqid anna al-film rāʾiʿ.', 'I think the film is amazing.', ['i think the movie is amazing']), S5('صحيح! أوافق.', 'ṣaḥīḥ! uwāfiq.', 'True! I agree.', ['right i agree']),
+      S5('بصراحة، كان مملا قليلا.', 'bi-ṣarāḥa, kāna mumillan qalīlan.', 'Honestly, it was a bit boring.'), S5('ربما غدا.', 'rubbamā ghadan.', 'Maybe tomorrow.'),
+      S5('في رأيي، القهوة أفضل من الشاي.', 'fī raʾyī, al-qahwa afḍal min ash-shāy.', 'In my opinion, coffee is better than tea.'), S5('طبعا!', 'ṭabʿan!', 'Of course!')],
+    blanks: [{ t: '__ أن الفيلم رائع.', en: 'I think the film is amazing.', options: ['أعتقد', 'أريد'], answer: 'أعتقد', why: 'أعتقد أن… = I think that…' },
+      { t: 'القهوة أفضل __ الشاي.', en: 'Coffee is better than tea.', options: ['من', 'في'], answer: 'من', why: 'أفضل من = better than.' }] },
+  { id: 'ar-d4', s: 5, title: 'Telling a story', icon: 'قصة',
+    guide: [
+      { h: 'Past tense', p: 'For “I did”, add ـتُ to the past stem: ذهب → ذهبتُ (I went), أكل → أكلتُ (I ate).', ex: [['أكلت كشري.', 'akaltu kushari.', 'I ate koshari.']] },
+      { h: 'Story glue', p: 'فجأة (suddenly), لذلك (so), لكن (but), في النهاية (in the end).', ex: [['لذلك رجعت إلى البيت.', 'li-dhālika rajaʿtu ilā al-bayt.', 'So I went back home.']] }
+    ],
+    words: [W5('ذهبت', 'dhahabtu', 'I went'), W5('أكلت', 'akaltu', 'I ate'), W5('رأيت', 'raʾaytu', 'I saw'), W5('كان ممتعا', 'kāna mumtiʿan', 'it was fun'), W5('الأسبوع الماضي', 'al-usbūʿ al-māḍī', 'last week'),
+      W5('فجأة', 'fajʾatan', 'suddenly'), W5('لذلك', 'li-dhālika', 'so / that’s why'), W5('لكن', 'lākin', 'but'), W5('في النهاية', 'fī an-nihāya', 'in the end'), W5('تفاجأت', 'tafājaʾtu', 'I was surprised')],
+    sentences: [S5('ذهبت إلى الإسكندرية الأسبوع الماضي.', 'dhahabtu ilā al-iskandariyya al-usbūʿ al-māḍī.', 'I went to Alexandria last week.'), S5('كان ممتعا جدا!', 'kāna mumtiʿan jiddan!', 'It was really fun!', ['it was very fun']),
+      S5('فجأة بدأ المطر.', 'fajʾatan badaʾa al-maṭar.', 'Suddenly the rain started.', ['suddenly it started raining']), S5('لذلك دخلنا مقهى.', 'li-dhālika dakhalnā maqhā.', 'So we went into a café.', ['so we went into a cafe']),
+      S5('رأيت هناك ممثلا مشهورا!', 'raʾaytu hunāka mumaththilan mashhūran!', 'I saw a famous actor there!'), S5('في النهاية رجعنا إلى البيت.', 'fī an-nihāya rajaʿnā ilā al-bayt.', 'In the end we went back home.')],
+    blanks: [{ t: '__ إلى السوق أمس.', en: 'I went to the market yesterday.', options: ['ذهبت', 'أذهب'], answer: 'ذهبت', why: 'Past tense: ذهبت = I went.' },
+      { t: 'بدأ المطر، __ دخلنا مقهى.', en: 'The rain started, so we went into a café.', options: ['لذلك', 'لكن'], answer: 'لذلك', why: 'لذلك = so / that’s why.' }] }
+);
+
+/* ------------------------------ SPANISH ------------------------------ */
+COURSES.es.units.push(
+  { id: 'es-d1', s: 4, title: 'Shopping & sizes', icon: 'Talla',
+    guide: [
+      { h: 'How it fits', p: 'Quedar describes fit: me queda bien (fits well), me queda grande (too big), me queda pequeño (too small).', ex: [['Me queda pequeño.', 'meh KEH-dah peh-KEH-nyoh.', 'It’s too small on me.']] },
+      { h: 'Polite with staff', p: 'Use usted with shop staff: ¿Tiene…? (Do you have…?). With friends: ¿Tienes…?', ex: [['¿Tiene otra talla?', 'TYEH-neh OH-trah TAH-yah?', 'Do you have another size?']] }
+    ],
+    words: [W5('¿me lo puedo probar?', 'meh loh PWEH-doh proh-BAR?', 'can I try it on?'), W5('la talla', 'lah TAH-yah', 'size'), W5('me queda grande', 'meh KEH-dah GRAHN-deh', 'it’s too big on me'), W5('pequeño', 'peh-KEH-nyoh', 'small'), W5('otro color', 'OH-troh koh-LOR', 'another colour'),
+      W5('caro', 'KAH-roh', 'expensive'), W5('barato', 'bah-RAH-toh', 'cheap'), W5('el descuento', 'ehl dehs-KWEHN-toh', 'discount'), W5('cambiar', 'kahm-BYAR', 'to exchange'), W5('el recibo', 'ehl reh-SEE-boh', 'receipt', 'receipt')],
+    sentences: [S5('¿Me lo puedo probar?', 'meh loh PWEH-doh proh-BAR?', 'Can I try it on?'), S5('Me queda grande.', 'meh KEH-dah GRAHN-deh.', 'It’s too big on me.', ['it is too big for me']),
+      S5('¿Tiene una talla más pequeña?', 'TYEH-neh OO-nah TAH-yah mahs peh-KEH-nyah?', 'Do you have a smaller size?'), S5('¿Lo tiene en otro color?', 'loh TYEH-neh ehn OH-troh koh-LOR?', 'Do you have it in another colour?', ['do you have it in another color']),
+      S5('¿Hay descuento?', 'eye dehs-KWEHN-toh?', 'Is there a discount?'), S5('Quiero cambiarlo. Aquí está el recibo.', 'KYEH-roh kahm-BYAR-loh. ah-KEE ehs-TAH ehl reh-SEE-boh.', 'I want to exchange it. Here’s the receipt.')],
+    blanks: [{ t: 'Me __ grande.', en: 'It’s too big on me.', options: ['queda', 'gusta'], answer: 'queda', why: 'Me queda grande = it fits me big.' },
+      { t: '¿Tiene una talla más __?', en: 'Do you have a smaller size?', options: ['pequeña', 'pequeño'], answer: 'pequeña', why: 'Talla is feminine, so pequeña.' }] },
+  { id: 'es-d2', s: 4, title: 'Phone & messages', icon: 'Tel',
+    guide: [
+      { h: 'Phone hellos', p: 'Spain answers with ¿Diga? or ¿Sí?, Mexico with ¿Bueno?, and much of Latin America with ¿Aló?', ex: [['¿Bueno? ¿Quién habla?', 'BWEH-noh? kyehn AH-blah?', 'Hello? Who’s speaking? (Mexico)']] },
+      { h: 'Commands + me', p: 'Attach me to commands: manda → mándame (send me), llama → llámame (call me).', ex: [['¡Llámame luego!', 'YAH-mah-meh LWEH-goh!', 'Call me later!']] }
+    ],
+    words: [W5('¿diga?', 'DEE-gah?', 'hello? (phone, Spain)'), W5('¿bueno?', 'BWEH-noh?', 'hello? (phone, Mexico)'), W5('un momento', 'oon moh-MEHN-toh', 'one moment'), W5('ocupado', 'oh-koo-PAH-doh', 'busy'), W5('luego', 'LWEH-goh', 'later'),
+      W5('te llamo', 'teh YAH-moh', 'I’ll call you'), W5('el mensaje', 'ehl mehn-SAH-heh', 'message'), W5('llego tarde', 'YEH-goh TAR-deh', 'I’m running late'), W5('la batería', 'lah bah-teh-REE-ah', 'battery'), W5('ya llegué', 'yah yeh-GEH', 'I’m here')],
+    sentences: [S5('¿Diga? ¿Quién es?', 'DEE-gah? kyehn ehs?', 'Hello? Who is it?'), S5('Estoy ocupado, te llamo luego.', 'ehs-TOY oh-koo-PAH-doh, teh YAH-moh LWEH-goh.', 'I’m busy, I’ll call you later.'),
+      S5('Un momento, por favor.', 'oon moh-MEHN-toh, por fah-BOR.', 'One moment, please.'), S5('Mándame un mensaje.', 'MAHN-dah-meh oon mehn-SAH-heh.', 'Send me a message.', ['text me', 'send me a text']),
+      S5('Perdón, llego diez minutos tarde.', 'pehr-DOHN, YEH-goh dyehs mee-NOO-tohs TAR-deh.', 'Sorry, I’ll be ten minutes late.', ['sorry i am ten minutes late']), S5('¡Ya llegué!', 'yah yeh-GEH!', 'I’m here!', ['i arrived', 'i have arrived'])],
+    blanks: [{ t: 'Te __ luego.', en: 'I’ll call you later.', options: ['llamo', 'llamas'], answer: 'llamo', why: 'Te llamo luego: the present works for the near future.' },
+      { t: '__ un mensaje.', en: 'Send me a message.', options: ['Mándame', 'Mando'], answer: 'Mándame', why: 'Mándame = send me (command + me).' }] },
+  { id: 'es-d3', s: 5, title: 'Opinions', icon: 'Opino',
+    guide: [
+      { h: 'I think that…', p: 'Creo que + sentence. Add la verdad (honestly) to sound natural, not rude.', ex: [['Creo que sí.', 'KREH-oh keh see.', 'I think so.']] },
+      { h: 'Better than', p: 'Mejor que = better than, peor que = worse than.', ex: [['El té es mejor que el café.', 'ehl teh ehs meh-HOR keh ehl kah-FEH.', 'Tea is better than coffee.']] }
+    ],
+    words: [W5('creo que', 'KREH-oh keh', 'I think that'), W5('tienes razón', 'TYEH-nehs rah-SOHN', 'you’re right'), W5('estoy de acuerdo', 'ehs-TOY deh ah-KWEHR-doh', 'I agree'), W5('no sé', 'noh seh', 'I don’t know'), W5('la verdad', 'lah behr-DAHD', 'honestly'),
+      W5('quizás', 'kee-SAHS', 'maybe'), W5('¡qué guay!', 'keh gwai!', 'how cool! (Spain)'), W5('aburrido', 'ah-boo-RREE-doh', 'boring'), W5('en mi opinión', 'ehn mee oh-pee-NYOHN', 'in my opinion'), W5('¡claro!', 'KLAH-roh!', 'of course!')],
+    sentences: [S5('Creo que es una buena idea.', 'KREH-oh keh ehs OO-nah BWEH-nah ee-DEH-ah.', 'I think it’s a good idea.'), S5('¡Tienes razón! Estoy de acuerdo.', 'TYEH-nehs rah-SOHN! ehs-TOY deh ah-KWEHR-doh.', 'You’re right! I agree.'),
+      S5('La verdad, la película fue un poco aburrida.', 'lah behr-DAHD, lah peh-LEE-koo-lah fweh oon POH-koh ah-boo-RREE-dah.', 'Honestly, the movie was a bit boring.', ['to be honest the movie was a bit boring']),
+      S5('Quizás mañana.', 'kee-SAHS mah-NYAH-nah.', 'Maybe tomorrow.'), S5('En mi opinión, el café es mejor que el té.', 'ehn mee oh-pee-NYOHN, ehl kah-FEH ehs meh-HOR keh ehl teh.', 'In my opinion, coffee is better than tea.'), S5('¡Claro que sí!', 'KLAH-roh keh see!', 'Of course!', ['of course yes'])],
+    blanks: [{ t: '__ que es una buena idea.', en: 'I think it’s a good idea.', options: ['Creo', 'Quiero'], answer: 'Creo', why: 'Creo que… = I think that…' },
+      { t: 'El café es mejor __ el té.', en: 'Coffee is better than tea.', options: ['que', 'de'], answer: 'que', why: 'mejor que = better than.' }] },
+  { id: 'es-d4', s: 5, title: 'Telling a story', icon: 'Ayer',
+    guide: [
+      { h: 'The past: fui, comí, vi', p: 'For finished actions, use the preterite: voy → fui (I went), como → comí (I ate), veo → vi (I saw).', ex: [['Ayer comí tacos.', 'ah-YEHR koh-MEE TAH-kohs.', 'Yesterday I ate tacos.']] },
+      { h: 'Story glue', p: 'De repente (suddenly), así que (so), pero (but), al final (in the end).', ex: [['Al final volvimos a casa.', 'ahl fee-NAHL bohl-BEE-mohs ah KAH-sah.', 'In the end we went home.']] }
+    ],
+    words: [W5('fui', 'fwee', 'I went'), W5('comí', 'koh-MEE', 'I ate'), W5('vi', 'bee', 'I saw'), W5('fue divertido', 'fweh dee-behr-TEE-doh', 'it was fun'), W5('la semana pasada', 'lah seh-MAH-nah pah-SAH-dah', 'last week'),
+      W5('de repente', 'deh reh-PEHN-teh', 'suddenly'), W5('así que', 'ah-SEE keh', 'so'), W5('pero', 'PEH-roh', 'but'), W5('al final', 'ahl fee-NAHL', 'in the end'), W5('¡qué sorpresa!', 'keh sor-PREH-sah!', 'what a surprise!')],
+    sentences: [S5('La semana pasada fui a la playa.', 'lah seh-MAH-nah pah-SAH-dah fwee ah lah PLAH-yah.', 'Last week I went to the beach.'), S5('¡Fue muy divertido!', 'fweh mooy dee-behr-TEE-doh!', 'It was really fun!', ['it was very fun']),
+      S5('De repente empezó a llover.', 'deh reh-PEHN-teh ehm-peh-SOH ah yoh-BEHR.', 'Suddenly it started to rain.', ['suddenly it started raining']), S5('Así que entramos en un café.', 'ah-SEE keh ehn-TRAH-mohs ehn oon kah-FEH.', 'So we went into a café.', ['so we went into a cafe']),
+      S5('¡Allí vi a un actor famoso!', 'ah-YEE bee ah oon ahk-TOR fah-MOH-soh!', 'I saw a famous actor there!'), S5('Al final volvimos a casa.', 'ahl fee-NAHL bohl-BEE-mohs ah KAH-sah.', 'In the end we went back home.', ['in the end we went home'])],
+    blanks: [{ t: 'Ayer __ a la playa.', en: 'Yesterday I went to the beach.', options: ['fui', 'voy'], answer: 'fui', why: 'Fui = I went (finished past).' },
+      { t: 'Empezó a llover, __ entramos en un café.', en: 'It started raining, so we went into a café.', options: ['así que', 'pero'], answer: 'así que', why: 'así que = so.' }] }
+);
+/* =====================================================================
+   DARI — FINALIZE: runs after all content files are loaded.
    ===================================================================== */
 const TRAVEL_SECTION = { title: 'Traveller’s phrasebook', blurb: 'Airport, money, directions, meeting people, food, hotel and help: what you need on day one in a new country.' };
 const NUM_PIC = { 'واحد': 'n1', 'اثنان': 'n2', 'ثلاثة': 'n3', 'أربعة': 'n4', 'خمسة': 'n5', 'ستة': 'n6', 'سبعة': 'n7', 'ثمانية': 'n8', 'تسعة': 'n9', 'عشرة': 'n10',
@@ -3837,8 +4003,10 @@ for (const c of Object.values(COURSES)) {
   c.sections = MAIN_SECTIONS[c.code] || c.sections;
   c.units.forEach(u => { u.s = MAIN_SECTION_OF[u.id] ?? u.s ?? 0; u.dialog = UNIT_DIALOG[u.id] ?? u.dialog; });
   /* Traveller's phrasebook sits right after the first season so a new visitor gets the survival phrases early. */
-  c.sections = c.sections.slice(); c.sections.splice(1, 0, TRAVEL_SECTION);
-  c.units.forEach(u => { u.s = u.s === 98 ? 1 : u.s === 99 ? c.sections.length - 1 : u.s >= 1 ? u.s + 1 : u.s; });
+  c.sections = c.sections.slice();
+  const insertSection = (idx, sec, key) => { c.sections.splice(idx, 0, sec); c.units.forEach(u => { if (u.s === key) u.s = idx; else if (u.s !== 98 && u.s !== 99 && u.s >= idx) u.s++; }); };
+  insertSection(1, TRAVEL_SECTION, 98);
+  insertSection(Math.max(2, c.sections.findIndex(x => x.title === 'Me & my world') + 1), DAILY_SECTION, 99);
   c.units = c.units.map((u, i) => [u, i]).sort((a, b) => (a[0].s - b[0].s) || (a[1] - b[1])).map(x => x[0]);
   c.letterUnits.forEach(u => { u.s = 0; });
   const seenC = new Set(['ㅇ']), seenV = new Set();
@@ -3863,6 +4031,8 @@ const pick = a => a[Math.floor(Math.random() * a.length)];
 const DAY = 864e5;
 const dayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const yesterdayKey = () => dayKey(new Date(Date.now() - DAY));
+/** Meaning without the fine print: "thank you (polite)" → "thank you". */
+const cleanEn = s => String(s || '').replace(/\s*\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
 const fill = (s, vars) => String(s).replace(/\{(\w+)\}/g, (m, k) => (vars[k] ?? m));
 
 /** Normalise learner input for comparison: strip spaces, punctuation, Arabic diacritics & letter variants. */
@@ -4228,7 +4398,7 @@ function addJoke(text) {
 const Sfx = {
   ctx: null,
   tone(f, t0, dur, type = 'sine', g = .14) {
-    if (!P()?.sound) return;
+    if (P() && !P().sound) return;
     try {
       this.ctx ||= new (window.AudioContext || window.webkitAudioContext)();
       const c = this.ctx, o = c.createOscillator(), v = c.createGain(), t = c.currentTime + t0;
@@ -4246,81 +4416,169 @@ const Sfx = {
 };
 
 /* ---------- 8. Speech: text-to-speech (native device voices) ---------- */
+/* ---------- Voices ----------
+   Friendly, human-ish speech with a different voice per character.
+   1. Studio voices: if the learner added a Gemini key, lines are spoken by
+      Gemini's expressive TTS (a named voice per character + an emotion).
+   2. Otherwise the device's best voice for the language (ranked: natural /
+      neural / online voices first, robotic ones last), and every character
+      gets a different installed voice when several exist, plus their own
+      pitch and pace. Emotions bend pitch, speed and loudness.            */
+const EMO_TTS = {
+  neutral: { p: 1, r: 1, v: 1, style: 'in a friendly, natural, conversational voice' },
+  happy: { p: 1.16, r: 1.06, v: 1, style: 'cheerfully, with a smile in your voice' },
+  excited: { p: 1.28, r: 1.14, v: 1, style: 'with real excitement' },
+  angry: { p: .86, r: 1.12, v: 1, style: 'angrily, sharp and firm' },
+  annoyed: { p: .9, r: .94, v: 1, style: 'in an annoyed, exasperated way, with a sigh' },
+  sad: { p: .82, r: .8, v: .7, style: 'sadly and softly' },
+  surprised: { p: 1.34, r: 1.02, v: 1, style: 'with surprise, your voice rising' },
+  question: { p: 1.12, r: 1, v: 1, style: 'as a curious question, rising at the end' },
+  calm: { p: 1, r: .9, v: .95, style: 'calmly and gently' },
+  warm: { p: 1.05, r: .95, v: 1, style: 'warmly and kindly' },
+  sarcastic: { p: .9, r: .84, v: 1, style: 'sarcastically, dry and slow' },
+  whisper: { p: 1.05, r: .88, v: .45, style: 'in a soft whisper' },
+  panicked: { p: 1.24, r: 1.2, v: 1, style: 'in a panic, breathless' },
+  hesitant: { p: .96, r: .82, v: .9, style: 'hesitantly, unsure, trailing off' },
+  relieved: { p: 1.02, r: .88, v: .95, style: 'with a relieved sigh' }
+};
+const STUDIO_POOL = ['Leda', 'Aoede', 'Fenrir', 'Callirrhoe', 'Sulafat', 'Zephyr', 'Laomedeia', 'Umbriel', 'Despina', 'Autonoe', 'Erinome', 'Algenib', 'Vindemiatrix', 'Sadachbia'];
+const CHAR_VOICE = {
+  narrator: { pick: 0, pitch: 1.04, rate: 1, studio: 'Achird' },
+  voice_leo_04: { pick: 1, pitch: 1.22, rate: 1.08, studio: 'Puck' },
+  voice_sophia_02: { pick: 2, pitch: .94, rate: .96, studio: 'Kore' },
+  voice_hiro_01: { pick: 3, pitch: .74, rate: .88, studio: 'Gacrux' }
+};
+function voiceProfile(who) {
+  if (who && typeof who === 'object') return Object.assign({}, CHAR_VOICE[who.id] || CHAR_VOICE.narrator, who);
+  if (CHAR_VOICE[who]) return CHAR_VOICE[who];
+  if (who && typeof VOICES === 'object' && VOICES[who]) {
+    let h = 0; for (const ch of String(who)) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+    return { pick: 4 + (h % 7), pitch: VOICES[who][0], rate: VOICES[who][1], studio: STUDIO_POOL[h % STUDIO_POOL.length] };
+  }
+  return CHAR_VOICE.narrator;
+}
+const Studio = {
+  cache: new Map(), audio: null, failed: 0,
+  on() { const ai = Store.data && Store.data.ai; return !!(ai && ai.geminiKey && ai.studio !== false && this.failed < 3 && navigator.onLine !== false); },
+  stop() { try { if (this.audio) { this.audio.pause(); this.audio.onended && this.audio.onended(); this.audio = null; } } catch (e) { /* ignore */ } },
+  wav(b64, rate = 24000) {
+    const bin = atob(b64), n = bin.length, buf = new ArrayBuffer(44 + n), v = new DataView(buf), w = (o, str) => { for (let i = 0; i < str.length; i++) v.setUint8(o + i, str.charCodeAt(i)); };
+    w(0, 'RIFF'); v.setUint32(4, 36 + n, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n, true);
+    const out = new Uint8Array(buf, 44); for (let i = 0; i < n; i++) out[i] = bin.charCodeAt(i);
+    return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
+  },
+  async url(text, voice, style) {
+    const key = voice + '|' + style + '|' + text; if (this.cache.has(key)) return this.cache.get(key);
+    const ai = Store.data.ai, model = ai.ttsModel || 'gemini-2.5-flash-preview-tts';
+    const job = (async () => {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'x-goog-api-key': ai.geminiKey },
+        body: JSON.stringify({ contents: [{ parts: [{ text: `Say ${style}: ${text}` }] }], generationConfig: { responseModalities: ['AUDIO'], speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } } } })
+      });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const d = await r.json(), part = d?.candidates?.[0]?.content?.parts?.find(x => x.inlineData);
+      if (!part) throw new Error('no audio');
+      const m = /rate=(\d+)/.exec(part.inlineData.mimeType || ''); return this.wav(part.inlineData.data, m ? +m[1] : 24000);
+    })();
+    this.cache.set(key, job); job.catch(() => this.cache.delete(key));
+    return job;
+  },
+  el: null,
+  /** Phones only let audio play after a tap: warm up one <audio> element on the first touch and reuse it. */
+  unlock() {
+    if (this.el) return;
+    try { this.el = new Audio(); this.el.setAttribute('playsinline', ''); this.el.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA='; const p = this.el.play(); if (p) p.then(() => this.el.pause()).catch(() => {}); } catch (e) { /* ignore */ }
+  },
+  async play(text, voice, style, rate) {
+    const url = await Promise.race([this.url(text, voice, style), new Promise((_, rej) => setTimeout(() => rej(new Error('slow')), 4000))]);
+    this.stop(); const a = this.el || new Audio(); a.src = url; a.playbackRate = Math.max(.7, Math.min(1.3, rate)); this.audio = a;
+    await a.play();   // throws if the browser blocks it → caller falls back to the device voice
+    return new Promise(res => { a.onended = a.onerror = () => res(); });
+  }
+};
 const Voice = {
-  voices: [], warned: {}, loaded: null, keep: null, seq: 0,
-  /** Chrome fills getVoices() late; resolve once it has (or after a short wait) so the first tap is never silent. */
+  voices: [], warned: {}, seq: 0,
   init() {
     if (!('speechSynthesis' in window)) return;
-    const load = () => { this.voices = speechSynthesis.getVoices() || []; };
-    load();
-    speechSynthesis.addEventListener?.('voiceschanged', load);
-    this.loaded = new Promise(res => { if (this.voices.length) return res(); const t = setTimeout(res, 1500); speechSynthesis.addEventListener?.('voiceschanged', () => { clearTimeout(t); load(); res(); }, { once: true }); });
+    const load = () => { this.voices = speechSynthesis.getVoices(); this._ranked = {}; };
+    load(); speechSynthesis.onvoiceschanged = load;
+    const cancel = speechSynthesis.cancel.bind(speechSynthesis); this._cancel = cancel;
+    try { speechSynthesis.cancel = () => { Studio.stop(); Voice.seq++; cancel(); }; } catch (e) { /* read-only in some browsers */ }
+    // First touch anywhere: wake up audio + speech so later lines can play on phones.
+    const wake = () => { Studio.unlock(); try { if (!this.voices.length) this.voices = speechSynthesis.getVoices(); speechSynthesis.resume(); } catch (e) { /* ignore */ } if (window.Ambient) Ambient.gesture(); };
+    ['pointerdown', 'touchend', 'keydown'].forEach(ev => document.addEventListener(ev, wake, { passive: true }));
   },
-  /** Natural-sounding voices score high; old robotic engines score low. */
   score(v) {
-    const n = `${v.name} ${v.voiceURI || ''}`;
-    let s = 0;
-    if (/natural|neural|wavenet|studio|premium|enhanced|siri/i.test(n)) s += 6;
-    if (/online|google/i.test(n)) s += 3;
-    if (!v.localService) s += 1;
-    if (/espeak|festival|compact|flite|pico/i.test(n)) s -= 8;
+    const n = v.name || ''; let s = 0;
+    if (/natural|neural|online|premium|enhanced|wavenet|studio|siri/i.test(n)) s += 50;
+    if (/google/i.test(n)) s += 30; if (!v.localService) s += 10; if (v.default) s += 3;
+    if (/espeak|compact|eloquence|robot|novelty|bad news|bells|whisper|zarvox|trinoids|cellos|bubbles|jester|organ|bahh|boing|deranged|albert|fred|hysterical/i.test(n)) s -= 80;
     return s;
   },
-  /** All usable voices for a language, best first (exact locale before same language). */
-  options(lang) {
-    const base = lang.split('-')[0].toLowerCase(), l = lang.toLowerCase().replace('_', '-');
-    return this.voices.filter(v => v.lang && v.lang.toLowerCase().replace('_', '-').startsWith(base))
-      .sort((x, y) => (this.score(y) - this.score(x)) || ((y.lang.toLowerCase().replace('_', '-') === l) - (x.lang.toLowerCase().replace('_', '-') === l)));
+  ranked(lang) {
+    this._ranked ||= {}; if (this._ranked[lang]) return this._ranked[lang];
+    const base = lang.split('-')[0].toLowerCase();
+    const list = this.voices.filter(v => v.lang && v.lang.replace('_', '-').toLowerCase().startsWith(base));
+    const exact = list.filter(v => v.lang.replace('_', '-').toLowerCase() === lang.toLowerCase());
+    return (this._ranked[lang] = (exact.length ? exact.concat(list.filter(v => !exact.includes(v))) : list).sort((a, b) => this.score(b) - this.score(a)));
   },
-  /** Each character gets its own voice when the device has several; otherwise they share the best one and differ by pitch/speed. */
-  find(lang, who) {
-    const all = this.options(lang); if (!all.length) return null;
-    const top = this.score(all[0]), good = all.filter(v => this.score(v) >= top - 2).slice(0, 5);
-    const i = Math.max(0, MASCOT_ORDER.indexOf(who)); return good[who ? i % good.length : 0];
+  find(lang, pick = 0) {
+    const r = this.ranked(lang); if (!r.length) return null;
+    const good = r.filter(v => this.score(v) >= this.score(r[0]) - 25);   // keep to the nicer voices
+    return good[pick % good.length] || r[0];
   },
-  stop() { this.seq++; clearInterval(this.keep); try { speechSynthesis.cancel(); } catch (e) { /* ignore */ } },
-  speak(text, lang = course().tts, rate = .9, who = null) {
-    if (!('speechSynthesis' in window)) { this.warn(lang, 'This browser has no speech voices.'); return; }
-    text = String(text || '').trim(); if (!text) return;
-    who = who || P()?.mascot || null;
-    const id = ++this.seq;
-    const go = () => {
-      if (id !== this.seq) return;
-      try {
-        const vp = VOICES[who] || [1, 1], u = new SpeechSynthesisUtterance(text);
-        u.lang = lang;
-        const foreign = !/^en/i.test(lang);        // keep pitch gentle on other languages so sounds stay accurate
-        u.pitch = foreign ? Math.min(1.25, Math.max(.8, vp[0])) : Math.min(1.6, Math.max(.6, vp[0]));
-        u.rate = Math.min(1.4, Math.max(.5, rate * (foreign ? .5 + vp[1] / 2 : vp[1])));
-        u.volume = 1;
-        const v = this.find(lang, who);
-        if (v) { u.voice = v; u.lang = v.lang; } else if (this.voices.length) this.warn(lang, `No ${({ ko: 'Korean', ar: 'Arabic', es: 'Spanish' })[lang.slice(0, 2)] || lang} voice on this device. Install one in your system’s language settings for native audio.`);
-        u.onerror = e => { if (/synthesis|hardware|busy/.test(e.error || '')) this.warn(lang, 'Audio didn’t play. Check your volume and silent mode, then tap again.'); };
-        this.last = u;
-        speechSynthesis.resume();
-        speechSynthesis.speak(u);
-        // Chrome silently stops long lines after ~15s; nudging the engine keeps them going.
-        clearInterval(this.keep);
-        if (text.length > 80) this.keep = setInterval(() => { if (!speechSynthesis.speaking) clearInterval(this.keep); else { speechSynthesis.pause(); speechSynthesis.resume(); } }, 10000);
-      } catch (e) { /* ignore */ }
-    };
-    try { speechSynthesis.cancel(); } catch (e) { /* ignore */ }
-    // A short gap after cancel() is needed or Chrome drops the new line; wait for voices on the very first tap.
-    const start = () => setTimeout(go, 60);
-    if (!this.voices.length && this.loaded) this.loaded.then(start); else start();
+  /** Speak; returns a promise that resolves when the line has finished. who: character id / mascot id / {id, pitch, rate, volume}; emo: an EMO_TTS key. */
+  play(text, lang = course().tts, rate = .9, who = null, emo = null) {
+    if (!text) return Promise.resolve();
+    const prof = voiceProfile(who), e = EMO_TTS[emo || (who && who.emotion)] || null, seq = ++this.seq;
+    this.lastText = text; this.lastAt = Date.now();
+    const en = /^en/i.test(lang);
+    if (Studio.on() && !en) {
+      try { this._cancel && this._cancel(); } catch (x) { /* ignore */ }
+      if (window.Ambient) Ambient.duck();
+      return Studio.play(text, prof.studio || 'Achird', (e || EMO_TTS.neutral).style, rate / .9).catch(() => { Studio.failed++; return seq === this.seq ? this.device(text, lang, rate, prof, e) : null; });
+    }
+    if (window.Ambient) Ambient.duck();
+    return this.device(text, lang, rate, prof, e);
   },
-  /** Speak, then resolve when the line has finished (or after a safety timeout). */
-  speakThen(text, lang, rate = .9, who = null) {
+  device(text, lang, rate, prof, e) {
+    const synth = window.speechSynthesis;
+    if (!synth) { this.warn(lang, 'This browser has no speech voices.'); return Promise.resolve(); }
+    if (!this.voices.length) { try { this.voices = synth.getVoices(); this._ranked = {}; } catch (x) { /* ignore */ } }
     return new Promise(res => {
-      if (!('speechSynthesis' in window)) return res();
-      let fin = false; const done = () => { if (fin) return; fin = true; clearTimeout(t); res(); };
-      const t = setTimeout(done, 2500 + String(text).length * 300);
-      this.speak(text, lang, rate, who);
-      const hook = setInterval(() => { const u = this.last; if (u && u.text === String(text).trim()) { clearInterval(hook); u.onend = done; const er = u.onerror; u.onerror = e => { er && er(e); done(); }; } }, 30);
-      setTimeout(() => clearInterval(hook), 2000);
+      let started = false, finished = false, retried = false;
+      const done = () => { if (finished) return; finished = true; clearTimeout(guard); res(); };
+      const guard = setTimeout(done, 2500 + String(text).length * 300);
+      const make = useVoice => {
+        const u = new SpeechSynthesisUtterance(text); u.lang = lang;
+        u.rate = Math.max(.5, Math.min(2, rate * (prof.rate || 1) * (e ? e.r : 1)));
+        u.pitch = Math.max(0, Math.min(2, (prof.pitch || 1) * (e ? e.p : 1)));
+        u.volume = Math.max(.1, Math.min(1, (prof.volume ?? 1) * (e ? e.v : 1)));
+        if (useVoice) { const v = this.find(lang, prof.pick || 0); if (v) u.voice = v; else this.warn(lang, `No ${({ ko: 'Korean', ar: 'Arabic', es: 'Spanish' })[lang.slice(0, 2)] || lang} voice on this device. Install one in your phone’s language settings (Text-to-speech), or add a Gemini key in Me for studio voices.`); }
+        return u;
+      };
+      const say = useVoice => {
+        let u; try { u = make(useVoice); } catch (x) { u = make(false); }
+        u.onstart = () => { started = true; };
+        u.onend = done;
+        u.onerror = ev => { if (!started && !retried && !/interrupted|canceled/.test(ev && ev.error)) { retried = true; say(false); } else done(); };
+        this.last = u;
+        try { synth.speak(u); if (synth.paused) synth.resume(); } catch (x) { done(); }
+      };
+      const go = () => {
+        say(true);
+        // Some Android phones silently drop the first line or a chosen voice: try once more with the default voice.
+        setTimeout(() => { if (!started && !finished && !retried && !synth.speaking) { retried = true; try { this._cancel(); } catch (x) { /* ignore */ } setTimeout(() => say(false), 60); } }, 1100);
+      };
+      Studio.stop();
+      if (synth.speaking || synth.pending) { try { this._cancel(); } catch (x) { /* ignore */ } setTimeout(go, 90); } else go();
     });
   },
-  warn(lang, msg) { if (!this.warned[lang]) { this.warned[lang] = 1; toast(msg); } }
+  speak(text, lang, rate, who, emo) { this.play(text, lang, rate, who, emo); },
+  speakThen(text, lang, rate, who, emo) { return this.play(text, lang, rate, who, emo); },
+  stop() { try { speechSynthesis.cancel(); } catch (e) { /* ignore */ } },
+  warn(lang, msg) { if (this.voices.length && !this.warned[lang]) { this.warned[lang] = 1; toast(msg); } }
 };
 
 /* ---------- 9. Speech: recognition (Web Speech API) ---------- */
@@ -4329,15 +4587,31 @@ const Mic = {
   blocked: false, active: null,
   supported() { return !!this.SR && !this.blocked; },
   /** Resolves with an array of transcript alternatives; rejects with an error code string. */
-  listen(lang) {
+  /** Listen once. Resolves with transcript alternatives; rejects with an error code.
+   *  opts.target: expected text — if live speech already matches it, finish instantly.
+   *  opts.onInterim(text): live captions while you speak. Stops ~0.8s after you go quiet. */
+  listen(lang, opts = {}) {
     return new Promise((resolve, reject) => {
       if (!this.SR) return reject('unsupported');
-      let done = false; const r = new this.SR();
-      r.lang = lang; r.interimResults = false; r.maxAlternatives = 5; r.continuous = false;
-      r.onresult = e => { done = true; resolve([...e.results[0]].map(a => a.transcript)); };
-      r.onerror = e => { done = true; if (e.error === 'not-allowed' || e.error === 'service-not-allowed' || e.error === 'audio-capture') this.blocked = true; reject(e.error || 'error'); };
-      r.onend = () => { if (!done) reject('no-speech'); this.active = null; };
-      try { r.start(); this.active = r; } catch (err) { reject('start-failed'); }
+      let done = false, last = '', alts = [], quietT = null;
+      const r = new this.SR();
+      r.lang = lang; r.interimResults = true; r.maxAlternatives = 5; r.continuous = false;
+      const tnorm = opts.target ? norm(opts.target) : '';
+      const finish = list => { if (done) return; done = true; clearTimeout(quietT); clearTimeout(maxT); try { r.abort(); } catch (e) { /* ignore */ } this.active = null; resolve(list.filter(Boolean)); };
+      const maxT = setTimeout(() => { if (last) finish([last, ...alts]); else { try { r.stop(); } catch (e) { /* ignore */ } } }, opts.max || 8000);
+      r.onresult = e => {
+        let text = '', final = false, list = [];
+        for (let i = e.resultIndex; i < e.results.length; i++) { const res = e.results[i]; text += res[0].transcript; if (res.isFinal) { final = true; list = [...res].map(a => a.transcript); } }
+        text = text.trim(); if (text) last = text;
+        if (opts.onInterim && text) opts.onInterim(text);
+        if (final) return finish(list.length ? list : [last]);
+        if (tnorm && text && (similarity(norm(text), tnorm) >= .86 || norm(text).includes(tnorm))) return finish([text]);
+        clearTimeout(quietT); quietT = setTimeout(() => last && finish([last]), 850);
+      };
+      r.onerror = e => { if (done) return; if (e.error === 'not-allowed' || e.error === 'service-not-allowed' || e.error === 'audio-capture') this.blocked = true;
+        if (last && e.error !== 'not-allowed') return finish([last]); done = true; clearTimeout(maxT); clearTimeout(quietT); this.active = null; reject(e.error || 'error'); };
+      r.onend = () => { if (!done) { if (last) finish([last]); else { done = true; clearTimeout(maxT); this.active = null; reject('no-speech'); } } this.active = null; };
+      try { r.start(); this.active = r; if (typeof Sfx !== 'undefined' && Sfx.tap) Sfx.tap(); } catch (err) { reject('start-failed'); }
     });
   },
   stop() { try { this.active && this.active.stop(); } catch (e) { /* ignore */ } },
@@ -4493,7 +4767,7 @@ const Tutor = {
         this.suggest(t.steps[chat.step].chips.map(c => ({ t: fill(c.t, vars), r: fill(c.r, vars), en: fill(c.en, vars) })));
         Mascot.set(latin ? 'giggle' : 'happy', quip);
       }
-      if (P().autoVoice) Voice.speak(next.t, undefined, undefined, SCENE_NPC[LS().chat.topic]);
+      if (P().autoVoice) Voice.speakThen(model.t, undefined, .9, P().mascot, 'happy').then(() => Voice.speak(next.t, undefined, undefined, SCENE_NPC[LS().chat.topic]));   // your line, said right, then the reply
     } else {
       const heardPartly = voice && similarity(norm(text), norm(model.t)) > .35;
       const joke = heardPartly ? fill(pick(mc.mishear), { heard: text, right: model.t, rom: model.r })
@@ -4501,6 +4775,7 @@ const Tutor = {
       const mood = Math.random() < .5 ? 'giggle' : 'shocked';
       addJoke(joke);
       this.push({ who: 'tutor', mood, joke, fix: { you: text, better: model.t, rom: model.r, why: `That doesn’t answer “${step.say.en}”. Try the line above, or tap a suggestion.` } });
+      if (P().autoVoice) Voice.speak(model.t, undefined, .85, P().mascot, 'calm');
       Sfx.wrong(); Mascot.set(mood, joke);
       this.suggest(chips);
     }
@@ -4607,7 +4882,7 @@ Reply with ONLY one JSON object, no other text:
     });
     this.suggest((Array.isArray(res?.suggestions) ? res.suggestions : []).slice(0, 3).map(s => ({ t: str(s.text), r: str(s.rom), en: str(s.en) })).filter(s => s.t));
     Mascot.set(mood, msg.joke || msg.quip || msg.en);
-    if (p.autoVoice && msg.t) Voice.speak(msg.t, undefined, undefined, SCENE_NPC[LS().chat.topic]);
+    if (p.autoVoice) { const better = msg.fix && msg.fix.better; (better ? Voice.speakThen(better, undefined, .85, p.mascot, 'calm') : Promise.resolve()).then(() => { if (msg.t) Voice.speak(msg.t, undefined, undefined, SCENE_NPC[LS().chat.topic]); }); }
     checkAchievements(); Store.save(); renderChrome();
   }
 };
@@ -4730,7 +5005,7 @@ function gardenHTML() {
   const p = P(), c = course(), l = LS(), now = Date.now(), words = learnedWords(p, c.code);
   const due = words.filter(w => w.id && l.srs[w.id] && l.srs[w.id].due <= now);
   const blooming = words.filter(w => gardenStage(w.box) === 5).length;
-  if (!words.length) return `<div class="card garden"><h3>Word Garden</h3><div class="garden-empty">${plantSVG(0, false)}<p class="note">Every word you learn gets planted here. Remember it and it grows into a flower; forget it and it wilts until you water it with a quick review.</p></div></div>`;
+  if (!words.length) return `<div class="card garden"><h3>Word Garden</h3><div class="garden-empty">${plantSVG(0, false)}<p class="note">Every word you learn grows a flower here. Review to keep it blooming.</p></div></div>`;
   const sorted = [...words].sort((a, b) => (l.srs[a.id]?.due <= now ? 0 : 1) - (l.srs[b.id]?.due <= now ? 0 : 1) || (a.box || 0) - (b.box || 0));
   return `<div class="card garden"><h3>Word Garden <span class="muted num" style="font:700 14px var(--font-body)">${blooming}/${words.length} in bloom</span></h3>
     ${due.length ? `<div class="water-row"><p><b>${due.length} plant${due.length > 1 ? 's are' : ' is'} thirsty.</b> A quick review waters them.</p><button class="btn sky sm" data-practice="water">Water them</button></div>` : '<p class="note" style="margin:0 0 8px">Everything is watered. Come back tomorrow and see what needs you.</p>'}
@@ -4852,6 +5127,20 @@ const BUDDY_LINES = {
   reveal: ['No stress. Here it is, say it after me:', 'Let’s do it together. Repeat after me:']
 };
 
+/* Fun, everyday lines so the game isn't just textbook sentences. */
+const BUDDY_FUN = {
+  ko: [['우리 고양이는 정말 귀여워요.', 'uri goyangineun jeongmal gwiyeowoyo.', 'My cat is really cute.'], ['지금 피자 먹고 싶어요!', 'jigeum pija meokgo sipeoyo!', 'I want to eat pizza right now!'],
+    ['이 커피 너무 뜨거워요!', 'i keopi neomu tteugeowoyo!', 'This coffee is too hot!'], ['너무 졸려요.', 'neomu jollyeoyo.', 'I’m so sleepy.'], ['제 핸드폰 어디 있어요?', 'je haendeupon eodi isseoyo?', 'Where is my phone?'],
+    ['같이 먹어요!', 'gachi meogeoyo!', 'Let’s eat together!'], ['오늘 제 생일이에요!', 'oneul je saengirieyo!', 'Today is my birthday!'], ['배고파요. 음식 있어요?', 'baegopayo. eumsik isseoyo?', 'I’m hungry. Is there food?'],
+    ['제일 친한 친구예요!', 'jeil chinhan chinguyeyo!', 'You’re my best friend!'], ['와, 대박이에요!', 'wa, daebagieyo!', 'Wow, that’s awesome!'], ['커피 한 잔 더 주세요.', 'keopi han jan deo juseyo.', 'One more coffee, please.'], ['한국 드라마를 정말 좋아해요.', 'hanguk deuramareul jeongmal joahaeyo.', 'I really love K-dramas.']],
+  ar: [['قطتي لطيفة جدا.', 'qiṭṭatī laṭīfa jiddan.', 'My cat is very cute.'], ['أريد بيتزا الآن!', 'urīdu bītzā al-ān!', 'I want pizza now!'], ['هذه القهوة حارة جدا!', 'hādhihi al-qahwa ḥārra jiddan!', 'This coffee is very hot!'],
+    ['أنا نعسان جدا.', 'anā naʿsān jiddan.', 'I’m very sleepy.'], ['أين هاتفي؟', 'ayna hātifī?', 'Where is my phone?'], ['هيا نأكل معا!', 'hayyā naʾkul maʿan!', 'Let’s eat together!'], ['اليوم عيد ميلادي!', 'al-yawm ʿīd mīlādī!', 'Today is my birthday!'],
+    ['أنا جائع.', 'anā jāʾiʿ.', 'I’m hungry.'], ['أنت أعز صديق لي!', 'anta aʿazz ṣadīq lī!', 'You’re my best friend!'], ['واو، هذا رائع!', 'wāw, hādhā rāʾiʿ!', 'Wow, that’s amazing!'], ['قهوة أخرى من فضلك.', 'qahwa ukhrā min faḍlak.', 'Another coffee, please.'], ['الجو جميل اليوم.', 'al-jaww jamīl al-yawm.', 'The weather is beautiful today.']],
+  es: [['Mi gato es muy lindo.', 'mee GAH-toh ehs mwee LEEN-doh.', 'My cat is very cute.'], ['¡Quiero pizza ahora mismo!', 'KYEH-roh PEET-sah ah-OH-rah MEES-moh!', 'I want pizza right now!'], ['¡Este café está muy caliente!', 'EHS-teh kah-FEH ehs-TAH mwee kah-LYEHN-teh!', 'This coffee is very hot!'],
+    ['Tengo mucho sueño.', 'TEHN-goh MOO-choh SWEH-nyoh.', 'I’m very sleepy.'], ['¿Dónde está mi teléfono?', 'DOHN-deh ehs-TAH mee teh-LEH-foh-noh?', 'Where is my phone?'], ['¡Vamos a comer juntos!', 'BAH-mohs ah koh-MEHR HOON-tohs!', 'Let’s eat together!'],
+    ['¡Hoy es mi cumpleaños!', 'oy ehs mee koom-pleh-AH-nyohs!', 'Today is my birthday!'], ['¡Eres mi mejor amigo!', 'EH-rehs mee meh-HOHR ah-MEE-goh!', 'You’re my best friend!'], ['¡Qué increíble!', 'keh een-kreh-EE-bleh!', 'How amazing!'],
+    ['Otro café, por favor.', 'OH-troh kah-FEH, pohr fah-BOHR.', 'Another coffee, please.'], ['Hace un día precioso.', 'AH-seh oon DEE-ah preh-SYOH-soh.', 'It’s a beautiful day.']]
+};
 const EN_COMMON = new Set('i you he she we they it the a an my your is am are was want would like please thank thanks where what how why when can do does have has and to of in on for this that there here water coffee hello hi yes no not good very much go eat drink'.split(' '));
 function looksEnglish(text) { const w = String(text).toLowerCase().replace(/[^a-z' ]/g, ' ').split(/\s+/).filter(Boolean); if (w.length < 2) return false; return w.filter(x => EN_COMMON.has(x)).length / w.length >= .5; }
 const Buddy = {
@@ -4859,8 +5148,9 @@ const Buddy = {
   pool() {
     const c = course(), p = P(), started = c.units.filter(u => unitProgress(p, c.code, u.id) > 0);
     const units = started.length ? started : c.units.slice(0, 2);
-    const out = [], seen = new Set(), add = (x, w) => { if (!x || !x.t || !x.en || seen.has(x.t)) return; seen.add(x.t); out.push({ t: x.t, r: x.r || '', en: x.en, alt: x.alt || [], id: x.id, w }); };
+    const out = [], seen = new Set(), add = (x, w) => { if (!x || !x.t || !x.en || seen.has(x.t)) return; seen.add(x.t); out.push({ t: x.t, r: x.r || '', en: cleanEn(x.en), alt: x.alt || [], id: x.id, w }); };
     units.forEach(u => (u.sentences || []).forEach(s => add(s, 3)));
+    (BUDDY_FUN[c.code] || []).forEach(([t, r, en]) => add({ t, r, en }, 2));
     units.forEach(u => (u.words || []).filter(w => !/^(he|she|i|you|it|we|they|this|that|what|the|a|an|one|two|is|am|are)\b/i.test(w.en) && w.en.length > 3).forEach(w => add(w, 1)));
     units.forEach(u => u.story && u.story.lines.forEach(l => add({ t: l[1], r: l[2], en: l[3] }, 1)));
     const ids = new Set(units.map(u => u.dialog).filter(Boolean));
@@ -4913,7 +5203,7 @@ const Buddy = {
       return { verdict: 'english', line: fill(pick(BUDDY_LINES.english), { lang }) };
     let score = 0, best = alts[0];
     for (const a of alts) {
-      const s = latin ? similarity(romanNorm(a), romanNorm(it.r)) : Math.max(similarity(norm(a), norm(it.t)), ...(it.altT || []).map(x => similarity(norm(a), norm(x))));
+      const s = latin ? similarity(romanNorm(a), romanNorm(it.r)) : (norm(a).includes(norm(it.t)) && norm(it.t).length >= 2 ? 1 : Math.max(similarity(norm(a), norm(it.t)), ...(it.altT || []).map(x => similarity(norm(a), norm(x)))));
       if (s > score) { score = s; best = a; }
     }
     if (latin && score >= .8) return { verdict: 'roman', line: fill(pick(BUDDY_LINES.roman), { lang }), xp: 3 };
@@ -4967,7 +5257,7 @@ const Buddy = {
       Tutor.push({ who: 'award', text: `+${xp} XP` }); award(xp); Sfx.correct();
       if (it.id) SRS.update(it.id, true);
       Mascot.set('cheer', res.line);
-      this.nextAfter(res.verdict === 'perfect' ? null : it.t);
+      this.nextAfter(it.t);   // always hear the native version of what you just said
     } else if (res.verdict === 'english') {
       Tutor.push({ who: 'tutor', mood: 'giggle', quip: res.line }); Sfx.wrong();
     } else {
@@ -4978,7 +5268,7 @@ const Buddy = {
       if (it.id) SRS.update(it.id, false);
       Mascot.set(mood, res.line);
       if (reveal) { Tutor.push({ who: 'tutor', mood: 'happy', quip: pick(BUDDY_LINES.reveal), t: it.t, r: it.r, en: it.en }); this.nextAfter(it.t, 900); }
-      else if (P().autoVoice) Voice.speakThen(res.line, 'en-US', 1.05, P().mascot).then(() => { if (P().handsFree && UI.tab === 'chat' && !Mic.active && Mic.supported()) chatMic(); });
+      else if (P().autoVoice) Voice.speakThen(res.line, 'en-US', 1.05, P().mascot).then(() => res.better ? Voice.speakThen(res.better, course().tts, .85, P().mascot, 'calm') : null).then(() => { if (P().handsFree && UI.tab === 'chat' && !Mic.active && Mic.supported()) chatMic(); });
     }
     checkAchievements(); Store.save(); renderChrome(); renderChatHead();
   },
@@ -4986,7 +5276,7 @@ const Buddy = {
   nextAfter(sayFirst, delay = 450) {
     const lang = P().lang, tok = this._tok = (this._tok || 0) + 1;
     const go = () => { if (tok !== this._tok || P().lang !== lang || LS().chat.topic !== 'buddy') return; const next = this.pickNext(); if (next) this.ask(next); };
-    if (sayFirst && P().autoVoice) Voice.speakThen(sayFirst, course().tts, .9).then(() => setTimeout(go, 150));
+    if (sayFirst && P().autoVoice) Voice.speakThen(sayFirst, course().tts, .9, P().mascot, 'happy').then(() => setTimeout(go, 150));
     else setTimeout(go, delay);
   },
   help() {
@@ -5127,38 +5417,58 @@ function wearOverlay(kind) {
 function wardrobeHTML() {
   const p = P(), have = p.wardrobe || [], finds = p.dailyFinds || 0;
   return `<div class="card wardrobe"><h3>${esc(MASCOTS[p.mascot].name)}’s wardrobe <span class="muted num" style="font:700 14px var(--font-body)">${have.length}/${WARDROBE.length}</span></h3>
-    <p class="note" style="margin:0 0 10px">Say Today’s phrase out loud each day to unlock outfits. You’ve done it ${finds} time${finds === 1 ? '' : 's'}.</p>
+    <p class="note" style="margin:0 0 10px">Find your Boo in the Daily Peekaboo to unlock outfits. You’ve found it ${finds} time${finds === 1 ? '' : 's'}.</p>
     <div class="wear-grid"><button class="wear ${!p.wear ? 'on' : ''}" data-wear=""><span class="wear-art"><svg viewBox="-4 -14 128 128">${MASCOT_ART[p.mascot].body}${mascotFace('happy', MASCOT_ART[p.mascot])}</svg></span><small>Nothing</small></button>
     ${WARDROBE.map(w => { const ok = have.includes(w.id); return `<button class="wear ${p.wear === w.id ? 'on' : ''} ${ok ? '' : 'locked'}" ${ok ? `data-wear="${w.id}"` : 'disabled'}><span class="wear-art"><svg viewBox="-4 -14 128 128">${MASCOT_ART[p.mascot].body}${mascotFace('happy', MASCOT_ART[p.mascot])}${wearSVG(w.id, MASCOT_ART[p.mascot])}</svg></span><small>${ok ? esc(w.name) : `Find ${w.at}×`}</small></button>`; }).join('')}</div></div>`;
 }
 
-/* ---------- Today's phrase: one useful line a day, then say it out loud ---------- */
+/* ---------- Daily Peekaboo ---------- */
+const HIDE_SPOTS = ['tree', 'door', 'umbrella', 'bus', 'cake', 'gift', 'bag', 'house', 'table', 'island', 'menu', 'car'];
+const NOT_BOO = [['shoe', 'Just a sock-less shoe. Boo is not here.'], ['ticket', 'An old bus ticket. No Boo.'], ['receipt', 'A very long receipt. Still no Boo.'], ['cookie', 'Half a cookie. Suspicious, but no Boo.'], ['tissue', 'A tissue. Bless you. No Boo.'], ['pen', 'A pen that doesn’t work. No Boo.']];
 const seedOf = s => [...String(s)].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7);
 function daily() {
   const p = P(), c = course(), t = dayKey();
-  if (!p.daily || p.daily.day !== t || p.daily.lang !== c.code || !p.daily.phrase) {
-    const open = c.units.filter(u => unitUnlocked(u) && u.sentences && !u.dialog_only), src = (open.length ? open : c.units.filter(u => u.sentences)).flatMap(u => u.sentences);
-    const s = src[seedOf(t + c.code + p.name) % Math.max(1, src.length)];
-    p.daily = { day: t, lang: c.code, phrase: s ? { t: s.t, r: s.r, en: s.en } : null, done: false };
+  if (!p.daily || p.daily.day !== t || p.daily.lang !== c.code) {
+    const sd = seedOf(t + c.code + p.name), spots = [0, 1, 2].map(i => HIDE_SPOTS[(sd + i * 5) % HIDE_SPOTS.length]);
+    const pool = vocabPool(c).filter(w => w.pic && ART[w.pic] && !ABSTRACT_ART.has(w.pic));
+    const w = pool[sd % pool.length];
+    p.daily = { day: t, lang: c.code, spots, boo: sd % 3, tries: [], found: false, done: false, word: w ? w.id : null, junk: [(sd >>> 3) % NOT_BOO.length, (sd >>> 5) % NOT_BOO.length] };
     Store.save();
   }
   return p.daily;
 }
 function dailyHTML() {
-  const p = P(), c = course(), d = daily(), s = d.phrase, due = SRS.due().length;
-  if (!s) return '';
-  const review = due ? `<button class="btn ghost sm" data-practice="mix">Review ${due} word${due > 1 ? 's' : ''}</button>` : '';
-  return `<div class="daily phrase ${d.done ? 'done' : ''}"><span class="daily-tag">Today’s phrase</span>
-    <button class="daily-word" data-say="${esc(s.t)}"><span><span class="script" ${attrs(c)}>${esc(s.t)}</span><small>${esc(s.r)}</small></span>${ICON.speaker}</button>
-    <p class="muted" style="margin:6px 0 10px">${esc(s.en)}</p>
-    <div class="phrase-actions">${d.done ? '<b class="good">Said it today ✓</b>' : '<button class="btn primary sm" data-daily-done>I said it · +5 gems</button>'}${starBtn(s)}${review}</div></div>`;
+  const p = P(), c = course(), d = daily(), w = VOCAB_INDEX[d.word], mc = MASCOTS[p.mascot];
+  if (!w) return '';
+  if (d.done) {
+    const next = new Date(); next.setHours(24, 0, 0, 0); const h = Math.ceil((next - Date.now()) / 36e5);
+    return `<div class="daily done"><div class="daily-done-art">${artSVG(w.pic)}</div><div><b>Today’s peekaboo word</b><button class="dw" data-say="${esc(w.t)}"><span class="script" ${attrs(c)}>${esc(w.t)}</span><small>${esc(w.r)} · ${esc(w.en)}</small></button><small class="muted">${esc(mc.name)} hides somewhere new in ${h}h.</small></div></div>`;
+  }
+  if (d.found) {
+    const opts = shuffle([w.en, ...shuffle(vocabPool(c).filter(x => x.en !== w.en)).slice(0, 2).map(x => x.en)]);
+    return `<div class="daily found"><div class="daily-top"><div class="mascot" data-daily-m></div><div><b>Peekaboo! You found me!</b><small>Here’s today’s word. What does it mean?</small></div></div>
+      <button class="daily-word" data-say="${esc(w.t)}">${artSVG(w.pic)}<span><span class="script" ${attrs(c)}>${esc(w.t)}</span><small>${esc(w.r)}</small></span></button>
+      <div class="daily-opts">${opts.map(o => `<button class="chip-btn big" data-daily-ans="${esc(o)}">${esc(o)}</button>`).join('')}</div></div>`;
+  }
+  return `<div class="daily"><div class="daily-top"><b>Where’s ${esc(mc.name)} hiding?</b><small>${d.tries.length ? 'Not there! Try another spot.' : 'Find me for today’s word'}</small></div>
+    <div class="spots">${d.spots.map((s, i) => { const tried = d.tries.includes(i), junk = NOT_BOO[d.junk[d.tries.indexOf(i)] ?? 0]; return `<button class="spot ${tried ? 'tried' : ''}" data-hide="${i}" ${tried ? 'disabled' : ''}>${tried ? `${artSVG(junk[0])}<small>${esc(junk[1])}</small>` : `${artSVG(s)}<span class="peek-eyes"></span>`}</button>`; }).join('')}</div></div>`;
 }
-function dailyDone() {
-  const p = P(), d = daily(); if (d.done) return;
-  d.done = true; p.dailyFinds = (p.dailyFinds || 0) + 1; p.gems += 5;
+function hideTap(i) {
+  const d = daily(); if (d.found || d.tries.includes(i)) return;
+  Sfx.tap();
+  if (i === d.boo || d.tries.length >= 2) { d.found = true; d.boo = i; Store.save(); renderLearn(); const m = $('[data-daily-m]'); if (m) { paintMascot(m, P().mascot, 'peek', true); setTimeout(() => paintMascot(m, P().mascot, 'cheer', true), 700); } Voice.speak(VOCAB_INDEX[d.word].t); }
+  else { d.tries.push(i); Store.save(); renderLearn(); Sfx.wrong(); }
+}
+function dailyAnswer(ans) {
+  const p = P(), d = daily(), w = VOCAB_INDEX[d.word]; if (d.done) return;
+  const ok = ans === w.en, first = d.tries.length === 0;
+  d.done = true; p.dailyFinds = (p.dailyFinds || 0) + 1;
+  const gems = (ok ? 10 : 4) + (first ? 5 : 0); p.gems += gems;
+  SRS.update(w.id, ok);
   const unlocked = WARDROBE.filter(x => x.at <= p.dailyFinds && !(p.wardrobe ||= []).includes(x.id));
   unlocked.forEach(x => p.wardrobe.push(x.id));
-  award(3); Store.save(); toast('Nice! +5 gems', '✓');
+  award(ok ? 5 : 2); Store.save();
+  toast(ok ? `Correct! +${gems} gems${first ? ' (found me first try!)' : ''}` : `It means “${w.en}”. +${gems} gems anyway.`, ok ? '✓' : '');
   if (unlocked.length) setTimeout(() => newOutfit(unlocked[unlocked.length - 1]), 500);
   renderChrome(); renderLearn();
 }
@@ -5334,9 +5644,26 @@ const Account = {
 const _storeSave = Store.save.bind(Store);
 Store.save = function (fromCloud) { if (this.data && !fromCloud) this.data.savedAt = Date.now(); _storeSave(); if (!fromCloud) Account.queuePush(); };
 
+/* ---------- Owner / tester mode: only the app owner can jump around ----------
+   On Play (accounts on): automatic when signed in with an email listed in config.js → owners.
+   Local mode (no accounts): tap the version line on Me 7 times to switch it on for this device. */
+const OWNERS = (CFG.owners || ['ayeshaferozroza@gmail.com']).map(e => String(e).toLowerCase());
+const Tester = {
+  on() {
+    if (Account.enabled()) return !!(Account.user && OWNERS.includes(String(Account.user.email || '').toLowerCase()));
+    try { return localStorage.getItem('speakaboo-tester') === '1'; } catch (e) { return false; }
+  },
+  toggleLocal() {
+    if (Account.enabled()) { toast(Tester.on() ? 'Tester mode is on for your owner account' : 'Tester mode is only for the app owner', '🔒'); return; }
+    const next = !Tester.on(); try { localStorage.setItem('speakaboo-tester', next ? '1' : '0'); } catch (e) { /* ignore */ }
+    toast(next ? 'Tester mode on: every episode is open' : 'Tester mode off', next ? '🔓' : '🔒');
+    renderLearn(); renderLetters(); renderProfile(); renderChrome();
+  }
+};
 /* ---------- Who gets in: trial, subscriber, or paywall ---------- */
 const Access = {
   state() {
+    if (Tester.on()) return { ok: true, mode: 'owner' };
     if (!Account.enabled()) return { ok: true, mode: 'local' };
     if (!Account.user) return { ok: false, mode: 'signedout' };
     const now = Date.now(), m = Account.meta, until = Account.ms(m.premiumUntil);
@@ -5354,16 +5681,16 @@ const LOCK_REASON = {
   talk: `That’s ${TRIAL.talkPerDay} Talk rounds today, the free-trial limit. Premium talks all day.`,
   call: 'Call Boo is a Premium feature: hands-free voice practice, as long as you like.',
   drill: 'This drill is part of Premium. The trial includes the basic drills.',
-  skip: 'Skipping ahead to later seasons is part of Premium.'
+  skip: 'Episodes open one by one as you finish them.'
 };
 /** Is a feature allowed right now? trial = limited, premium/local = everything. */
 Access.allows = function (what, ctx) {
   const s = this.state();
-  if (s.mode === 'local' || s.mode === 'premium') return true;
+  if (what === 'skip') return Tester.on();
+  if (s.mode === 'local' || s.mode === 'premium' || s.mode === 'owner') return true;
   if (!s.ok) return false;
   const p = P(), t = dayKey();
   if (what === 'season') return !ctx || ctx.track === 'letters' || (ctx.s || 0) < TRIAL.seasons;
-  if (what === 'skip') return (ctx || 0) + 1 < TRIAL.seasons;
   if (what === 'drill') return TRIAL.drills.includes(ctx);
   if (what === 'call') return !!TRIAL.callBoo;
   if (what === 'talk') { if (!p) return true; if (!p.talkDay || p.talkDay.day !== t) p.talkDay = { day: t, n: 0 }; return p.talkDay.n < TRIAL.talkPerDay; }
@@ -5581,13 +5908,1077 @@ const React = {
   /** Coloured wash over the lesson stage. */
   flash(ok) { const st = $('#l-stage'); if (!st) return; st.classList.remove('flash-ok', 'flash-bad'); void st.offsetWidth; st.classList.add(ok ? 'flash-ok' : 'flash-bad'); }
 };
+
+/* =====================================================================
+   v5: everyday-life lines, streak "aww" moments, softer mistakes
+   ===================================================================== */
+/** Turn a word you just got right into a tiny real-life mission. */
+const DAILY_USE = [
+  [/\b(hello|hi|good (morning|afternoon|evening|day))\b/, ['Say {w} to the first person you see today.', 'Next time you answer the phone, try {w} first.', 'Walking into a shop today? Greet them with {w} in your head.']],
+  [/\b(thank|thanks)\b/, ['Say {w} in your head the next time someone hands you something.', 'Your tea arrives? That’s a {w} moment.', 'Someone holds the door for you? {w}!']],
+  [/\b(sorry|excuse me|apolog)/, ['Bump into someone today? {w} has your back.', 'Running late to something? Practise {w} on the way.', 'Stepped on a toe? {w}. Hopefully just in your head.']],
+  [/\b(goodbye|bye|see you|good night)\b/, ['Leaving home today? Whisper {w} to the door.', 'End your next call with {w}.']],
+  [/\b(yes|no|okay|ok)\b/, ['Answer your next question in your head with {w}.']],
+  [/\b(water)\b/, ['Thirsty later? Ask yourself for {w}.', 'Every glass of water today is a {w}.']],
+  [/\b(coffee|tea|milk|juice)\b/, ['Making {en} today? Name it: {w}.', 'Order your next {en} in your head: {w}.']],
+  [/\b(rice|bread|meat|fish|egg|apple|fruit|food|kimchi|soup|noodle|chicken|vegetable|dumpling|cake|pizza)/, ['Spot {en} on a plate today and say {w}.', 'Lunch break mission: find {en}, say {w}.']],
+  [/\b(eat|drink|hungry|delicious|tasty)\b/, ['Before your next meal, say {w}.', 'Food time today = {w} time.']],
+  [/\b(name|i am|i’m|nice to meet)/, ['Introduce yourself to the mirror tonight with {w}.']],
+  [/\b(mother|mom|father|dad|sister|brother|friend|family|baby|child|grandm|grandf)/, ['Texting your {en} today? Think {w}.', 'Picture your {en} and say {w}.']],
+  [/\b(one|two|three|four|five|six|seven|eight|nine|ten|hundred|number)\b/, ['Count the stairs today. Number {en} is {w}.', 'Look at a clock today and find {w}.']],
+  [/\b(today|tomorrow|yesterday|morning|night|now|time|week|day)\b/, ['Plan your day out loud and drop in {w}.', 'Check the time today and say {w}.']],
+  [/\b(hot|cold|rain|snow|weather|sun|wind)\b/, ['Look outside. Is it {en}? Say {w}.']],
+  [/\b(home|house|school|office|work|shop|store|market|hospital|station|restaurant|cafe|café|bank|toilet|bathroom)/, ['On your way to the {en}, say {w}.', 'Walking past a {en} today? That’s a {w}.']],
+  [/\b(bus|car|taxi|train|subway|plane|bike)\b/, ['Riding or seeing a {en} today? Call it {w}.']],
+  [/\b(red|blue|green|yellow|black|white|pink|orange|purple|colou?r)\b/, ['Find something {en} around you and say {w}.']],
+  [/\b(head|hand|eye|nose|mouth|ear|foot|leg|arm|face|hair|tooth)\b/, ['Touch your {en} and say {w}. Silly, but it sticks.']],
+  [/\b(shirt|shoes|hat|bag|clothes|dress|pants|jacket)\b/, ['Getting dressed? Your {en} is {w}.']],
+  [/\b(how much|price|money|cheap|expensive|pay|buy)\b/, ['At the shop today, ask yourself {w}', 'Checking a price tag? Think {w}.']],
+  [/\b(happy|sad|tired|sleepy|angry|bored|busy|sick|fine|good|great)\b/, ['Feeling {en} today? Tell yourself {w}.', 'Ask a friend how they are and imagine they say {w}.']],
+  [/\b(where|what|who|when|why|how)\b/, ['Ask yourself one question today that starts with {w}.']],
+  [/\b(like|love|want|need)\b/, ['Name one thing you {en} today, starting with {w}.']],
+  [/\b(phone|computer|book|pen|door|window|table|chair|bed|key|cup)\b/, ['Pick up a {en} today and call it {w}.', 'Stick a mental label on your {en}: {w}.']],
+  [/\b(cat|dog|bird|rabbit|tiger|bear|fish)\b/, ['See a {en} today? Greet it with {w}.']],
+  [/\b(please|help|wait|again|slowly)\b/, ['Use {w} once today, even if just in your head.']],
+  [/\b(go|come|sleep|study|read|write|walk|run|cook|wash|watch|listen|speak|work)\b/, ['Doing it today? Narrate it: {w}.', 'Before you {en} today, say {w}.']]
+];
+const DailyUse = {
+  seen: new Set(), last: '',
+  line(t, en) {
+    if (!t || this.seen.has(t)) return ''; 
+    const e = cleanEn(en || '').toLowerCase().split(/[\/;,]/)[0].trim(); if (!t || !e) return '';
+    for (const [re, lines] of DAILY_USE) if (re.test(e)) { this.seen.add(t); const opts = lines.filter(l => l !== this.last); const l = pick(opts.length ? opts : lines); this.last = l; return l.replace(/\{w\}/g, `“${t}”`).replace(/\{en\}/g, e); }
+    return '';
+  }
+};
+const WARM_PRAISE = ['That one’s yours now.', 'Clean answer. Your brain just filed it.', 'See? You know more than you think.', 'Smooth. Say it out loud once for luck.', 'Yes! That’s a real-life word now.'];
+const WARM_OOPS = ['Close! It’s “{right}”. You’ll see it again soon.', 'Easy mix-up. It’s “{right}”.', '“{you}” was a brave guess. The answer is “{right}”.', 'Not this time. Remember “{right}”, it comes back later.'];
+const COMFORT = ['Aww, come here. Mistakes are how words stick.', 'Deep breath. Even native speakers mix these up.', 'It’s okay! Boo still thinks you’re brilliant.'];
+Object.assign(React, {
+  /** The message under the headline: a daily mission when right, a kind fix when wrong. */
+  message(ok, item, info, wrongRun) {
+    if (ok) { const d = item && DailyUse.line(item.t, item.en); if (d) return 'Use it today: ' + d; let w; do { w = pick(WARM_PRAISE); } while (w === this._lp); this._lp = w; return w; }
+    if (wrongRun >= 2) return pick(COMFORT) + ' ' + fill('It’s “{right}”.', info);
+    return fill(pick(WARM_OOPS), info);
+  },
+  headline(ok, combo, wrongRun) {
+    if (ok) return combo >= 10 ? 'Legendary!' : combo >= 8 ? 'Unstoppable!' : combo >= 5 ? 'Aww, look at you!' : combo >= 3 ? 'On a roll!' : pick(['Nice!', 'Yes!', 'You got it!', 'Correct!']);
+    return wrongRun >= 3 ? 'Hug break' : wrongRun === 2 ? 'Aww, it’s okay' : pick(['Not quite', 'Almost!', 'Oopsie!']);
+  },
+  buzz(pattern) { try { navigator.vibrate && navigator.vibrate(pattern); } catch (e) { /* ignore */ } },
+  /** Rain particles across the whole screen. */
+  rain(type = 'hearts', n = 18) {
+    const layer = document.createElement('div'); layer.className = 'fx-rain'; document.body.append(layer);
+    const sh = { hearts: c => `<svg viewBox="0 0 20 20"><path d="M10 18C2 12 0 7 3 4c2-2 5-1 7 2 2-3 5-4 7-2 3 3 1 8-7 14z" fill="${c}"/></svg>`, stars: c => `<svg viewBox="0 0 20 20"><path d="M10 1l2.7 5.6 6.1.8-4.5 4.2 1.2 6L10 14.7 4.5 17.6l1.2-6L1.2 7.4l6.1-.8z" fill="${c}"/></svg>`, confetti: c => `<i style="background:${c}"></i>` };
+    const cols = { hearts: ['#FF6B6B', '#FF8A8A', '#FFB3B3'], stars: ['#FFC23D', '#FFE066', '#8D92FF'], confetti: ['#8D92FF', '#FF6B6B', '#FFC23D', '#4146C9', '#FFF2E1'] }[type];
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('span'); s.className = 'drop ' + type;
+      s.style.left = (Math.random() * 100) + 'vw'; s.style.animationDelay = (Math.random() * 500) + 'ms'; s.style.animationDuration = (1300 + Math.random() * 900) + 'ms';
+      s.style.setProperty('--sway', (Math.random() * 60 - 30) + 'px'); s.style.setProperty('--sz', (12 + Math.random() * 14) + 'px');
+      s.innerHTML = sh[type](pick(cols)); layer.append(s);
+    }
+    setTimeout(() => layer.remove(), 2600);
+  },
+  /** Big streak moment: Boo pops up blushing, hearts or stars fall. */
+  streak(n, kind) {
+    const tiers = n >= 10 ? ['confetti', 'Legendary streak!', 'star'] : n >= 8 ? ['stars', 'Unstoppable!', 'star'] : n >= 5 ? ['hearts', 'Aww, ' + n + ' in a row!', 'love'] : ['hearts', n + ' in a row!', 'love'];
+    const el = document.createElement('div'); el.className = 'streak-pop' + (n >= 8 ? ' gold' : '');
+    el.innerHTML = `<div class="sp-m mascot"></div><div class="sp-txt"><b>${tiers[1]}</b><small>${esc(pick(n >= 8 ? ['Boo is screaming (happily)', 'Is this even legal?', 'Fluent behaviour detected'] : ['Boo is blushing', 'Boo’s heart just did a flip', 'Keep it going!']))}</small></div>`;
+    document.body.append(el); paintMascot($('.sp-m', el), kind, tiers[2], true);
+    this.rain(tiers[0], n >= 8 ? 28 : 18); this.buzz([25, 40, 25, 40, 60]);
+    setTimeout(() => el.classList.add('out'), 2100); setTimeout(() => el.remove(), 2600);
+  },
+  /** Combo chip in the lesson header. */
+  comboChip(n) {
+    let c = $('#l-combo'); const h = $('#l-hearts'); if (!h) return;
+    if (!c) { c = document.createElement('span'); c.id = 'l-combo'; c.className = 'l-combo'; h.before(c); }
+    c.hidden = n < 2; if (n < 2) return;
+    c.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-6 1-9z" fill="#FF6B6B"/><path d="M12 12c1 2 3 3 3 5a3 3 0 0 1-6 0c0-1 1-2 1-3 1 1 2 0 2-2z" fill="#FFC23D"/></svg><b>${n}</b>`;
+    c.classList.toggle('hot', n >= 5); c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump');
+  }
+});
+/* =====================================================================
+   SPEAKABOO — REAL TALK: content bank
+   Bite-sized pragmatics rounds: how people ACTUALLY talk.
+   Each option carries its own feedback in the game's JSON shape:
+   [text, romanization, English, rating, emotion, stakes, explanation(<20 words)]
+   Ratings: Natural | Too Stiff | Culturally Awkward | Inappropriate
+   Emotions: happy | neutral | confused | offended | impressed
+   ===================================================================== */
+const RT_MODES = {
+  MICRO_ROLEPLAY: { name: 'Micro role-play', short: 'Role-play', color: '#4146C9' },
+  TONE_SLIDER: { name: 'Tone slider', short: 'Tone', color: '#7A5AF8' },
+  SOCIAL_STAKES: { name: 'Social stakes', short: 'Stakes', color: '#FF6B6B' },
+  SPEED_ROUND: { name: 'Speed round', short: 'Speed', color: '#E0A100' }
+};
+const RT = (mode, context, persona, prompt, options, extra = {}) => ({ mode, context, persona, prompt, options, ...extra });
+const O = (t, r, en, rating, emo, stakes, why) => ({ t, r, en, rating, emo, stakes, why, ok: rating === 'Natural' });
+
+const RT_BANK = {
+  ko: [
+    RT('MICRO_ROLEPLAY', 'Your friend’s story won’t end and your bus just pulled up.', 'Minji, your very chatty friend',
+      ['그래서 내가 뭐라고 했냐면…', 'geuraeseo naega mworago haennyamyeon…', 'So then, you know what I said…'], [
+        O('미안, 나 버스 왔어! 이따 톡해!', 'mian, na beoseu wasseo! itta tokae!', 'Sorry, my bus is here! Text you later!', 'Natural', 'happy', 10, 'Casual speech plus “톡” (KakaoTalk) is exactly how friends bail politely.'),
+        O('안녕히 계세요.', 'annyeonghi gyeseyo.', 'Goodbye (to someone staying).', 'Too Stiff', 'confused', -10, 'That’s for shopkeepers and elders, not your best friend.'),
+        O('조용히 해.', 'joyonghi hae.', 'Be quiet.', 'Inappropriate', 'offended', -10, 'That’s a command, not an exit. Friendship meter says ouch.')]),
+    RT('MICRO_ROLEPLAY', 'You need the server in a packed Korean BBQ place. They’re rushing past.', 'A very busy server',
+      ['(The server zooms past your table…)', '', ''], [
+        O('여기요!', 'yeogiyo!', 'Over here!', 'Natural', 'happy', 10, 'Calling “여기요!” out loud is normal and polite in Korean restaurants.'),
+        O('실례합니다, 잠시 시간 있으십니까?', 'sillyehamnida, jamsi sigan isseusimnikka?', 'Excuse me, might you have a moment?', 'Too Stiff', 'confused', -10, 'Sounds like a street survey. They’ll keep walking.'),
+        O('야!', 'ya!', 'Hey, you!', 'Inappropriate', 'offended', -10, '“야” is for close friends or scolding, never strangers.')]),
+    RT('TONE_SLIDER', 'Tell your roommate you’re starving.', 'Your roommate',
+      ['배고파?', 'baegopa?', 'Hungry?'], [
+        O('배고파 죽겠어.', 'baegopa jukgesseo.', 'I’m dying of hunger.', 'Natural', 'happy', 10, '“~죽겠어” (I’m dying) is everyday exaggeration between friends.'),
+        O('배가 고픕니다.', 'baega gopeumnida.', 'I am hungry. (formal)', 'Too Stiff', 'confused', 0, 'News-anchor formal. Your roommate will laugh at you.'),
+        O('배고프세요?', 'baegopeuseyo?', 'Are you hungry? (honorific)', 'Culturally Awkward', 'confused', -10, 'That asks THEM, with honorifics. Wrong person, wrong tone.')], { tone: 'Casual Native' }),
+    RT('TONE_SLIDER', 'Your new boss just paid for the team dinner.', 'Your new team leader',
+      ['다들 맛있게 먹었어요?', 'dadeul masitge meogeosseoyo?', 'Did everyone enjoy the meal?'], [
+        O('잘 먹었습니다!', 'jal meogeosseumnida!', 'Thank you for the meal!', 'Natural', 'impressed', 10, 'The go-to thanks when someone treats you. Formal ending fits a boss.'),
+        O('고마워!', 'gomawo!', 'Thanks! (casual)', 'Inappropriate', 'offended', -10, 'Casual speech to your boss? Bold career move.'),
+        O('땡큐!', 'ttaengkyu!', 'Thank-you! (Konglish)', 'Culturally Awkward', 'confused', -10, 'Cute with friends, risky with a boss on day one.')], { tone: 'Formal' }),
+    RT('TONE_SLIDER', 'Your friend shows you a hilarious meme.', 'Your best friend',
+      ['이거 봐 ㅋㅋㅋ', 'igeo bwa kkk', 'Look at this lol'], [
+        O('ㅋㅋㅋ 개웃겨!', 'kkk gae-utgyeo!', 'LOL, so freaking funny!', 'Natural', 'impressed', 10, '“개-” turns anything into “super”. Very slangy, friends only.'),
+        O('재미있네요.', 'jaemiinneyo.', 'That is amusing.', 'Too Stiff', 'neutral', 0, 'Polite, but it kills the meme on contact.'),
+        O('웃기십니다.', 'utgisimnida.', 'You are funny, sir.', 'Culturally Awkward', 'confused', -10, 'Super honorific. It sounds sarcastic between friends.')], { tone: 'Street Slang' }),
+    RT('SOCIAL_STAKES', 'At a concert, a fan your age screams next to you.', 'A hyped stranger',
+      ['와 대박! 미쳤다!', 'wa daebak! michyeotda!', 'Wow, insane! This is crazy good!'], [
+        O('완전 대박이에요!', 'wanjeon daebagieyo!', 'Totally amazing!', 'Natural', 'happy', 10, 'Matches their hype but stays polite, since you just met.'),
+        O('그렇습니까? 동의합니다.', 'geureoseumnikka? donguihamnida.', 'Is that so? I concur.', 'Too Stiff', 'confused', -10, 'You just turned a concert into a board meeting.'),
+        O('저 안 미쳤는데요?', 'jeo an michyeonneundeyo?', 'I’m not crazy though?', 'Culturally Awkward', 'confused', -10, 'Here “미쳤다” means insanely good, not actually crazy.')]),
+    RT('SOCIAL_STAKES', 'Your friend’s mum offers you more food. Third time.', 'Your friend’s mum, warm but insistent',
+      ['더 먹어, 많이 먹어!', 'deo meogeo, mani meogeo!', 'Eat more, eat lots!'], [
+        O('감사합니다! 진짜 맛있어요.', 'gamsahamnida! jinjja masisseoyo.', 'Thank you! It’s really delicious.', 'Natural', 'impressed', 10, 'Praising the food is the real thank-you to a Korean mum.'),
+        O('아니요, 됐어요.', 'aniyo, dwaesseoyo.', 'No, I’m good.', 'Culturally Awkward', 'offended', -10, 'A flat no sounds cold. Praise first, then slow down.'),
+        O('배불러.', 'baebulleo.', 'I’m full. (casual)', 'Inappropriate', 'offended', -10, 'Casual speech to an elder. Mum’s eyebrow just went up.')]),
+    RT('SPEED_ROUND', 'Your friend hisses this at you during an awkward moment.', 'Your friend',
+      ['눈치 좀 챙겨!', 'nunchi jom chaenggyeo!', '?'], [
+        O('Read the room!', '', '', 'Natural', 'impressed', 10, '눈치 = “eye-measure”: the Korean superpower of sensing the mood.'),
+        O('Grab your eyes!', '', '', 'Culturally Awkward', 'confused', -10, 'Literal, but nobody’s grabbing eyeballs here.'),
+        O('Take some snacks!', '', '', 'Culturally Awkward', 'confused', -10, 'Tempting, but no.')], { story: 'Koreans say people with good 눈치 “read the air” and never need things spelled out.' }),
+    RT('SPEED_ROUND', 'You see your dream sneakers. Sold out forever.', 'You, sad',
+      ['그림의 떡', 'geurimui tteok', '?'], [
+        O('So close, but I can’t have it', '', '', 'Natural', 'impressed', 10, 'A rice cake in a painting: looks tasty, can’t eat it.'),
+        O('Easy as cake', '', '', 'Culturally Awkward', 'confused', -10, 'Wrong snack idiom. That one is 식은 죽 먹기.'),
+        O('A beautiful painting', '', '', 'Culturally Awkward', 'confused', -10, 'Too literal. It’s about wanting the unreachable.')], { story: 'Imagine a painted rice cake on the wall, staring at you. Torture.' }),
+    RT('SPEED_ROUND', 'Your friend finishes the quiz in two minutes.', 'Your smug friend',
+      ['식은 죽 먹기지!', 'sigeun juk meokgiji!', '?'], [
+        O('Piece of cake!', '', '', 'Natural', 'impressed', 10, 'Eating cold porridge takes zero effort, so it means super easy.'),
+        O('That was disgusting', '', '', 'Culturally Awkward', 'confused', -10, 'Cold porridge sounds gross, but the idiom is a flex.'),
+        O('I’m still hungry', '', '', 'Culturally Awkward', 'confused', -10, 'Nope, it’s not about food at all.')], { story: 'Hot porridge burns; cold porridge just slides down. Effortless.' })
+  ],
+  ar: [
+    RT('MICRO_ROLEPLAY', 'Your Cairo taxi driver is taking a “shortcut” the wrong way.', 'A chatty Cairo taxi driver',
+      ['يا باشا، ده طريق أسرع!', 'ya basha, da ṭarīʾ asraʿ!', 'Boss, this way is faster!'], [
+        O('لا يا أسطى، وقّف هنا لو سمحت.', 'la ya usṭa, waʾʾaf hina law samaḥt.', 'No, driver, stop here please.', 'Natural', 'happy', 10, '“يا أسطى” is the friendly Egyptian way to address a driver.'),
+        O('من فضلك توقف أيها السائق.', 'min faḍlik tawaqqaf ayyuha as-sāʾiq.', 'Please halt, O driver.', 'Too Stiff', 'confused', -10, 'Textbook Fusha in a taxi. He’ll think you’re reading the news.'),
+        O('إنت غلطان!', 'inta ghalṭān!', 'You’re wrong!', 'Culturally Awkward', 'offended', -10, 'Too blunt. Soften it with “يا أسطى” and “لو سمحت”.')]),
+    RT('MICRO_ROLEPLAY', 'At a friend’s house, they hand you a glass of tea.', 'Your host',
+      ['اتفضل، شاي!', 'itfaḍḍal, shāy!', 'Here you go, tea!'], [
+        O('تسلم إيدك!', 'tislam īdak!', 'Bless your hand!', 'Natural', 'happy', 10, 'You thank the hands that made it. Loved across the Arab world.'),
+        O('شكراً جزيلاً على هذا الشاي.', 'shukran jazīlan ʿala hādha ash-shāy.', 'Thank you very much for this tea.', 'Too Stiff', 'neutral', 0, 'Correct, but stiff. Locals bless the hands instead.'),
+        O('مش عايز.', 'mish ʿāyiz.', 'Don’t want it.', 'Inappropriate', 'offended', -10, 'Refusing tea bluntly can feel like refusing the host.')]),
+    RT('TONE_SLIDER', 'Ask your friend how they’re doing.', 'Your friend from Beirut',
+      ['مرحبا!', 'marḥaba!', 'Hi!'], [
+        O('كيفك؟ شو الأخبار؟', 'kīfak? shū il-akhbār?', 'How are you? What’s new?', 'Natural', 'happy', 10, 'Short and warm. Everyday Levantine (Lebanon, Syria, Jordan).'),
+        O('كيف حالك يا سيدي؟', 'kayfa ḥāluka yā sayyidī?', 'How is your state, sir?', 'Too Stiff', 'confused', -10, 'Calling your friend “sir”? Now they’re worried.'),
+        O('ما اسمك؟', 'mā ismuk?', 'What’s your name?', 'Culturally Awkward', 'confused', -10, 'You… already know your friend’s name.')], { tone: 'Casual Native' }),
+    RT('TONE_SLIDER', 'Greet an older man at your first business meeting.', 'An older business partner',
+      ['أهلاً وسهلاً.', 'ahlan wa sahlan.', 'Welcome.'], [
+        O('السلام عليكم، تشرفنا.', 'as-salāmu ʿalaykum, tasharrafnā.', 'Peace be upon you, we’re honoured.', 'Natural', 'impressed', 10, 'Respectful greeting plus “we’re honoured” works everywhere.'),
+        O('هلا!', 'hala!', 'Hey!', 'Culturally Awkward', 'confused', -10, 'Warm with friends, too breezy for a first meeting.'),
+        O('يا زلمة!', 'yā zalameh!', 'Hey man!', 'Inappropriate', 'offended', -10, 'That’s for your buddies, not a respected elder.')], { tone: 'Formal' }),
+    RT('TONE_SLIDER', 'Your friend just got amazing news. Hype them up.', 'Your best friend',
+      ['نجحت بالامتحان!', 'nijaḥt bil-imtiḥān!', 'I passed the exam!'], [
+        O('يا سلام! إنت وحش!', 'yā salām! inta waḥsh!', 'Wow! You’re a beast!', 'Natural', 'impressed', 10, '“وحش” (beast) is top-tier praise among friends.'),
+        O('أهنئك على هذا النجاح.', 'uhanniʾuka ʿala hādha an-najāḥ.', 'I congratulate you on this success.', 'Too Stiff', 'neutral', 0, 'Sounds like a certificate, not a friend.'),
+        O('طيب.', 'ṭayyib.', 'Okay.', 'Culturally Awkward', 'offended', -10, 'Big news deserves more than “okay”.')], { tone: 'Street Slang' }),
+    RT('SOCIAL_STAKES', 'Your friend proudly shows off a new car.', 'A very proud friend',
+      ['شو رأيك بالسيارة الجديدة؟', 'shū raʾyak bis-sayyāra ij-jdīdeh?', 'What do you think of the new car?'], [
+        O('ما شاء الله! مبروك!', 'mā shāʾ allāh! mabrūk!', 'Wow, amazing! Congrats!', 'Natural', 'impressed', 10, '“ما شاء الله” praises without “jinxing” it. A cultural must.'),
+        O('إنها سيارة جيدة.', 'innahā sayyāra jayyida.', 'It is a good car.', 'Too Stiff', 'neutral', 0, 'Grammatically fine, emotionally a fax machine.'),
+        O('كم دفعت؟', 'kam dafaʿt?', 'How much did you pay?', 'Culturally Awkward', 'offended', -10, 'Asking the price first feels nosy and kills the joy.')]),
+    RT('SOCIAL_STAKES', 'Someone sneezes next to you in a café.', 'A stranger who just sneezed',
+      ['هاتشو!', 'hātshū!', 'Achoo!'], [
+        O('يرحمك الله.', 'yarḥamuk allāh.', 'God bless you.', 'Natural', 'happy', 10, 'The standard sneeze blessing. They’ll answer “يهدينا ويهديكم”.'),
+        O('بالهنا والشفا!', 'bil-hana wa-sh-shifa!', 'Enjoy your meal!', 'Culturally Awkward', 'confused', -10, 'That’s for eating. They sneezed, they didn’t eat.'),
+        O('(Say nothing)', '', '', 'Culturally Awkward', 'neutral', 0, 'Skipping the blessing can feel a little cold.')]),
+    RT('SPEED_ROUND', 'You ask a friend for a favour. They say:', 'Your generous friend',
+      ['على راسي!', 'ʿala rāsī!', '?'], [
+        O('With pleasure!', '', '', 'Natural', 'impressed', 10, '“On my head” means your request is honoured, top priority.'),
+        O('I have a headache', '', '', 'Culturally Awkward', 'confused', -10, 'Their head is fine, they’re saying yes!'),
+        O('Over my head', '', '', 'Culturally Awkward', 'confused', -10, 'Not confused, just very willing.')], { story: 'Carrying something on your head = carrying it with honour.' }),
+    RT('SPEED_ROUND', 'You ask if they’ll come to your party. They smile:', 'A friend who might not come',
+      ['إن شاء الله', 'in shāʾ allāh', '?'], [
+        O('Hopefully… maybe', '', '', 'Natural', 'impressed', 10, '“If God wills”: can mean yes, maybe, or a very polite never.'),
+        O('Definitely yes!', '', '', 'Culturally Awkward', 'confused', -10, 'Don’t set a plate for them just yet.'),
+        O('No way', '', '', 'Culturally Awkward', 'confused', -10, 'Too harsh. It keeps the door open.')], { story: 'Tone is everything: a cheerful one is hopeful, a long one… less so.' }),
+    RT('SPEED_ROUND', 'You show your friend a tiny stray kitten in the rain.', 'Your soft-hearted friend',
+      ['يا حرام!', 'yā ḥarām!', '?'], [
+        O('Aww, poor thing!', '', '', 'Natural', 'impressed', 10, 'Literally “oh, forbidden!” but it means “what a pity, aww”.'),
+        O('That’s forbidden!', '', '', 'Culturally Awkward', 'confused', -10, 'Literal trap. Nobody is breaking rules here.'),
+        O('Hurry up!', '', '', 'Culturally Awkward', 'confused', -10, 'Nope, it’s pure sympathy.')], { story: 'Said for sad stories, wet kittens and anyone who missed their bus.' })
+  ],
+  es: [
+    RT('MICRO_ROLEPLAY', 'You’re at a bar in Madrid and want the bill. The waiter is relaxed.', 'A laid-back Madrid waiter',
+      ['¿Algo más, chicos?', 'AHL-goh mahs, CHEE-kohs?', 'Anything else, guys?'], [
+        O('¡Nada más, la cuenta cuando puedas!', 'NAH-dah mahs, lah KWEHN-tah KWAHN-doh PWEH-dahs!', 'That’s all, the bill when you can!', 'Natural', 'happy', 10, 'Using “tú” with waiters is totally normal in Spain.'),
+        O('Le solicito amablemente la factura.', 'leh soh-lee-SEE-toh ah-MAH-bleh-mehn-teh lah fahk-TOO-rah.', 'I kindly request the invoice.', 'Too Stiff', 'confused', -10, '“Factura” is a business invoice. You sound like an accountant.'),
+        O('¡Dame la cuenta ya!', 'DAH-meh lah KWEHN-tah yah!', 'Give me the bill now!', 'Inappropriate', 'offended', -10, '“Ya” turns it into a demand. Add “cuando puedas”.')]),
+    RT('MICRO_ROLEPLAY', 'Your Mexican friend invites you to a party. You’re exhausted.', 'Your hyped Mexican friend',
+      ['¡Vente a la fiesta, va a estar bien padre!', 'BEHN-teh ah lah FYEHS-tah, bah ah ehs-TAR byehn PAH-dreh!', 'Come to the party, it’ll be awesome!'], [
+        O('¡Qué padre, pero hoy estoy muerto! La próxima sí.', 'keh PAH-dreh, PEH-roh oy ehs-TOY MWEHR-toh! lah PROHK-see-mah see.', 'Awesome, but I’m dead today! Next time for sure.', 'Natural', 'happy', 10, 'Echoing their slang and promising “next time” keeps it warm.'),
+        O('No deseo asistir.', 'noh deh-SEH-oh ah-sees-TEER.', 'I do not wish to attend.', 'Too Stiff', 'offended', -10, 'Sounds like declining a court summons.'),
+        O('¿Padre? ¿Tu papá va?', 'PAH-dreh? too pah-PAH bah?', 'Father? Is your dad going?', 'Culturally Awkward', 'confused', -10, 'In Mexico “padre” also means cool. Their dad isn’t invited.')]),
+    RT('TONE_SLIDER', 'Tell your friend last night’s concert was amazing. (Spain)', 'Your friend from Madrid',
+      ['¿Qué tal el concierto?', 'keh tahl ehl kohn-SYEHR-toh?', 'How was the concert?'], [
+        O('¡Fue la leche, tío!', 'fweh lah LEH-cheh, TEE-oh!', 'It was awesome, dude!', 'Natural', 'impressed', 10, '“La leche” = amazing in Spain. “Tío” = dude. Friends only.'),
+        O('Fue un concierto excelente.', 'fweh oon kohn-SYEHR-toh ehk-seh-LEHN-teh.', 'It was an excellent concert.', 'Too Stiff', 'neutral', 0, 'True, but it sounds like a newspaper review.'),
+        O('Fue muy bonito, señor.', 'fweh mooy boh-NEE-toh, seh-NYOHR.', 'It was very nice, sir.', 'Culturally Awkward', 'confused', -10, '“Señor” to your mate? Now it’s a weird job interview.')], { tone: 'Street Slang' }),
+    RT('TONE_SLIDER', 'Start an email to a professor you’ve never met.', 'Professor García',
+      ['(New email…)', '', ''], [
+        O('Estimado profesor García:', 'ehs-tee-MAH-doh proh-feh-SOHR gar-SEE-ah:', 'Dear Professor García:', 'Natural', 'impressed', 10, '“Estimado” plus a colon is the classic formal opener.'),
+        O('¡Hola, profe!', 'OH-lah, PROH-feh!', 'Hi, prof!', 'Culturally Awkward', 'confused', -10, 'Cute once you know them. Too chummy for a first email.'),
+        O('¿Qué onda, García?', 'keh OHN-dah, gar-SEE-ah?', 'What’s up, García?', 'Inappropriate', 'offended', -10, 'Street greeting plus surname only. Email deleted.')], { tone: 'Formal' }),
+    RT('TONE_SLIDER', 'Your friend asks how your day was. It was fine.', 'Your friend',
+      ['¿Qué tal tu día?', 'keh tahl too DEE-ah?', 'How was your day?'], [
+        O('Bien, tranqui. ¿Y tú?', 'byehn, TRAHN-kee. ee too?', 'Good, chill. You?', 'Natural', 'happy', 10, '“Tranqui” (short for tranquilo) is the relaxed everyday answer.'),
+        O('Mi día ha sido satisfactorio.', 'mee DEE-ah ah SEE-doh sah-tees-fahk-TOH-ryoh.', 'My day has been satisfactory.', 'Too Stiff', 'confused', -10, 'Satisfactory? Are you a robot filling in a form?'),
+        O('Normal.', 'nor-MAHL.', 'Normal.', 'Culturally Awkward', 'neutral', 0, 'Not wrong, but a bit flat. Ask back!')], { tone: 'Casual Native' }),
+    RT('SOCIAL_STAKES', 'At a party in Spain, a new friend leans in to greet you.', 'A friendly Spaniard',
+      ['¡Hola! Encantada.', 'OH-lah! ehn-kahn-TAH-dah.', 'Hi! Nice to meet you.'], [
+        O('¡Encantado! ¿Qué tal? (two cheek kisses)', 'ehn-kahn-TAH-doh! keh tahl?', 'Nice to meet you! How’s it going?', 'Natural', 'happy', 10, 'Two cheek kisses, right cheek first, is the Spanish hello.'),
+        O('Es un placer conocerla, señorita.', 'ehs oon plah-SEHR koh-noh-SEHR-lah, seh-nyoh-REE-tah.', 'It is a pleasure to meet you, miss.', 'Too Stiff', 'confused', -10, '“Señorita” at a party sounds old-fashioned and a bit odd.'),
+        O('(Firm handshake only)', '', '', 'Culturally Awkward', 'neutral', 0, 'Not wrong, but it feels distant among friends of friends.')]),
+    RT('SOCIAL_STAKES', 'Your Argentinian friend’s grandma serves you a giant plate.', 'An Argentinian abuela',
+      ['¡Comé, comé, que estás flaquito!', 'koh-MEH, koh-MEH, keh ehs-TAHS flah-KEE-toh!', 'Eat, eat, you’re so skinny!'], [
+        O('¡Gracias, abuela! Está riquísimo.', 'GRAH-syahs, ah-BWEH-lah! ehs-TAH ree-KEE-see-moh.', 'Thanks, grandma! It’s delicious.', 'Natural', 'impressed', 10, '“Riquísimo” (super tasty) is the magic word for any abuela.'),
+        O('Le agradezco la comida, señora.', 'leh ah-grah-DEHS-koh lah koh-MEE-dah, seh-NYOH-rah.', 'I thank you for the food, madam.', 'Too Stiff', 'neutral', 0, 'Polite, but grandma wanted a hug, not a speech.'),
+        O('No tengo hambre.', 'noh TEHN-goh AHM-breh.', 'I’m not hungry.', 'Culturally Awkward', 'offended', -10, 'Refusing abuela’s food? Her heart just broke.')]),
+    RT('SPEED_ROUND', 'Your teacher waves a hand in front of your face:', 'Your teacher',
+      ['¡Estás en las nubes!', 'ehs-TAHS ehn lahs NOO-behs!', '?'], [
+        O('You’re daydreaming!', '', '', 'Natural', 'impressed', 10, 'Head in the clouds = not paying attention.'),
+        O('You’re on a plane!', '', '', 'Culturally Awkward', 'confused', -10, 'Too literal. You never left your chair.'),
+        O('You’re super happy!', '', '', 'Culturally Awkward', 'confused', -10, 'That’s “on cloud nine” in English, a different idea.')], { story: 'Same picture as English: your brain floated off to the sky.' }),
+    RT('SPEED_ROUND', 'Exam is tomorrow and you’re still on TikTok. Mum says:', 'Your mum',
+      ['¡Ponte las pilas!', 'POHN-teh lahs PEE-lahs!', '?'], [
+        O('Get your act together!', '', '', 'Natural', 'impressed', 10, '“Put your batteries in”: power up and get moving.'),
+        O('Charge your phone!', '', '', 'Culturally Awkward', 'confused', -10, 'Close, but she means YOU need charging.'),
+        O('Relax a bit!', '', '', 'Culturally Awkward', 'confused', -10, 'The exact opposite, sorry.')], { story: 'Like a toy that only moves once you pop in fresh batteries.' }),
+    RT('SPEED_ROUND', 'Your friend shrugs about the gossip:', 'Your unbothered friend',
+      ['Me importa un pepino.', 'meh eem-POR-tah oon peh-PEE-noh.', '?'], [
+        O('I couldn’t care less', '', '', 'Natural', 'impressed', 10, '“It matters a cucumber to me”: cucumbers are apparently worthless.'),
+        O('I love cucumbers', '', '', 'Culturally Awkward', 'confused', -10, 'This is not a salad conversation.'),
+        O('It’s very important', '', '', 'Culturally Awkward', 'confused', -10, 'Opposite! It matters zero.')], { story: 'Spanish loves vegetable shade: a cucumber, a radish (un rábano), same thing.' })
+  ]
+};
+/* =====================================================================
+   SPEAKABOO — REAL TALK
+   Game-like micro-challenges about how people ACTUALLY talk: role-plays,
+   a tone slider, a social-stakes meter and idiom speed rounds.
+   Every round, scripted or AI-made, flows through ONE JSON shape:
+   { game_mode, setup{context, character_persona, prompt_text},
+     ui_state{character_emotion, social_stakes_change},
+     feedback{is_successful, rating, explanation, alternative_suggestion} }
+   ===================================================================== */
+const RT_RATINGS = ['Natural', 'Too Stiff', 'Culturally Awkward', 'Inappropriate'];
+const RT_EMOS = ['happy', 'neutral', 'confused', 'offended', 'impressed'];
+const RT_FACE = { happy: 'cheer', neutral: 'happy', confused: 'think', offended: 'pout', impressed: 'star' };
+const RT_ROUNDS = 6, RT_SPEED_SECS = 10;
+
+/** The brief the AI follows (the product spec, plus language specifics). */
+function rtRules() {
+  const c = course();
+  return `You are the Real Talk game engine inside Speakaboo, a language app. Language being learned: ${c.name}. The learner is a beginner to intermediate English speaker.
+Provide interactive micro-challenges that feel like a mobile game, not a textbook. Never do plain "translate this sentence".
+PRINCIPLES: Bite-sized only (under 15-30 seconds to read and answer). Native and colloquial: real spoken, localized expressions, slang, idioms and tone; not stiff classroom grammar. Focus on pragmatics (how people actually talk) over syntax.
+GAME MODES: MICRO_ROLEPLAY (max 2 sentences; a situation where textbook language fails), TONE_SLIDER (target tone [Formal], [Casual Native] or [Street Slang]; judge only whether the tone is hit), SOCIAL_STAKES (grammatically fine but tone-deaf or robotic answers make the character confused or offended and drop the meter), SPEED_ROUND (an obscure or very local expression; give a fast funny origin story in feedback.explanation).
+Write ${c.name} text in its own script followed by romanization in parentheses${c.code === 'ar' ? ', and say which dialect when it is not Modern Standard Arabic' : ''}.
+OUTPUT: respond ONLY with one JSON object, no markdown, exactly this shape:
+{"game_mode":"MICRO_ROLEPLAY|TONE_SLIDER|SOCIAL_STAKES|SPEED_ROUND","setup":{"context":"1 short sentence","character_persona":"who you play","prompt_text":"the line the learner responds to"},"ui_state":{"character_emotion":"happy|neutral|confused|offended|impressed","social_stakes_change":-10|0|10},"feedback":{"is_successful":true|false,"rating":"Natural|Too Stiff|Culturally Awkward|Inappropriate","explanation":"max 20 words","alternative_suggestion":"a better native expression"}}
+When asked for a NEW ROUND: fill setup; use character_emotion "neutral", social_stakes_change 0, is_successful false, rating "Natural", explanation "", and put one great native answer in alternative_suggestion.
+When given the learner's ANSWER: keep the same setup and judge it. Explanation stays under 20 words.`;
+}
+/** Clamp anything the model says into the exact schema. */
+function rtClean(j, fallbackSetup) {
+  const s = v => (typeof v === 'string' ? v : '').slice(0, 300).trim();
+  const modes = Object.keys(RT_MODES);
+  const o = j && typeof j === 'object' ? j : {}, st = o.setup || {}, ui = o.ui_state || {}, fb = o.feedback || {};
+  const ch = Number(ui.social_stakes_change);
+  return {
+    game_mode: modes.includes(o.game_mode) ? o.game_mode : (fallbackSetup?.game_mode || 'MICRO_ROLEPLAY'),
+    setup: { context: s(st.context) || fallbackSetup?.setup.context || '', character_persona: s(st.character_persona) || fallbackSetup?.setup.character_persona || '', prompt_text: s(st.prompt_text) || fallbackSetup?.setup.prompt_text || '' },
+    ui_state: { character_emotion: RT_EMOS.includes(ui.character_emotion) ? ui.character_emotion : 'neutral', social_stakes_change: ch > 0 ? 10 : ch < 0 ? -10 : 0 },
+    feedback: { is_successful: fb.is_successful === true, rating: RT_RATINGS.includes(fb.rating) ? fb.rating : (fb.is_successful ? 'Natural' : 'Too Stiff'), explanation: s(fb.explanation).split(/\s+/).slice(0, 20).join(' '), alternative_suggestion: s(fb.alternative_suggestion) }
+  };
+}
+/** A scripted option, expressed in the game's JSON shape. */
+function rtFromBank(r, opt) {
+  const best = r.options.find(o => o.ok) || r.options[0];
+  return {
+    game_mode: r.mode,
+    setup: { context: r.context, character_persona: r.persona, prompt_text: r.prompt[0] },
+    ui_state: { character_emotion: opt.emo, social_stakes_change: opt.stakes },
+    feedback: { is_successful: opt.ok, rating: opt.rating, explanation: opt.why, alternative_suggestion: r.mode === 'SPEED_ROUND' ? `${r.prompt[0]} = ${best.t}` : best.t + (best.r ? ` (${best.r})` : '') }
+  };
+}
+
+const RealTalk = {
+  on: false, list: [], i: 0, stakes: 50, wins: 0, cast: 'mandu', timer: null, busy: false,
+  aiReady() { return Tutor.brain === 'claude' || Tutor.brain === 'gemini'; },
+  async ask(task) {
+    const rules = rtRules();
+    const turns = [{ role: 'user', content: task }];
+    return Tutor.brain === 'claude' ? await Tutor.askClaude(rules, turns) : await Tutor.askGemini(rules, turns);
+  },
+  open() {
+    if (this.on) return;
+    const c = course(), bank = RT_BANK[c.code] || [];
+    if (!bank.length) return toast('Real Talk is coming to this language soon.');
+    // Mix modes: never two of the same mode in a row if we can help it.
+    const pool = shuffle(bank.slice()), list = [];
+    while (pool.length && list.length < RT_ROUNDS) { const k = pool.findIndex(x => !list.length || x.mode !== list[list.length - 1].mode); list.push(pool.splice(k < 0 ? 0 : k, 1)[0]); }
+    if (this.aiReady()) list.splice(Math.min(3, list.length), 0, { ai: true });
+    Object.assign(this, { on: true, list, i: 0, stakes: 50, wins: 0 });
+    const el = document.createElement('div'); el.id = 'rt'; el.className = 'rt';
+    el.innerHTML = `<div class="rt-top"><button class="icon-btn" id="rt-x" aria-label="Close">${ICON.x}</button>
+      <div class="rt-meter" title="Social stakes"><svg viewBox="0 0 20 20" width="20" height="20"><path d="M10 18C2 12 0 7 3 4c2-2 5-1 7 2 2-3 5-4 7-2 3 3 1 8-7 14z" fill="#FF6B6B"/></svg><div class="rt-bar"><i id="rt-bar"></i></div><b id="rt-val">50</b></div>
+      <span class="rt-count" id="rt-count"></span></div>
+      <div class="rt-body" id="rt-body"></div>`;
+    document.body.append(el); requestAnimationFrame(() => el.classList.add('in'));
+    $('#rt-x').onclick = () => this.close();
+    this.drawMeter(0); this.round();
+  },
+  drawMeter(delta) {
+    $('#rt-bar').style.width = this.stakes + '%'; $('#rt-val').textContent = this.stakes;
+    $('#rt-bar').className = this.stakes >= 70 ? 'hi' : this.stakes <= 30 ? 'lo' : '';
+    if (delta) { const f = document.createElement('span'); f.className = 'rt-delta ' + (delta > 0 ? 'up' : 'down'); f.textContent = (delta > 0 ? '+' : '') + delta; $('.rt-meter').append(f); setTimeout(() => f.remove(), 1100); }
+  },
+  async round() {
+    clearInterval(this.timer); this.busy = false;
+    if (this.i >= this.list.length) return this.finish();
+    $('#rt-count').textContent = `${this.i + 1}/${this.list.length}`;
+    const cc = courseCast(); this.cast = cc[(this.i + 1) % cc.length];
+    let r = this.list[this.i];
+    if (r.ai) {
+      this.paint({ game_mode: 'MICRO_ROLEPLAY', setup: { context: 'Boo is writing you a fresh challenge…', character_persona: '', prompt_text: '' } }, null, true);
+      try {
+        const modes = Object.keys(RT_MODES);
+        const j = rtClean(await this.ask(`NEW ROUND. game_mode: ${pick(modes)}. Make it fresh, funny and about everyday life.`));
+        if (!j.setup.prompt_text) throw new Error('empty');
+        r = this.list[this.i] = { ai: true, json: j };
+      } catch (e) { this.list.splice(this.i, 1); return this.round(); }
+    }
+    this.paint(r.ai ? r.json : rtFromBank(r, { emo: 'neutral', stakes: 0, ok: false, rating: 'Natural', why: '' }), r);
+  },
+  /** Draw a round from its JSON (and the scripted options, if any). */
+  paint(j, r, loading) {
+    const c = course(), m = RT_MODES[j.game_mode], body = $('#rt-body'); if (!body) return;
+    const p = r && !r.ai ? r.prompt : null, isTarget = p && p[1];
+    const tone = r?.tone || (j.game_mode === 'TONE_SLIDER' ? (j.setup.context.match(/formal|casual|slang/i) || ['Casual'])[0] : '');
+    const toneIdx = /formal/i.test(tone) ? 0 : /slang/i.test(tone) ? 2 : 1;
+    body.innerHTML = `<div class="rt-card">
+      <span class="rt-mode" style="--mc:${m.color}">${esc(m.name)}</span>
+      <p class="rt-ctx">${esc(j.setup.context)}</p>
+      ${j.game_mode === 'TONE_SLIDER' ? `<div class="rt-tone"><div class="rt-tone-track"><i style="left:${toneIdx * 50}%"></i></div><div class="rt-tone-lbl">${['Formal', 'Casual native', 'Street slang'].map((x, k) => `<span class="${k === toneIdx ? 'on' : ''}">${x}</span>`).join('')}</div></div>` : ''}
+      <div class="rt-scene"><div class="mascot rt-char" id="rt-char"></div>
+        <div class="rt-say">${j.setup.character_persona ? `<small>${esc(j.setup.character_persona)}</small>` : ''}
+          ${loading ? '<span class="typing"><i></i><i></i><i></i></span>' : p ? `<button class="rt-line" ${isTarget ? `data-say="${esc(p[0])}"` : ''}><span class="${isTarget ? 'script' : ''}" ${isTarget ? attrs(c) : ''}>${esc(p[0])}</span>${isTarget ? `<small>${esc(p[1])}${p[2] && p[2] !== '?' ? ' · ' + esc(p[2]) : ''}</small>` : ''}</button>` : `<b class="rt-line ai">${esc(j.setup.prompt_text)}</b>`}</div></div>
+      ${j.game_mode === 'SPEED_ROUND' && !loading ? `<div class="rt-timer"><i id="rt-timer"></i></div><p class="rt-q">Quick! What does it really mean?</p>` : ''}
+      <div class="rt-opts" id="rt-opts">${r && !r.ai ? shuffle(r.options.map((o, k) => ({ o, k }))).map(({ o, k }, n) => `<button class="rt-opt" data-k="${k}" style="animation-delay:${n * 60}ms"><span class="${o.r ? 'script' : ''}" ${o.r ? attrs(c) : ''}>${esc(o.t)}</span>${o.r ? `<small>${esc(o.r)}</small>` : ''}</button>`).join('') : ''}</div>
+      ${!loading && (r?.ai || this.aiReady()) ? `<form class="rt-own ${r?.ai ? 'open' : ''}" id="rt-own">${r?.ai ? '' : '<button type="button" class="rt-own-toggle" id="rt-own-t">✎ Or say it your way</button>'}
+        <div class="rt-own-row"><input class="input script" id="rt-in" lang="${c.code}" dir="auto" placeholder="Your reply in ${esc(c.name)}…" autocomplete="off">${Mic.SR && !Mic.blocked ? `<button type="button" class="round" id="rt-mic" aria-label="Speak">${ICON.mic}</button>` : ''}<button class="round send" aria-label="Send">${ICON.send}</button></div></form>` : ''}
+    </div><div class="rt-fb" id="rt-fb" hidden></div>`;
+    paintMascot($('#rt-char'), this.cast, loading ? 'think' : 'peek', true);
+    if (loading) return;
+    if (isTarget) setTimeout(() => Voice.speak(p[0]), 300);
+    $$('.rt-opt', body).forEach(b => b.onclick = () => this.pickOpt(r, +b.dataset.k, b));
+    const own = $('#rt-own');
+    if (own) {
+      $('#rt-own-t') && ($('#rt-own-t').onclick = () => { own.classList.add('open'); $('#rt-in').focus(); });
+      own.onsubmit = e => { e.preventDefault(); const v = $('#rt-in').value.trim(); if (v) this.judge(j, v); };
+      $('#rt-mic') && ($('#rt-mic').onclick = async () => { const alts = await listenOnce(c.stt, { onInterim: t => { $('#rt-in').value = t; } }); if (alts && alts[0]) { $('#rt-in').value = alts[0]; this.judge(j, alts[0]); } });
+    }
+    if (j.game_mode === 'SPEED_ROUND' && r && !r.ai) {
+      const t0 = Date.now();
+      this.timer = setInterval(() => {
+        const left = 1 - (Date.now() - t0) / (RT_SPEED_SECS * 1000), bar = $('#rt-timer'); if (!bar) return clearInterval(this.timer);
+        bar.style.width = Math.max(0, left * 100) + '%'; bar.classList.toggle('hurry', left < .35);
+        if (left <= 0) { clearInterval(this.timer); if (this.busy) return; this.busy = true; $$('.rt-opt').forEach(b => { b.disabled = true; if (r.options[+b.dataset.k].ok) b.classList.add('was'); }); const best = r.options.find(o => o.ok); this.show(Object.assign(rtFromBank(r, { emo: 'confused', stakes: 0, ok: false, rating: 'Too Stiff', why: 'Too slow! ' + (r.story || best.why) }), {}), r, null); }
+      }, 100);
+    }
+  },
+  pickOpt(r, k, btn) {
+    if (this.busy) return; this.busy = true; clearInterval(this.timer);
+    const o = r.options[k]; $$('.rt-opt').forEach(b => { b.disabled = true; if (+b.dataset.k === k) b.classList.add(o.ok ? 'right' : 'wrong'); else if (r.options[+b.dataset.k].ok) b.classList.add('was'); });
+    this.show(rtFromBank(r, o), r, o);
+  },
+  async judge(j, answer) {
+    if (this.busy) return; this.busy = true; clearInterval(this.timer);
+    $('#rt-own')?.classList.add('busy'); paintMascot($('#rt-char'), this.cast, 'think', true);
+    try { this.show(rtClean(await this.ask(`ANSWER. Round: ${JSON.stringify({ game_mode: j.game_mode, setup: j.setup })}\nLearner's reply: "${answer.slice(0, 200)}"`), j), this.list[this.i], null, answer); }
+    catch (e) { this.busy = false; $('#rt-own')?.classList.remove('busy'); toast('Couldn’t reach the AI. Pick an answer instead.'); paintMascot($('#rt-char'), this.cast, 'oops', true); }
+  },
+  /** Show the verdict, react, move the stakes meter. */
+  show(j, r, opt, said) {
+    const c = course(), f = j.feedback, ch = j.ui_state.social_stakes_change, mood = RT_FACE[j.ui_state.character_emotion] || 'happy';
+    this.stakes = Math.max(0, Math.min(100, this.stakes + ch)); this.drawMeter(ch);
+    if (f.is_successful) { this.wins++; Sfx.correct(); } else { Sfx.wrong(); React.buzz(60); }
+    React.play($('#rt-char'), this.cast, mood);
+    const fx = { impressed: 'stars', happy: 'hearts', offended: 'clouds', confused: 'tears' }[j.ui_state.character_emotion];
+    if (fx) setTimeout(() => React.burst($('#rt-char'), fx, f.is_successful ? 10 : 6), 80);
+    if (f.is_successful && this.wins >= 3 && this.wins === this.i + 1) setTimeout(() => React.rain('hearts', 14), 200);
+    const best = r && !r.ai ? r.options.find(o => o.ok) : null;
+    const altSay = best && best.r ? best.t : '';
+    const head = /^Too slow/.test(f.explanation) ? 'Too slow!' : f.is_successful ? pick(j.ui_state.character_emotion === 'impressed' ? ['Native vibes!', 'Smooth!', 'They’re impressed!'] : ['Nailed it!', 'So natural!', 'Yes!']) : ({ 'Too Stiff': pick(['Bit stiff!', 'Robot alert!']), 'Culturally Awkward': pick(['Awkward…', 'Hmm, not quite!']), Inappropriate: pick(['Yikes!', 'Oof, no!']) }[f.rating] || 'Not quite');
+    const fb = $('#rt-fb'); fb.hidden = false; fb.className = 'rt-fb ' + (f.is_successful ? 'ok' : 'bad');
+    fb.innerHTML = `<div class="rt-fb-head"><b>${esc(head)}</b><span class="rt-rate r${RT_RATINGS.indexOf(f.rating)}">${esc(f.rating)}</span></div>
+      ${said ? `<p class="rt-said">You said: <span class="script" ${attrs(c)}>${esc(said)}</span></p>` : ''}
+      ${f.explanation ? `<p class="rt-why">${esc(f.explanation)}</p>` : ''}
+      ${r && r.story && j.game_mode === 'SPEED_ROUND' ? `<p class="rt-story"><b>Backstory:</b> ${esc(r.story)}</p>` : ''}
+      ${f.alternative_suggestion && !(f.is_successful && j.game_mode === 'SPEED_ROUND') ? `<div class="rt-alt"><small>${f.is_successful ? 'Also great' : 'Say it like a local'}</small>${altSay ? `<button class="rt-alt-line" data-say="${esc(altSay)}">${ICON.speaker}<span class="script" ${attrs(c)}>${esc(best.t)}</span></button><small>${esc(best.r)} · ${esc(best.en)}</small>` : `<b class="script" ${attrs(c)}>${esc(f.alternative_suggestion)}</b>`}</div>` : ''}
+      <div class="rt-fb-btns">${altSay && Mic.SR && !Mic.blocked ? `<button class="btn ghost sm" id="rt-sayit">${ICON.mic} Say it</button>` : ''}<button class="btn primary" id="rt-next">${this.i + 1 >= this.list.length ? 'See results' : 'Next'}</button></div>`;
+    if (altSay) setTimeout(() => Voice.speak(altSay), 500);
+    $('#rt-next').onclick = () => { this.i++; this.round(); };
+    $('#rt-sayit') && ($('#rt-sayit').onclick = async () => {
+      const b = $('#rt-sayit'); b.disabled = true; const alts = await listenOnce(c.stt, { target: altSay }); b.disabled = false;
+      const s = pronScore(altSay, alts || []); b.innerHTML = `${ICON.mic} ${s.pct}%`; if (s.ok) { React.burst(b, 'stars', 8); Sfx.correct(); }
+    });
+    requestAnimationFrame(() => fb.classList.add('in'));
+  },
+  finish() {
+    const n = this.list.length, xp = 5 + this.wins * 3, p = P(), body = $('#rt-body');
+    award(xp); p.stats.realTalk = (p.stats.realTalk || 0) + 1; Quests.bump('practice'); Store.save();
+    const mood = this.stakes >= 80 ? 'love' : this.stakes >= 60 ? 'star' : this.stakes >= 40 ? 'proud' : 'oops';
+    const title = this.stakes >= 80 ? 'Everyone loves you!' : this.stakes >= 60 ? 'Smooth talker!' : this.stakes >= 40 ? 'Getting there!' : 'Socially… brave!';
+    body.innerHTML = `<div class="rt-end"><div class="mascot" id="rt-end-m"></div><h2>${title}</h2>
+      <div class="tiles"><div><small>Natural answers</small><b>${this.wins}/${n}</b></div><div><small>Social stakes</small><b>${this.stakes}</b></div><div><small>XP</small><b>+${xp}</b></div></div>
+      <div class="stack"><button class="btn primary" id="rt-again">Play again</button><button class="btn ghost" id="rt-done">Done</button></div></div>`;
+    React.play($('#rt-end-m'), p.mascot, mood);
+    if (this.stakes >= 60) React.rain(this.stakes >= 80 ? 'confetti' : 'stars', 24);
+    $('#rt-again').onclick = () => { this.close(true); this.open(); };
+    $('#rt-done').onclick = () => this.close();
+  },
+  close(quiet) {
+    clearInterval(this.timer); this.on = false; window.speechSynthesis?.cancel();
+    const el = $('#rt'); if (!el) return; el.classList.remove('in'); setTimeout(() => el.remove(), quiet ? 0 : 250);
+    if (!quiet) renderChrome();
+  }
+};
+/* =====================================================================
+   SPEAKABOO — STORY ADVENTURE & LETTER EXPLORER: cast + chapters
+   Every scene is stored in the exact JSON shape the game engine uses:
+   { current_mode, character_engine{speaker_name, tts_voice_id,
+     tts_modifiers{emotion, speed}}, display_text{primary_target_language,
+     secondary_english_subtext}, story_state{scene_description,
+     user_choices[{choice_id, ui_button_text, english_translation}]},
+     feedback{is_correct, system_explanation} }
+   Scripted scenes also carry `_key` (which choice moves the story on)
+   and `_why` (one feedback line per choice). The engine turns those into
+   the `feedback` object when you pick.
+   ===================================================================== */
+const STORY_CAST = {
+  voice_leo_04: { name: 'Leo (Energetic Teen)', short: 'Leo', pitch: 1.3, rate: 1, pick: 0,
+    look: { c: '#C4F0F6', d: '#2F9C95', ink: '#1C1B2E' } },
+  voice_sophia_02: { name: 'Sophia (Sarcastic Barista)', short: 'Sophia', pitch: .9, rate: 1, pick: 1,
+    look: { c: '#FFE6D2', d: '#B9825A', ink: '#3A2416' } },
+  voice_hiro_01: { name: 'Grandpa Hiro (Wise/Calm)', short: 'Grandpa Hiro', pitch: .7, rate: 1, pick: 2,
+    look: { c: '#F3F1EA', d: '#7A7466', ink: '#2E2A22' } }
+};
+const VOICE_OF = { 'Leo (Energetic Teen)': 'voice_leo_04', 'Sophia (Sarcastic Barista)': 'voice_sophia_02', 'Grandpa Hiro (Wise/Calm)': 'voice_hiro_01' };
+/** Emotion → how the voice and the face change. */
+const EMOTION_TTS = {
+  excited: { pitch: 1.12, rate: 1.06, volume: 1, face: 'cheer' },
+  sarcastic: { pitch: .92, rate: .94, volume: 1, face: 'pout' },
+  warm: { pitch: 1.03, rate: .96, volume: 1, face: 'happy' },
+  whisper: { pitch: 1.05, rate: .9, volume: .45, face: 'peek' },
+  panicked: { pitch: 1.2, rate: 1.15, volume: 1, face: 'shocked' }
+};
+/** Short scene builder: who, emotion, speed, [target, subtext], scene, [[choice, english]...], key, [why...] */
+const STORY_SC = (voice, emotion, speed, line, scene, choices, key, why) => ({
+  current_mode: 'STORY_ADVENTURE',
+  character_engine: { speaker_name: STORY_CAST[voice].name, tts_voice_id: voice, tts_modifiers: { emotion, speed } },
+  display_text: { primary_target_language: line[0], secondary_english_subtext: line[1] },
+  story_state: { scene_description: scene, user_choices: choices.map(([t, en], i) => ({ choice_id: i + 1, ui_button_text: t, english_translation: en })) },
+  feedback: { is_correct: false, system_explanation: '' },
+  _key: key, _why: why
+});
+const V_LEO = 'voice_leo_04', V_SOPH = 'voice_sophia_02', V_HIRO = 'voice_hiro_01';
+
+const ADV_STORIES = {
+  ko: { id: 'ko-midnight', title: 'Midnight in Seoul', blurb: 'You missed the last subway. Leo, Sophia and Grandpa Hiro are your only hope.', art: 'moon', scenes: [
+    STORY_SC(V_LEO, 'panicked', 1.15, ['헐, 막차 끊겼어!', '[heol, mak-cha kkeun-kyeo-sseo] - Whoa, the last train’s gone!'], 'Seoul Station, 12:07 am. The gates slam shut. A teen in a hoodie stares at you in horror.',
+      [['진짜? 어떡해?', '[jin-jja? eo-tteo-kae] - Really? What do we do?'], ['안녕히 주무세요.', '[an-nyeong-hi ju-mu-se-yo] - Good night (very polite)']], 1,
+      ['Matching his panic in casual speech makes him your instant ally.', 'You wished him sweet dreams on a freezing platform. He looks betrayed.']),
+    STORY_SC(V_LEO, 'excited', 1.15, ['편의점 가자! 배고파 죽겠어.', '[pyeo-nui-jeom ga-ja! bae-go-pa juk-ge-sseo] - Let’s hit the convenience store! I’m starving.'], 'Leo is already jogging toward a glowing convenience-store sign.',
+      [['좋아, 가자!', '[jo-a, ga-ja] - Okay, let’s go!'], ['저는 배가 부릅니다.', '[jeo-neun bae-ga bu-reum-ni-da] - I am full (formal)']], 1,
+      ['Short and casual: exactly how friends agree to a plan.', 'Formal AND a buzzkill. Leo goes anyway, dragging you along.']),
+    STORY_SC(V_SOPH, 'sarcastic', 1.0, ['또 막차 놓친 사람이네요.', '[tto mak-cha no-chin sa-ra-mi-ne-yo] - Another one who missed the last train, I see.'], 'The clerk doesn’t look up from her phone. She has seen this a thousand times.',
+      [['네… 라면 하나 주세요.', '[ne… ra-myeon ha-na ju-se-yo] - Yeah… one ramyeon, please.'], ['야, 라면 줘.', '[ya, ra-myeon jwo] - Hey, gimme ramyeon.']], 1,
+      ['Polite -요 with a stranger, and ramyeon is the official midnight cure.', 'Casual speech to a stranger at work. Her eyebrow says “try again”.']),
+    STORY_SC(V_SOPH, 'sarcastic', 1.0, ['택시 승강장은 저쪽이에요.', '[taek-si seung-gang-jang-eun jeo-jjo-gi-e-yo] - The taxi stand is over there.'], 'She points at a sign outside that says 택시. Decode it to find your way home.',
+      [['택시! 감사합니다.', '[taek-si! gam-sa-ham-ni-da] - Taxi! Thank you.'], ['버스요?', '[beo-seu-yo] - The bus?']], 1,
+      ['You decoded 택시 = taxi. Sophia almost smiles. Almost.', '택 is “taek”, not “beo”. Sophia sighs dramatically.']),
+    STORY_SC(V_HIRO, 'warm', 0.85, ['어디로 모실까요?', '[eo-di-ro mo-sil-kka-yo] - Where may I take you?'], 'A grandpa taxi driver with kind eyes and a flask of barley tea.',
+      [['홍대 가 주세요.', '[hong-dae ga ju-se-yo] - To Hongdae, please.'], ['홍대 줘.', '[hong-dae jwo] - Give me Hongdae.']], 1,
+      ['“Place + 가 주세요” is the golden taxi phrase in Korea.', 'You can’t be handed a neighbourhood. And casual speech to an elder? Oof.']),
+    STORY_SC(V_HIRO, 'warm', 0.85, ['조심히 들어가요. 다음엔 막차 놓치지 마요.', '[jo-sim-hi deu-reo-ga-yo. da-eu-men mak-cha no-chi-ji ma-yo] - Get home safe. Don’t miss the last train next time.'], 'You’re home. Your phone buzzes: Leo texts “ㅋㅋㅋ 내일 또 놀자!” (lol let’s hang tomorrow!).',
+      [['감사합니다! 안녕히 가세요!', '[gam-sa-ham-ni-da! an-nyeong-hi ga-se-yo] - Thank you! Goodbye!'], ['잘 자!', '[jal ja] - Night! (casual)']], 1,
+      ['He’s driving away, so 안녕히 가세요 is perfect. Chapter complete!', 'Too casual for Grandpa Hiro. Save “잘 자” for Leo.'])
+  ] },
+  es: { id: 'es-tacos', title: 'Mystery tacos in Mexico City', blurb: 'Midnight street food with a hyper teen, a sarcastic taquera and a wise old regular.', art: 'taco', scenes: [
+    STORY_SC(V_LEO, 'excited', 1.15, ['¡Güey, tienes que probar los tacos de aquí!', '[GWAY, TYEH-nehs keh proh-BAR lohs TAH-kohs deh ah-KEE] - Dude, you have to try the tacos here!'], 'Midnight in Mexico City. Leo drags you to a tiny stall with a spinning trompo of al pastor.',
+      [['¡Órale, vamos!', '[OH-rah-leh, BAH-mohs] - Alright, let’s go!'], ['Prefiero cenar en un restaurante.', '[preh-FYEH-roh seh-NAR ehn oon rehs-tow-RAHN-teh] - I prefer to dine at a restaurant.']], 1,
+      ['“Órale” is pure Mexico: okay, let’s do this!', 'Leo gasps. Refusing street tacos in CDMX is basically a crime.']),
+    STORY_SC(V_SOPH, 'sarcastic', 1.0, ['¿Qué van a querer? Y no me digan “lo que sea”.', '[keh bahn ah keh-REHR? ee noh meh DEE-gahn loh keh SEH-ah] - What’ll it be? And don’t say “whatever”.'], 'The taquera wipes the counter, deeply unimpressed.',
+      [['Dos de pastor, por favor.', '[dohs deh pahs-TOR, por fah-BOR] - Two al pastor, please.'], ['Lo que sea.', '[loh keh SEH-ah] - Whatever.']], 1,
+      ['Number + “de” + filling is exactly how locals order tacos.', 'She literally just told you not to say that. Bold.']),
+    STORY_SC(V_SOPH, 'sarcastic', 1.0, ['¿Con todo?', '[kohn TOH-doh] - With everything?'], 'She gestures at onion, cilantro, salsa and a suspicious bright-green sauce.',
+      [['¡Con todo!', '[kohn TOH-doh] - With everything!'], ['¿Qué es “todo”? ¿El universo?', '[keh ehs TOH-doh? ehl oo-nee-BEHR-soh] - What’s “everything”? The universe?']], 1,
+      ['“Con todo” = onion, cilantro and salsa. The local default.', 'Sophia: “Sí, el universo. Cinco pesos extra.” Try again.']),
+    STORY_SC(V_LEO, 'panicked', 1.15, ['¡Aguas! ¡Esa salsa pica muchísimo!', '[AH-gwahs! EH-sah SAHL-sah PEE-kah moo-CHEE-see-moh] - Watch out! That salsa is super spicy!'], 'You reach for the green sauce. Leo grabs your arm. Decode what he means!',
+      [['¿Pica mucho? Mejor poquito.', '[PEE-kah MOO-choh? meh-HOR poh-KEE-toh] - Is it really spicy? Just a little, then.'], ['¿Agua? Sí, quiero agua.', '[AH-gwah? see, KYEH-roh AH-gwah] - Water? Yes, I want water.']], 1,
+      ['“¡Aguas!” means “watch out!” in Mexico. You saved your tongue.', '“Aguas” here means watch out, not water. Your mouth is now on fire.']),
+    STORY_SC(V_SOPH, 'sarcastic', 1.0, ['Son ochenta pesos, joven.', '[sohn oh-CHEHN-tah PEH-sohs, HOH-behn] - That’s eighty pesos, young one.'], 'She slides the bill across the counter. Time to pay.',
+      [['Aquí tiene. ¡Estaban buenísimos!', '[ah-KEE TYEH-neh. ehs-TAH-bahn bweh-NEE-see-mohs] - Here you go. They were amazing!'], ['¿Ocho pesos? ¡Qué barato!', '[OH-choh PEH-sohs? keh bah-RAH-toh] - Eight pesos? So cheap!']], 1,
+      ['Paying plus praise? Sophia nods. That’s her version of a hug.', 'Ochenta is 80, ocho is 8. Nice try.']),
+    STORY_SC(V_HIRO, 'warm', 0.85, ['Así se come en México, mijo. Despacito y con amigos.', '[ah-SEE seh KOH-meh ehn MEH-hee-koh, MEE-hoh. dehs-pah-SEE-toh ee kohn ah-MEE-gohs] - That’s how we eat in Mexico, kid. Slowly, with friends.'], 'An old man on the next stool raises his horchata to you.',
+      [['¡Salud, señor!', '[sah-LOOD, seh-NYOR] - Cheers, sir!'], ['¿Qué onda, viejo?', '[keh OHN-dah, BYEH-hoh] - What’s up, old man?']], 1,
+      ['Respectful “señor” plus a toast. Chapter complete!', '“Viejo” to an elder you just met sounds rude. Leo winces.'])
+  ] },
+  ar: { id: 'ar-souq', title: 'Lost in a Cairo souq', blurb: 'Haggle, decode signs and drink tea in Egyptian Arabic.', art: 'lantern', scenes: [
+    STORY_SC(V_LEO, 'excited', 1.15, ['يلا بينا! السوق ده تحفة!', '[YAL-la BEE-na! is-SOO’ da TOH-fa] - Let’s go! This market is awesome!'], 'Cairo at sunset. Leo, a hyper local teen, offers to show you around the old souq.',
+      [['يلا!', '[YAL-la] - Let’s go!'], ['لا أرغب في ذلك.', '[la AR-gha-bu fee DHA-lik] - I do not desire that.']], 1,
+      ['“يلا” is the most useful word in Arabic: let’s go, hurry, come on!', 'Textbook Fusha. Leo thinks you’re a robot tourist.']),
+    STORY_SC(V_SOPH, 'sarcastic', 1.0, ['عايز إيه؟ بص بس، ببلاش.', '[AA-yiz EH? BUSS bass, bi-ba-LAASH] - What do you want? Looking is free.'], 'A shopkeeper with a bored stare guards a mountain of copper lanterns.',
+      [['بكام ده؟', '[bi-KAAM da] - How much is this?'], ['كم ثمن هذا المصباح من فضلك؟', '[kam THA-man HAA-dha al-mis-BAAH min FAD-lik] - What is the price of this lamp, please?']], 1,
+      ['“بكام” is THE Egyptian price question.', 'Fusha in a souq? She jokes the price just doubled.']),
+    STORY_SC(V_SOPH, 'sarcastic', 1.0, ['ده بخمسمية جنيه بس.', '[da bi-KHUM-su-MEE-ya gi-NEEH bass] - That’s only 500 pounds.'], 'She smiles. That price is clearly a joke. Time to haggle.',
+      [['لا، كتير أوي! ميتين؟', '[la, k-TEER A-wi! mi-TEEN] - No, way too much! 200?'], ['ماشي، اتفضلي.', '[MAA-shi, it-FAD-da-li] - Okay, here you go.']], 1,
+      ['Haggling is expected. “كتير أوي” plus a counter-offer is the move.', 'You paid the joke price. She’s telling her friends tonight.']),
+    STORY_SC(V_LEO, 'panicked', 1.15, ['اقرا اليافطة دي بسرعة!', '[I’-ra il-YAF-ta di bi-SUR-a] - Read that sign, quick!'], 'The alley splits in two. A sign above one path says: مخرج. Decode it!',
+      [['مخرج! من هنا.', '[MAKH-rag! min HI-na] - Exit! This way.'], ['مطعم؟', '[MAT-am] - Restaurant?']], 1,
+      ['You decoded مخرج (makhrag) = exit. Leo is impressed.', 'مطعم is restaurant. You’re now standing in someone’s kitchen.']),
+    STORY_SC(V_HIRO, 'warm', 0.85, ['اتفضل اقعد، اشرب شاي.', '[it-FAD-dal U’-ud, ISH-rab shaay] - Please sit, have some tea.'], 'Outside the souq, an old café owner pulls up a chair for you.',
+      [['تسلم إيدك يا حاج.', '[TIS-lam EE-dak ya HAAGG] - Bless your hand, sir.'], ['مش عايز.', '[mish AA-yiz] - Don’t want it.']], 1,
+      ['“يا حاج” is a warm, respectful way to address an older man in Egypt.', 'Refusing an elder’s tea? Grandpa Hiro looks genuinely hurt.']),
+    STORY_SC(V_HIRO, 'warm', 0.85, ['نورتنا! تعالى تاني.', '[naw-WAR-ti-na! TA-a-la TAA-ni] - You lit up our place! Come again.'], 'The sun sets behind the minarets. Leo is already planning tomorrow.',
+      [['ده نورك! إن شاء الله.', '[da NOO-rak! in shaa’ AL-laah] - That’s your light! God willing.'], ['أنا مش لمبة.', '[A-na mish LAM-ba] - I’m not a lightbulb.']], 1,
+      ['“ده نورك” is the perfect polite comeback. Chapter complete!', '“You lit up the place” is a compliment, not about lamps. Leo is crying laughing.'])
+  ] }
+};
+/* =====================================================================
+   SPEAKABOO — STORY ADVENTURE + LETTER EXPLORER
+   Interactive fiction with three very different characters (each with
+   their own voice, emotion and speed), and an alphabet "intuition" game
+   where Grandpa Hiro shows letters living inside real words.
+   Scenes always flow through one JSON shape (see 3j-adventure-data.js),
+   whether scripted or written live by the AI.
+   ===================================================================== */
+const ADV_MODES = ['LETTER_EXPLORER', 'STORY_ADVENTURE'], ADV_EMOS = Object.keys(EMOTION_TTS), ADV_SPEEDS = [.85, 1, 1.15];
+
+/* ---------- The three characters: Boo-style ghosts with their own props ---------- */
+function charArt(voice) {
+  const c = STORY_CAST[voice] || STORY_CAST.voice_leo_04, o = c.look;
+  let extra = '';
+  if (voice === 'voice_leo_04') extra = `<path d="M33 31q27-24 54 0q-27-8-54 0z" fill="#FF6B6B" stroke="#C94040" stroke-width="2.6" stroke-linejoin="round"/><path d="M35 30q-14-2-20 6q10 3 21-2z" fill="#FF6B6B" stroke="#C94040" stroke-width="2.4" stroke-linejoin="round"/><circle cx="60" cy="20" r="3" fill="#C94040"/>`;
+  if (voice === 'voice_sophia_02') extra = `<circle cx="60" cy="13" r="9" fill="#8B5A3C" stroke="#5E3B24" stroke-width="2.5"/><path d="M50 18q10 6 20 0" stroke="#5E3B24" stroke-width="2.5" fill="none"/><g transform="translate(106 60)"><rect x="-7" y="-4" width="13" height="14" rx="3" fill="#fff" stroke="#5E3B24" stroke-width="2.2"/><path d="M6 0q6 0 6 4.5T6 9" fill="none" stroke="#5E3B24" stroke-width="2.2"/><path d="M-3-8q3-3 0-6M2-8q3-3 0-6" stroke="#B9825A" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>`;
+  if (voice === 'voice_hiro_01') extra = `<g fill="none" stroke="#5B544A" stroke-width="2.4"><circle cx="44" cy="56" r="10.5"/><circle cx="76" cy="56" r="10.5"/><path d="M54.5 55q5.5-4 11 0"/></g><path d="M34 42q8-6 16-1M70 41q8-5 16 1" stroke="#fff" stroke-width="4.5" stroke-linecap="round" fill="none"/><path d="M34 42q8-6 16-1M70 41q8-5 16 1" stroke="#9A9284" stroke-width="1.2" stroke-linecap="round" fill="none"/><path d="M50 65q5-4 10-1q5-3 10 1q-5 3-10 1q-5 2-10-1z" fill="#fff" stroke="#9A9284" stroke-width="1.5"/>`;
+  return { ink: o.ink, cheek: '#FFAA98', ey: 56, my: 70, sp: 16, c: o.c, d: o.d, body: booBody({ c: o.c, d: o.d, sw: 3.2 }), extra };
+}
+function charSVG(voice, mood = 'happy') { const a = charArt(voice); return `<svg viewBox="-4 -6 128 126" role="img" aria-label="${esc(STORY_CAST[voice]?.short || 'Character')}, ${mood}"><ellipse cx="60" cy="112" rx="34" ry="5" fill="#33223F" opacity=".1"/>${a.body}${mascotFace(mood, a)}${a.extra}</svg>`; }
+function paintChar(el, voice, mood = 'happy') {
+  if (!el) return; [...el.classList].filter(k => k.startsWith('m-')).forEach(k => el.classList.remove(k));
+  el.classList.add('mascot', 'm-' + mood); el.innerHTML = charSVG(voice, mood);
+  el.classList.remove('r-anim'); void el.offsetWidth; el.classList.add('r-anim');
+}
+/** Speak a line with the character's voice, emotion and speed. */
+function charSpeak(text, ce) {
+  const cast = STORY_CAST[ce?.tts_voice_id] || STORY_CAST.voice_leo_04, m = ce?.tts_modifiers || {}, e = EMOTION_TTS[m.emotion] || EMOTION_TTS.warm;
+  return Voice.speakThen(text, course().tts, .92 * (m.speed || 1), { id: ce?.tts_voice_id || 'voice_leo_04', emotion: m.emotion || 'warm' });
+}
+
+/* ---------- AI: same JSON, live ---------- */
+function advRules(mode) {
+  const c = course();
+  return `You are the Story Adventure and Letter Explorer engine inside Speakaboo, a language app. Language being learned: ${c.name}${c.code === 'ar' ? ' (use Egyptian Arabic for dialogue)' : ''}. Learner: beginner, English speaker.
+Focus on natural expressions, alphabet intuition and rich character dynamics.
+DUAL-LANGUAGE PHONETICS: for every phrase give the ${c.name} script AND an English phonetic/literal guide in the form "[pho-ne-tic] - meaning".
+VOICE & EMOTION: tag every line with a character and TTS data. Characters: "Leo (Energetic Teen)" voice_leo_04, fast-talking, heavy slang, speed 1.15; "Sophia (Sarcastic Barista)" voice_sophia_02, slow, dry, sarcastic native idioms, speed 1.0; "Grandpa Hiro (Wise/Calm)" voice_hiro_01, calm and warm, speed 0.85.
+STORY_ADVENTURE: an ongoing interactive fiction scene. Progress depends on choosing the right contextual expression or decoding a piece of text. Give exactly 2 user_choices (one right, one that backfires funnily).
+LETTER_EXPLORER: pair target letters with an English guide tied to them, inside a real short word.
+Respond ONLY with one JSON object, no markdown, exactly:
+{"current_mode":"${mode}","character_engine":{"speaker_name":"Leo (Energetic Teen)|Sophia (Sarcastic Barista)|Grandpa Hiro (Wise/Calm)","tts_voice_id":"voice_leo_04|voice_sophia_02|voice_hiro_01","tts_modifiers":{"emotion":"excited|sarcastic|warm|whisper|panicked","speed":0.85|1.0|1.15}},"display_text":{"primary_target_language":"","secondary_english_subtext":"[phonetic] - meaning"},"story_state":{"scene_description":"","user_choices":[{"choice_id":1,"ui_button_text":"","english_translation":"[phonetic] - meaning"},{"choice_id":2,"ui_button_text":"","english_translation":""}]},"feedback":{"is_correct":true|false,"system_explanation":"one sentence about the learner's LAST choice; empty on the first scene"}}`;
+}
+function advClean(j, mode) {
+  const s = v => (typeof v === 'string' ? v : '').slice(0, 300).trim(), o = j && typeof j === 'object' ? j : {};
+  const ce = o.character_engine || {}, tm = ce.tts_modifiers || {}, dt = o.display_text || {}, st = o.story_state || {}, fb = o.feedback || {};
+  const voice = STORY_CAST[ce.tts_voice_id] ? ce.tts_voice_id : VOICE_OF[ce.speaker_name] || 'voice_leo_04';
+  const sp = Number(tm.speed), speed = ADV_SPEEDS.reduce((a, b) => Math.abs(b - sp) < Math.abs(a - sp) ? b : a, 1);
+  const choices = (Array.isArray(st.user_choices) ? st.user_choices : []).slice(0, 3).map((x, i) => ({ choice_id: i + 1, ui_button_text: s(x?.ui_button_text), english_translation: s(x?.english_translation) })).filter(x => x.ui_button_text);
+  return {
+    current_mode: ADV_MODES.includes(o.current_mode) ? o.current_mode : mode,
+    character_engine: { speaker_name: STORY_CAST[voice].name, tts_voice_id: voice, tts_modifiers: { emotion: ADV_EMOS.includes(tm.emotion) ? tm.emotion : 'warm', speed } },
+    display_text: { primary_target_language: s(dt.primary_target_language), secondary_english_subtext: s(dt.secondary_english_subtext) },
+    story_state: { scene_description: s(st.scene_description), user_choices: choices },
+    feedback: { is_correct: fb.is_correct === true, system_explanation: s(fb.system_explanation) }
+  };
+}
+async function advAsk(mode, turns) {
+  const rules = advRules(mode);
+  return Tutor.brain === 'claude' ? await Tutor.askClaude(rules, turns) : await Tutor.askGemini(rules, turns);
+}
+
+/* ---------- Letter Explorer: build scenes from the Letters course ---------- */
+function jamoOf(ch) {
+  const k = ch.charCodeAt(0) - 0xAC00; if (k < 0 || k > 11171) return [ch];
+  return [HG.I[Math.floor(k / 588)], HG.M[Math.floor((k % 588) / 28)], HG.F[k % 28]].filter(Boolean);
+}
+function hasLetter(word, g, code) {
+  if (code === 'ko') return [...word].some(ch => jamoOf(ch).includes(g));
+  return word.toLowerCase().includes(g.toLowerCase());
+}
+function explorerScenes() {
+  const c = course(), p = P(), lu = c.letterUnits || [];
+  if (!lu.length) return [];
+  const unit = lu.find(u => unitProgress(p, c.code, u.id) < UNIT_LESSONS) || pick(lu);
+  const seen = new Set(), words = vocabPool(c).filter(w => w && w.t && [...w.t].length <= 6 && !/\s/.test(w.t) && !seen.has(w.t) && seen.add(w.t));
+  const units = [unit, ...lu.filter(u => u !== unit)];
+  const out = [];
+  for (const u of units) {
+    for (const l of shuffle((u.letters || []).slice())) {
+      if (out.length >= 5) break;
+      if (!l.g || l.g.length > 2) continue;
+      const withL = shuffle(words.filter(w => hasLetter(w.t, l.g, c.code))), without = shuffle(words.filter(w => !hasLetter(w.t, l.g, c.code)));
+      if (withL.length < 2 || !without.length) continue;
+      const show = withL[0], right = withL[1], wrong = without[0], guide = w => `[${w.r}] - ${cleanEn(w.en)}`;
+      const choices = shuffle([right, wrong]);
+      out.push({
+        current_mode: 'LETTER_EXPLORER',
+        character_engine: { speaker_name: STORY_CAST.voice_hiro_01.name, tts_voice_id: 'voice_hiro_01', tts_modifiers: { emotion: 'warm', speed: .85 } },
+        display_text: { primary_target_language: show.t, secondary_english_subtext: guide(show) },
+        story_state: { scene_description: `Grandpa Hiro circles ${l.g} in this word. It sounds like “${l.r}”. Which other word hides ${l.g}?`,
+          user_choices: choices.map((w, i) => ({ choice_id: i + 1, ui_button_text: w.t, english_translation: guide(w) })) },
+        feedback: { is_correct: false, system_explanation: '' },
+        _key: choices.indexOf(right) + 1, _letter: l, _say: show.t,
+        _why: choices.map(w => w === right ? `Yes! ${w.t} has ${l.g} in it: ${w.r}. You’re reading by feel now.` : `${w.t} (${w.r}) has no ${l.g}. Look for the shape ${l.g}.`)
+      });
+    }
+    if (out.length >= 5) break;
+  }
+  return out;
+}
+
+/* ---------- The player ---------- */
+const Adventure = {
+  on: false, mode: 'STORY_ADVENTURE', story: null, scenes: [], i: 0, tries: 0, wins: 0, ai: false, turns: [], aiLeft: 0,
+  progress() { const ls = LS(); ls.adv ||= {}; return ls.adv; },
+  open(mode = 'STORY_ADVENTURE') {
+    if (this.on) return;
+    const c = course();
+    let scenes = [], title = '';
+    if (mode === 'LETTER_EXPLORER') { scenes = explorerScenes(); title = c.code === 'ko' ? 'Hangeul Explorer' : c.code === 'ar' ? 'Alphabet Explorer' : 'Sound Explorer'; if (!scenes.length) return toast('Letter Explorer needs the Letters course for this language.'); }
+    else { this.story = ADV_STORIES[c.code]; if (!this.story) return toast('A story for this language is coming soon.'); scenes = this.story.scenes; title = this.story.title; }
+    const saved = mode === 'STORY_ADVENTURE' ? (this.progress()[this.story.id] || 0) : 0;
+    Object.assign(this, { on: true, mode, scenes, i: saved >= scenes.length ? 0 : saved, tries: 0, wins: 0, ai: false, turns: [], aiLeft: 0 });
+    const el = document.createElement('div'); el.id = 'adv'; el.className = 'rt adv ' + (mode === 'LETTER_EXPLORER' ? 'explorer' : 'story');
+    el.innerHTML = `<div class="rt-top"><button class="icon-btn" id="adv-x" aria-label="Close">${ICON.x}</button><div class="adv-title"><small>${mode === 'LETTER_EXPLORER' ? 'Letter Explorer' : 'Story Adventure'}</small><b>${esc(title)}</b></div><span class="rt-count" id="adv-count"></span></div>
+      <div class="adv-prog"><i id="adv-prog"></i></div><div class="rt-body" id="adv-body"></div>`;
+    document.body.append(el); requestAnimationFrame(() => el.classList.add('in'));
+    $('#adv-x').onclick = () => this.close();
+    this.show();
+  },
+  total() { return this.ai ? this.scenes.length + this.aiLeft : this.scenes.length; },
+  show() {
+    const j = this.scenes[this.i]; if (!j) return this.finish();
+    this.tries = 0;
+    $('#adv-count').textContent = `${Math.min(this.i + 1, this.total())}/${this.total()}`;
+    $('#adv-prog').style.width = (this.i / this.total() * 100) + '%';
+    this.paint(j);
+  },
+  paint(j) {
+    const c = course(), body = $('#adv-body'), ce = j.character_engine, cast = STORY_CAST[ce.tts_voice_id], e = ce.tts_modifiers.emotion;
+    const L = j._letter, prim = j.display_text.primary_target_language;
+    const primHTML = L && c.code === 'ko' ? [...prim].map(ch => jamoOf(ch).includes(L.g) ? `<mark>${esc(ch)}</mark>` : esc(ch)).join('') : L ? esc(prim).split(esc(L.g)).join(`<mark>${esc(L.g)}</mark>`) : esc(prim);
+    body.innerHTML = `<div class="adv-scene">
+      <p class="adv-narr">${esc(j.story_state.scene_description)}</p>
+      ${L ? `<button class="adv-letter" data-say="${esc(L.say || L.g)}"><span class="script" ${attrs(c)}>${esc(L.g)}</span><small>[${esc(L.r)}]${L.hint ? ' - ' + esc(L.hint.split('.')[0]) : ''}</small></button>` : ''}
+      <div class="adv-stage"><div class="adv-char" id="adv-char"></div>
+        <button class="adv-bubble" id="adv-line"><span class="adv-who">${esc(cast.short)}<em class="emo ${e}">${esc(e)} · ${ce.tts_modifiers.speed}×</em></span>
+          <span class="adv-prim script" ${attrs(c)}>${primHTML}</span><span class="adv-sub">${esc(j.display_text.secondary_english_subtext)}</span>${ICON.speaker}</button></div>
+      <div class="adv-choices">${j.story_state.user_choices.map((x, n) => `<button class="adv-ch" data-id="${x.choice_id}" style="animation-delay:${n * 70 + 150}ms"><span class="script" ${attrs(c)}>${esc(x.ui_button_text)}</span><small>${esc(x.english_translation)}</small></button>`).join('')}</div>
+      <div class="adv-fb" id="adv-fb" hidden></div></div>`;
+    paintChar($('#adv-char'), ce.tts_voice_id, EMOTION_TTS[e]?.face || 'happy');
+    const line = () => charSpeak(j._say || prim, ce);
+    $('#adv-line').onclick = line; setTimeout(line, 350);
+    $$('.adv-ch', body).forEach(b => b.onclick = () => this.choose(j, +b.dataset.id, b));
+  },
+  async choose(j, id, btn) {
+    if (this.busy) return;
+    const ch = j.story_state.user_choices.find(x => x.choice_id === id); if (!ch) return;
+    Voice.speak(ch.ui_button_text);
+    let fb;
+    if (j._key) fb = { is_correct: id === j._key, system_explanation: j._why[id - 1] || '' };
+    else {   // AI scene: the AI judges the choice and writes the next scene in one go
+      this.busy = true; btn.classList.add('wait'); paintChar($('#adv-char'), j.character_engine.tts_voice_id, 'think');
+      try {
+        this.turns.push({ role: 'assistant', content: JSON.stringify(j) }, { role: 'user', content: `Learner chose ${id}: "${ch.ui_button_text}". ${this.aiLeft <= 1 ? 'This is the final scene: wrap up the chapter.' : 'Continue the story with the next scene.'}` });
+        const next = advClean(await advAsk(this.mode, this.turns), this.mode); this.busy = false;
+        fb = next.feedback;
+        if (fb.is_correct && this.aiLeft > 0 && next.story_state.user_choices.length) { this.scenes.push(next); this.aiLeft--; }
+        else if (!fb.is_correct) this.turns.splice(-2, 2);
+      } catch (e) { this.busy = false; btn.classList.remove('wait'); toast('The AI didn’t answer. Try again.'); return; }
+    }
+    j.feedback = fb;
+    const f = $('#adv-fb'); f.hidden = false; f.className = 'adv-fb ' + (fb.is_correct ? 'ok' : 'bad');
+    btn.classList.add(fb.is_correct ? 'right' : 'wrong');
+    const voice = j.character_engine.tts_voice_id;
+    if (fb.is_correct) {
+      $$('.adv-ch').forEach(b => b.disabled = true); this.wins += this.tries === 0 ? 1 : 0; Sfx.correct();
+      paintChar($('#adv-char'), voice, pick(['star', 'laugh', 'cheer'])); setTimeout(() => React.burst($('#adv-char'), 'stars', 10), 60);
+      f.innerHTML = `<b>${pick(['Story unlocked!', 'Smooth move!', 'That worked!'])}</b><p>${esc(fb.system_explanation)}</p><button class="btn primary" id="adv-next">${this.i + 1 >= this.total() ? 'Finish chapter' : 'Next scene'}</button>`;
+      $('#adv-next').onclick = () => { this.i++; if (this.mode === 'STORY_ADVENTURE' && !this.ai) { this.progress()[this.story.id] = this.i; Store.save(); } this.show(); };
+    } else {
+      this.tries++; Sfx.wrong(); React.buzz(60); btn.disabled = true;
+      paintChar($('#adv-char'), voice, pick(['oops', 'dizzy', 'pout'])); setTimeout(() => React.burst($('#adv-char'), 'clouds', 5), 60);
+      f.innerHTML = `<b>${pick(['That backfired!', 'Plot twist… not good.', 'Hmm, nope!'])}</b><p>${esc(fb.system_explanation)}</p><small>Try the other option to continue the story.</small>`;
+    }
+    requestAnimationFrame(() => f.classList.add('in'));
+  },
+  finish() {
+    const p = P(), body = $('#adv-body'), n = this.scenes.length, xp = 5 + this.wins * 2;
+    award(xp); Quests.bump('practice'); Store.save();
+    if (this.mode === 'STORY_ADVENTURE' && !this.ai) { this.progress()[this.story.id] = n; Store.save(); }
+    $('#adv-prog').style.width = '100%';
+    const canAI = this.mode === 'STORY_ADVENTURE' && !this.ai && RealTalk.aiReady();
+    body.innerHTML = `<div class="rt-end"><div class="adv-cast">${['voice_leo_04', 'voice_sophia_02', 'voice_hiro_01'].map(v => `<div class="adv-mini" data-v="${v}"></div>`).join('')}</div>
+      <h2>${this.mode === 'LETTER_EXPLORER' ? 'You’re reading by feel!' : 'Chapter complete!'}</h2>
+      <div class="tiles"><div><small>First-try picks</small><b>${this.wins}/${n}</b></div><div><small>XP</small><b>+${xp}</b></div></div>
+      <div class="stack">${canAI ? '<button class="btn primary" id="adv-ai">Bonus chapter (AI-written)</button>' : ''}<button class="btn ${canAI ? 'ghost' : 'primary'}" id="adv-again">${this.mode === 'LETTER_EXPLORER' ? 'Explore more letters' : 'Replay chapter'}</button><button class="btn ghost" id="adv-done">Done</button></div></div>`;
+    $$('.adv-mini', body).forEach((el, k) => paintChar(el, el.dataset.v, ['cheer', 'pout', 'happy'][k]));
+    React.rain('stars', 20);
+    $('#adv-again').onclick = () => { const m = this.mode; if (m === 'STORY_ADVENTURE') this.progress()[this.story.id] = 0; this.close(true); this.open(m); };
+    $('#adv-done').onclick = () => this.close();
+    $('#adv-ai') && ($('#adv-ai').onclick = () => this.startAI());
+  },
+  async startAI() {
+    const body = $('#adv-body'); body.innerHTML = `<div class="rt-end"><div class="adv-char big" id="adv-char"></div><p class="adv-narr">Writing your bonus chapter…</p></div>`;
+    paintChar($('#adv-char'), 'voice_sophia_02', 'think');
+    try {
+      this.turns = [{ role: 'user', content: `Start a NEW short chapter (4 scenes) continuing "${this.story.title}" with Leo, Sophia and Grandpa Hiro. Give scene 1 now.` }];
+      const first = advClean(await advAsk('STORY_ADVENTURE', this.turns), 'STORY_ADVENTURE');
+      if (!first.story_state.user_choices.length || !first.display_text.primary_target_language) throw new Error('empty');
+      Object.assign(this, { ai: true, scenes: [first], i: 0, wins: 0, aiLeft: 3 }); this.show();
+    } catch (e) { toast('The AI couldn’t write a chapter right now.'); this.close(); }
+  },
+  close(quiet) {
+    this.on = false; this.busy = false; window.speechSynthesis?.cancel();
+    const el = $('#adv'); if (!el) return; el.classList.remove('in'); setTimeout(() => el.remove(), quiet ? 0 : 250);
+    if (!quiet) { renderChrome(); if (UI.tab === 'learn') renderLearn(); }
+  }
+};
+/* =====================================================================
+   SPEAKABOO — "NOW": phrases for the moment you're living
+   Four parts of the day, five real phrases each, with when you'd say it.
+   ===================================================================== */
+const CITY = {
+  ko: { city: 'Seoul', tz: 'Asia/Seoul' },
+  ar: { city: 'Cairo', tz: 'Africa/Cairo' },
+  es: { city: 'Mexico City', tz: 'America/Mexico_City' }
+};
+const DAYPARTS = {
+  morning: { name: 'Morning', from: 5, to: 11, mood: 'Coffee, commutes and “good morning”s.' },
+  midday: { name: 'Midday', from: 11, to: 16, mood: 'Lunch, menus and quick plans.' },
+  evening: { name: 'Evening', from: 16, to: 21, mood: 'Heading home, dinner, how-was-your-day.' },
+  night: { name: 'Night', from: 21, to: 29, mood: 'Late snacks and good nights.' }
+};
+const NP = (t, r, en, when) => ({ t, r, en, when });
+const MOMENTS = {
+  ko: {
+    morning: [
+      NP('좋은 아침!', 'jo-eun a-chim', 'Good morning!', 'The first person you see today.'),
+      NP('잘 잤어?', 'jal ja-sseo?', 'Did you sleep well?', 'Family or a friend, still yawning.'),
+      NP('아이스 아메리카노 한 잔 주세요.', 'a-i-seu a-me-ri-ka-no han jan ju-se-yo', 'One iced americano, please.', 'At the café. Koreans drink it iced, even in winter.'),
+      NP('늦었다!', 'neu-jeot-da!', 'I’m late!', 'Running out the door, shoe half on.'),
+      NP('오늘 날씨 좋다.', 'o-neul nal-ssi jo-ta', 'Nice weather today.', 'Looking out the window.')],
+    midday: [
+      NP('점심 먹었어요?', 'jeom-sim meo-geo-sseo-yo?', 'Have you had lunch?', 'How Koreans say hi to coworkers around noon.'),
+      NP('뭐 먹을까?', 'mwo meo-geul-kka?', 'What should we eat?', 'Friends standing outside five restaurants.'),
+      NP('이거 주세요.', 'i-geo ju-se-yo', 'This one, please.', 'Pointing at the menu. Works everywhere.'),
+      NP('잘 먹겠습니다!', 'jal meok-get-seum-ni-da!', 'Thanks for the meal!', 'Right before the first bite.'),
+      NP('계산해 주세요.', 'gye-san-hae ju-se-yo', 'The bill, please.', 'Done eating, ready to go.')],
+    evening: [
+      NP('수고하셨습니다!', 'su-go-ha-syeot-seum-ni-da!', 'Thanks for your hard work!', 'Leaving work. Everyone says it.'),
+      NP('오늘 어땠어?', 'o-neul eo-ttae-sseo?', 'How was your day?', 'A friend or family at dinner.'),
+      NP('피곤해.', 'pi-gon-hae', 'I’m tired.', 'Flopping onto the sofa.'),
+      NP('치킨 먹을래?', 'chi-kin meo-geul-lae?', 'Wanna get fried chicken?', 'The classic Korean evening plan.'),
+      NP('집에 가는 중이야.', 'ji-be ga-neun jung-i-ya', 'I’m on my way home.', 'Texting from the bus.')],
+    night: [
+      NP('잘 자!', 'jal ja!', 'Good night!', 'Friends, siblings, your cat.'),
+      NP('안녕히 주무세요.', 'an-nyeong-hi ju-mu-se-yo', 'Good night (polite).', 'Parents, grandparents, elders.'),
+      NP('내일 봐!', 'nae-il bwa!', 'See you tomorrow!', 'Ending a late chat.'),
+      NP('아직 안 자?', 'a-jik an ja?', 'You’re not asleep yet?', 'Texting a friend at 1 am.'),
+      NP('라면 먹을까?', 'ra-myeon meo-geul-kka?', 'Should I have ramyeon?', 'The midnight snack debate.')]
+  },
+  ar: {
+    morning: [
+      NP('صباح الخير!', 'sa-BAAH il-KHEER', 'Good morning!', 'The first person you see today.'),
+      NP('صباح النور!', 'sa-BAAH in-NOOR', 'Morning of light! (the reply)', 'When someone says صباح الخير to you.'),
+      NP('نمت كويس؟', 'nimt kway-YIS?', 'Did you sleep well?', 'Family or a friend at breakfast. (Egyptian)'),
+      NP('قهوة مظبوط لو سمحت.', 'AH-wa maz-BOOT law sa-MAHT', 'A medium-sweet coffee, please.', 'At the ahwa (café). مظبوط = just right sugar.'),
+      NP('أنا متأخر!', 'A-na mit-’AKH-khar', 'I’m late!', 'Running out the door. (Egyptian)')],
+    midday: [
+      NP('اتغديت؟', 'it-gha-DEET?', 'Have you had lunch?', 'A caring check-in around 2 pm. (Egyptian)'),
+      NP('ناكل إيه؟', 'NAA-kul EH?', 'What shall we eat?', 'The eternal lunch question. (Egyptian)'),
+      NP('عايز ده.', 'AA-yiz da', 'I want this one.', 'Pointing at the menu. Women say عايزة (AY-za).'),
+      NP('بالهنا والشفا!', 'bil-HA-na wish-SHI-fa', 'Enjoy your meal!', 'When food arrives, for anyone eating.'),
+      NP('الحساب لو سمحت.', 'il-hi-SAAB law sa-MAHT', 'The bill, please.', 'Done eating, ready to go.')],
+    evening: [
+      NP('مساء الخير!', 'ma-SAA’ il-KHEER', 'Good evening!', 'Walking into a shop or home after sunset.'),
+      NP('يومك كان عامل إزاي؟', 'YOO-mak kaan AA-mil iz-ZAY?', 'How was your day?', 'Family at dinner. (Egyptian)'),
+      NP('أنا تعبان.', 'A-na ta’-BAAN', 'I’m tired.', 'Flopping onto the sofa. Women say تعبانة.'),
+      NP('نخرج نتعشى؟', 'NO-khrug nit-’ash-SHA?', 'Shall we go out for dinner?', 'Making evening plans. (Egyptian)'),
+      NP('أنا مروّح.', 'A-na mi-RAW-wah', 'I’m heading home.', 'Texting from the metro. (Egyptian)')],
+    night: [
+      NP('تصبح على خير!', 'tis-BAH ’a-la KHEER', 'Good night!', 'To a man. To a woman: تصبحي على خير.'),
+      NP('وإنت من أهله.', 'wi-NTA min AH-lu', 'And you too. (the reply)', 'When someone wishes you good night.'),
+      NP('أشوفك بكرة.', 'a-SHOO-fak BUK-ra', 'See you tomorrow.', 'Ending a late chat. (Egyptian)'),
+      NP('لسه صاحي؟', 'LIS-sa SAA-hi?', 'Still awake?', 'Texting a friend at 1 am. (Egyptian)'),
+      NP('أنا جعان.', 'A-na ga’-AAN', 'I’m hungry.', 'The midnight snack moment. (Egyptian)')]
+  },
+  es: {
+    morning: [
+      NP('¡Buenos días!', 'BWEH-nohs DEE-ahs', 'Good morning!', 'The first person you see today.'),
+      NP('¿Dormiste bien?', 'dor-MEES-teh byehn?', 'Did you sleep well?', 'Family or a friend at breakfast.'),
+      NP('Un café con leche, por favor.', 'oon kah-FEH kohn LEH-cheh, por fah-BOR', 'Coffee with milk, please.', 'At the café counter.'),
+      NP('¡Llego tarde!', 'YEH-goh TAR-deh!', 'I’m running late!', 'Running out the door.'),
+      NP('¡Qué buen día hace!', 'keh bwehn DEE-ah AH-seh!', 'What a nice day!', 'Looking out the window.')],
+    midday: [
+      NP('¿Ya comiste?', 'yah koh-MEES-teh?', 'Have you eaten yet?', 'A caring check-in around lunch.'),
+      NP('¿Qué comemos?', 'keh koh-MEH-mohs?', 'What shall we eat?', 'Friends deciding on lunch.'),
+      NP('Para mí, esto.', 'PAH-rah mee, EHS-toh', 'For me, this one.', 'Pointing at the menu.'),
+      NP('¡Buen provecho!', 'bwehn proh-BEH-choh!', 'Enjoy your meal!', 'To anyone eating, even strangers.'),
+      NP('La cuenta, por favor.', 'lah KWEHN-tah, por fah-BOR', 'The bill, please.', 'Done eating, ready to go.')],
+    evening: [
+      NP('¡Buenas tardes!', 'BWEH-nahs TAR-dehs!', 'Good afternoon / evening!', 'Until it gets dark.'),
+      NP('¿Qué tal tu día?', 'keh tahl too DEE-ah?', 'How was your day?', 'Family or friends at dinner.'),
+      NP('Estoy muerto.', 'ehs-TOY MWEHR-toh', 'I’m dead tired.', 'Flopping onto the sofa. Women say muerta.'),
+      NP('¿Salimos a cenar?', 'sah-LEE-mohs ah seh-NAR?', 'Shall we go out for dinner?', 'Making evening plans.'),
+      NP('Voy para casa.', 'boy PAH-rah KAH-sah', 'I’m heading home.', 'Texting from the bus.')],
+    night: [
+      NP('¡Buenas noches!', 'BWEH-nahs NOH-chehs!', 'Good night!', 'After dark, hello AND goodbye.'),
+      NP('Que descanses.', 'keh dehs-KAHN-sehs', 'Rest well.', 'The warm way to end a night chat.'),
+      NP('Nos vemos mañana.', 'nohs BEH-mohs mah-NYAH-nah', 'See you tomorrow.', 'Ending a late chat.'),
+      NP('¿Sigues despierto?', 'SEE-gehs dehs-PYEHR-toh?', 'Are you still awake?', 'Texting a friend at 1 am.'),
+      NP('Tengo hambre… ¿unos tacos?', 'TEHN-goh AHM-breh… OO-nohs TAH-kohs?', 'I’m hungry… tacos?', 'The midnight snack moment.')]
+  }
+};
+/* =====================================================================
+   SPEAKABOO — NOW
+   The home screen is a living city. It follows your real clock: the sky,
+   the windows, Boo and the phrases all change with the time of day.
+   Learn what you'll actually say in the next few hours, practise it in a
+   90-second "Live it", then take one phrase out into the real world.
+   ===================================================================== */
+function dayPart(h = new Date().getHours()) { return h >= 5 && h < 11 ? 'morning' : h >= 11 && h < 16 ? 'midday' : h >= 16 && h < 21 ? 'evening' : 'night'; }
+function skyOf(h = new Date().getHours()) { return h >= 5 && h < 8 ? 'dawn' : h >= 8 && h < 17 ? 'day' : h >= 17 && h < 20 ? 'dusk' : 'night'; }
+function cityTime(code) {
+  const ci = CITY[code]; if (!ci) return null;
+  try {
+    const f = new Intl.DateTimeFormat('en-GB', { timeZone: ci.tz, hour: '2-digit', minute: '2-digit', hour12: false });
+    const [hh, mm] = f.format(new Date()).split(':').map(Number);
+    return { city: ci.city, h: hh % 24, label: `${String(hh % 24).padStart(2, '0')}:${String(mm).padStart(2, '0')}` };
+  } catch (e) { return { city: ci.city, h: null, label: '' }; }
+}
+/** Today's three phrases: stable for the whole day-part, different tomorrow. */
+function momentPhrases(code = course().code, part = dayPart()) {
+  const list = (MOMENTS[code] || {})[part] || [];
+  const d = new Date(), seed = d.getFullYear() * 400 + d.getMonth() * 32 + d.getDate();
+  const out = []; for (let k = 0; k < Math.min(3, list.length); k++) out.push(list[(seed + k * 2) % list.length]);
+  return [...new Set(out)].length === out.length ? out : list.slice(0, 3);
+}
+
+/* ---------- The city skyline, lit for the hour ---------- */
+function skylineSVG(code, sky) {
+  const night = sky === 'night' || sky === 'dusk';
+  const far = { dawn: '#8E86C9', day: '#9CC9E4', dusk: '#6B4FA0', night: '#24285E' }[sky];
+  const near = { dawn: '#4B3F8E', day: '#4A6FA5', dusk: '#3A2A6E', night: '#15183D' }[sky];
+  const lit = night ? '#FFD66B' : 'rgba(255,255,255,.35)';
+  const win = (x, y, w, h, cols, rows) => { let s = ''; for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) if ((i * 7 + j * 3 + x) % 5 !== 0) s += `<rect x="${x + 4 + i * ((w - 8) / cols)}" y="${y + 6 + j * 9}" width="3.2" height="4.2" rx=".6" fill="${(i + j + x) % 3 === 0 && night ? '#FFB24D' : lit}" opacity="${night ? ((i + j) % 4 ? .95 : .35) : .8}"/>`; return s; };
+  const block = (x, y, w, c) => `<rect x="${x}" y="${y}" width="${w}" height="${130 - y}" fill="${c}"/>` + win(x, y, w, 130 - y, Math.max(2, Math.floor(w / 9)), Math.floor((120 - y) / 9));
+  let far_ = '', land = '';
+  if (code === 'ko') {
+    far_ = `<path d="M0 104q60-40 120-14q50-30 110-6q60-34 120-8q30-12 50 0V130H0z" fill="${far}"/>`;
+    land = `<g fill="${near}"><path d="M286 96V40h4v56z"/><rect x="281" y="34" width="14" height="9" rx="4"/><path d="M288 34v-14" stroke="${near}" stroke-width="2"/><circle cx="288" cy="19" r="2" fill="${night ? '#FF6B6B' : near}"/></g>`;
+  } else if (code === 'ar') {
+    far_ = `<path d="M30 112l40-36 40 36zM96 112l26-22 26 22z" fill="${far}"/><path d="M0 116h400v14H0z" fill="${far}"/>`;
+    land = `<g fill="${near}"><path d="M262 130V70h8v60z"/><path d="M259 72h14l-7-16z"/><circle cx="266" cy="52" r="2.2"/><path d="M276 130v-30q22-26 44 0v30z"/><path d="M298 74v-6"/></g>`;
+  } else {
+    far_ = `<path d="M0 108q70-30 140-12q60-40 140-6q70-22 120 0V130H0z" fill="${far}"/>`;
+    land = `<g fill="${near}"><path d="M296 130V58h7v72z"/><rect x="292" y="52" width="15" height="7" rx="2"/><path d="M299.5 52l-5-12h10z"/><circle cx="299.5" cy="38" r="3" fill="${night ? '#FFD66B' : '#E9B949'}"/></g>`;
+  }
+  const blocks = code === 'es'
+    ? [[14, 86, 34, '#E76F51'], [50, 92, 30, '#F4A261'], [82, 80, 40, near], [124, 94, 28, '#2A9D8F'], [154, 84, 36, near], [192, 90, 30, '#E9C46A'], [224, 78, 42, near], [318, 88, 36, '#E76F51'], [356, 82, 44, near]]
+    : [[10, 70, 38, near], [50, 84, 28, near], [80, 62, 34, near], [116, 88, 30, near], [148, 74, 40, near], [190, 92, 26, near], [218, 66, 36, near], [320, 80, 34, near], [356, 70, 44, near]];
+  return `<svg class="skyline" viewBox="0 0 400 130" preserveAspectRatio="xMidYMax slice" aria-hidden="true">${far_}${land}${blocks.map(b => block(...b)).join('')}<rect x="0" y="126" width="400" height="4" fill="${near}"/></svg>`;
+}
+function skyDeco(sky) {
+  if (sky === 'night') return `<div class="stars">${Array.from({ length: 16 }, (_, i) => `<i style="left:${(i * 37) % 100}%;top:${(i * 23) % 55}%;animation-delay:${(i % 5) * .4}s"></i>`).join('')}</div><div class="moon"></div>`;
+  if (sky === 'dusk') return '<div class="sun low"></div>';
+  if (sky === 'dawn') return '<div class="sun rise"></div>';
+  return '<div class="sun"></div><div class="cloud c1"></div><div class="cloud c2"></div>';
+}
+
+/* ---------- Places in your neighbourhood: every feature is somewhere ---------- */
+const PLACE_ART = {
+  cafe: `<svg viewBox="0 0 64 64"><rect x="8" y="22" width="48" height="36" rx="3" fill="#FFF6EA" stroke="#1C1B2E" stroke-width="2.5"/><path d="M6 22l4-10h44l4 10z" fill="#FF7A59" stroke="#1C1B2E" stroke-width="2.5" stroke-linejoin="round"/><path d="M16 12v10M26 12v10M38 12v10M48 12v10" stroke="#fff" stroke-width="4"/><rect x="26" y="38" width="12" height="20" rx="2" fill="#4146C9"/><rect x="12" y="30" width="10" height="10" rx="2" fill="#BFE3FF" stroke="#1C1B2E" stroke-width="2"/><rect x="42" y="30" width="10" height="10" rx="2" fill="#BFE3FF" stroke="#1C1B2E" stroke-width="2"/></svg>`,
+  street: `<svg viewBox="0 0 64 64"><path d="M10 58V30h44v28" fill="#2A2E6E" stroke="#1C1B2E" stroke-width="2.5"/><path d="M6 30q26-14 52 0" fill="#FF7A59" stroke="#1C1B2E" stroke-width="2.5"/><circle cx="18" cy="40" r="5" fill="#FFD66B"/><circle cx="32" cy="40" r="5" fill="#FF9F6B"/><circle cx="46" cy="40" r="5" fill="#FFD66B"/><path d="M12 50h40" stroke="#FFF6EA" stroke-width="3"/></svg>`,
+  books: `<svg viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="42" rx="3" fill="#E6E7FB" stroke="#1C1B2E" stroke-width="2.5"/><rect x="14" y="24" width="7" height="26" fill="#FF7A59"/><rect x="23" y="20" width="7" height="30" fill="#4146C9"/><rect x="32" y="26" width="7" height="24" fill="#2F9C95"/><rect x="41" y="22" width="9" height="28" fill="#FFD66B" transform="rotate(8 45 36)"/><path d="M8 50h48" stroke="#1C1B2E" stroke-width="2.5"/></svg>`,
+  booth: `<svg viewBox="0 0 64 64"><rect x="18" y="8" width="28" height="50" rx="4" fill="#FF7A59" stroke="#1C1B2E" stroke-width="2.5"/><rect x="23" y="18" width="18" height="30" rx="2" fill="#BFE3FF" stroke="#1C1B2E" stroke-width="2"/><path d="M27 30q5-6 10 0" stroke="#1C1B2E" stroke-width="2.5" fill="none"/><rect x="22" y="11" width="20" height="5" rx="1.5" fill="#FFF6EA"/></svg>`,
+  stage: `<svg viewBox="0 0 64 64"><path d="M6 58h52V24H6z" fill="#2A2E6E" stroke="#1C1B2E" stroke-width="2.5"/><path d="M4 24q14-14 28-6 14-8 28 6z" fill="#FF7A59" stroke="#1C1B2E" stroke-width="2.5" stroke-linejoin="round"/><rect x="28" y="30" width="8" height="14" rx="4" fill="#FFD66B"/><path d="M24 40q8 8 16 0M32 46v6" stroke="#FFD66B" stroke-width="2.5" fill="none"/><path d="M12 34q4-4 0-8M52 34q-4-4 0-8" stroke="#8D92FF" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+  gym: `<svg viewBox="0 0 64 64"><rect x="8" y="20" width="48" height="38" rx="3" fill="#FFF6EA" stroke="#1C1B2E" stroke-width="2.5"/><path d="M4 22l28-14 28 14" fill="#4146C9" stroke="#1C1B2E" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38h24" stroke="#1C1B2E" stroke-width="3"/><rect x="14" y="31" width="6" height="14" rx="2" fill="#2F9C95"/><rect x="44" y="31" width="6" height="14" rx="2" fill="#2F9C95"/></svg>`
+};
+function placesHTML() {
+  const c = course(), st = ADV_STORIES[c.code];
+  const places = [
+    ['cafe', 'The Café', 'Real Talk: sound local, not textbook', 'data-realtalk'],
+    ['street', 'Night Street', st ? st.title : 'Story Adventure', 'data-adventure="STORY_ADVENTURE"'],
+    c.letterUnits.length && lettersOpen() ? ['books', 'Sign Shop', 'Decode letters in real words', 'data-adventure="LETTER_EXPLORER"'] : null,
+    ['stage', 'Tone Studio', 'Same words, different feelings', 'data-tone'],
+    ['booth', 'Phone Booth', 'Call Boo, hands-free', 'data-call'],
+    ['gym', 'Word Gym', 'Review, drills, your phrasebook', 'data-tab="practice"']
+  ].filter(Boolean);
+  return `<div class="hood"><div class="hood-head"><b>Your neighbourhood</b><small>Every place is a different way to practise</small></div>
+    <div class="hood-row">${places.map(([k, name, sub, act], i) => `<button class="place p-${k}" ${act} style="animation-delay:${i * 60}ms">${PLACE_ART[k]}<b>${name}</b><small>${esc(sub)}</small></button>`).join('')}</div></div>`;
+}
+
+/* ---------- The Now screen ---------- */
+function renderNow() {
+  const tab = $('#tab-now'); if (!tab) return;
+  const p = P(), c = course(), h = new Date().getHours(), sky = skyOf(h), part = dayPart(h), ct = cityTime(c.code), ph = momentPhrases();
+  const cur = currentLesson('main'), mc = MASCOTS[p.mascot], st = BooMood.state();
+  const hi = { morning: 'Good morning', midday: 'Good afternoon', evening: 'Good evening', night: 'Still up' }[part];
+  const mis = p.mission && p.mission.day === dayKey() ? p.mission : null;
+  const showInstall = !IS_STANDALONE && !IN_ARTIFACT && !p.hideInstall && innerWidth < 900;
+  tab.innerHTML = `<div class="now">
+    <section class="sky sky-${sky}">${skyDeco(sky)}
+      <div class="sky-top"><span class="sky-clock">${String(h).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')} · ${DAYPARTS[part].name}</span>${ct && ct.label ? `<span class="sky-city">${esc(ct.city)} ${ct.label}${ct.h != null ? ` · ${ct.h >= 6 && ct.h < 18 ? 'daytime' : 'night'} there` : ''}</span>` : ''}</div>
+      <h1 class="sky-hi">${hi}, ${esc(p.name)}.</h1>
+      <p class="sky-sub">${['bored', 'missing', 'fading', 'ghosted'].includes(st.key) ? esc(st.line) : `Here’s what people say in ${esc(c.name)} around now.`}</p>
+      <button class="sky-boo" data-sky-boo aria-label="Tap ${esc(mc.name)}"></button><div class="sky-bubble" id="sky-bubble" hidden></div>
+      ${skylineSVG(c.code, sky)}
+    </section>
+    <section class="moment card-lift">
+      <div class="moment-head"><span class="chip-time">${DAYPARTS[part].name}</span><b>Your next few hours</b></div>
+      ${ph.map((x, i) => `<div class="phrase" style="animation-delay:${i * 80}ms"><button class="ph-play" data-say="${esc(x.t)}" aria-label="Play">${ICON.speaker}</button>
+        <div class="ph-txt"><span class="script" ${attrs(c)}>${esc(x.t)}</span><small class="ph-rom">${esc(x.r)} · ${esc(x.en)}</small><small class="ph-when">${esc(x.when)}</small></div></div>`).join('')}
+      <button class="live-btn" data-live>${ICON.mic}<span><b>Live it</b><small>90 seconds: hear, say, use</small></span></button>
+    </section>
+    <section class="mission ${mis && mis.done ? 'done' : ''}">${mis ? (mis.done
+      ? `<div><small>Real-life mission</small><b>You said “<span class="script" ${attrs(c)}>${esc(mis.t)}</span>” today. That’s real fluency.</b></div><span class="ms-badge">✓</span>`
+      : `<div><small>Real-life mission</small><b>Say “<span class="script" ${attrs(c)}>${esc(mis.t)}</span>” out loud today, to anyone (even your cat).</b></div><button class="btn primary sm" data-mission-done>I did it</button>`)
+      : `<div><small>Real-life mission</small><b>Tap “Live it” to get today’s phrase to use for real.</b></div>`}</section>
+    ${readyToReadHTML()}
+    ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Episode ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
+    ${placesHTML()}
+    ${showInstall ? `<div class="install-banner">${ICON.download}<p>Add Speakaboo to your home screen</p><button class="btn primary sm" data-install>Install</button><button class="icon-btn" data-hide-install aria-label="Dismiss">${ICON.x}</button></div>` : ''}
+  </div>`;
+  const hb = $('[data-sky-boo]', tab); if (hb) paintMascot(hb, p.mascot, part === 'night' ? 'sleep' : st.face || 'happy', true);
+  const rr = $('[data-rr-m]', tab); if (rr) paintMascot(rr, p.mascot, 'love', true);
+  BooMood.apply();
+}
+function missionDone() {
+  const p = P(); if (!p.mission || p.mission.done) return;
+  p.mission.done = true; p.stats.missions = (p.stats.missions || 0) + 1; p.gems = (p.gems || 0) + 5; award(5); Store.save();
+  toast('+5 gems for using it in real life!', '★'); React.rain('hearts', 16); renderNow(); renderChrome();
+}
+
+/* ---------- Live it: 90 seconds with today's phrases ---------- */
+const Live = {
+  on: false, ph: [], steps: [], i: 0, score: 0,
+  open() {
+    if (this.on) return;
+    const ph = momentPhrases(); if (!ph.length) return;
+    const steps = [];
+    ph.forEach(x => { steps.push({ k: 'learn', x }); steps.push({ k: 'say', x }); });
+    shuffle(ph.slice()).slice(0, 2).forEach(x => steps.push({ k: 'when', x, opts: shuffle(ph.slice()) }));
+    Object.assign(this, { on: true, ph, steps, i: 0, score: 0 });
+    const el = document.createElement('div'); el.id = 'live'; el.className = 'rt live sky-' + skyOf();
+    el.innerHTML = `<div class="rt-top"><button class="icon-btn" id="live-x" aria-label="Close">${ICON.x}</button><div class="adv-title"><small>Live it · ${DAYPARTS[dayPart()].name}</small><b>Your next few hours</b></div><span class="rt-count" id="live-n"></span></div>
+      <div class="adv-prog"><i id="live-prog"></i></div><div class="rt-body" id="live-body"></div>`;
+    document.body.append(el); requestAnimationFrame(() => el.classList.add('in'));
+    $('#live-x').onclick = () => this.close();
+    this.show();
+  },
+  show() {
+    const s = this.steps[this.i]; if (!s) return this.finish();
+    const c = course(), body = $('#live-body'), p = P();
+    $('#live-n').textContent = `${this.i + 1}/${this.steps.length}`; $('#live-prog').style.width = (this.i / this.steps.length * 100) + '%';
+    const big = `<div class="live-phrase"><span class="script" ${attrs(c)}>${esc(s.x.t)}</span><small>${esc(s.x.r)}</small><b>${esc(s.x.en)}</b></div>`;
+    if (s.k === 'learn') {
+      body.innerHTML = `<div class="live-card"><div class="live-boo mascot" id="live-m"></div><p class="live-when">${esc(s.x.when)}</p>${big}
+        <div class="live-btns"><button class="btn ghost" data-say="${esc(s.x.t)}" data-rate=".6">${ICON.turtle} Slow</button><button class="btn primary" id="live-ok">Got it</button></div></div>`;
+      paintMascot($('#live-m'), p.mascot, 'cheer', true); setTimeout(() => Voice.speak(s.x.t), 300);
+      $('#live-ok').onclick = () => this.next();
+    } else if (s.k === 'say') {
+      const can = Mic.SR && !Mic.blocked;
+      body.innerHTML = `<div class="live-card"><div class="live-boo mascot" id="live-m"></div><p class="live-when">Your turn. Say it like you mean it.</p>${big}
+        <div class="live-meter" id="live-res"></div>
+        <div class="live-btns">${can ? `<button class="btn primary big-mic" id="live-mic">${ICON.mic} Say it</button>` : ''}<button class="btn ${can ? 'ghost' : 'primary'}" id="live-self">${can ? 'Skip' : 'I said it out loud'}</button></div></div>`;
+      paintMascot($('#live-m'), p.mascot, 'peek', true);
+      $('#live-self').onclick = () => { if (!can) this.score++; this.next(); };
+      $('#live-mic') && ($('#live-mic').onclick = async () => {
+        const b = $('#live-mic'); b.disabled = true; $('#live-res').innerHTML = '<span class="listening">Listening…</span>';
+        const alts = await listenOnce(c.stt, { target: s.x.t, onInterim: t => { $('#live-res').innerHTML = `<span class="script" ${attrs(c)}>${esc(t)}</span>`; } });
+        const r = pronScore(s.x.t, alts || []); b.disabled = false;
+        $('#live-res').innerHTML = `<div class="pron">${r.html}</div><b class="${r.ok ? 'good' : 'bad'}">${r.pct}%</b>`;
+        if (r.ok) { this.score++; Sfx.correct(); React.play($('#live-m'), p.mascot, r.pct >= 90 ? 'love' : 'star'); React.burst($('#live-m'), 'hearts', 8); setTimeout(() => this.next(), 1100); }
+        else { Sfx.wrong(); React.play($('#live-m'), p.mascot, 'oops'); b.innerHTML = `${ICON.mic} Again`; }
+      });
+    } else {
+      body.innerHTML = `<div class="live-card"><div class="live-boo mascot" id="live-m"></div><p class="live-q">${esc(s.x.when)}</p><p class="live-when">What do you say?</p>
+        <div class="live-opts">${s.opts.map((o, k) => `<button class="adv-ch" data-k="${k}"><span class="script" ${attrs(c)}>${esc(o.t)}</span><small>${esc(o.r)}</small></button>`).join('')}</div></div>`;
+      paintMascot($('#live-m'), p.mascot, 'think', true);
+      $$('.live-opts .adv-ch', body).forEach(b => b.onclick = () => {
+        const o = s.opts[+b.dataset.k], ok = o === s.x;
+        if (ok) { this.score++; b.classList.add('right'); Sfx.correct(); Voice.speak(o.t); React.play($('#live-m'), p.mascot, 'cheer'); React.burst($('#live-m'), 'stars', 8); $$('.live-opts .adv-ch').forEach(x => x.disabled = true); setTimeout(() => this.next(), 1100); }
+        else { b.classList.add('wrong'); b.disabled = true; Sfx.wrong(); React.play($('#live-m'), p.mascot, 'oops'); }
+      });
+    }
+  },
+  next() { this.i++; this.show(); },
+  finish() {
+    const p = P(), c = course(), body = $('#live-body'), m = this.ph.find(x => /good|thank|enjoy|see you|night|morning|evening|how was|rest well|did you sleep|have you|lunch|eaten/i.test(x.en)) || this.ph[0], xp = 5 + this.score * 2;
+    p.mission = { day: dayKey(), t: m.t, r: m.r, en: m.en, done: false };
+    this.ph.forEach(x => { try { if (!Phrases.has(x.t)) Phrases.list().unshift({ t: x.t, r: x.r, en: x.en, d: Date.now() }); } catch (e) { /* ignore */ } });
+    award(xp); Quests.bump('practice'); Store.save();
+    $('#live-prog').style.width = '100%';
+    body.innerHTML = `<div class="rt-end"><div class="mascot" id="live-end"></div><h2>You’re ready for ${DAYPARTS[dayPart()].name.toLowerCase()}.</h2>
+      <div class="mission-card"><small>Your real-life mission</small><b>Say “<span class="script" ${attrs(c)}>${esc(m.t)}</span>” to someone today.</b><small>${esc(m.en)} · ${esc(m.when)}</small></div>
+      <p class="note">All three phrases are saved in your Pocket phrasebook. +${xp} XP</p>
+      <button class="btn primary" id="live-done">Back to the city</button></div>`;
+    React.play($('#live-end'), p.mascot, 'love'); React.rain('hearts', 18);
+    $('#live-done').onclick = () => this.close();
+  },
+  close() {
+    this.on = false; window.speechSynthesis?.cancel();
+    const el = $('#live'); if (el) { el.classList.remove('in'); setTimeout(() => el.remove(), 250); }
+    if (UI.tab === 'now') renderNow(); renderChrome();
+  }
+};
+
+function skyBooTap() {
+  const p = P(), c = course(), x = pick(momentPhrases()), el = $('[data-sky-boo]'), b = $('#sky-bubble'); if (!x || !el) return;
+  paintMascot(el, p.mascot, pick(['cheer', 'laugh', 'love']), true); React.burst(el, 'hearts', 6); Voice.speak(x.t);
+  if (b) { b.hidden = false; b.innerHTML = `<span class="script" ${attrs(c)}>${esc(x.t)}</span><small>${esc(x.en)}</small>`; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); clearTimeout(skyBooTap.t); skyBooTap.t = setTimeout(() => { b.hidden = true; }, 3200); }
+}
 /* =====================================================================
    SPEAKABOO — UI: shell & navigation, learn path, lesson engine, practice,
    quests & shop, profile & settings, chat, install & microphone helpers.
    ===================================================================== */
 const BRAND_SVG = `<span class="brand-boo" aria-hidden="true">${mascotSVG('mandu', 'peek')}</span>`;
-const SPEAKABOO_VERSION = '2026.10.09-c';
-const UI = { tab: 'learn', manage: false, creating: false, confirmDel: null, draft: { name: '', mascot: 'mandu', lang: 'ko' }, meConfirm: null };
+const SPEAKABOO_VERSION = '2026.10.25-a';
+const UI = { tab: 'now', manage: false, creating: false, confirmDel: null, draft: { name: '', mascot: 'mandu', lang: 'ko' }, meConfirm: null };
 const attrs = c => `lang="${c.code}" dir="${c.dir}"`;
 const IN_ARTIFACT = !!window.claude;                              // opened inside claude.ai (mic blocked there)
 const APP_URL = window.SPEAKABOO_APP_URL || '';                        // the hosted app link (set at build time)
@@ -5599,6 +6990,10 @@ Object.assign(ICON, {
   heart: '<svg class="i" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.3 5 6.8 5c2 0 3.4 1.1 4.2 2.4C11.8 6.1 13.2 5 15.2 5c3.5 0 5.6 3.6 4.3 6.8C19.5 16.4 12 21 12 21z"/></svg>',
   gem: '<svg class="i" viewBox="0 0 24 24"><path d="M7 3h10l4 6-9 12L3 9z" fill="currentColor"/><path d="M3 9h18M9 3l3 6 3-6M12 9v12" stroke="#fff" stroke-opacity=".55" stroke-width="1.2" fill="none"/></svg>',
   lock: '<svg class="i" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V7a3 3 0 0 0-6 0z"/></svg>',
+  play5: '<svg class="i go-ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="currentColor" opacity=".18"/><path d="M10 7.5v9l7-4.5z" fill="currentColor"/></svg>',
+  sunI: '<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="4.5" fill="currentColor" stroke="none"/><path d="M12 3v2M4.9 6l1.4 1.4M19.1 6l-1.4 1.4M2 13h2M20 13h2M3 20h18"/></svg>',
+  route: '<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5" fill="currentColor"/><circle cx="18" cy="5" r="2.5" fill="currentColor"/><path d="M6 16.5V12a3 3 0 0 1 3-3h6a3 3 0 0 0 3-3V7.5"/></svg>',
+  bag: '<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 8h14l-1 13H6z" fill="currentColor" fill-opacity=".2"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
   trophy: '<svg class="i" viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h10v2h3v3a5 5 0 0 1-4.4 5A5 5 0 0 1 13 15.8V18h3v3H8v-3h3v-2.2A5 5 0 0 1 8.4 13 5 5 0 0 1 4 8V5h3zm0 4H6v1a3 3 0 0 0 1 2.2zm10 0v3.2A3 3 0 0 0 18 8V7z"/></svg>',
   starI: '<svg class="i" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>',
   home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
@@ -5661,14 +7056,6 @@ function englishFor(text) {
   }
   return _enIndex[String(text).replace(/→.*/, '').replace(/[.!?¿¡؟،,。]/g, '').trim()] || '';
 }
-let _glossT = null;
-function showGloss(text) {
-  const p = P(), en = englishFor(text), box = $('#gloss'); if (!en || !box) return;
-  const to = p.myLang || 'en';
-  box.hidden = false; box.innerHTML = `<div class="g-en">${esc(en)}</div>${to !== 'en' ? `<div class="g-my muted">…</div>` : ''}`;
-  clearTimeout(_glossT); _glossT = setTimeout(() => { box.hidden = true; }, 7000);
-  if (to !== 'en') Tr.get(en, to).then(out => { if (!box.hidden && box.firstChild && $('.g-en', box)?.textContent === en) $('.g-my', box).textContent = out; }).catch(() => { const g = $('.g-my', box); if (g) g.textContent = 'Needs an internet connection for ' + myLangName(to) + '.'; });
-}
 /** Lesson Translate button: explain everything on the current challenge in the learner's language. */
 function translateHelp() {
   const p = P(), stage = $('#l-stage'); if (!stage) return;
@@ -5709,7 +7096,7 @@ function confetti() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const cv = $('#confetti'), ctx = cv.getContext('2d'); cv.hidden = false;
   const W = cv.width = innerWidth, H = cv.height = innerHeight;
-  const cols = ['#57B9C8', '#1F6F83', '#FF6B6B', '#FFC23D', '#FFF2E1', '#08323F'];
+  const cols = ['#8D92FF', '#4146C9', '#FF6B6B', '#FFC23D', '#FFF2E1', '#1C1B2E'];
   const ps = Array.from({ length: 150 }, () => ({ x: W / 2 + (Math.random() - .5) * 200, y: H * .35, vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 4, r: Math.random() * 6 + 4, c: pick(cols), a: Math.random() * 6, s: Math.random() > .5 }));
   let f = 0;
   (function tick() {
@@ -5796,7 +7183,8 @@ function showProfiles() { Store.data.active = null; Store.save(); UI.manage = fa
 /* =====================================================================
    APP SHELL & NAVIGATION
    ===================================================================== */
-const TABS = [['learn', 'Learn', 'home'], ['letters', 'Letters', 'letters'], ['practice', 'Practice', 'dumbbell'], ['chat', 'Talk', 'chat'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
+const TABS = [['now', 'Today', 'sunI'], ['learn', 'Journey', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Talk', 'chat'], ['practice', 'Pocket', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
+const NAV_HIDDEN = ['letters', 'quests'];
 
 function enterApp(id) {
   Store.data.active = id; Store.save();
@@ -5804,9 +7192,9 @@ function enterApp(id) {
   applyFreezes(p); Hearts.sync(p); Quests.today(p);
   $('#profiles').hidden = true; $('#app').hidden = false;
   applyLang(); Tutor.pickBrain();
-  UI.tab = 'learn'; BooMood.apply(); renderChrome(); showTab('learn'); setTimeout(welcomeBack, 700);
+  UI.tab = 'now'; BooMood.apply(); renderChrome(); showTab('now'); setTimeout(welcomeBack, 700);
   const m = MASCOTS[p.mascot];
-  Mascot.set('happy', todayXP(p) ? `Welcome back, ${p.name}! ${todayXP(p)} XP so far today.` : `Hi ${p.name}! I’m ${m.name}. Tap me on the stage for a peekaboo word!`);
+  Mascot.set('happy', todayXP(p) ? `Welcome back, ${p.name}! ${todayXP(p)} XP so far today.` : `Hi ${p.name}! I’m ${m.name}. Tap “Live it” to learn what to say in the next few hours.`);
   if (!Access.state().ok) Paywall.show();
 }
 function applyLang() { document.documentElement.style.setProperty('--script', course().font); }
@@ -5827,7 +7215,7 @@ function langChipHTML() {
 }
 function renderChrome() {
   const p = P(); if (!p || $('#app').hidden) return;
-  const navBtns = cls => TABS.filter(([id]) => id !== 'letters').map(([id, label, ic]) => `<button class="${cls}" data-tab="${id}" ${(UI.tab === 'letters' ? 'learn' : UI.tab) === id ? 'aria-current="page"' : ''}>${ICON[ic]}<span>${label}</span></button>`).join('');
+  const navBtns = cls => TABS.filter(([id]) => !NAV_HIDDEN.includes(id)).map(([id, label, ic]) => `<button class="${cls}" data-tab="${id}" ${(UI.tab === 'letters' ? 'learn' : UI.tab) === id ? 'aria-current="page"' : ''}>${ICON[ic]}<span>${label}</span></button>`).join('');
   $('#rail').innerHTML = `<div class="logo">${BRAND_SVG}<span>Speakaboo<small>peek · speak · repeat</small></span></div>${navBtns('nav-i')}
     <button class="who-btn" data-switch><div class="mascot" data-art="${p.mascot}"></div><span><b>${esc(p.name)}</b><small>Switch learner</small></span></button>`;
   $('#topbar').innerHTML = `${langChipHTML()}<span class="spacer"></span>${statsHTML(p)}`;
@@ -5849,8 +7237,8 @@ function showTab(tab) {
   UI.tab = tab;
   TABS.forEach(([id]) => { $('#tab-' + id).hidden = id !== tab; });
   const sec = $('#tab-' + tab); if (sec) { sec.classList.remove('tab-in'); void sec.offsetWidth; sec.classList.add('tab-in'); }
-  $$('[data-tab]').forEach(b => { if (b.dataset.tab === (tab === 'letters' ? 'learn' : tab)) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
-  ({ learn: renderLearn, letters: renderLetters, practice: renderPractice, chat: renderChat, quests: renderQuests, profile: renderProfile })[tab]();
+  $$('[data-tab]').forEach(b => { if (b.dataset.tab === (tab === 'letters' ? 'learn' : tab === 'quests' ? 'profile' : tab)) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+  ({ now: renderNow, learn: renderLearn, letters: renderLetters, practice: renderPractice, chat: renderChat, quests: renderQuests, profile: renderProfile })[tab]();
 }
 function questHTML(q) {
   return `<div class="quest ${q.done ? 'done' : ''}"><div class="qi">${q.done ? ICON.check : ICON.target}</div>
@@ -5862,7 +7250,7 @@ function questHTML(q) {
    ===================================================================== */
 const UNIT_COLORS = 4;
 function findUnit(uid) { const c = course(); return [...c.units, ...c.letterUnits].find(x => x.id === uid); }
-function unitUnlocked(u) { const us = unitList(course(), u.track); return u.index === 0 || unitProgress(P(), course().code, us[u.index - 1].id) >= UNIT_LESSONS; }
+function unitUnlocked(u) { if (Tester.on()) return true; const us = unitList(course(), u.track); return u.index === 0 || unitProgress(P(), course().code, us[u.index - 1].id) >= UNIT_LESSONS; }
 function currentLesson(track = 'main') {
   const c = course(), p = P();
   for (const u of unitList(c, track)) { const prog = unitProgress(p, c.code, u.id); if (unitUnlocked(u) && prog < UNIT_LESSONS) return { u, i: prog }; }
@@ -5884,34 +7272,34 @@ function renderPath(track) {
   const c = course(), p = P(), tab = $(track === 'letters' ? '#tab-letters' : '#tab-learn');
   const units = unitList(c, track), sections = track === 'letters' ? c.letterSections : c.sections;
   const showInstall = track === 'main' && !IS_STANDALONE && !IN_ARTIFACT && !p.hideInstall && innerWidth < 900;
-  let html = `<div class="pad">${showInstall ? `<div class="install-banner">${ICON.download}<p>Install Speakaboo on your home screen to use it like an app.</p><button class="btn primary sm" data-install>Install</button><button class="icon-btn" data-hide-install aria-label="Dismiss">${ICON.x}</button></div>` : ''}`;
-  if (track === 'letters') html += `<div class="skip-card letters-intro"><div class="mascot" data-li-m></div><div><b>${({ ko: 'Learn to read Hangeul', ar: 'Learn the Arabic script', es: 'Master Spanish sounds' })[c.code]} (optional)</b><small>Do these whenever you like. The main course shows ${c.code === 'es' ? 'pronunciation hints' : 'romanization'} everywhere, so you never have to finish this first.</small></div></div>`;
-  if (track === 'main') html += trialBannerHTML() + heroHTML() + dailyHTML();
-  if (c.letterUnits.length) html += `<div class="seg track-seg" role="tablist"><button role="tab" data-tab="learn" class="${track === 'main' ? 'on' : ''}">Course</button><button role="tab" data-tab="letters" class="${track === 'letters' ? 'on' : ''}">${c.code === 'ko' ? 'Hangeul' : c.code === 'ar' ? 'Alphabet' : 'Sounds'}</button></div>`;
-  if (track === 'main') html += moodHTML();
+  let html = `<div class="pad metro">${false && showInstall ? `<div class="install-banner">${ICON.download}<p>Add Speakaboo to your home screen</p><button class="btn primary sm" data-install>Install</button><button class="icon-btn" data-hide-install aria-label="Dismiss">${ICON.x}</button></div>` : ''}`;
+  if (track === 'letters') html += `<div class="skip-card letters-intro"><div class="mascot" data-li-m></div><div><b>${({ ko: 'Learn to read Hangeul', ar: 'Learn the Arabic script', es: 'Master Spanish sounds' })[c.code]} (optional)</b><small>Do these whenever you like. The main course shows ${c.code === 'es' ? 'pronunciation hints' : 'romanization'} everywhere, so you never have to finish this first.</small><button class="btn primary sm" data-adventure="LETTER_EXPLORER" style="margin-top:8px">Play Letter Explorer</button></div></div>`;
+  if (track === 'main') html += trialBannerHTML() + journeyHeadHTML();
+  if (c.letterUnits.length) html += `<div class="seg track-seg" role="tablist"><button role="tab" data-tab="learn" class="${track === 'main' ? 'on' : ''}">Course</button>${lettersOpen() ? `<button role="tab" data-tab="letters" class="${track === 'letters' ? 'on' : ''}">${c.code === 'ko' ? 'Hangeul' : c.code === 'ar' ? 'Alphabet' : 'Sounds'}</button>` : `<button role="tab" class="locked" data-letters-locked>${ICON.lock || ''}${c.code === 'ko' ? 'Hangeul' : 'Alphabet'}</button>`}</div>`;
+
   let lastS = -1;
   const cur = currentLesson(track);
   units.forEach(u => {
     if (u.s !== lastS) {
       lastS = u.s; html += `<div class="season-head"><span class="season-tag">${track === 'letters' ? 'Letters' : `Season ${u.s + 1}`}</span><b>${esc(sections[u.s].title)}</b>${sections[u.s].blurb ? `<small>${esc(sections[u.s].blurb)}</small>` : ''}</div>`;
-      if (track === 'main' && sections[u.s + 1] && !sectionDone(p, c.code, u.s)) html += `<div class="skip-card"><div><b>Already know this season?</b><small>Jump to Season ${u.s + 2}: ${esc(sections[u.s + 1].title)}. You can come back any time.</small></div><button class="btn primary sm" data-skip-section="${u.s}">Skip</button></div>`;
+      if (track === 'main' && Tester.on() && sections[u.s + 1] && !sectionDone(p, c.code, u.s)) html += `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Season ${u.s + 1} done and open Season ${u.s + 2}: ${esc(sections[u.s + 1].title)}.</small></div><button class="btn primary sm" data-skip-section="${u.s}">Skip</button></div>`;
     }
     const prog = unitProgress(p, c.code, u.id), open = unitUnlocked(u), num = units.filter(x => x.s === u.s).indexOf(u) + 1;
     const cc = courseCast(), castId = cc[(u.index + (track === 'letters' ? 1 : 0)) % cc.length];
     const doneN = Math.min(prog, UNIT_LESSONS), mastered = prog > UNIT_LESSONS;
+    if (!open) { html += `<section class="ep mini c${u.index % UNIT_COLORS} locked" id="unit-${u.id}"><div class="ep-icon" ${attrs(c)}>${esc(u.icon || num)}</div><div class="ep-title"><span class="eyebrow">Episode ${num}${Access.allows('season', u) ? '' : ' · ★ Premium'}</span><b>${esc(u.title)}</b></div><button class="guide-btn" data-guide="${u.id}" aria-label="Guide">${ICON.guide}</button><span class="ep-lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 10V8a5 5 0 0 1 10 0v2h1v11H6V10zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg></span></section>`; return; }
     html += `<section class="ep c${u.index % UNIT_COLORS} ${open ? '' : 'locked'} ${Access.allows('season', u) ? '' : 'premium'} ${cur && cur.u === u ? 'now' : ''}" id="unit-${u.id}">
       <div class="ep-boo" data-path-m="${castId}" data-mood="${open ? (cur && cur.u === u ? 'cheer' : 'happy') : 'peek'}" title="${esc(MASCOTS[castId].name)}"></div>
       <div class="ep-head"><div class="ep-icon" ${attrs(c)}>${esc(u.icon || num)}</div>
         <div class="ep-title"><span class="eyebrow">Episode ${num}${mastered ? ' · Mastered' : ''}${Access.allows('season', u) ? '' : ' · <span class="crown-tag">★ Premium</span>'}</span><h2>${esc(u.title)}</h2>
           <small>${open ? `${doneN}/${UNIT_LESSONS} scenes · with ${esc(MASCOTS[castId].name)}` : `${esc(MASCOTS[castId].name)} is hiding until you get here`}</small></div>
         <button class="guide-btn" data-guide="${u.id}" aria-label="Guide">${ICON.guide}</button></div>
-      <div class="ep-row">`;
+      <div class="ep-row segs">`;
     for (let i = 0; i <= UNIT_LESSONS; i++) {
       const isTest = i === UNIT_LESSONS, done = isTest ? prog > UNIT_LESSONS : prog > i;
       const isCur = cur && cur.u === u && cur.i === i;
       const state = done ? 'done' : (open && prog >= i) ? 'open' : 'locked';
-      html += `<button class="win ${state} ${isTest ? 'trophy' : ''} ${isCur ? 'current' : ''}" data-node="${u.id}:${i}" data-stop="${u.id}:${i}" aria-label="${isTest ? 'Unit test' : 'Scene ' + (i + 1)} (${state})">
-        <span class="win-in">${isTest ? ICON.trophy : done ? ICON.check : state === 'locked' ? '<i class="shutter"></i>' : `<b>${i + 1}</b>`}</span>${isCur ? '<span class="win-tip">Go!</span>' : ''}</button>`;
+      html += `<button class="ep-seg ${state} ${isTest ? 'test' : ''} ${isCur ? 'current' : ''}" data-node="${u.id}:${i}" data-stop="${u.id}:${i}" aria-label="${isTest ? 'Unit test' : 'Scene ' + (i + 1)} (${state})">${isTest ? ICON.trophy : isCur ? `<span><svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Scene ${i + 1}</span>` : ''}</button>`;
     }
     html += `</div></section>`;
   });
@@ -5920,12 +7308,23 @@ function renderPath(track) {
   $$('[data-path-m]', tab).forEach(el => paintMascot(el, el.dataset.pathM, el.dataset.mood, false));
   const li = $('[data-li-m]', tab); if (li) paintMascot(li, courseCast()[0], 'happy', false);
   const fm = $('[data-feel-m]', tab); if (fm) paintMascot(fm, p.mascot, 'happy', false);
+  $$('[data-sb]', tab).forEach((el, k) => paintChar(el, el.dataset.sb, ['cheer', 'pout', 'happy'][k]));
   const hb = $('[data-hero-boo]', tab); if (hb) paintMascot(hb, p.mascot, BooMood.state().face, true);
   const dm = $('[data-daily-m]', tab); if (dm) paintMascot(dm, p.mascot, 'cheer', false);
   BooMood.apply();
   if (cur && track === 'letters') setTimeout(() => { const n = $(`[data-stop="${cur.u.id}:${cur.i}"]`, tab); if (n && (cur.u.index > 0 || cur.i > 1) && n.getBoundingClientRect().bottom > innerHeight - 90) n.scrollIntoView({ block: 'center' }); }, 30);
 }
 /* ---------- Boo stage: the friendly top of the home screen ---------- */
+function journeyHeadHTML() {
+  const c = course(), p = P(), done = c.units.filter(u => unitProgress(p, c.code, u.id) >= UNIT_LESSONS).length;
+  return `<div class="journey-head"><div><small>Your journey in ${esc(c.name)}</small><b>${done} of ${c.units.length} stations</b></div><div class="jh-bar"><i style="width:${done / c.units.length * 100}%"></i></div></div>`;
+}
+function storyBannerHTML() {
+  const st = ADV_STORIES[course().code]; if (!st) return '';
+  const at = (LS().adv || {})[st.id] || 0, n = st.scenes.length, done = at >= n;
+  return `<button class="story-banner" data-adventure="STORY_ADVENTURE"><div class="sb-cast"><span data-sb="voice_leo_04"></span><span data-sb="voice_sophia_02"></span><span data-sb="voice_hiro_01"></span></div>
+    <span class="sb-txt"><small>Story Adventure · ${done ? 'complete' : at ? `scene ${at + 1}/${n}` : 'new chapter'}</small><b>${esc(st.title)}</b></span><em>${done ? 'Replay' : at ? 'Resume' : 'Play'}</em></button>`;
+}
 function heroHTML() {
   const p = P(), c = course(), mc = MASCOTS[p.mascot], cur = currentLesson('main'), h = new Date().getHours();
   const hi = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
@@ -5933,10 +7332,10 @@ function heroHTML() {
   return `<div class="boo-stage">
     <div class="stage-bubble" id="stage-bubble"><b>${esc(mc.name)}</b><span>${esc(pick(lines))}</span></div>
     <button class="stage-boo" data-hero-boo aria-label="Tap ${esc(mc.name)} for a peekaboo word"></button>
-    <div class="stage-actions">
-      ${cur ? `<button class="stage-btn next" data-go="${cur.u.id}:${cur.i}:lesson">${ICON.starI}<span><b>Next scene</b><small>${esc(cur.u.title)} · ${cur.i + 1}/${UNIT_LESSONS}</small></span></button>`
-        : `<button class="stage-btn next" data-practice="mix">${ICON.starI}<span><b>Practice</b><small>Keep your words fresh</small></span></button>`}
-      <button class="stage-btn call" data-call><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span><b>Call ${esc(mc.name)}</b><small>Hands-free voice chat</small></span></button>
+    <div class="stage-actions v5">
+      ${cur ? `<button class="stage-go" data-go="${cur.u.id}:${cur.i}:lesson"><span><b>Continue</b><small>${esc(cur.u.title)} · scene ${cur.i + 1}</small></span>${ICON.play5}</button>`
+        : `<button class="stage-go" data-practice="mix"><span><b>Practice</b><small>Keep your words fresh</small></span>${ICON.play5}</button>`}
+      <div class="stage-mini"><button class="mini-btn" data-tab="chat">${ICON.mic}<span>Talk</span></button><button class="mini-btn rt-btn" data-realtalk><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H9l-4 3v-3.2A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z" fill="currentColor"/><path d="M20 9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2l-3-2h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Real Talk</span></button><button class="mini-btn call" data-call><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>Call</span></button></div>
     </div></div>`;
 }
 let _peekBusy = false;
@@ -5999,29 +7398,48 @@ const unitsUpTo = u => unitList(course(), u.track).slice(0, u.index + 1);
 const courseCast = () => (CULTURE_CAST[P().lang] || MASCOT_ORDER).filter(k => k !== P().mascot);
 function castMember(seed = Math.random()) { const others = courseCast(); return others[Math.floor(seed * others.length) % others.length]; }
 
+/** Friendly, varied question wording. */
+function askQ(kind, w) {
+  const n = MASCOTS[P().mascot].name, en = cleanEn(w.en);
+  const Q = {
+    meaning: ['What does this mean?', `${n} found this word. What does it mean?`, 'Quick! What’s this in English?', 'Know this one?', 'Translate me!'],
+    say: [`How do you say “${en}”?`, `${n} needs “${en}”. Which one?`, `Pick the word for “${en}”`, `“${en}”… which is it?`],
+    hear: ['What do you hear?', `Listen! What did ${n} say?`, 'Ears on! What was that?', 'Catch the word!'],
+    pic: ['What is this?', 'Name this one!', 'What’s in the picture?', `${n} is pointing at… what?`]
+  };
+  return pick(Q[kind]);
+}
+/** A real sentence from the course that uses this word, for context on teaching cards. */
+function exampleFor(w) {
+  const t = norm(w.t); if (!t || t.length < 2) return null;
+  const hit = allSentences().filter(s => norm(s.t).includes(t) && norm(s.t) !== t);
+  return hit.length ? pick(hit) : null;
+}
 const EX = {
   teachLetter: l => ({ kind: 'teach', big: l.g, rom: l.r, note: l.hint, say: l.say, label: 'New letter' }),
-  teachWord: w => ({ kind: 'teach', big: w.t, rom: w.r, note: w.en, say: w.t, pic: w.pic, label: 'New word', isWord: true }),
+  teachWord: w => ({ kind: 'teach', big: w.t, rom: w.r, note: cleanEn(w.en), say: w.t, pic: w.pic, label: pick(['New word', 'Fresh word', 'Word drop']), isWord: true, ex: exampleFor(w) }),
   tip: g => ({ kind: 'tip', g }),
   story: u => ({ kind: 'story', story: u.story, uid: u.id }),
   storyQ: (q) => ({ kind: 'mcq', q: q[0], prompt: { sub: 'About the story' }, options: shuffle([...q[1]]), answer: q[2] }),
   storyListen: (st) => { const ls = shuffle(st.lines.slice()).slice(0, 3), l = ls[0]; return { kind: 'mcq', q: 'Which line did you hear?', prompt: { audio: l[1] }, options: shuffle(ls.map(x => x[3])), answer: l[3], teach: `${l[1]} (${l[2]})` }; },
   glyphToSound: (l, pool) => ({ kind: 'mcq', q: 'What sound is this letter?', prompt: { text: l.g, script: true, say: l.say }, options: optionsFrom(pool, l, x => x.r), answer: l.r, teach: `${l.g} = ${l.r}` }),
   soundToGlyph: (l, pool) => ({ kind: 'mcq', q: 'Which letter do you hear?', prompt: { audio: l.say }, options: optionsFrom(pool, l, x => x.g), optScript: true, answer: l.g, teach: `${l.g} = ${l.r}` }),
-  matchLetters: ls => ({ kind: 'match', pairs: ls.map(l => ({ k: l.g, a: l.g, b: l.r, say: l.say })), aScript: true }),
-  meaning: (w, pool) => ({ kind: 'mcq', q: 'What does this mean?', prompt: { text: w.t, script: true, sub: w.r, say: w.t }, options: optionsFrom(pool, w, x => x.en), answer: w.en, srsId: w.id, teach: `${w.t} (${w.r}) = ${w.en}` }),
+  matchLetters: ls => { const seen = new Set(); return { kind: 'match', pairs: ls.filter(l => !seen.has(l.r) && seen.add(l.r)).map(l => ({ k: l.r, a: l.g, b: l.r, say: l.say })), aScript: true }; },
+  meaning: (w, pool) => ({ kind: 'mcq', q: askQ('meaning', w), prompt: { text: w.t, script: true, sub: w.r, say: w.t }, options: optionsFrom(pool, w, x => cleanEn(x.en)), answer: cleanEn(w.en), srsId: w.id, teach: `${w.t} (${w.r}) = ${w.en}` }),
   readWord: (w, pool) => ({ kind: 'mcq', q: 'How do you read this word?', prompt: { text: w.t, script: true, pic: w.pic }, options: optionsFrom(pool, w, x => x.r), answer: w.r, srsId: w.id, sayAfter: w.t, teach: `${w.t} = ${w.r}, "${w.en}"` }),
-  toTarget: (w, pool) => ({ kind: 'mcq', q: `How do you say “${w.en}”?`, prompt: { pic: w.pic }, options: optionsFrom(pool, w, x => x.t), optScript: true, optRom: pool, speakOpts: true, answer: w.t, answerRom: w.r, srsId: w.id, teach: `${w.t} (${w.r})` }),
-  listenWord: (w, pool) => ({ kind: 'mcq', q: 'What do you hear?', prompt: { audio: w.t }, options: optionsFrom(pool, w, x => x.en), answer: w.en, srsId: w.id, teach: `${w.t} (${w.r}) = ${w.en}` }),
-  matchWords: ws => ({ kind: 'match', pairs: ws.map(w => ({ k: w.id, a: w.t, b: w.en, say: w.t })), aScript: true }),
+  toTarget: (w, pool) => ({ kind: 'mcq', q: askQ('say', w), prompt: { pic: w.pic }, options: optionsFrom(pool, w, x => x.t), optScript: true, optRom: pool, speakOpts: true, answer: w.t, answerRom: w.r, srsId: w.id, teach: `${w.t} (${w.r})` }),
+  listenWord: (w, pool) => ({ kind: 'mcq', q: askQ('hear', w), prompt: { audio: w.t }, options: optionsFrom(pool, w, x => cleanEn(x.en)), answer: cleanEn(w.en), srsId: w.id, teach: `${w.t} (${w.r}) = ${w.en}` }),
+  matchWords: ws => { const key = w => cleanEn(w.en).toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/^(i ?m|i am|it ?s|im) /, '').trim(), seen = new Set();
+    const uniq = ws.filter(w => { const k = key(w); if (seen.has(k)) return false; seen.add(k); return true; });
+    return { kind: 'match', pairs: uniq.map(w => ({ k: key(w), a: w.t, r: w.r, b: cleanEn(w.en), say: w.t })), aScript: true }; },
   pickPic: (w, pool) => ({ kind: 'pics', w, options: shuffle([w, ...shuffle(pool.filter(x => x.pic && x.pic !== w.pic && x.en !== w.en)).slice(0, 3)]), srsId: w.id }),
-  namePic: (w, pool) => ({ kind: 'mcq', q: 'What is this?', prompt: { pic: w.pic, big: true }, options: optionsFrom(pool, w, x => x.t), optScript: true, optRom: pool, speakOpts: true, answer: w.t, answerRom: w.r, srsId: w.id, teach: `${w.t} (${w.r}) = ${w.en}` }),
+  namePic: (w, pool) => ({ kind: 'mcq', q: askQ('pic', w), prompt: { pic: w.pic, big: true }, options: optionsFrom(pool, w, x => x.t), optScript: true, optRom: pool, speakOpts: true, answer: w.t, answerRom: w.r, srsId: w.id, teach: `${w.t} (${w.r}) = ${w.en}` }),
   build: t => ({ kind: 'build', ...t }),
   toEn: s => ({ kind: 'tiles', dir: 'en', s, who: castMember() }),
   toKo: s => ({ kind: 'tiles', dir: 'ko', s, who: castMember() }),
   listenTiles: s => ({ kind: 'tiles', dir: 'ko', s, listen: true, who: castMember() }),
   blank: b => ({ kind: 'blank', b }),
-  speak: (it, who) => ({ kind: 'speak', item: { t: it.t, r: it.r, en: it.en, pic: it.pic }, who: who || castMember() }),
+  speak: (it, who) => ({ kind: 'speak', item: { t: it.t, r: it.r, en: cleanEn(it.en), pic: concretePic(it) ? it.pic : '' }, who: who || castMember() }),
   dialog: (npc, say, reply, wrongs) => ({ kind: 'dialog', npc, say, reply, options: shuffle([reply, ...wrongs]) })
 };
 /* Pictures that clearly show a thing (not arrows, digits or symbols) make fair picture questions. */
@@ -6157,7 +7575,7 @@ function buildPractice(kind) {
   }
   else if (kind === 'matching') {
     const seen = new Set(), ws = shuffle([...words, ...units.flatMap(u => u.words || [])].filter(w => w && !seen.has(w.id) && !seen.has(w.en) && seen.add(w.id) && seen.add(w.en)));
-    for (let i = 0; i + 5 <= ws.length && out.length < 4; i += 5) out.push(EX.matchWords(ws.slice(i, i + 5)));
+    for (let i = 0; i + 5 <= ws.length && out.length < 4; i += 5) { const st = EX.matchWords(ws.slice(i, i + 5)); if (st.pairs.length >= 3) out.push(st); }
   }
   else if (kind === 'grammar') { shuffle(units.flatMap(u => u.blanks || [])).slice(0, 10).forEach(b => out.push(EX.blank(b))); }
   else if (kind === 'catch') { shuffle(sents).map(oopsStep).filter(Boolean).slice(0, 8).forEach(o => out.push(o)); }
@@ -6232,6 +7650,7 @@ function startPractice(kind) {
 const Runner = {
   open(meta, steps) {
     Object.assign(this, { meta, queue: steps, i: 0, graded: 0, correct: 0, combo: 0, maxCombo: 0, wrongRun: 0, halfDone: false, missedItems: [], missed: new Set(), finished: false, mode: 'wait', select: null, outOfHearts: false, advanceT: null });
+    React.comboChip(0); DailyUse.seen.clear();
     $('#lesson').hidden = false; clearInterval(this.tick); this.deadline = meta.speed ? Date.now() + 60000 : 0;
     if (meta.speed) this.tick = setInterval(() => { this.drawHearts(); if (Date.now() > this.deadline && !this.finished && !this.locked) this.complete(); }, 250);
     paintMascot($('#l-boo'), P().mascot, 'happy', false);
@@ -6260,21 +7679,31 @@ const Runner = {
     const step = this.queue[this.i], p = P(), mc = MASCOTS[p.mascot];
     const n = info.weight || 1, good = info.correctCount ?? (ok ? n : 0);
     this.graded += n; this.correct += good;
-    if (step.srsId) { if (!ok) this.missed.add(step.srsId); SRS.update(step.srsId, ok && !this.missed.has(step.srsId)); }
+    if (info.free && !ok) {   // "guess first" steps: a miss costs nothing
+      this.graded -= n;
+      const foot = $('#l-foot'); foot.hidden = false; foot.className = 'l-foot bad free';
+      $('#l-fb').hidden = false; $('#l-fb-title').textContent = pick(['Nice guess!', 'Good try!', 'Ooh, close-ish!']); $('#l-fb-msg').textContent = info.teach || '';
+      $('#l-fb-detail').innerHTML = info.show ? `<span>It means:</span><span>${esc(info.show.en)}</span><small>${esc(info.show.t)} · ${esc(info.show.r || '')}</small>` : '';
+      React.play($('#l-fb-m'), p.mascot, 'giggle'); this.nextOnly('Continue'); return;
+    }
+    if (step.srsId && !info.free) { if (!ok) this.missed.add(step.srsId); SRS.update(step.srsId, ok && !this.missed.has(step.srsId)); }
     if (ok) {
       this.combo++; this.wrongRun = 0; this.maxCombo = Math.max(this.maxCombo, this.combo); p.stats.correct++; Quests.bump('correct', good);
-      if (this.combo % 5 === 0) { this.comboFlash(); Quests.bump('combo5'); }
+      if (this.combo % 5 === 0) Quests.bump('combo5');
+      if (!this.meta.speed && ([3, 5, 8].includes(this.combo) || (this.combo >= 10 && this.combo % 5 === 0))) setTimeout(() => React.streak(this.combo, p.mascot), 250);
       p.stats.bestCombo = Math.max(p.stats.bestCombo, this.combo);
       Sfx.correct();
     } else {
-      this.combo = 0; this.wrongRun++; Sfx.wrong();
+      this.combo = 0; this.wrongRun++; Sfx.wrong(); React.buzz(70);
       if (step.srsId && VOCAB_INDEX[step.srsId] && !this.missedItems.some(x => x.id === step.srsId)) this.missedItems.push({ id: step.srsId, ...VOCAB_INDEX[step.srsId] });
       else if (step.s && !this.missedItems.some(x => x.t === step.s.t)) this.missedItems.push({ t: step.s.t, r: step.s.r, en: step.s.en });
       if (!step.retry && step.kind !== 'speak' && step.kind !== 'match' && !this.meta.speed) this.queue.push({ ...step, retry: true });
       if (!this.practiceMode()) { Hearts.lose(); this.drawHearts(); if (Hearts.left() <= 0) this.outOfHearts = true; }
     }
-    const title = ok ? pick(mc.praise) : fill(pick(mc.oops), { you: info.you || '…', right: typeof info.show === 'string' ? info.show : (info.show?.t || step.answer || '…') });
-    if (!ok) addJoke(title);
+    const item = (info.show && typeof info.show === 'object' && info.show.t) ? info.show : step.w || (step.srsId && VOCAB_INDEX[step.srsId]) || step.item || (step.s && step.s.en && [...step.s.t].length <= 14 ? step.s : null);
+    const title = React.message(ok, item, { you: info.you || '…', right: typeof info.show === 'string' ? info.show : (info.show?.t || step.answer || '…') }, this.wrongRun);
+    if (!ok && Math.random() < .5) addJoke(fill(pick(mc.oops), { you: info.you || '…', right: typeof info.show === 'string' ? info.show : (info.show?.t || step.answer || '…') }));
+    React.comboChip(this.combo);
     const foot = $('#l-foot'); foot.hidden = false; foot.className = 'l-foot ' + (ok ? 'ok' : 'bad');
     $('#l-fb').hidden = false; $('#l-fb-title').textContent = React.headline(ok, this.combo, this.wrongRun);
     $('#l-fb-msg').textContent = title;
@@ -6290,19 +7719,24 @@ const Runner = {
     $('#l-fb-detail').innerHTML = d.join('');
     const mood = React.pick(ok, this.combo, this.wrongRun);
     React.play($('#l-fb-m'), p.mascot, mood); paintMascot($('#l-boo'), p.mascot, mood, true);
+    $('#l-fb-m').classList.toggle('r-no', !ok); $('#l-fb-m').classList.toggle('r-yay', ok);
     React.flash(ok);
     setTimeout(() => React.burst($('#l-fb-m'), ok ? (this.combo >= 3 ? 'stars' : 'hearts') : (this.wrongRun >= 2 ? 'clouds' : 'tears'), ok ? 10 : 6), 60);
+    if (!ok && this.wrongRun >= 2) setTimeout(() => { if (this.locked) { React.play($('#l-fb-m'), p.mascot, 'love'); React.burst($('#l-fb-m'), 'hearts', 5); } }, 1100);
     $('#l-skip').hidden = true;
+    // Always hear the right answer in the target language.
+    const tgt = (info.show && typeof info.show === 'object' && info.show.t) || (step.w && step.w.t) || (step.srsId && VOCAB_INDEX[step.srsId] && VOCAB_INDEX[step.srsId].t) || (step.s && step.s.t) || (step.optScript && step.answer) || (step.b && step.b.t && step.b.t.replace('__', step.b.answer));
+    if (tgt && !['speak', 'pop', 'tf', 'match', 'ctxpick', 'scene', 'feel', 'tone', 'shadow', 'order', 'ctxsay'].includes(step.kind)) setTimeout(() => { if (this.queue[this.i] === step && !(Voice.lastText === tgt && Date.now() - Voice.lastAt < 2500)) Voice.speak(tgt, undefined, .88, P().mascot, ok ? 'happy' : 'calm'); }, 280);
     Store.save(); this.nextOnly('Continue');
     // Correct answers move on by themselves; mistakes wait so you can read the fix.
     if (this.meta.speed) this.advanceT = setTimeout(() => { if (this.mode === 'next' && this.locked) this.next(); }, ok ? 450 : 1300);
-    else if (ok && !info.noAuto && !this.outOfHearts) this.advanceT = setTimeout(() => { if (this.mode === 'next' && this.locked) this.next(); }, info.show || info.why ? 1300 : 700);
+    else if (ok && !info.noAuto && !this.outOfHearts) this.advanceT = setTimeout(() => { if (this.mode === 'next' && this.locked) this.next(); }, /Use it today/.test(title) ? 2300 : tgt ? Math.min(3400, 1700 + [...tgt].length * 70) : info.show || info.why ? 1800 : 1300);
   },
   halfway() {
     const el = document.createElement('div'); el.className = 'halfway';
     el.innerHTML = `<div class="mascot" id="hw-m"></div><b>Halfway there!</b><small>${esc(pick(['You’re doing great.', 'Keep that energy!', 'Look at you go!']))}</small>`;
     $('#lesson').append(el); React.play($('#hw-m'), P().mascot, 'star'); Sfx.level();
-    setTimeout(() => el.classList.add('out'), 1300); setTimeout(() => el.remove(), 1700);
+    setTimeout(() => el.classList.add('out'), 2000); setTimeout(() => el.remove(), 2500);
   },
   comboFlash() {
     const el = document.createElement('div'); el.className = 'combo'; el.textContent = `${this.combo} in a row!`;
@@ -6393,13 +7827,13 @@ const Runner = {
 /* ---------- Pronunciation check (used by lessons, teaching cards and chat) ---------- */
 function pronScore(target, alts) {
   const t = norm(target); let best = alts[0] || '', score = 0;
-  alts.forEach(a => { const s = similarity(t, norm(a)); if (s > score) { score = s; best = a; } });
+  alts.forEach(a => { const n = norm(a), s = n.includes(t) && t.length >= 2 ? 1 : similarity(t, n); if (s > score) { score = s; best = a; } });
   const mask = hitMask(t, norm(best)); let k = 0;
   const html = [...target].map(ch => { if (!norm(ch)) return esc(ch); const hit = mask[k++]; return `<span class="${hit ? 'hit' : 'miss'}">${esc(ch)}</span>`; }).join('');
   return { pct: Math.round(score * 100), best, html, ok: score >= .7 };
 }
 /** Listen once and return the transcript alternatives, handling permission. */
-async function listenOnce(lang) { Voice.stop(); const alts = await Mic.listen(lang); P().micReady = true; Store.save(); return alts; }
+async function listenOnce(lang, opts) { Voice.stop(); const alts = await Mic.listen(lang, opts); P().micReady = true; Store.save(); return alts; }
 
 /* ---------- Exercise renderers: tapping an answer submits it ---------- */
 function bubblePrompt(el, inner, who) { el.insertAdjacentHTML('beforeend', `<div class="prompt-row"><div class="mascot" data-pm></div><div class="say-bubble">${who ? `<span class="who-tag">${esc(MASCOTS[who].name)}</span>` : ''}${inner}</div></div>`); paintMascot($('[data-pm]', el), who || P().mascot, 'happy'); }
@@ -6466,8 +7900,11 @@ const RENDER = {
   },
   tip(step, el, R) {
     const c = course(), g = step.g;
-    el.innerHTML = `<div class="tip-card"><span class="badge-new">Tip</span><h2>${esc(g.h)}</h2><p>${esc(g.p)}</p>
-      ${(g.ex || []).map(([t, r, en]) => `<div class="ex-row"><button class="speaker sm" data-say="${esc(t.replace(/→.*/, '').trim())}" aria-label="Play">${ICON.speaker}</button><div><span class="script" ${attrs(c)}>${esc(t)}</span><small>${esc(r)} · ${esc(en)}</small></div></div>`).join('')}</div>`;
+    const short = (String(g.p).match(/^.*?[.!?](\s|$)/) || [g.p])[0].trim();
+    el.innerHTML = `<div class="tip-wrap"><div class="tip-boo mascot" id="tip-m"></div>
+      <div class="tip-say"><b>${esc(g.h)}</b><p>${esc(short)}</p></div></div>
+      ${(g.ex || []).length ? `<div class="tip-ex">${g.ex.slice(0, 3).map(([t, r, en]) => `<button class="tip-chip" data-say="${esc(t.replace(/→.*/, '').trim())}"><span class="script" ${attrs(c)}>${esc(t)}</span><small>${esc(cleanEn(en))}</small></button>`).join('')}</div>` : ''}`;
+    paintMascot($('#tip-m', el), P().mascot, 'think', true);
     R.nextOnly('Got it');
   },
   teach(step, el, R) {
@@ -6476,7 +7913,7 @@ const RENDER = {
       ${step.pic ? `<div class="pic-hero" aria-hidden="true">${artSVG(step.pic)}</div>` : ''}
       <button class="glyph-btn" data-say="${esc(step.say)}"><span class="big script ${[...step.big].length > 3 || step.pic ? 'long' : ''}" ${attrs(c)}>${esc(step.big)}</span><small>${ICON.speaker} Tap to hear</small></button>
       <div class="rom">${esc(step.rom)}</div><div class="${step.isWord ? 'en' : 'hint'}">${esc(step.note)}</div>
-      ${step.isWord ? bridgeHTML(step.note) : ''}
+      ${step.ex ? `<button class="ex-line" data-say="${esc(step.ex.t)}">${ICON.speaker}<span><span class="script" ${attrs(c)}>${esc(step.ex.t)}</span><small>${esc(step.ex.en)}</small></span></button>` : ''}
       <div class="card-actions">${step.isWord ? starBtn({ t: step.say, r: step.rom, en: step.note }) : ''}<button class="speaker slow" data-say="${esc(step.say)}" data-rate=".55" aria-label="Play slowly">${ICON.turtle}</button>
         ${Mic.SR && !Mic.blocked ? `<button class="say-it" id="t-mic">${ICON.mic}<span>Say it</span></button>` : ''}</div>
       <div class="pron-line" id="t-pron"></div>${step.isWord ? echoHTML() : ''}</div>`;
@@ -6485,7 +7922,7 @@ const RENDER = {
     const mic = $('#t-mic', el);
     if (mic) mic.onclick = async () => {
       mic.classList.add('on'); $('#t-pron', el).textContent = 'Listening…';
-      try { const r = pronScore(step.say, await listenOnce(c.stt)); mic.classList.remove('on'); Journal.log({ t: step.say, r: step.rom, en: step.note }, r.pct);
+      try { const r = pronScore(step.say, await listenOnce(c.stt, { target: step.say, onInterim: t => { const el2 = $('#t-pron', el); if (el2) el2.textContent = `Hearing: ${t}`; } })); mic.classList.remove('on'); Journal.log({ t: step.say, r: step.rom, en: step.note }, r.pct);
         $('#t-pron', el).innerHTML = `<span class="script" ${attrs(c)}>${r.html}</span> <b class="${r.ok ? 'good' : 'bad'}">${r.pct}%</b> ${r.ok ? 'Sounds right!' : 'Try again: listen to the slow version first.'}`; if (r.ok) Sfx.correct(); else Sfx.wrong(); }
       catch (code) { mic.classList.remove('on'); $('#t-pron', el).textContent = Mic.explain(code); }
     };
@@ -6516,7 +7953,7 @@ const RENDER = {
     const c = course(), w = step.w;
     el.innerHTML = `<p class="q">${step.retry ? '<span class="badge-new" style="margin-right:8px">Previous mistake</span>' : ''}Which picture is this?</p>
       <div class="prompt"><button class="speaker" data-say="${esc(w.t)}" aria-label="Play">${ICON.speaker}</button><div><div class="prompt-text script" ${attrs(c)} style="font-size:34px">${esc(w.t)}</div><div class="prompt-sub" style="width:auto">${esc(w.r)}</div></div></div>
-      <div class="pic-grid">${step.options.map((o, i) => `<button class="pic-card" data-i="${i}"><span class="pic">${artSVG(o.pic)}</span><small class="pic-label">${esc(o.en)}</small></button>`).join('')}</div>`;
+      <div class="pic-grid">${step.options.map((o, i) => `<button class="pic-card" data-i="${i}"><span class="pic">${artSVG(o.pic)}</span><small class="pic-label">${esc(cleanEn(o.en))}</small></button>`).join('')}</div>`;
     const answer = i => {
       if (R.locked) return; const ok = step.options[i].t === w.t;
       $$('.pic-card', el).forEach((b, j) => { b.classList.add('revealed'); if (step.options[j].t === w.t) b.classList.add('right'); else if (j === i) b.classList.add('wrong'); });
@@ -6545,7 +7982,7 @@ const RENDER = {
   match(step, el, R) {
     const c = course(), left = shuffle(step.pairs), right = shuffle(step.pairs);
     el.innerHTML = `<p class="q">Tap the matching pairs</p>
-      <div class="match"><div class="col">${left.map(x => `<button class="tile ${step.aScript ? 'script' : ''}" ${attrs(c)} draggable="true" data-side="a" data-k="${esc(x.k)}">${esc(x.a)}</button>`).join('')}</div>
+      <div class="match"><div class="col">${left.map(x => `<button class="tile ${step.aScript ? 'script' : ''}" ${attrs(c)} draggable="true" data-side="a" data-k="${esc(x.k)}">${esc(x.a)}${x.r ? `<small class="tile-sub">${esc(x.r)}</small>` : ''}</button>`).join('')}</div>
       <div class="col">${right.map(x => `<button class="tile" data-side="b" data-k="${esc(x.k)}">${esc(x.b)}</button>`).join('')}</div></div>`;
     let selA = null, selB = null, left_ = step.pairs.length, mistakes = 0;
     const attempt = (a, b) => {
@@ -6662,7 +8099,7 @@ const RENDER = {
       if (Mic.active) { Mic.stop(); return; }
       btn.classList.add('on'); st.textContent = 'Listening… speak now.';
       try {
-        const alts = await listenOnce(c.stt); btn.classList.remove('on'); tries++;
+        const alts = await listenOnce(c.stt, { target: it.t, onInterim: t => { st.textContent = `Hearing: ${t}…`; } }); btn.classList.remove('on'); tries++;
         const r = pronScore(it.t, alts); Journal.log(it, r.pct);
         $('#sp-t', el).innerHTML = r.html;
         const meter = $('#sp-meter', el); meter.style.width = r.pct + '%'; meter.style.background = r.ok ? 'var(--jade)' : 'var(--coral)';
@@ -6774,7 +8211,9 @@ async function chatMic() {
   if (!Mic.supported()) { toast(Mic.explain(Mic.SR ? 'not-allowed' : 'unsupported')); return; }
   btn.classList.add('on'); Mascot.set('think', 'Listening… speak now!');
   try {
-    const alts = await Mic.listen(course().stt);
+    const chat = LS().chat, tgt = chat.topic === 'buddy' ? Buddy.state().cur?.t : (chat.suggestions || [])[0]?.t;
+    const alts = await Mic.listen(course().stt, { target: tgt, onInterim: t => { const i = $('#chat-input'); if (i) i.value = t; const cs = $('#call-st'); if (cs) cs.textContent = `Hearing: ${t}…`; } });
+    const ci = $('#chat-input'); if (ci) ci.value = '';
     btn.classList.remove('on'); Tutor.send(alts[0], alts);
   } catch (code) { btn.classList.remove('on'); toast(Mic.explain(code)); Mascot.set('happy'); }
 }
@@ -6786,11 +8225,16 @@ async function chatMic() {
 function renderPractice() {
   const p = P(), c = course(), words = learnedWords(p, c.code), due = SRS.due().length;
   $('#tab-practice').innerHTML = `<div class="pad stack">
+    ${moodHTML()}
     <div class="card practice-hero"><div class="mascot" data-pr-m></div><div><h2 style="font-size:22px">Practice your weak spots</h2>
-      <p>${due ? `${due} word${due > 1 ? 's are' : ' is'} due for review.` : words.length ? 'Keep words fresh before they fade.' : 'Finish a lesson and your words land here.'} Practice never costs hearts and earns one back.</p>
+      <p>${due ? `${due} word${due > 1 ? 's are' : ' is'} due for review.` : words.length ? 'Keep words fresh before they fade.' : 'Finish a lesson and your words land here.'}</p>
       <button class="btn" data-practice="mix">Start practice +5 XP</button></div></div>
+    <button class="rt-promo" data-realtalk><div class="mascot" data-rtp-m></div><span><b>Real Talk</b><small>Role-plays, tone slider, social stakes and idiom speed rounds. Talk like a local, not a textbook.</small></span><em>Play</em></button>
+    <button class="tone-promo" data-tone><span class="tp-wave"><i></i><i></i><i></i><i></i><i></i><i></i></span><span><b>Tone Studio</b><small>진짜? vs 진짜! Same words, different feelings. Hear it, then say it with feeling.</small></span><em>Play</em></button>
+    <div class="adv-promos"><button class="adv-promo story" data-adventure="STORY_ADVENTURE"><span class="mascot" data-ap="voice_leo_04"></span><b>Story Adventure</b><small>Choose the right words to survive the night</small></button>
+      <button class="adv-promo explorer" data-adventure="LETTER_EXPLORER" ${course().letterUnits.length && lettersOpen() ? '' : 'disabled'}><span class="mascot" data-ap="voice_hiro_01"></span><b>Letter Explorer</b><small>Find letters hiding in real words</small></button></div>
     <div class="drills">
-      <button class="drill" data-practice="letters" ${c.letterUnits.length ? '' : 'disabled'}><span class="ic">${ICON.blocks}</span><b>${c.code === 'ko' ? 'Hangeul drill' : 'Letter drill'}</b><small>Sounds, letters and syllable building</small></button>
+      <button class="drill" data-practice="letters" ${c.letterUnits.length && lettersOpen() ? '' : 'disabled'}><span class="ic">${ICON.blocks}</span><b>${c.code === 'ko' ? 'Hangeul drill' : 'Letter drill'}</b><small>Sounds, letters and syllable building</small></button>
       <button class="drill" data-practice="listen"><span class="ic">${ICON.ear}</span><b>Listening</b><small>Hear it, pick it, write it</small></button>
       <button class="drill" data-practice="speak"><span class="ic">${ICON.mic}</span><b>Speaking</b><small>Pronunciation checked by voice</small></button>
       <button class="drill" data-practice="sentences" ${c.units.some(u => u.sentences) ? '' : 'disabled'}><span class="ic">${ICON.chat}</span><b>Sentences</b><small>Build and translate</small></button>
@@ -6814,11 +8258,14 @@ function renderPractice() {
     </details>
   </div>`;
   paintMascot($('[data-pr-m]'), p.mascot, 'cheer', false);
+  $$('[data-ap]').forEach(el => paintChar(el, el.dataset.ap, 'cheer'));
+  const rtp = $('[data-rtp-m]'); if (rtp) paintMascot(rtp, courseCast()[1 % courseCast().length], 'laugh', false);
+  const fm2 = $('#tab-practice [data-feel-m]'); if (fm2) paintMascot(fm2, p.mascot, 'happy', false);
 }
 
 function voiceJournalHTML() {
   const c = course(), st = Journal.stats(), days = Journal.days(14), tr = Journal.tricky(5);
-  if (!st) return `<div class="card journal"><h3>Voice Journal</h3><p class="note">Every time the mic checks you, the score lands here, so you can watch your accent get better week by week.</p></div>`;
+  if (!st) return `<div class="card journal"><h3>Voice Journal</h3><p class="note">Speak in a lesson and watch your accent improve here.</p></div>`;
   const trend = st.older == null ? '' : st.recent > st.older ? `<span class="good">▲ ${st.recent - st.older}% vs before</span>` : st.recent < st.older ? `<span class="bad">▼ ${st.older - st.recent}% vs before</span>` : '<span class="muted">steady</span>';
   return `<div class="card journal"><h3>Voice Journal <span class="muted num" style="font:700 14px var(--font-body)">${st.total} checks</span></h3>
     <div class="kv sm"><div><b>${st.recent}%</b><span>Recent average</span></div><div><b>${st.best}%</b><span>Best ever</span></div></div>
@@ -6832,7 +8279,7 @@ function phrasebookHTML() {
   return `<div class="card phrasebook"><h3>Pocket Phrasebook <span class="muted num" style="font:700 14px var(--font-body)">${ph.length}</span></h3>
     ${ph.length ? `${ph.map(x => `<div class="ex-row"><button class="speaker sm" data-say="${esc(x.t)}" aria-label="Play">${ICON.speaker}</button><div style="flex:1"><span class="script" ${attrs(c)}>${esc(x.t)}</span><small>${esc(x.r)}${x.en ? ' · ' + esc(x.en) : ''}</small></div>${starBtn(x)}</div>`).join('')}
       <button class="btn sm" data-practice="phrases" style="margin-top:8px">Say my phrases out loud</button>`
-    : '<p class="note">Tap ★ on any word, story line or sentence to keep it here, with audio, for when you need it in real life.</p>'}</div>`;
+    : '<p class="note">Tap ★ on any word to keep it here for real life.</p>'}</div>`;
 }
 
 /* =====================================================================
@@ -6884,7 +8331,7 @@ function buy(item) {
 function renderProfile() {
   const p = P(), ai = Store.data.ai, c = course();
   const micState = !Mic.SR ? 'Not supported in this browser' : Mic.blocked ? 'Blocked here' : p.micReady ? 'Ready' : 'Not set up yet';
-  $('#tab-profile').innerHTML = `<div class="pad stack">
+  $('#tab-profile').innerHTML = `<div class="pad stack"><button class="me-passport" data-tab="quests">${ICON.target}<span><b>Passport & quests</b><small>Stamps, culture cards, daily quests, shop</small></span></button>
     <div class="card"><div class="me-card"><div data-mascot-live></div>
       <div style="flex:1;min-width:180px"><h1 style="font-size:28px">${esc(p.name)}</h1><p class="note">Learning ${c.name} with ${MASCOTS[p.mascot].name} · since ${new Date(p.createdAt).toLocaleDateString()}</p></div>
       <button class="btn ghost sm" data-switch>Switch learner</button></div></div>
@@ -6908,22 +8355,25 @@ function renderProfile() {
       <label class="row">Sound effects<input type="checkbox" class="toggle" id="me-sound" ${p.sound ? 'checked' : ''}></label>
       <label class="row">Tutor reads lines aloud<input type="checkbox" class="toggle" id="me-voice" ${p.autoVoice ? 'checked' : ''}></label>
       <label class="row">Show English in chat<input type="checkbox" class="toggle" id="me-en" ${p.showEnglish ? 'checked' : ''}></label>
+      <label class="row">Unlimited hearts<input type="checkbox" class="toggle" id="me-hearts" ${p.unlimitedHearts ? 'checked' : ''}></label>
     </div>
-    <details class="more"><summary>Advanced</summary>
-    <div class="card settings"><label class="row">Unlimited hearts<input type="checkbox" class="toggle" id="me-hearts" ${p.unlimitedHearts ? 'checked' : ''}></label></div>
+    ${c.code !== 'es' ? `<div class="card settings"><h3>Writing</h3><p class="note">Speakaboo starts by ear: pronunciation first, ${esc(c.name)} script as a sneak peek. After Season 1 the script takes the lead.</p>
+      <label class="row">Show<select id="script-mode">${[['auto', 'Automatic (recommended)'], ['sound', 'Sounds first'], ['script', 'Script first']].map(([v, l]) => `<option value="${v}" ${(p.scriptMode || 'auto') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>` : ''}
     <div class="card settings" id="ai-panel"><h3>Chat tutor brain</h3>
       <p class="note">Now using: <b>${esc(Tutor.label())}</b>. Claude works when Speakaboo is opened inside claude.ai. Anywhere else, paste a free Gemini key from Google AI Studio. Offline scenes always work.</p>
       <label class="row">Brain<select id="ai-provider">${[['auto', 'Automatic'], ['claude', 'Claude (inside claude.ai)'], ['gemini', 'Gemini (your key)'], ['offline', 'Offline scenes']].map(([v, l]) => `<option value="${v}" ${ai.provider === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
       <label class="field"><span>Gemini API key</span><input class="input" id="ai-key" type="password" placeholder="Paste your key" value="${esc(ai.geminiKey)}"></label>
       <label class="field"><span>Gemini model</span><input class="input" id="ai-model" value="${esc(ai.geminiModel)}"></label>
+      <label class="row">Voices<select id="ai-studio"><option value="on" ${ai.studio !== false ? 'selected' : ''}>Studio voices (Gemini, human-like)</option><option value="off" ${ai.studio === false ? 'selected' : ''}>Device voices</option></select></label>
+      <p class="note">${ai.geminiKey ? (Studio.on() ? 'Studio voices are on: every character has their own expressive voice.' : 'Studio voices are off. Device voices are used.') : 'Add a free Gemini key above to unlock human-like studio voices. Until then, Speakaboo picks the most natural voice on your device.'}</p>
+      <button class="btn ghost sm" id="voice-test">${ICON.speaker} Hear the cast</button>
       <p class="note">The key stays in this browser and is sent only to Google.</p>
     </div>
-    <p class="note" style="text-align:center">Speakaboo version ${SPEAKABOO_VERSION}</p>
+    <p class="note ver-line" id="ver-line" style="text-align:center">${Tester.on() ? '<b>Tester mode on</b> · ' : ''}Speakaboo version ${SPEAKABOO_VERSION}</p>
     <div class="card settings"><h3>Data</h3>
       ${UI.meConfirm === 'reset' ? `<div class="p-row"><span class="note">Erase ${esc(p.name)}’s progress?</span><button class="btn danger sm" id="me-reset-yes">Erase</button><button class="btn ghost sm" data-me-cancel>Keep</button></div>` : `<button class="btn ghost sm" id="me-reset">Reset my progress</button>`}
       ${UI.meConfirm === 'delete' ? `<div class="p-row"><span class="note">Delete this learner?</span><button class="btn danger sm" id="me-del-yes">Delete</button><button class="btn ghost sm" data-me-cancel>Keep</button></div>` : `<button class="btn ghost sm" id="me-del">Delete this learner</button>`}
     </div>
-    </details>
   </div>`;
   const root = $('#tab-profile');
   $$('[data-mascot-live]', root).forEach(el => paintMascot(el, p.mascot, Mascot.mood));
@@ -6947,6 +8397,9 @@ function renderProfile() {
   $('#me-del-yes')?.addEventListener('click', () => { UI.meConfirm = null; deleteProfile(p.id); $('#app').hidden = true; $('#profiles').hidden = false; });
   const saveAI = () => { Tutor.pickBrain(); Store.save(); renderProfile(); };
   $('#ai-provider').onchange = e => { ai.provider = e.target.value; saveAI(); };
+  $('#ai-studio') && ($('#ai-studio').onchange = e => { ai.studio = e.target.value === 'on'; Studio.failed = 0; saveAI(); });
+  $('#voice-test') && ($('#voice-test').onclick = async () => { const l = { ko: ['안녕! 나는 레오야!', '어서 오세요.', '천천히 하세요.'], ar: ['أهلا! أنا ليو!', 'أهلا وسهلا.', 'على مهلك يا ابني.'], es: ['¡Hola! ¡Soy Leo!', 'Bienvenido.', 'Tranquilo, hijo.'] }[c.code]; await Voice.speakThen(l[0], c.tts, .95, { id: 'voice_leo_04', emotion: 'excited' }); await Voice.speakThen(l[1], c.tts, .95, { id: 'voice_sophia_02', emotion: 'sarcastic' }); await Voice.speakThen(l[2], c.tts, .9, { id: 'voice_hiro_01', emotion: 'warm' }); });
+  $('#script-mode') && ($('#script-mode').onchange = e => { p.scriptMode = e.target.value; Store.save(); applyScriptMode(); toast(e.target.value === 'script' ? 'Script first' : e.target.value === 'sound' ? 'Sounds first' : 'Automatic'); });
   $('#ai-key').onchange = e => { ai.geminiKey = e.target.value.trim(); saveAI(); };
   $('#ai-model').onchange = e => { ai.geminiModel = e.target.value.trim() || 'gemini-2.5-flash'; Store.save(); };
 }
@@ -6989,16 +8442,20 @@ async function installApp() {
    ===================================================================== */
 document.addEventListener('click', e => {
   const t = e.target;
+  if (t.closest('#ver-line')) { const n = UI.verTaps = (Date.now() - (UI.verT || 0) < 1500 ? (UI.verTaps || 0) : 0) + 1; UI.verT = Date.now(); if (n >= 7) { UI.verTaps = 0; Tester.toggleLocal(); } return; }
   if (t.closest('[data-buddy-skip]')) { Buddy.skip(); return; }
   if (t.closest('[data-hands-free]')) { P().handsFree = !P().handsFree; Store.save(); renderChatHead(); toast(P().handsFree ? 'Hands-free on: I read prompts aloud and open the mic for you.' : 'Hands-free off.'); if (P().handsFree && !P().autoVoice) { P().autoVoice = true; Store.save(); } return; }
   const hb = t.closest('[data-hero-boo]'); if (hb) { heroPeek(hb); return; }
   if (t.closest('[data-call]')) { Call.open(); return; }
-  if (t.closest('[data-daily-done]')) { dailyDone(); return; }
+  if (t.closest('[data-realtalk]')) { RealTalk.open(); return; }
+  const adv = t.closest('[data-adventure]'); if (adv) { Adventure.open(adv.dataset.adventure); return; }
+  const hide = t.closest('[data-hide]'); if (hide) { hideTap(+hide.dataset.hide); return; }
+  const dans = t.closest('[data-daily-ans]'); if (dans) { dailyAnswer(dans.dataset.dailyAns); return; }
   const wear = t.closest('[data-wear]'); if (wear) { P().wear = wear.dataset.wear || null; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', 'How do I look?'); return; }
   const feel = t.closest('[data-feel]'); if (feel) { startMood(feel.dataset.feel); return; }
   const star = t.closest('[data-star]'); if (star) { const on = Phrases.toggle(JSON.parse(star.dataset.star)); star.classList.toggle('on', on); if (UI.tab === 'practice' && $('#lesson').hidden) renderPractice(); return; }
   const stamp = t.closest('[data-stamp]'); if (stamp) { cultureSheet(stamp.dataset.stamp); return; }
-  const say = t.closest('[data-say]'); if (say) { Voice.speak(say.dataset.say, say.dataset.tts || course().tts, say.dataset.rate ? +say.dataset.rate : .9, say.dataset.who || null); if (!say.closest('#lesson') && !say.dataset.tts) showGloss(say.dataset.say); if (!say.closest('.hw')) return; }
+  const say = t.closest('[data-say]'); if (say) { Voice.speak(say.dataset.say, say.dataset.tts || course().tts, say.dataset.rate ? +say.dataset.rate : .9, say.dataset.who || null); if (!say.closest('.hw')) return; }
   const node = t.closest('[data-node]'); if (node) { showNodePop(node.dataset.node); Sfx.tap(); return; }
   const go = t.closest('[data-go]'); if (go) { const [uid, i, mode] = go.dataset.go.split(':'); startLesson(uid, +i, mode); return; }
   const tab = t.closest('[data-tab]'); if (tab) { showTab(tab.dataset.tab); return; }
@@ -7013,7 +8470,14 @@ document.addEventListener('click', e => {
   const pr = t.closest('[data-practice]'); if (pr) { closeSheet(); startPractice(pr.dataset.practice); return; }
   const b = t.closest('[data-buy]'); if (b) { buy(b.dataset.buy); return; }
   if (t.closest('[data-install]')) { installApp(); return; }
-  if (t.closest('[data-hide-install]')) { P().hideInstall = true; Store.save(); renderLearn(); return; }
+  if (t.closest('[data-hide-install]')) { P().hideInstall = true; Store.save(); UI.tab === 'now' ? renderNow() : renderLearn(); return; }
+  if (t.closest('[data-letters-locked]')) { lettersLockedSheet(); return; }
+  if (t.closest('[data-letters-early]')) { P().lettersEarly = true; Store.save(); closeSheet(); applyScriptMode(); showTab('letters'); toast('Letters unlocked. Take it slow!', '가'); return; }
+  if (t.closest('[data-rr-done]')) { const p = P(); (p.readyShown ||= {})[course().code] = true; Store.save(); if (!t.closest('[data-adventure]')) { renderNow(); return; } }
+  if (t.closest('[data-live]')) { Live.open(); return; }
+  if (t.closest('[data-tone]')) { ToneLab.open(); return; }
+  if (t.closest('[data-sky-boo]')) { skyBooTap(); return; }
+  if (t.closest('[data-mission-done]')) { missionDone(); return; }
   if (t.closest('[data-switch]')) { showProfiles(); return; }
   if (t.closest('[data-mascot-live]') && P()) { Mascot.set(pick(['giggle', 'cheer', 'happy']), pick(MASCOTS[P().mascot].praise)); Sfx.pop(); return; }
   if (!t.closest('.pop-card')) $$('.pop-card').forEach(x => x.remove());
@@ -7035,7 +8499,7 @@ function goHome() {
   if (!P() || $('#app').hidden) return;
   closeSheet(); $('#modal').hidden = true;
   if (!$('#lesson').hidden) Runner.close();
-  UI.tab = 'learn'; BooMood.apply(); renderChrome(); showTab('learn'); setTimeout(welcomeBack, 700);
+  UI.tab = 'now'; BooMood.apply(); renderChrome(); showTab('now'); setTimeout(welcomeBack, 700);
 }
 let hiddenAt = 0;
 document.addEventListener('visibilitychange', () => {
@@ -7044,12 +8508,38 @@ document.addEventListener('visibilitychange', () => {
 });
 addEventListener('pageshow', e => { if (e.persisted) goHome(); });
 
-(function boot() {
+/* Boo hugging a little multi-language dictionary: used by the opening screen and app icons. */
+function booBookSVG(mood = 'happy') {
+  const A = MASCOT_ART.mandu, ink = '#1C1B2E';
+  const body = A.body.replace(/<ellipse class="arm-[lr]"[^>]*\/>/g, '');
+  const book = `<g transform="rotate(-7 60 90)">
+    <rect x="37" y="77" width="50" height="33" rx="5" fill="#FFF2E1" stroke="${ink}" stroke-width="3"/>
+    <path d="M44 106h40" stroke="#EADCC8" stroke-width="2"/>
+    <rect x="33" y="73" width="50" height="33" rx="5" fill="#FF6B6B" stroke="${ink}" stroke-width="3"/>
+    <path d="M41 73v33" stroke="${ink}" stroke-width="2.4"/>
+    <rect x="47" y="79" width="31" height="21" rx="4" fill="#FFF2E1"/>
+    <text x="62.5" y="94" text-anchor="middle" font-size="10" font-weight="900" fill="${ink}" font-family="'Noto Sans KR','Noto Sans Arabic','Nunito',system-ui,sans-serif">A 가 ع</text></g>
+    <ellipse cx="33" cy="88" rx="7.5" ry="6.5" fill="#fff" stroke="${ink}" stroke-width="3.2"/>
+    <ellipse cx="86" cy="84" rx="7.5" ry="6.5" fill="#fff" stroke="${ink}" stroke-width="3.2"/>`;
+  return `<svg viewBox="-4 -4 128 124" width="100%" height="100%">${body}${mascotFace(mood, A)}${book}</svg>`;
+}
+function splash() {
+  const el = document.createElement('div'); el.id = 'splash'; el.setAttribute('aria-hidden', 'true');
+  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${booBookSVG('happy')}</div><div class="sp-word">Speakaboo</div><div class="sp-tag">peek · speak · repeat</div>`;
+  document.body.append(el);
+  const t0 = Date.now(); let gone = false;
+  const hide = () => { if (gone) return; gone = true; setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 600); }, Math.max(0, 1100 - (Date.now() - t0))); };
+  setTimeout(hide, 2400);   // never block sign-in or slow networks
+  return hide;
+}
+function bootApp() {
+  const hideSplash = splash();
   Store.load(); Voice.init();
   Account.boot(() => {
     Object.values(Store.data.profiles).forEach(upgradeProfile);
     const d = Store.data;
     if (d.active && d.profiles[d.active]) enterApp(d.active); else { $('#profiles').hidden = false; renderProfiles(); }
+    hideSplash();
   });
   Tutor.init();
   if (window.SPEAKABOO_PWA && 'serviceWorker' in navigator && location.protocol === 'https:') {
@@ -7058,4 +8548,1617 @@ addEventListener('pageshow', e => { if (e.persisted) goHome(); });
     navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController && !reloaded) { reloaded = true; location.reload(); } });
     navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => { r.update().catch(() => {}); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') r.update().catch(() => {}); }); }).catch(() => {});
   }
+}
+/* =====================================================================
+   SPEAKABOO — SCENE CONTEXTS
+   Instead of a clip-art "heart" for 감사합니다, every abstract word is
+   learned inside a tiny comic moment: WHERE you are, WHO you're talking
+   to, and WHAT just happened. That is exactly what decides which word a
+   native speaker picks (감사합니다 to a clerk, 고마워요 to a friend…).
+   word → [place, role, caption, who speaks ('you' default | 'them')]
+   Places: street · shop · cafe · home · school
+   Roles:  friend (Leo) · clerk (Sophia) · elder (Grandpa Hiro) · teacher (Grandpa Hiro) · local (a local Boo)
+   ===================================================================== */
+const SCENE_CTX = {
+  ko: {
+    '안녕하세요': ['street', 'elder', 'You run into Grandpa Hiro on the street.'],
+    '감사합니다': ['shop', 'clerk', 'The clerk hands you your change.'],
+    '고마워요': ['cafe', 'friend', 'Leo saved you a seat.'],
+    '죄송합니다': ['street', 'elder', 'Oops! You bumped into Grandpa Hiro.'],
+    '미안해요': ['cafe', 'friend', 'You’re 10 minutes late to meet Leo.'],
+    '아니요': ['shop', 'clerk', '“Do you need a bag?” You don’t.'],
+    '괜찮아요': ['cafe', 'friend', 'Leo spilled a little water. No big deal.'],
+    '만나서 반가워요': ['school', 'local', 'First day. You meet a new classmate.'],
+    '안녕히 가세요': ['home', 'elder', 'Grandpa Hiro is leaving your home.'],
+    '안녕히 계세요': ['shop', 'clerk', 'You’re leaving the shop. The clerk stays.'],
+    '저': ['school', 'teacher', 'Introducing yourself to the teacher.'],
+    '제': ['school', 'teacher', 'Telling the teacher your name.'],
+    '이름': ['school', 'teacher', '“What’s your name?” asks the teacher.', 'them'],
+    '이거': ['shop', 'clerk', 'You point at the bag right in front of you.'],
+    '그거': ['shop', 'clerk', 'You point at the thing the clerk is holding.'],
+    '저거': ['shop', 'clerk', 'You point at a hat way across the shop.'],
+    '뭐': ['street', 'friend', 'Leo shows you something very strange.'],
+    '주세요': ['cafe', 'clerk', 'Ordering at the counter.'],
+    '아니에요': ['shop', 'clerk', '“Is this your umbrella?” It isn’t.'],
+    '얼마': ['shop', 'clerk', 'You hold up a T-shirt. No price tag.'],
+    '있어요': ['shop', 'clerk', '“Umbrellas?” The clerk nods.', 'them'],
+    '없어요': ['shop', 'clerk', '“Umbrellas?” Sold out.', 'them'],
+    '어디': ['street', 'local', 'You really need a bathroom.'],
+    '맛있어요': ['cafe', 'friend', 'First sip of the latte.'],
+    '포장': ['cafe', 'clerk', '“For here or to go?” To go!'],
+    '여기서': ['cafe', 'clerk', '“For here or to go?” For here.'],
+    '좋아해요': ['home', 'friend', 'Leo asks about your favourite food.'],
+    '정말': ['street', 'friend', 'Leo says he met a celebrity.']
+  },
+  ar: {
+    'مرحبا': ['street', 'friend', 'You run into Leo on the street.'],
+    'السلام عليكم': ['shop', 'elder', 'You walk into Grandpa Hiro’s shop.'],
+    'شكرا': ['cafe', 'clerk', 'Sophia hands you your tea.'],
+    'نعم': ['cafe', 'clerk', '“Sugar?” Yes, please.'],
+    'لا': ['shop', 'clerk', '“Do you need a bag?” You don’t.'],
+    'بخير': ['street', 'friend', '“How are you?” asks Leo.'],
+    'اسمي': ['school', 'teacher', 'First day of class. Introduce yourself.'],
+    'مع السلامة': ['shop', 'clerk', 'You’re leaving the shop.'],
+    'أنا': ['school', 'teacher', 'The teacher asks who’s new.'],
+    'تشرفنا': ['street', 'elder', 'You meet your friend’s grandpa.'],
+    'هذا': ['shop', 'clerk', 'You point at the book in front of you.'],
+    'ما': ['street', 'friend', 'Leo shows you something very strange.'],
+    'أريد': ['cafe', 'clerk', 'Ordering at the counter.'],
+    'بكم': ['shop', 'clerk', 'You hold up a lantern. No price tag.'],
+    'غالي': ['shop', 'clerk', '“500 pounds!” Way too much.'],
+    'رخيص': ['shop', 'clerk', '“Only 10 pounds!” What a deal.'],
+    'عفوا': ['cafe', 'friend', 'Leo thanks you for the coffee.'],
+    'الحساب': ['cafe', 'clerk', 'You’ve finished eating.'],
+    'لذيذ': ['home', 'elder', 'You taste Grandpa Hiro’s cooking.'],
+    'عندي': ['home', 'friend', '“Do you have a brother?”']
+  },
+  es: {
+    'hola': ['street', 'friend', 'You run into Leo on the street.'],
+    'buenos días': ['cafe', 'clerk', 'You walk into the café at 9 am.'],
+    'buenas tardes': ['shop', 'clerk', 'You walk into a shop at 4 pm.'],
+    'buenas noches': ['home', 'elder', 'Grandpa Hiro heads off to bed.'],
+    'gracias': ['cafe', 'clerk', 'Sophia hands you your coffee.'],
+    'por favor': ['cafe', 'clerk', 'You’d like some water.'],
+    'sí': ['cafe', 'clerk', '“With milk?” Yes!'],
+    'no': ['shop', 'clerk', '“Do you need a bag?” You don’t.'],
+    'adiós': ['shop', 'clerk', 'You’re leaving the shop.'],
+    'de nada': ['cafe', 'friend', 'Leo thanks you for the coffee.'],
+    'me llamo': ['school', 'teacher', 'First day of class. Introduce yourself.'],
+    'soy': ['school', 'teacher', 'The teacher asks who’s new.'],
+    'eres': ['school', 'local', 'You ask a classmate if they’re new too.'],
+    'esto': ['shop', 'clerk', 'You point at the bread in front of you.'],
+    'eso': ['shop', 'clerk', 'You point at what the clerk is holding.'],
+    'qué': ['street', 'friend', 'Leo shows you something very strange.'],
+    'quiero': ['cafe', 'clerk', 'Ordering at the counter.'],
+    'la cuenta': ['cafe', 'clerk', 'You’ve finished eating.'],
+    'para mí': ['cafe', 'clerk', 'Ordering for yourself.'],
+    'algo más': ['cafe', 'clerk', 'Sophia waits with her pen.', 'them'],
+    'rico': ['home', 'elder', 'You taste Grandpa Hiro’s cooking.'],
+    'tengo': ['street', 'friend', '“Got a pen?” Leo asks.'],
+    'tienes': ['street', 'friend', 'You need a pen. Ask Leo.']
+  }
+};
+
+/* ---------- Moments for every episode, beginner → advanced ---------- */
+Object.assign(SCENE_CTX.ko, {
+  // Introducing yourself
+  '학생': ['school', 'teacher', '“What do you do?” You’re in class every day.'], '선생님': ['school', 'local', 'A classmate points at Grandpa Hiro at the board.'],
+  '회사원': ['office', 'coworker', 'A new coworker asks what your job is.'], '친구': ['street', 'elder', 'You introduce Leo to Grandpa Hiro.'],
+  '한국 사람': ['street', 'local', 'A tourist asks where Grandpa Hiro is from.'], '방글라데시 사람': ['school', 'teacher', '“Where are you from?”'], '미국 사람': ['cafe', 'friend', 'Leo asks about the tourist at the next table.'],
+  // This, that & please
+  '가방': ['shop', 'clerk', 'You love the leather one on the shelf.'], '핸드폰': ['cafe', 'friend', 'Leo can’t find his… you spot it under a napkin.'], '우산': ['shop', 'clerk', 'It just started pouring outside.'],
+  // Numbers & prices
+  '원': ['shop', 'clerk', 'The price tag says 5,000 (Korean money).', 'them'], '천': ['shop', 'clerk', '“That’s 1,000.” A very small number of won.', 'them'], '만': ['shop', 'clerk', 'A big 10,000 note in your wallet.'],
+  '백': ['shop', 'clerk', 'The gum costs just 100.', 'them'],
+  // Have & don't have
+  '시간': ['street', 'friend', '“Got a minute?” Leo looks rushed.'], '돈': ['shop', 'clerk', 'You open your wallet… it’s empty.'], '동생': ['home', 'friend', 'Leo sees a kid in your family photo.'],
+  '고양이': ['home', 'friend', 'Something fluffy jumps onto the sofa.'], '화장실': ['cafe', 'clerk', 'You really need to go.'],
+  // Everyday verbs
+  '가요': ['street', 'friend', 'Leo asks where you’re heading.'], '와요': ['home', 'elder', 'Grandpa Hiro is coming over for dinner.'], '먹어요': ['home', 'friend', 'You’re having bibimbap.'],
+  '마셔요': ['cafe', 'friend', 'You sip your iced tea.'], '봐요': ['home', 'friend', 'A drama is on TV.'], '공부해요': ['school', 'friend', 'Leo asks what you’re doing at the library.'],
+  '영화': ['street', 'friend', 'Leo has two cinema tickets.'], '학교': ['street', 'elder', 'Grandpa Hiro asks where you’re off to with your backpack.'], '김치': ['home', 'elder', 'Grandpa Hiro serves a spicy red side dish.'],
+  // Café
+  '아메리카노': ['cafe', 'clerk', 'The most ordered drink in Korea.'], '라떼': ['cafe', 'clerk', 'You want coffee with milk.'], '아이스': ['cafe', 'clerk', 'It’s 35°C outside.'],
+  '한 잔': ['cafe', 'clerk', 'Just one drink for you.'], '두 잔': ['cafe', 'clerk', 'Leo wants the same.'], '카드': ['cafe', 'clerk', 'Paying without cash.'],
+  // Time & plans
+  '지금': ['street', 'friend', '“When are you free?” Right this second.'], '몇 시': ['street', 'local', 'You forgot your watch.'], '오늘': ['cafe', 'friend', 'Leo asks when the party is. It’s tonight!'],
+  '내일': ['school', 'friend', 'The test is the day after today.'], '어제': ['cafe', 'friend', 'Leo asks when you watched the movie.'], '주말': ['office', 'coworker', 'It’s Friday at 5 pm.'],
+  '월요일': ['office', 'coworker', 'The worst day of the week, everyone agrees.'], '금요일': ['office', 'coworker', 'Everyone’s favourite workday.'], '아침': ['home', 'elder', 'Grandpa Hiro made breakfast.'], '저녁': ['home', 'elder', 'Grandpa Hiro asks about dinner.'],
+  // Getting around
+  '지하철': ['station', 'local', 'Underground, fast and cheap.'], '택시': ['street', 'driver', 'You’re late. You wave at a car with a light on top.'], '역': ['street', 'local', 'You’re looking for the train.'],
+  '오른쪽': ['street', 'local', 'A local points the way.', 'them'], '왼쪽': ['street', 'local', 'The local points the other way.', 'them'], '쭉': ['street', 'local', '“Keep going, don’t turn.”', 'them'],
+  '멀어요': ['street', 'local', '“The palace? That’s 2 hours on foot.”', 'them'], '가까워요': ['street', 'local', '“The station? Just around the corner.”', 'them'], '걸어서': ['street', 'friend', 'Leo asks how you got here. No bus.'], '길': ['street', 'local', 'You’re totally lost.'],
+  // Weather & feelings
+  '날씨': ['street', 'elder', 'Grandpa Hiro looks up at the sky.'], '더워요': ['street', 'friend', 'It’s 35°C. Leo’s ice cream is melting.'], '추워요': ['street', 'friend', 'Snow. Leo is shivering.'],
+  '비': ['street', 'friend', 'Drops start falling from the sky.'], '맑아요': ['park', 'friend', 'Blue sky, not one cloud.'], '행복해요': ['park', 'friend', 'Perfect picnic. You’re smiling.'],
+  '피곤해요': ['office', 'coworker', 'It’s 11 pm and you’re still at work.'], '슬퍼요': ['home', 'friend', 'The drama ended badly.'], '기분': ['home', 'friend', 'Leo asks how you feel today.'], '너무': ['cafe', 'friend', 'The coffee is extremely hot.'],
+  // Hobbies
+  '취미': ['cafe', 'friend', 'Leo asks what you do for fun.'], '운동': ['park', 'friend', 'You’re jogging in the park.'], '노래': ['home', 'friend', 'Leo can’t stop humming.'], '춤': ['school', 'friend', 'K-pop practice after class.'],
+  '요리': ['home', 'elder', 'Grandpa Hiro is chopping vegetables.'], '여행': ['station', 'friend', 'Suitcases and train tickets.'], '음악': ['cafe', 'friend', 'Leo has his headphones on.'],
+  '자주': ['cafe', 'friend', '“How often do you come here?” Almost daily.'], '가끔': ['cafe', 'friend', '“Do you cook?” Once in a while.'], '노래방': ['street', 'friend', 'A neon sign with a microphone on it.'],
+  // Daily routine
+  '일어나요': ['home', 'elder', 'The alarm rings at 7.'], '씻어요': ['home', 'elder', 'Bathroom time.'], '출근해요': ['station', 'coworker', '8 am, the train is packed.'], '퇴근해요': ['office', 'coworker', '6 pm, you grab your bag.'],
+  '자요': ['home', 'elder', 'Grandpa Hiro whispers: it’s late.'], '매일': ['park', 'friend', 'You jog here every single morning.'], '보통': ['cafe', 'friend', 'Leo asks what time you normally get up.'], '먼저': ['home', 'elder', 'Grandpa Hiro holds the door: after you.'], '후에': ['office', 'coworker', 'Plans once work is over.'],
+  // Health
+  '머리': ['hospital', 'doctor', 'You point at your head.'], '배': ['hospital', 'doctor', 'Too much spicy food last night.'], '목': ['hospital', 'doctor', 'It hurts to swallow.'],
+  '아파요': ['hospital', 'doctor', 'Dr. Hiro asks what’s wrong.'], '감기': ['hospital', 'doctor', 'Sneezing and a runny nose.'], '열': ['hospital', 'doctor', 'The thermometer says 38.5°C.', 'them'],
+  '약': ['hospital', 'doctor', 'Dr. Hiro hands you a small paper bag.', 'them'], '병원': ['street', 'friend', 'You look pale. Leo is worried.'], '의사': ['hospital', 'local', 'Someone in a white coat walks in.'], '푹 쉬세요': ['hospital', 'doctor', 'Dr. Hiro says goodbye.', 'them'],
+  // Season 5: shopping & phone
+  '입어 봐도 돼요?': ['shop', 'clerk', 'You found a jacket you love.'], '커요': ['shop', 'clerk', 'You try it on. You could fit two of you inside.'], '작아요': ['shop', 'clerk', 'The zip won’t close.'],
+  '사이즈': ['shop', 'clerk', 'The clerk asks which one you wear.', 'them'], '다른 색': ['shop', 'clerk', 'You like it, but not in orange.'], '비싸요': ['shop', 'clerk', 'The tag says 300,000 won.'],
+  '깎아 주세요': ['shop', 'clerk', 'A street market stall. You smile sweetly.'], '할인': ['shop', 'clerk', 'Big red “50%” signs everywhere.'], '교환': ['shop', 'clerk', 'Wrong size. You’re back with the bag.'], '영수증': ['shop', 'clerk', 'The clerk asks for proof you bought it.', 'them'],
+  '여보세요': ['phone', 'friend', 'Your phone rings. Leo’s name on the screen.'], '누구세요?': ['phone', 'local', 'An unknown number calls you.'], '잠깐만요': ['phone', 'clerk', 'Sophia needs a second to check.', 'them'],
+  '바빠요': ['office', 'coworker', 'You’re drowning in work when the phone rings.'], '나중에': ['phone', 'friend', 'You can’t talk right now.'], '전화할게요': ['phone', 'friend', 'You promise to ring Leo back.'],
+  '문자': ['phone', 'friend', 'Leo’s phone buzzes with your words.'], '늦어요': ['station', 'friend', 'Your train is stuck.'], '배터리': ['phone', 'friend', 'Your screen shows 1%.'], '도착했어요': ['cafe', 'friend', 'You walk in and wave at Leo.'],
+  // Season 6: opinions & stories
+  '생각해요': ['cafe', 'friend', 'Leo asks your opinion about his plan.'], '맞아요': ['cafe', 'friend', 'Leo says kimchi makes everything better.'], '저도요': ['cafe', 'friend', 'Leo says he’s hungry. Same here!'],
+  '글쎄요': ['office', 'coworker', 'A tricky question. You need a second.'], '솔직히': ['cafe', 'friend', 'Leo asks if you liked his cooking.'], '아마': ['street', 'friend', 'Grey clouds are rolling in.'],
+  '별로예요': ['cafe', 'friend', 'Leo asks how the movie was. Meh.'], '최고예요': ['cafe', 'friend', 'The best fried chicken of your life.'], '잘 모르겠어요': ['street', 'local', 'A stranger asks you for directions.'], '왜냐하면': ['cafe', 'friend', 'Leo asks why you’re learning Korean.'],
+  '갔어요': ['cafe', 'friend', 'Leo asks about your trip to Busan.'], '먹었어요': ['cafe', 'friend', 'Leo asks if you’ve had lunch.'], '봤어요': ['cafe', 'friend', 'Leo asks if you saw the new movie.'],
+  '재미있었어요': ['cafe', 'friend', 'Leo asks how the concert was.'], '지난주': ['cafe', 'friend', 'Leo asks when you went.'], '갑자기': ['street', 'friend', 'Out of nowhere, a cat jumps out!'],
+  '그래서': ['cafe', 'friend', 'It rained, so…'], '그런데': ['cafe', 'friend', 'Fun trip… but you lost your wallet.'], '결국': ['cafe', 'friend', 'After 3 hours of waiting, finally…'], '깜짝 놀랐어요': ['street', 'friend', 'Leo jumps out from behind a tree.']
+});
+Object.assign(SCENE_CTX.ar, {
+  'هو': ['school', 'teacher', 'The teacher points at Leo.'], 'هي': ['school', 'teacher', 'The teacher points at Sophia.'], 'طالب': ['school', 'teacher', '“What do you do?” You’re in class every day.'],
+  'مهندس': ['office', 'coworker', 'A new coworker asks what your job is.'], 'من': ['street', 'local', '“Where are you from?”'], 'مصر': ['street', 'local', 'A tourist asks where Grandpa Hiro is from.'],
+  'هذه': ['shop', 'clerk', 'You point at the car keys… a feminine word.'], 'كتاب': ['shop', 'clerk', 'A bookshop. You want that one.'], 'سيارة': ['street', 'friend', 'Leo’s new ride is parked outside.'],
+  'قلم': ['school', 'friend', 'You need to write something down.'], 'ماء': ['cafe', 'clerk', 'You’re very thirsty.'], 'قهوة': ['cafe', 'clerk', 'Morning. You need caffeine.'],
+  'أب': ['home', 'friend', 'Leo looks at your family photo. Who’s the man?'], 'أم': ['home', 'friend', 'Leo looks at your family photo. Who’s the woman?'], 'أخ': ['home', 'friend', 'A boy in your family photo.'],
+  'أخت': ['home', 'friend', 'A girl in your family photo.'], 'عائلة': ['home', 'elder', 'Everyone together for Friday lunch.'], 'ابن': ['home', 'elder', 'Grandpa Hiro introduces his boy.', 'them'], 'بنت': ['home', 'elder', 'Grandpa Hiro introduces his girl.', 'them'],
+  'شاي': ['cafe', 'clerk', 'The most loved drink in Egypt.'], 'خبز': ['shop', 'clerk', 'A fresh, round loaf.'], 'طعام': ['home', 'elder', 'Grandpa Hiro sets the table.'], 'تمر': ['home', 'elder', 'Grandpa Hiro offers sweet brown fruit.'], 'مطعم': ['street', 'friend', 'You’re hungry. Leo knows a place.'],
+  'الساعة': ['street', 'local', 'You forgot your phone. What time is it?'], 'الآن': ['street', 'friend', '“When?” Right this second.'], 'اليوم': ['cafe', 'friend', 'The party is tonight!'], 'غدا': ['school', 'friend', 'The test is the day after today.'],
+  'أمس': ['cafe', 'friend', 'Leo asks when you saw the film.'], 'يوم الجمعة': ['home', 'elder', 'The weekend day for family lunch.'], 'العطلة': ['office', 'coworker', 'No work today!'], 'درس': ['school', 'teacher', 'Class is starting.'],
+  'المحطة': ['street', 'local', 'You’re looking for the train.'], 'الحافلة': ['street', 'local', 'A big vehicle full of people pulls up.'], 'تاكسي': ['street', 'driver', 'You wave at a car with a sign on top.'],
+  'اليمين': ['street', 'local', 'A local points the way.', 'them'], 'اليسار': ['street', 'local', 'The local points the other way.', 'them'], 'قريب': ['street', 'local', '“Just around the corner.”', 'them'],
+  'بعيد': ['street', 'local', '“That’s two hours on foot!”', 'them'], 'شارع': ['street', 'friend', 'Leo asks where the shop is.'], 'الخريطة': ['street', 'friend', 'You’re lost. Leo opens his phone.'], 'مشيا': ['street', 'friend', 'Leo asks how you got here. No bus.'],
+  'الطقس': ['street', 'elder', 'Grandpa Hiro looks up at the sky.'], 'حار': ['street', 'friend', 'It’s 40°C in Cairo.'], 'بارد': ['street', 'friend', 'A chilly winter night.'], 'مطر': ['street', 'friend', 'Drops start falling. Rare in Cairo!'],
+  'مظلة': ['shop', 'clerk', 'It’s pouring outside.'], 'سعيد': ['park', 'friend', 'Perfect picnic. You’re smiling.'], 'حزين': ['home', 'friend', 'The film ended badly.'], 'متعب': ['office', 'coworker', '11 pm and you’re still at work.'],
+  'لأن': ['cafe', 'friend', 'Leo asks why you’re learning Arabic.'], 'لماذا': ['cafe', 'friend', 'Leo ordered four coffees. You need to know…'],
+  'هواية': ['cafe', 'friend', 'Leo asks what you do for fun.'], 'الرياضة': ['park', 'friend', 'Jogging along the Nile.'], 'القراءة': ['cafe', 'friend', 'You’re lost in a good book.'], 'الطبخ': ['home', 'elder', 'Grandpa Hiro is stirring a big pot.'],
+  'السفر': ['station', 'friend', 'Suitcases and train tickets.'], 'الموسيقى': ['cafe', 'friend', 'Leo has his headphones on.'], 'كرة القدم': ['park', 'friend', 'A match on the street. Goal!'], 'أحب': ['cafe', 'friend', 'Leo asks about your favourite food.'],
+  'كثيرا': ['cafe', 'friend', '“Do you like koshari?” SO much.'], 'أحيانا': ['cafe', 'friend', '“Do you cook?” Once in a while.'],
+  'أستيقظ': ['home', 'elder', 'The alarm rings at 7.'], 'أشرب': ['cafe', 'friend', 'Your morning tea.'], 'أعمل': ['office', 'coworker', 'A coworker asks what you do all day.'], 'أرجع': ['station', 'coworker', 'Heading home after work.'],
+  'أنام': ['home', 'elder', 'It’s late. Grandpa Hiro yawns.'], 'الفطور': ['home', 'elder', 'Foul and bread at 8 am.'], 'العشاء': ['home', 'elder', 'Evening meal time.'], 'عادة': ['cafe', 'friend', 'Leo asks what time you normally wake up.'], 'كل يوم': ['park', 'friend', 'You jog here daily.'], 'ثم': ['home', 'elder', 'First tea, and after that…'],
+  'رأسي': ['hospital', 'doctor', 'You point at your head.'], 'بطني': ['hospital', 'doctor', 'Too much koshari last night.'], 'يؤلمني': ['hospital', 'doctor', 'Dr. Hiro asks what’s wrong.'], 'زكام': ['hospital', 'doctor', 'Sneezing and a runny nose.'],
+  'حمى': ['hospital', 'doctor', 'The thermometer says 38.5°C.', 'them'], 'دواء': ['hospital', 'doctor', 'Dr. Hiro hands you a small box.', 'them'], 'الطبيب': ['hospital', 'local', 'Someone in a white coat walks in.'],
+  'مستشفى': ['street', 'friend', 'You look pale. Leo is worried.'], 'مريض': ['home', 'friend', 'You can’t come to the party.'], 'سلامتك': ['home', 'friend', 'Leo visits you in bed.', 'them'],
+  // Season 5–6
+  'أجرّب': ['shop', 'clerk', 'You found a jacket you love.'], 'مقاس': ['shop', 'clerk', 'The clerk asks which one you wear.', 'them'], 'كبير': ['shop', 'clerk', 'You could fit two of you inside.'],
+  'صغير': ['shop', 'clerk', 'The zip won’t close.'], 'أصغر': ['shop', 'clerk', 'This one is too big. You need…'], 'لون آخر': ['shop', 'clerk', 'You like it, but not in orange.'], 'خصم': ['shop', 'clerk', 'Big red “50%” signs everywhere.'],
+  'أرخص': ['shop', 'clerk', 'Too pricey. You ask for something…'], 'أستبدل': ['shop', 'clerk', 'Wrong size. You’re back with the bag.'], 'إيصال': ['shop', 'clerk', 'The clerk asks for proof you bought it.', 'them'],
+  'ألو': ['phone', 'friend', 'Your phone rings. Leo’s name on the screen.'], 'من معي؟': ['phone', 'local', 'An unknown number calls you.'], 'لحظة': ['phone', 'clerk', 'Sophia needs a second to check.', 'them'],
+  'مشغول': ['office', 'coworker', 'You’re drowning in work when the phone rings.'], 'لاحقا': ['phone', 'friend', 'You can’t talk right now.'], 'سأتصل بك': ['phone', 'friend', 'You promise to ring Leo back.'],
+  'رسالة': ['phone', 'friend', 'Leo’s phone buzzes with your words.'], 'متأخر': ['station', 'friend', 'Your train is stuck.'], 'البطارية': ['phone', 'friend', 'Your screen shows 1%.'], 'وصلت': ['cafe', 'friend', 'You walk in and wave at Leo.'],
+  'أعتقد': ['cafe', 'friend', 'Leo asks your opinion about his plan.'], 'صحيح': ['cafe', 'friend', 'Leo says tea tastes better with mint.'], 'أوافق': ['office', 'coworker', 'Sophia suggests a long lunch break.'],
+  'ربما': ['street', 'friend', 'Grey clouds are rolling in.'], 'بصراحة': ['cafe', 'friend', 'Leo asks if you liked his cooking.'], 'لا أعرف': ['street', 'local', 'A stranger asks you for directions.'],
+  'رائع': ['cafe', 'friend', 'Leo asks how the concert was. WOW.'], 'ممل': ['school', 'friend', 'A two-hour lecture about paperclips.'], 'في رأيي': ['cafe', 'friend', 'A big debate: tea or coffee?'], 'طبعا': ['cafe', 'friend', '“Want dessert?” Obviously!'],
+  'ذهبت': ['cafe', 'friend', 'Leo asks about your trip.'], 'أكلت': ['cafe', 'friend', 'Leo asks if you’ve had lunch.'], 'رأيت': ['cafe', 'friend', 'Leo asks if you saw the new film.'], 'كان ممتعا': ['cafe', 'friend', 'Leo asks how the trip was.'],
+  'الأسبوع الماضي': ['cafe', 'friend', 'Leo asks when you went.'], 'فجأة': ['street', 'friend', 'Out of nowhere, a cat jumps out!'], 'لذلك': ['cafe', 'friend', 'It rained, so…'], 'لكن': ['cafe', 'friend', 'Fun trip… but you lost your wallet.'],
+  'في النهاية': ['cafe', 'friend', 'After 3 hours of waiting, finally…'], 'تفاجأت': ['street', 'friend', 'Leo jumps out from behind a tree.']
+});
+Object.assign(SCENE_CTX.es, {
+  'es': ['school', 'teacher', 'The teacher points at Leo: “He ___ new.”', 'them'], 'estudiante': ['school', 'teacher', '“What do you do?” You’re in class every day.'], 'profesora': ['school', 'local', 'A classmate points at the woman at the board.'],
+  'médico': ['hospital', 'local', 'Someone in a white coat walks in.'], 'amigo': ['street', 'elder', 'You introduce Leo to Grandpa Hiro.'], 'España': ['street', 'local', 'A tourist asks where you’re from. Madrid!'], 'México': ['street', 'local', 'Leo says where he grew up.'],
+  'café': ['cafe', 'clerk', 'Morning. You need caffeine.'], 'agua': ['cafe', 'clerk', 'You’re very thirsty.'], 'té': ['cafe', 'clerk', 'Not coffee… the other hot drink.'], 'pan': ['shop', 'clerk', 'A fresh, crusty loaf.'],
+  'veinte': ['shop', 'clerk', 'The price tag says 20.', 'them'], 'euro': ['shop', 'clerk', 'The money they use in Spain.'],
+  'tiene': ['school', 'friend', 'Leo points at Sophia’s cat photo.'], 'hambre': ['home', 'friend', 'Your stomach growls loudly.'], 'sed': ['street', 'friend', 'It’s 38°C and you’ve been walking for hours.'],
+  'tiempo': ['street', 'friend', '“Got a minute?” Leo looks rushed.'], 'hermano': ['home', 'friend', 'A boy in your family photo.'], 'hermana': ['home', 'friend', 'A girl in your family photo.'], 'perro': ['park', 'friend', 'Something fluffy runs up wagging its tail.'], 'gato': ['home', 'friend', 'Something fluffy jumps onto the sofa.'],
+  'hablo': ['school', 'teacher', 'The teacher asks which languages you know.'], 'trabajo': ['office', 'coworker', 'A coworker asks what you do all day.'], 'estudio': ['school', 'friend', 'Leo asks what you do at the library.'], 'como': ['home', 'friend', 'Leo asks what’s for lunch.'],
+  'vivo': ['street', 'local', 'A neighbour asks about your address.'], 'español': ['school', 'teacher', 'The class you’re taking right now.'], 'inglés': ['school', 'teacher', 'Your other language.'], 'casa': ['street', 'friend', 'Leo asks where you’re heading after school.'], 'ciudad': ['station', 'friend', 'Leo asks where you live: a big place or a village?'],
+  'una mesa': ['cafe', 'clerk', 'You walk in with Leo. You need somewhere to sit.'], 'la carta': ['cafe', 'clerk', 'You want to see what they serve.'], 'la tortilla': ['cafe', 'clerk', 'The famous Spanish potato omelette.'],
+  'la tarjeta': ['cafe', 'clerk', 'Paying without cash.'], 'el vaso': ['cafe', 'clerk', 'Sophia brings water… but no glass.'], 'el queso': ['cafe', 'clerk', 'Manchego on the tapas plate.'],
+  'la hora': ['street', 'local', 'You forgot your phone. What time is it?'], 'ahora': ['street', 'friend', '“When?” Right this second.'], 'hoy': ['cafe', 'friend', 'The party is tonight!'], 'mañana': ['school', 'friend', 'The test is the day after today.'],
+  'ayer': ['cafe', 'friend', 'Leo asks when you saw the film.'], 'el lunes': ['office', 'coworker', 'The worst day of the week, everyone agrees.'], 'el viernes': ['office', 'coworker', 'Everyone’s favourite workday.'],
+  'el fin de semana': ['office', 'coworker', 'It’s Friday at 5 pm.'], 'por la mañana': ['home', 'elder', 'Grandpa Hiro asks when you jog.'], 'por la noche': ['home', 'elder', 'Grandpa Hiro asks when you study.'],
+  'la estación': ['street', 'local', 'You’re looking for the train.'], 'el metro': ['station', 'local', 'Underground, fast and cheap.'], 'el autobús': ['street', 'local', 'A big vehicle full of people pulls up.'],
+  'a la derecha': ['street', 'local', 'A local points the way.', 'them'], 'a la izquierda': ['street', 'local', 'The local points the other way.', 'them'], 'todo recto': ['street', 'local', '“Keep going, don’t turn.”', 'them'],
+  'cerca': ['street', 'local', '“Just around the corner.”', 'them'], 'lejos': ['street', 'local', '“That’s two hours on foot!”', 'them'], 'la calle': ['street', 'friend', 'Leo asks where the shop is.'], 'a pie': ['street', 'friend', 'Leo asks how you got here. No bus.'],
+  'el tiempo': ['street', 'elder', 'Grandpa Hiro looks up at the sky.'], 'hace calor': ['street', 'friend', 'It’s 38°C. Leo’s ice cream is melting.'], 'hace frío': ['street', 'friend', 'Snow. Leo is shivering.'],
+  'llueve': ['street', 'friend', 'Drops start falling from the sky.'], 'el paraguas': ['shop', 'clerk', 'It’s pouring outside.'], 'feliz': ['park', 'friend', 'Perfect picnic. You’re smiling.'],
+  'triste': ['home', 'friend', 'The film ended badly.'], 'cansado': ['office', 'coworker', '11 pm and you’re still at work.'], 'porque': ['cafe', 'friend', 'Leo asks why you’re learning Spanish.'], 'tengo hambre': ['home', 'friend', 'Your stomach growls loudly.'],
+  'el deporte': ['park', 'friend', 'Leo asks what you do to keep fit.'], 'leer': ['cafe', 'friend', 'You’re lost in a good book.'], 'cocinar': ['home', 'elder', 'Grandpa Hiro is stirring a big pot.'], 'viajar': ['station', 'friend', 'Suitcases and train tickets.'],
+  'la música': ['cafe', 'friend', 'Leo has his headphones on.'], 'el fútbol': ['park', 'friend', 'A match in the park. Goal!'], 'bailar': ['school', 'friend', 'Salsa night after class.'], 'me gusta': ['cafe', 'friend', 'Leo asks if you like the café.'],
+  'me encanta': ['cafe', 'friend', 'Leo asks about the churros. You ADORE them.'], 'a veces': ['cafe', 'friend', '“Do you cook?” Once in a while.'],
+  'me levanto': ['home', 'elder', 'The alarm rings at 7.'], 'me ducho': ['home', 'elder', 'Bathroom time.'], 'desayuno': ['home', 'elder', 'Coffee and toast at 8.'], 'salgo de casa': ['home', 'elder', 'Keys, bag, out the door.'],
+  'vuelvo': ['station', 'coworker', 'Heading home after work.'], 'ceno': ['home', 'elder', 'Evening meal time (late, in Spain!).'], 'me acuesto': ['home', 'elder', 'It’s midnight. Bedtime.'], 'normalmente': ['cafe', 'friend', 'Leo asks what time you usually wake up.'], 'primero': ['home', 'elder', 'Grandpa Hiro asks about your morning.'], 'después': ['home', 'elder', 'Coffee, and after that…'],
+  'la cabeza': ['hospital', 'doctor', 'You point at your head.'], 'el estómago': ['hospital', 'doctor', 'Too many tacos last night.'], 'me duele': ['hospital', 'doctor', 'Dr. Hiro asks what’s wrong.'], 'la fiebre': ['hospital', 'doctor', 'The thermometer says 38.5°C.', 'them'],
+  'resfriado': ['hospital', 'doctor', 'Sneezing and a runny nose.'], 'la medicina': ['hospital', 'doctor', 'Dr. Hiro hands you a small box.', 'them'], 'el médico': ['street', 'friend', 'You look pale. Who should you see?'], 'el hospital': ['street', 'friend', 'You look very pale. Leo is worried.'], 'enfermo': ['home', 'friend', 'You can’t come to the party.'], 'necesito': ['shop', 'clerk', 'You must have water. Now.'],
+  // Season 5–6
+  '¿me lo puedo probar?': ['shop', 'clerk', 'You found a jacket you love.'], 'la talla': ['shop', 'clerk', 'The clerk asks which one you wear.', 'them'], 'me queda grande': ['shop', 'clerk', 'You could fit two of you inside.'],
+  'pequeño': ['shop', 'clerk', 'The zip won’t close.'], 'otro color': ['shop', 'clerk', 'You like it, but not in orange.'], 'caro': ['shop', 'clerk', 'The tag says 300 euros.'], 'barato': ['shop', 'clerk', 'Only 5 euros! What a deal.'],
+  'el descuento': ['shop', 'clerk', 'Big red “50%” signs everywhere.'], 'cambiar': ['shop', 'clerk', 'Wrong size. You’re back with the bag.'], 'el recibo': ['shop', 'clerk', 'The clerk asks for proof you bought it.', 'them'],
+  '¿diga?': ['phone', 'local', 'Your phone rings in Madrid.'], '¿bueno?': ['phone', 'friend', 'Your phone rings in Mexico City. It’s Leo.'], 'un momento': ['phone', 'clerk', 'Sophia needs a second to check.', 'them'],
+  'ocupado': ['office', 'coworker', 'You’re drowning in work when the phone rings.'], 'luego': ['phone', 'friend', 'You can’t talk right now.'], 'te llamo': ['phone', 'friend', 'You promise to ring Leo back.'],
+  'el mensaje': ['phone', 'friend', 'Leo’s phone buzzes with your words.'], 'llego tarde': ['station', 'friend', 'Your train is stuck.'], 'la batería': ['phone', 'friend', 'Your screen shows 1%.'], 'ya llegué': ['cafe', 'friend', 'You walk in and wave at Leo.'],
+  'creo que': ['cafe', 'friend', 'Leo asks your opinion about his plan.'], 'tienes razón': ['cafe', 'friend', 'Leo says churros taste better with chocolate.'], 'estoy de acuerdo': ['office', 'coworker', 'Sophia suggests a long lunch break.'],
+  'no sé': ['street', 'local', 'A stranger asks you for directions.'], 'la verdad': ['cafe', 'friend', 'Leo asks if you liked his cooking.'], 'quizás': ['street', 'friend', 'Grey clouds are rolling in.'],
+  '¡qué guay!': ['street', 'friend', 'Leo shows you his new skateboard.'], 'aburrido': ['school', 'friend', 'A two-hour lecture about paperclips.'], 'en mi opinión': ['cafe', 'friend', 'A big debate: tea or coffee?'], '¡claro!': ['cafe', 'friend', '“Want dessert?” Obviously!'],
+  'fui': ['cafe', 'friend', 'Leo asks about your trip.'], 'comí': ['cafe', 'friend', 'Leo asks if you’ve had lunch.'], 'vi': ['cafe', 'friend', 'Leo asks if you saw the new film.'], 'fue divertido': ['cafe', 'friend', 'Leo asks how the trip was.'],
+  'la semana pasada': ['cafe', 'friend', 'Leo asks when you went.'], 'de repente': ['street', 'friend', 'Out of nowhere, a cat jumps out!'], 'así que': ['cafe', 'friend', 'It rained, so…'], 'pero': ['cafe', 'friend', 'Fun trip… but you lost your wallet.'],
+  'al final': ['cafe', 'friend', 'After 3 hours of waiting, finally…'], '¡qué sorpresa!': ['street', 'friend', 'Leo jumps out from behind a tree.']
+});
+/* =====================================================================
+   SPEAKABOO — SCENE-FIRST LESSONS
+   How people really pick up a language: you SEE a moment, HEAR the
+   words in it, GUESS before you're told, then use it in a new moment.
+   New exercise types, all driven by the same tiny comic panels:
+     scene   – a 2–3 panel comic that opens the lesson (meanings hidden)
+     guess   – guess first, no penalty (pre-testing makes words stick)
+     ctxpick – a new moment with an empty speech bubble: what do you say?
+     pop     – listening game: pop the floating word you hear
+     tf      – 30-second true/false speed round
+   ===================================================================== */
+(function fixPics() {   // 이 = "two" in the numbers unit, not a tooth
+  for (const c of Object.values(COURSES)) for (const u of c.units) for (const w of (u.words || [])) if (/^two \(2\)/i.test(w.en) && ART.n2) { w.pic = 'n2'; if (VOCAB_INDEX[w.id] && VOCAB_INDEX[w.id].lang === c.code && /^two/i.test(VOCAB_INDEX[w.id].en)) VOCAB_INDEX[w.id].pic = 'n2'; }
 })();
+const ROLE_VOICE = { friend: 'voice_leo_04', clerk: 'voice_sophia_02', coworker: 'voice_sophia_02', elder: 'voice_hiro_01', teacher: 'voice_hiro_01', doctor: 'voice_hiro_01', driver: 'voice_hiro_01' };
+const ROLE_NAME = { friend: 'Leo', clerk: 'Sophia', coworker: 'Sophia', elder: 'Grandpa Hiro', teacher: 'Grandpa Hiro', doctor: 'Dr. Hiro', driver: 'The driver', local: '' };
+function ctxOf(w) {
+  const m = SCENE_CTX[course().code] || {}, k = w && (m[w.t] || m[String(w.t).toLowerCase()]);
+  return k ? { place: k[0], role: k[1], cap: k[2], who: k[3] || 'you' } : null;
+}
+/* ---------- Backgrounds for each place (fixed illustration colours) ---------- */
+function placeSVG(place) {
+  const floor = '<rect y="150" width="320" height="20" fill="#E3D9C8"/>';
+  if (place === 'street') return `<rect width="320" height="170" fill="#D6ECFF"/><circle cx="270" cy="28" r="14" fill="#FFE08A"/>
+    <g fill="#B9C6EE"><rect x="0" y="46" width="54" height="104"/><rect x="58" y="70" width="40" height="80"/><rect x="236" y="58" width="48" height="92"/><rect x="288" y="80" width="32" height="70"/></g>
+    <g fill="#fff" opacity=".7">${[[8, 56], [28, 56], [8, 80], [28, 80], [66, 82], [244, 70], [262, 70], [244, 96], [262, 96]].map(([x, y]) => `<rect x="${x}" y="${y}" width="10" height="12" rx="2"/>`).join('')}</g>
+    <path d="M150 150V66" stroke="#5D5A72" stroke-width="4"/><circle cx="150" cy="62" r="7" fill="#FFD66B"/><rect y="146" width="320" height="24" fill="#D9D3C7"/>`;
+  if (place === 'shop') return `<rect width="320" height="170" fill="#FFF1E6"/>
+    <g stroke="#C9A27E" stroke-width="4"><path d="M150 44h170M150 84h170"/></g>
+    <g>${[[160, 22, '#FF7A59'], [182, 26, '#4146C9'], [204, 20, '#2F9C95'], [236, 24, '#FFD66B'], [262, 18, '#FF7A59'], [292, 24, '#7A5AF8'], [168, 62, '#FFD66B'], [196, 64, '#FF7A59'], [226, 58, '#4146C9'], [258, 64, '#2F9C95'], [288, 60, '#FFD66B']].map(([x, y, f]) => `<rect x="${x}" y="${y}" width="18" height="${(y < 40 ? 44 : 84) - y}" rx="3" fill="${f}"/>`).join('')}</g>
+    <rect x="10" y="20" width="110" height="64" rx="8" fill="#fff" stroke="#E3D9C8" stroke-width="3"/><path d="M20 32h90M20 46h70M20 60h80" stroke="#E3D9C8" stroke-width="5" stroke-linecap="round"/>${floor}`;
+  if (place === 'cafe') return `<rect width="320" height="170" fill="#F1EAFE"/>
+    <rect x="160" y="14" width="140" height="62" rx="8" fill="#2A2E6E"/><path d="M174 30h70M174 44h100M174 58h60" stroke="#FFF2E1" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+    <g fill="#fff" stroke="#5D5A72" stroke-width="2"><rect x="20" y="40" width="16" height="18" rx="3"/><rect x="44" y="40" width="16" height="18" rx="3"/><rect x="68" y="40" width="16" height="18" rx="3"/></g><path d="M14 60h80" stroke="#C9A27E" stroke-width="5"/>${floor}`;
+  if (place === 'home') return `<rect width="320" height="170" fill="#E7F3EA"/>
+    <rect x="120" y="18" width="80" height="62" rx="6" fill="#D6ECFF" stroke="#fff" stroke-width="6"/><path d="M160 18v62M120 49h80" stroke="#fff" stroke-width="4"/>
+    <path d="M286 150v-40" stroke="#6E8E2E" stroke-width="4"/><circle cx="286" cy="102" r="16" fill="#8CC56A"/><rect x="276" y="132" width="20" height="18" rx="3" fill="#FF7A59"/>${floor}`;
+  if (place === 'station') return `<rect width="320" height="170" fill="#E4ECF7"/><rect y="22" width="320" height="8" fill="#5D5A72"/><rect x="40" y="36" width="250" height="70" rx="14" fill="#4146C9"/>
+    <g fill="#D6ECFF">${[60, 110, 160, 210].map(x => `<rect x="${x}" y="48" width="38" height="28" rx="5"/>`).join('')}</g><rect x="40" y="88" width="250" height="6" fill="#FF7A59"/><rect y="138" width="320" height="32" fill="#CFC8BA"/><rect y="136" width="320" height="5" fill="#FFD66B"/>`;
+  if (place === 'office') return `<rect width="320" height="170" fill="#EEF2F6"/><rect x="18" y="16" width="70" height="46" rx="5" fill="#fff" stroke="#C9D2DE" stroke-width="3"/><path d="M28 50l14-14 12 10 18-20" stroke="#4146C9" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="128" y="64" width="60" height="38" rx="5" fill="#1C1B2E"/><rect x="133" y="69" width="50" height="28" rx="3" fill="#8D92FF"/><rect x="150" y="102" width="16" height="10" fill="#5D5A72"/><rect x="104" y="112" width="110" height="8" rx="3" fill="#C98B5E"/><path d="M278 150v-34" stroke="#6E8E2E" stroke-width="4"/><circle cx="278" cy="108" r="14" fill="#8CC56A"/>${floor}`;
+  if (place === 'hospital') return `<rect width="320" height="170" fill="#EAF6F4"/><rect x="128" y="18" width="64" height="64" rx="12" fill="#fff" stroke="#BFE3DD" stroke-width="3"/><path d="M160 32v36M142 50h36" stroke="#FF6B6B" stroke-width="10" stroke-linecap="round"/>
+    <rect x="16" y="22" width="84" height="54" rx="6" fill="#fff" stroke="#BFE3DD" stroke-width="3"/><path d="M26 50h14l6-14 8 26 6-12h30" stroke="#2F9C95" stroke-width="3" fill="none" stroke-linejoin="round"/>${floor}`;
+  if (place === 'park') return `<rect width="320" height="170" fill="#DDF1FF"/><circle cx="60" cy="30" r="14" fill="#FFE08A"/><path d="M0 120q80-40 160-10t160-14V170H0z" fill="#9BD07A"/>
+    <path d="M150 140V96" stroke="#7A5230" stroke-width="7"/><circle cx="150" cy="80" r="30" fill="#6DBB5A"/><circle cx="132" cy="92" r="18" fill="#7FCB6A"/><circle cx="170" cy="90" r="20" fill="#7FCB6A"/><rect y="150" width="320" height="20" fill="#8BC56A"/>`;
+  if (place === 'phone') return `<rect width="160" height="170" fill="#F1EAFE"/><rect x="160" width="160" height="170" fill="#E4ECF7"/><path d="M160 0v170" stroke="#fff" stroke-width="6" stroke-dasharray="10 8"/>
+    <g transform="translate(108 22)"><rect width="22" height="38" rx="5" fill="#1C1B2E"/><rect x="3" y="4" width="16" height="26" rx="2" fill="#8D92FF"/></g><g transform="translate(190 22)"><rect width="22" height="38" rx="5" fill="#1C1B2E"/><rect x="3" y="4" width="16" height="26" rx="2" fill="#FFB3A0"/></g>
+    <path d="M140 40q20-16 40 0" stroke="#FF7A59" stroke-width="3" fill="none" stroke-dasharray="4 5"/><rect y="150" width="320" height="20" fill="#E3D9C8"/>`;
+  return `<rect width="320" height="170" fill="#EEF0FF"/><rect x="96" y="14" width="128" height="70" rx="6" fill="#2F6B4F" stroke="#C9A27E" stroke-width="5"/>
+    <text x="160" y="58" text-anchor="middle" font-size="22" font-weight="700" fill="#F4F1EA" font-family="system-ui, sans-serif">A 가 ع</text>${floor}`;
+}
+function charInSVG(kind, x, y, size, mood) {
+  let inner;
+  if (kind === 'you') { const a = MASCOT_ART[P().mascot] || MASCOT_ART.mandu; inner = a.body + mascotFace(mood, a); }
+  else if (ROLE_VOICE[kind]) { const a = charArt(ROLE_VOICE[kind]); inner = a.body + mascotFace(mood, a) + a.extra; }
+  else { const id = (courseCast()[0]) || 'mandu', a = MASCOT_ART[id] || MASCOT_ART.mandu; inner = a.body + mascotFace(mood, a); }
+  return `<svg x="${x}" y="${y}" width="${size}" height="${size}" viewBox="-4 -6 128 126">${inner}</svg>`;
+}
+/** A comic panel. bubble: 'word' | 'blank' | 'none'. */
+function panelHTML(w, bubble = 'word', opts = {}) {
+  const c = course(), x = ctxOf(w); if (!x) return '';
+  const counter = (x.place === 'shop' || x.place === 'cafe') && x.role === 'clerk';
+  const them = x.role;
+  const speakerYou = x.who !== 'them';
+  const svg = `<svg class="pn-art" viewBox="0 0 320 170" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${placeSVG(x.place)}
+    ${charInSVG('you', 22, 58, 100, speakerYou && bubble !== 'blank' ? 'cheer' : opts.youMood || 'happy')}
+    ${charInSVG(them, 196, 52, 106, opts.themMood || (speakerYou ? 'happy' : 'cheer'))}
+    ${counter ? '<rect x="184" y="128" width="136" height="42" fill="#C98B5E"/><rect x="184" y="124" width="136" height="8" rx="3" fill="#E0A877"/>' : ''}</svg>`;
+  const bub = bubble === 'none' ? '' : `<div class="pn-bub ${speakerYou ? 'you' : 'them'} ${bubble === 'blank' ? 'blank' : ''}">${bubble === 'blank' ? '<b>?</b>' : `<span class="script" ${attrs(c)}>${esc(w.t)}</span>${w.r && course().code !== 'es' || opts.rom ? `<small>${esc(w.r)}</small>` : ''}`}</div>`;
+  return `<figure class="panel ${opts.small ? 'small' : ''}">${svg}${bub}<figcaption>${ROLE_NAME[x.role] ? `<b>${esc(ROLE_NAME[x.role])}</b> · ` : ''}${esc(x.cap)}</figcaption></figure>`;
+}
+function sayCtx(w) { const x = ctxOf(w); if (x && x.who === 'them' && ROLE_VOICE[x.role]) charSpeak(w.t, { tts_voice_id: ROLE_VOICE[x.role], tts_modifiers: { emotion: 'warm', speed: 1 } }); else Voice.speak(w.t); }
+
+/* ---------- New step builders ---------- */
+Object.assign(EX, {
+  scene: ws => ({ kind: 'scene', ws }),
+  guess: (w, pool) => ({ kind: 'guess', w, options: optionsFrom(pool, w, x => cleanEn(x.en), 3), answer: cleanEn(w.en), srsId: w.id }),
+  ctxpick: (w, pool, set = []) => {
+    const key = x => cleanEn(x.en).toLowerCase(), seen = new Set([w.t, key(w)]);
+    const others = shuffle(pool.filter(x => x.t !== w.t && !seen.has(key(x)))).sort((a, b) => ((set.includes(b) ? 2 : 0) + (ctxOf(b) ? 1 : 0)) - ((set.includes(a) ? 2 : 0) + (ctxOf(a) ? 1 : 0)));
+    const opts = [w]; for (const o of others) { if (opts.length >= 3) break; if (seen.has(o.t) || seen.has(key(o))) continue; seen.add(o.t); seen.add(key(o)); opts.push(o); }
+    return { kind: 'ctxpick', w, options: shuffle(opts), srsId: w.id };
+  },
+  pop: ws => ({ kind: 'pop', ws: ws.slice(0, 5) }),
+  tf: (ws, pool) => {
+    const items = shuffle(ws).slice(0, 6).map((w, i) => {
+      if (i % 2 === 0) return { w, en: cleanEn(w.en), ok: true };
+      const wrong = shuffle(pool.filter(x => cleanEn(x.en).toLowerCase() !== cleanEn(w.en).toLowerCase()))[0];
+      return { w, en: cleanEn(wrong ? wrong.en : 'banana'), ok: false };
+    });
+    return { kind: 'tf', items: shuffle(items) };
+  }
+});
+/* Teach cards: a scene for words that live in moments, a picture only for real objects. */
+const _teachWord = EX.teachWord;
+EX.teachWord = w => { const s = _teachWord(w); if (ctxOf(w)) { s.pic = null; s.ctxW = w; } else if (!concretePic(w)) s.pic = null; return s; };
+
+/* ---------- Renderers ---------- */
+const _teachR = RENDER.teach, _introOrig = RENDER.intro;
+const _tipR = RENDER.tip;
+Object.assign(RENDER, {
+  tip(step, el, R) {
+    _tipR(step, el, R);
+    if (step.secret) { const b = $('.tip-say b', el); if (b) b.insertAdjacentHTML('beforebegin', '<small class="tip-kicker">Boo’s secret</small>'); R.nextOnly('Ooh, nice'); }
+  },
+  teach(step, el, R) {
+    _teachR(step, el, R);
+    if (step.ctxW) $('.teach .badge-new', el)?.insertAdjacentHTML('afterend', panelHTML(step.ctxW, 'none', { small: true }));
+  },
+  intro(step, el, R) {
+    const c = course(), u = step.u, W = u.words || [];
+    const set = (step.level === 1 ? W.slice(Math.ceil(W.length / 2)) : W.slice(0, Math.ceil(W.length / 2))).slice(0, 6);
+    const lead = set.find(ctxOf);
+    if (u.letters || !lead) return _introOrig(step, el, R);
+    el.innerHTML = `<div class="intro-card v2"><span class="badge-new">Episode ${(u.index || 0) + 1} · Scene ${step.level + 1}</span><h2>${esc(u.title)}</h2>
+      ${panelHTML(lead, 'blank')}
+      <p class="intro-hook">By the end of this scene you’ll know exactly what to say here, and in ${Math.max(2, set.filter(ctxOf).length)} other moments.</p>
+      <div class="intro-chips">${set.map((w, k) => `<button class="ichip" data-say="${esc(w.t)}" style="animation-delay:${200 + k * 70}ms"><span class="script" ${attrs(c)}>${esc(w.t)}</span>${c.code !== 'es' ? `<small>${esc(w.r)}</small>` : ''}</button>`).join('')}</div></div>`;
+    R.nextOnly('Start the scene');
+  },
+  scene(step, el, R) {
+    const c = course(); let i = 0;
+    const show = () => {
+      const w = step.ws[i], last = i === step.ws.length - 1;
+      el.innerHTML = `<p class="q">Watch the scene <span class="muted num" style="font-size:15px">${i + 1}/${step.ws.length}</span></p>
+        <div class="scene-wrap">${panelHTML(w, 'word', { rom: true })}</div>
+        <button class="reveal" id="sc-rev">What does it mean? <small>Guess, then tap</small></button>
+        ${last ? '' : `<button class="btn primary" id="sc-next" style="width:100%;margin-top:10px">Next panel</button>`}`;
+      setTimeout(() => sayCtx(w), 350);
+      $('.panel', el).onclick = () => sayCtx(w);
+      $('#sc-rev').onclick = e => { const b = e.currentTarget; b.classList.add('on'); b.innerHTML = `<b>${esc(cleanEn(w.en))}</b>`; Sfx.pop(); };
+      $('#sc-next') && ($('#sc-next').onclick = () => { i++; show(); });
+      if (last) R.nextOnly('I’ve seen it');
+    };
+    show();
+  },
+  guess(step, el, R) {
+    const c = course(), w = step.w;
+    el.innerHTML = `<p class="q">Guess first! <span class="muted" style="font-size:15px">No hearts lost.</span></p>${panelHTML(w, 'word', { rom: true })}
+      <p class="muted" style="margin:6px 0 10px;font-weight:700">What do you think <span class="script" ${attrs(c)}>${esc(w.t)}</span> means here?</p>
+      <div class="opts">${step.options.map((o, i) => `<button class="opt" data-i="${i}"><span class="num-k">${i + 1}</span>${esc(o)}</button>`).join('')}</div>`;
+    setTimeout(() => sayCtx(w), 300);
+    const answer = i => {
+      if (R.locked) return; const ok = step.options[i] === step.answer;
+      $$('.opt', el).forEach((b, j) => { b.disabled = true; if (step.options[j] === step.answer) b.classList.add('right'); else if (j === i) b.classList.add('wrong'); });
+      R.grade(ok, { free: true, you: step.options[i], show: { t: w.t, r: w.r, en: step.answer }, teach: ok ? 'You read the moment. That’s how natives learn.' : 'Guessing first, even wrong, makes it stick better. Science!' });
+    };
+    $$('.opt', el).forEach(b => b.onclick = () => answer(+b.dataset.i)); R.select = answer;
+  },
+  ctxpick(step, el, R) {
+    const c = course(), w = step.w;
+    el.innerHTML = `<p class="q">${pick(['What do you say?', 'Your line!', 'Fill the bubble'])}</p>${panelHTML(w, 'blank')}
+      <div class="opts ctx-opts">${step.options.map((o, i) => `<button class="opt" data-i="${i}"><span class="num-k">${i + 1}</span><span><span class="script" ${attrs(c)}>${esc(o.t)}</span><small class="opt-rom">${esc(o.r)}</small></span></button>`).join('')}</div>`;
+    const answer = i => {
+      if (R.locked) return; const o = step.options[i], ok = o.t === w.t;
+      $$('.opt', el).forEach((b, j) => { b.disabled = true; if (step.options[j].t === w.t) b.classList.add('right'); else if (j === i) b.classList.add('wrong'); });
+      const bub = $('.pn-bub', el); if (bub) { bub.classList.remove('blank'); bub.innerHTML = `<span class="script" ${attrs(c)}>${esc(w.t)}</span>`; bub.classList.add('fill'); }
+      sayCtx(w);
+      R.grade(ok, { you: o.t, show: { t: w.t, r: w.r, en: cleanEn(w.en) } });
+    };
+    $$('.opt', el).forEach(b => b.onclick = () => answer(+b.dataset.i)); R.select = answer;
+  },
+  pop(step, el, R) {
+    const c = course(), ws = step.ws, targets = shuffle(ws.slice()).slice(0, 3); let round = 0, mistakes = 0, wait = false;
+    el.innerHTML = `<p class="q">Pop the word you hear!</p>
+      <div class="pop-top"><button class="speaker" id="pop-say" aria-label="Hear it again">${ICON.speaker}</button><span class="pop-round" id="pop-round"></span><span class="pop-score" id="pop-score"></span></div>
+      <div class="pop-arena" id="pop-arena"></div>`;
+    const arena = $('#pop-arena', el);
+    const lay = () => {
+      arena.innerHTML = shuffle(ws.slice()).map((w, k) => `<button class="pop-b c${k % 4}" data-t="${esc(w.t)}" style="left:${6 + (k * 19) % 74}%;animation-duration:${5.2 + (k % 3) * .9}s;animation-delay:-${(k * 1.3) % 4}s"><span class="script" ${attrs(c)}>${esc(w.t)}</span><small>${esc(w.r)}</small></button>`).join('');
+      $$('.pop-b', arena).forEach(b => b.onclick = () => tap(b));
+    };
+    const say = () => { const t = targets[round]; if (!t || !arena.isConnected) return; arena.dataset.t = t.t; Voice.speak(t.t); };
+    const next = () => { wait = false; if (!targets[round] || !arena.isConnected) return; $('#pop-round', el).textContent = `${round + 1}/${targets.length}`; lay(); arena.dataset.t = targets[round].t; setTimeout(say, 300); };
+    const tap = b => {
+      if (R.locked || wait || b.classList.contains('popped')) return;
+      if (b.dataset.t === targets[round].t) {
+        b.classList.add('popped'); Sfx.pop(); React.burst(b, 'stars', 7); round++; wait = true;
+        $('#pop-score', el).textContent = '★'.repeat(round);
+        if (round >= targets.length) { setTimeout(() => R.grade(mistakes === 0, { weight: 1, correctCount: mistakes ? 0 : 1, teach: mistakes ? `${mistakes} wrong pop${mistakes > 1 ? 's' : ''}. Ears warming up!` : 'Perfect ears!' }), 500); }
+        else setTimeout(next, 650);
+      } else { mistakes++; Sfx.wrong(); b.classList.remove('nope'); void b.offsetWidth; b.classList.add('nope'); }
+    };
+    $('#pop-say', el).onclick = say; next();
+  },
+  tf(step, el, R) {
+    const c = course(), items = step.items, T = 30; let i = 0, right = 0, t0 = Date.now(), done = false, tick;
+    el.innerHTML = `<p class="q">Speed round: true or false?</p><div class="tf-timer"><i id="tf-bar"></i></div>
+      <div class="tf-card" id="tf-card"></div>
+      <div class="tf-btns"><button class="tf-b no" id="tf-no" aria-label="False">✗</button><button class="tf-b yes" id="tf-yes" aria-label="True">✓</button></div>
+      <p class="muted tf-count" id="tf-count"></p>`;
+    const card = () => { const it = items[i]; $('#tf-card', el).innerHTML = `<span class="script" ${attrs(c)}>${esc(it.w.t)}</span><small>${esc(it.w.r)}</small><b>= ${esc(it.en)}</b>`; $('#tf-card', el).classList.remove('in'); void $('#tf-card', el).offsetWidth; $('#tf-card', el).classList.add('in'); $('#tf-count', el).textContent = `${i + 1} of ${items.length} · ${right} right`; Voice.speak(it.w.t); };
+    const end = () => {
+      if (done) return; done = true; clearInterval(tick); const secs = Math.round((Date.now() - t0) / 1000), ok = right >= items.length - 1;
+      R.grade(ok, { weight: 1, correctCount: ok ? 1 : 0, teach: `${right}/${items.length} in ${secs}s${ok ? '. Lightning brain!' : '. Those words come back soon.'}` });
+    };
+    const answer = yes => {
+      if (done || R.locked) return; const it = items[i], ok = yes === it.ok, cardEl = $('#tf-card', el);
+      cardEl.classList.add(ok ? 'good' : 'bad'); if (ok) { right++; Sfx.pop(); } else { Sfx.wrong(); cardEl.insertAdjacentHTML('beforeend', `<em>It means “${esc(cleanEn(it.w.en))}”</em>`); }
+      setTimeout(() => { cardEl.classList.remove('good', 'bad'); i++; if (i >= items.length) end(); else card(); }, ok ? 380 : 1100);
+    };
+    $('#tf-yes', el).onclick = () => answer(true); $('#tf-no', el).onclick = () => answer(false);
+    R.select = k => answer(k === 1);
+    tick = setInterval(() => { const left = 1 - (Date.now() - t0) / (T * 1000), b = $('#tf-bar'); if (!b) return clearInterval(tick); b.style.width = Math.max(0, left * 100) + '%'; b.classList.toggle('hurry', left < .3); if (left <= 0) end(); }, 100);
+    card();
+  }
+});
+
+/* ---------- The new lesson recipe for word scenes ---------- */
+const _buildLesson = buildLesson;
+buildLesson = function (u, level) {
+  if (u.letters || level > 1 || !(u.words || []).length) return _buildLesson(u, level);
+  const W = u.words, half = Math.ceil(W.length / 2), set = (level === 0 ? W.slice(0, half) : W.slice(half)).slice(0, 7), wp = vocabPool(course());
+  const ctx = set.filter(ctxOf), out = [];
+  if (ctx.length >= 2) out.push(EX.scene(ctx.slice(0, 3)));
+  const guessW = ctx[1] || ctx[0];
+  if (guessW) out.push(EX.guess(guessW, new Set(set.map(x => cleanEn(x.en))).size >= 3 ? set : wp));
+  // Interleave: learn a word, then check the PREVIOUS one (a little forgetting helps memory).
+  set.forEach((w, k) => {
+    out.push(EX.teachWord(w));
+    if (k > 0) { const p = set[k - 1]; out.push(ctxOf(p) && k % 2 ? EX.ctxpick(p, set.concat(wp), set) : wordCheck(p, wp, k)); }
+  });
+  const lastW = set[set.length - 1]; out.push(ctxOf(lastW) ? EX.ctxpick(lastW, set.concat(wp), set) : wordCheck(lastW, wp, 1));
+  if (set.length >= 3) out.push(EX.pop(set));
+  out.push(EX.tf(set, wp));
+  shuffle(ctx.filter(w => w !== lastW)).slice(0, 2).forEach(w => out.push(EX.ctxpick(w, set.concat(wp), set)));
+  const g = u.guide && u.guide[level ? Math.min(1, u.guide.length - 1) : 0];
+  if (g && !(u.index === 0 && level === 0)) out.push(Object.assign(EX.tip(g), { secret: true }));
+  shuffle(set).slice(0, 1).forEach(w => out.push(EX.speak(w)));
+  return out;
+};
+/* Any other lesson: never open with a grammar tip. Learn something first. */
+const _buildLesson2 = buildLesson;
+buildLesson = function (u, level) {
+  const out = _buildLesson2(u, level);
+  if (out[0] && out[0].kind === 'tip') { const t = Object.assign(out.shift(), { secret: true }); out.splice(Math.min(5, out.length), 0, t); }
+  return out;
+};
+
+/* =====================================================================
+   SOUNDS FIRST, LETTERS LATER
+   Korean and Arabic start by ear: pronunciation big, the real script
+   small underneath as a sneak peek. After Season 1 the script takes over
+   and the Letters track opens with a little ceremony.
+   ===================================================================== */
+function lettersOpen(p = P(), code = course().code) {
+  const c = COURSES[code];
+  return !c.letterUnits.length || Tester.on() || !!p.lettersEarly || sectionDone(p, code, 0) || c.letterUnits.some(u => unitProgress(p, code, u.id) > 0);
+}
+function soundFirst(p = P()) {
+  const c = course(); if (!p || c.code === 'es') return false;
+  const m = p.scriptMode || 'auto'; if (m === 'script') return false; if (m === 'sound') return true;
+  return !sectionDone(p, c.code, 0) && !p.lettersEarly;
+}
+function applyScriptMode() { document.documentElement.classList.toggle('sound-first', !!(P() && soundFirst())); }
+const _renderChrome = renderChrome;
+renderChrome = function () { applyScriptMode(); return _renderChrome.apply(this, arguments); };
+function lettersLockedSheet() {
+  const c = course();
+  openSheet(`<div class="sheet-head"><h2>Letters come a bit later</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
+    <div class="ll-sheet"><div class="mascot" id="ll-m"></div><p>Babies speak before they read. We do the same: you learn real phrases <b>by ear</b> first, then the ${c.code === 'ko' ? 'Hangeul' : 'Arabic'} letters feel easy, because you already know the words they spell.</p>
+    <p class="note">The letters open when you finish Season 1. Curious already?</p>
+    <div class="stack"><button class="btn primary" data-close>Keep learning by ear</button><button class="btn ghost" data-letters-early>Show me the letters now</button></div></div>`);
+  paintMascot($('#ll-m'), P().mascot, 'giggle', true);
+}
+function readyToReadHTML() {
+  const p = P(), c = course(); if (c.code === 'es' || !sectionDone(p, c.code, 0)) return '';
+  p.readyShown ||= {}; if (p.readyShown[c.code]) return '';
+  return `<section class="ready-read"><div class="mascot" data-rr-m></div><div><small>Unlocked</small><b>You can already say dozens of things by ear. Ready to meet the letters behind them?</b>
+    <div class="rr-btns"><button class="btn primary sm" data-adventure="LETTER_EXPLORER" data-rr-done>Visit the Sign Shop</button><button class="btn ghost sm" data-rr-done>Later</button></div></div></section>`;
+}
+
+/* =====================================================================
+   SPEAKABOO — TONE: same words, different feelings
+   In real speech the melody carries half the meaning: 진짜? (really?)
+   vs 진짜! (seriously!) vs 아, 진짜… (ugh, come on…). Each item is one
+   word said several ways. emo = how it sounds, how = what your voice does.
+   ===================================================================== */
+const TV = (t, r, en, emo, how) => ({ t, r, en, emo, how });
+const TONES = {
+  ko: [
+    { word: '진짜', vars: [TV('진짜?', 'jinjja?', 'Really?', 'surprised', 'Your voice jumps UP at the end, like a question.'), TV('진짜!', 'jinjja!', 'Seriously! (I mean it)', 'excited', 'Strong and punchy, falling at the end: you’re insisting.'), TV('아, 진짜…', 'a, jinjja…', 'Ugh, come on…', 'annoyed', 'Low and drawn out, with a sigh.')] },
+    { word: '네', vars: [TV('네?', 'ne?', 'Pardon? / What?', 'question', 'Short and rising: you didn’t catch it.'), TV('네.', 'ne.', 'Yes.', 'calm', 'Flat and short: a polite yes.'), TV('네~', 'ne~', 'Yeees~ (sweet, playful)', 'happy', 'Bouncy and stretched: friendly and cute.')] },
+    { word: '대박', vars: [TV('대박!', 'daebak!', 'Awesome!', 'excited', 'High and punchy, full of energy.'), TV('대박…', 'daebak…', 'No way… (stunned)', 'hesitant', 'Quiet and slow: you can’t believe it.')] },
+    { word: '그래', vars: [TV('그래?', 'geurae?', 'Really? / Is that so?', 'question', 'Rises at the end: you’re curious.'), TV('그래.', 'geurae.', 'Okay.', 'calm', 'Flat and relaxed: simple agreement.'), TV('그래!', 'geurae!', 'Let’s do it!', 'excited', 'Bright and loud: you’re in!')] },
+    { word: '왜', vars: [TV('왜?', 'wae?', 'Why?', 'question', 'Curious and rising.'), TV('왜!', 'wae!', 'What?! (leave me alone)', 'angry', 'Sharp and loud, dropping hard.')] },
+    { word: '됐어', vars: [TV('됐어!', 'dwaesseo!', 'It worked! Done!', 'happy', 'Bright and quick: success!'), TV('됐어.', 'dwaesseo.', 'Forget it.', 'angry', 'Cold, low and clipped. Ouch.')] },
+    { word: '아이고', vars: [TV('아이고!', 'aigo!', 'Oh my goodness!', 'surprised', 'Up then down, like “oh no!”'), TV('아이고…', 'aigo…', 'Phew, I’m exhausted…', 'sad', 'Long and sinking: a tired sigh.')] },
+    { word: '좋아', vars: [TV('좋아!', 'joa!', 'Great!', 'excited', 'Bouncy and loud.'), TV('좋아…', 'joa…', 'Fine… (not really)', 'hesitant', 'Slow and trailing off.')] }
+  ],
+  es: [
+    { word: 'en serio', vars: [TV('¿En serio?', 'ehn SEH-ryoh?', 'Really?', 'surprised', 'Rises sharply at the end.'), TV('¡En serio!', 'ehn SEH-ryoh!', 'I’m serious!', 'angry', 'Firm and falling: you mean it.'), TV('En serio…', 'ehn SEH-ryoh…', 'Seriously… (disappointed)', 'sad', 'Low and slow, trailing off.')] },
+    { word: 'sí', vars: [TV('¿Sí?', 'see?', 'Yes? / Really?', 'question', 'Short and rising.'), TV('Sí.', 'see.', 'Yes.', 'calm', 'Flat and simple.'), TV('¡Sí!', 'see!', 'Yes!!', 'excited', 'High and loud: pure joy.')] },
+    { word: 'qué bien', vars: [TV('¡Qué bien!', 'keh byehn!', 'How great!', 'happy', 'Bright and rising with a smile.'), TV('Qué bien…', 'keh byehn…', 'Great… (not great)', 'sarcastic', 'Flat and slow: you don’t mean it at all.')] },
+    { word: 'vale', vars: [TV('¡Vale!', 'BAH-leh!', 'Okay! (Spain)', 'happy', 'Quick and cheerful.'), TV('Vale…', 'BAH-leh…', 'Fine… (reluctant)', 'hesitant', 'Slow, sinking, a bit sulky.')] },
+    { word: 'qué', vars: [TV('¿Qué?', 'keh?', 'What? / Pardon?', 'question', 'Short and rising: you didn’t hear.'), TV('¡¿Qué?!', 'keh?!', 'WHAT?!', 'surprised', 'Jumps very high: total shock.')] },
+    { word: 'ay', vars: [TV('¡Ay!', 'eye!', 'Ouch! / Oh!', 'surprised', 'Sudden and sharp.'), TV('Ay…', 'eye…', '(a sad sigh)', 'sad', 'Long and falling.')] },
+    { word: 'venga', vars: [TV('¡Venga!', 'BEHN-gah!', 'Come on, you can do it!', 'excited', 'Bright and pushing forward.'), TV('¡Venga ya!', 'BEHN-gah yah!', 'Oh, come on! (no way)', 'annoyed', 'Heavy and falling, a little eye-roll.')] },
+    { word: 'bueno', vars: [TV('Bueno…', 'BWEH-noh…', 'Well…', 'hesitant', 'Slow, buying time.'), TV('¡Bueno!', 'BWEH-noh!', 'All right then!', 'happy', 'Short and decided.'), TV('¿Bueno?', 'BWEH-noh?', 'Hello? (phone, Mexico)', 'question', 'Rising, like picking up the phone.')] }
+  ],
+  ar: [
+    { word: 'بجد', vars: [TV('بجد؟', 'bi-GAD?', 'Really?', 'surprised', 'Rises at the end. (Egyptian)'), TV('بجد!', 'bi-GAD!', 'Seriously! (I mean it)', 'angry', 'Firm and falling.'), TV('بجد…', 'bi-GAD…', 'Seriously… (disappointed)', 'sad', 'Low and slow.')] },
+    { word: 'يا سلام', vars: [TV('يا سلام!', 'ya sa-LAAM!', 'Wow, wonderful!', 'happy', 'Bright and rising with delight.'), TV('يا سلام؟', 'ya sa-LAAM?', 'Oh really? (sure…)', 'sarcastic', 'Slow and dry: you don’t believe it.')] },
+    { word: 'خلاص', vars: [TV('خلاص!', 'kha-LAAS!', 'Enough!', 'angry', 'Sharp and loud.'), TV('خلاص.', 'kha-LAAS.', 'Okay, done.', 'calm', 'Flat and settled.'), TV('خلاص؟', 'kha-LAAS?', 'Done? / Are we good?', 'question', 'Rising at the end.')] },
+    { word: 'ماشي', vars: [TV('ماشي!', 'MAA-shi!', 'Okay! (sure!)', 'happy', 'Quick and cheerful. (Egyptian)'), TV('ماشي…', 'MAA-shi…', 'Fine… (reluctant)', 'hesitant', 'Slow and trailing off.')] },
+    { word: 'إيه', vars: [TV('إيه؟', 'EH?', 'What?', 'question', 'Short and rising.'), TV('إيه ده!', 'EH da!', 'What is THIS?!', 'surprised', 'Jumps high: shock. (Egyptian)')] },
+    { word: 'الحمد لله', vars: [TV('الحمد لله!', 'il-HAM-du lil-LAAH!', 'Thank God! (great news)', 'happy', 'Bright and full.'), TV('الحمد لله…', 'il-HAM-du lil-LAAH…', 'Thank God… (phew)', 'relieved', 'A long, relieved breath out.')] },
+    { word: 'يا خبر', vars: [TV('يا خبر!', 'ya KHA-bar!', 'Oh my God! (shock)', 'surprised', 'High and sudden.'), TV('يا خبر…', 'ya KHA-bar…', 'Oh no… (bad news)', 'sad', 'Low and slow.')] }
+  ]
+};
+const EMO_LABEL = { surprised: 'Surprised', excited: 'Excited', happy: 'Happy', annoyed: 'Annoyed', angry: 'Angry', sad: 'Sad', calm: 'Calm', question: 'Asking', sarcastic: 'Sarcastic', hesitant: 'Unsure', relieved: 'Relieved' };
+const EMO_FACE = { surprised: 'shocked', excited: 'cheer', happy: 'laugh', annoyed: 'pout', angry: 'pout', sad: 'cry', calm: 'happy', question: 'think', sarcastic: 'pout', hesitant: 'think', relieved: 'happy' };
+const EMO_COLOR = { surprised: '#FF9F1C', excited: '#FF7A59', happy: '#FFC23D', annoyed: '#B5651D', angry: '#D64545', sad: '#5B7BD6', calm: '#2F9C95', question: '#7A5AF8', sarcastic: '#8B5A3C', hesitant: '#8C8696', relieved: '#12805A' };
+/* =====================================================================
+   SPEAKABOO — TONE STUDIO
+   1. Feel it:   hear a line, guess the feeling (happy? annoyed? asking?)
+   2. Mean it:   the SAME word said differently: what does it mean now?
+   3. Say it:    say it with the feeling; the mic draws your voice's
+                 melody live and checks rise/fall, energy and pace.
+   ===================================================================== */
+const TONE_CAST = ['voice_leo_04', 'voice_sophia_02', 'voice_hiro_01'];
+const ttsText = t => String(t).replace(/~/g, '');
+function toneItems(code = course().code) { return TONES[code] || []; }
+function sayTone(v, voice) { return Voice.speakThen(ttsText(v.t), course().tts, .9, { id: voice, emotion: v.emo }, v.emo); }
+
+/* ---------- Prosody: pitch + loudness from the microphone ---------- */
+const Prosody = {
+  supported() { return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && (window.AudioContext || window.webkitAudioContext)) && !IN_ARTIFACT; },
+  pitch(buf, sr) {
+    const n = buf.length, minLag = Math.floor(sr / 500), maxLag = Math.floor(sr / 70);
+    let best = 0, bestLag = 0, e0 = 0; for (let i = 0; i < n; i++) e0 += buf[i] * buf[i];
+    for (let lag = minLag; lag <= maxLag; lag++) {
+      let c = 0, e1 = 0; for (let i = 0; i + lag < n; i++) { c += buf[i] * buf[i + lag]; e1 += buf[i + lag] * buf[i + lag]; }
+      const r = c / Math.sqrt(e0 * e1 || 1); if (r > best) { best = r; bestLag = lag; }
+    }
+    return best > .55 && bestLag ? sr / bestLag : 0;
+  },
+  stopReq: false,
+  async record(maxMs, onFrame) {
+    this.stopReq = false;
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: false } });
+    const AC = window.AudioContext || window.webkitAudioContext, ctx = new AC(), src = ctx.createMediaStreamSource(stream), an = ctx.createAnalyser();
+    an.fftSize = 2048; src.connect(an);
+    const buf = new Float32Array(an.fftSize), frames = [], t0 = performance.now(); let lastVoice = 0, started = false;
+    return new Promise(res => {
+      const end = () => { stream.getTracks().forEach(t => t.stop()); ctx.close(); res(frames); };
+      const tick = () => {
+        an.getFloatTimeDomainData(buf);
+        let sum = 0; for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+        const rms = Math.sqrt(sum / buf.length), now = performance.now() - t0, f0 = rms > .01 ? this.pitch(buf, ctx.sampleRate) : 0;
+        frames.push({ t: now, rms, f0 }); if (f0) { started = true; lastVoice = now; }
+        onFrame && onFrame(frames);
+        if (this.stopReq || now > maxMs || (started && now - lastVoice > 750)) return end();
+        setTimeout(tick, 30);
+      };
+      tick();
+    });
+  },
+  analyse(frames) {
+    const v = frames.filter(f => f.f0 > 0); if (v.length < 6) return null;
+    const sorted = v.map(f => f.f0).sort((a, b) => a - b), med = sorted[Math.floor(sorted.length / 2)];
+    const st = v.map(f => 12 * Math.log2(f.f0 / med)), q = p => { const a = st.slice().sort((x, y) => x - y); return a[Math.floor((a.length - 1) * p)]; };
+    const n = st.length, mid = st.slice(Math.floor(n * .25), Math.floor(n * .75)), tail = st.slice(Math.floor(n * .75));
+    const avg = a => a.reduce((x, y) => x + y, 0) / (a.length || 1);
+    const loud = 20 * Math.log10(avg(v.map(f => f.rms)) || 1e-6);
+    return { range: q(.9) - q(.1), end: avg(tail) - avg(mid), loud, dur: v[v.length - 1].t - v[0].t, med };
+  },
+  /** Compare the take to the feeling. Returns {score 0..3, tips[]}. */
+  judge(a, emo) {
+    const checks = [];
+    const rise = ['question', 'surprised'].includes(emo), big = ['excited', 'happy', 'surprised'].includes(emo);
+    const soft = ['sad', 'hesitant', 'relieved', 'sarcastic', 'annoyed'].includes(emo), hard = emo === 'angry';
+    if (rise) checks.push([a.end >= 1.5, 'Let your voice climb higher at the very end.']);
+    if (!rise && (soft || hard || emo === 'calm')) checks.push([a.end <= .8, 'Let your voice drop at the end.']);
+    if (big) checks.push([a.range >= 4.5, 'Make your melody bouncier: go higher on the key word.']);
+    if (big || hard) checks.push([a.loud >= -30, 'More energy! Say it louder and brighter.']);
+    if (soft) checks.push([a.dur >= 650, 'Slow down and stretch it out, like a sigh.']);
+    if (soft || emo === 'calm') checks.push([a.range <= 7, 'Keep it flatter and more relaxed.']);
+    if (hard) checks.push([a.dur <= 1300, 'Shorter and sharper, like a snap.']);
+    const ok = checks.filter(c => c[0]).length;
+    return { score: Math.round(ok / checks.length * 3), tips: checks.filter(c => !c[0]).map(c => c[1]) };
+  },
+  draw(canvas, frames, emo) {
+    const g = canvas.getContext('2d'), W = canvas.width, H = canvas.height; g.clearRect(0, 0, W, H);
+    // the target "melody shape" for this feeling
+    const shape = { question: [[0, .62], [.6, .58], [1, .18]], surprised: [[0, .6], [.5, .45], [1, .12]], excited: [[0, .5], [.25, .2], [.5, .45], [.75, .25], [1, .5]], happy: [[0, .55], [.3, .3], [.7, .35], [1, .45]],
+      angry: [[0, .3], [.3, .28], [1, .78]], annoyed: [[0, .45], [.5, .6], [1, .8]], sad: [[0, .5], [1, .82]], hesitant: [[0, .5], [.6, .6], [1, .78]], calm: [[0, .5], [1, .6]], sarcastic: [[0, .55], [1, .68]], relieved: [[0, .45], [1, .75]] }[emo] || [[0, .5], [1, .5]];
+    g.setLineDash([8, 8]); g.lineWidth = 6; g.lineCap = 'round'; g.strokeStyle = 'rgba(141,146,255,.45)'; g.beginPath();
+    shape.forEach(([x, y], i) => i ? g.lineTo(x * W, y * H) : g.moveTo(x * W, y * H)); g.stroke(); g.setLineDash([]);
+    const v = frames.filter(f => f.f0 > 0); if (!v.length) return;
+    const t0 = v[0].t, span = Math.max(900, v[v.length - 1].t - t0), meds = v.map(f => f.f0).sort((a, b) => a - b), med = meds[Math.floor(meds.length / 2)];
+    g.strokeStyle = EMO_COLOR[emo] || '#4146C9'; g.lineWidth = 7; g.beginPath();
+    v.forEach((f, i) => { const x = (f.t - t0) / span * W, y = H / 2 - 12 * Math.log2(f.f0 / med) / 12 * (H * .8); i ? g.lineTo(x, Math.max(6, Math.min(H - 6, y))) : g.moveTo(x, Math.max(6, Math.min(H - 6, y))); });
+    g.stroke();
+  }
+};
+
+/* ---------- The Tone Studio game ---------- */
+const ToneLab = {
+  on: false, rounds: [], i: 0, score: 0,
+  open() {
+    if (this.on) return;
+    const items = shuffle(toneItems().slice()); if (!items.length) return toast('Tone Studio is coming to this language soon.');
+    const canSay = Prosody.supported(), rounds = [];
+    items.slice(0, 8).forEach((it, k) => {
+      const v = pick(it.vars), voice = TONE_CAST[k % 3];
+      const type = canSay && (k === 3 || k === 7) ? 'say' : k % 2 ? 'mean' : 'feel';
+      rounds.push({ type, it, v, voice });
+    });
+    Object.assign(this, { on: true, rounds, i: 0, score: 0 });
+    const el = document.createElement('div'); el.id = 'tone'; el.className = 'rt tone-lab';
+    el.innerHTML = `<div class="rt-top"><button class="icon-btn" id="tone-x" aria-label="Close">${ICON.x}</button><div class="adv-title"><small>Tone Studio</small><b>Same words, different feelings</b></div><span class="rt-count" id="tone-n"></span></div>
+      <div class="adv-prog"><i id="tone-prog"></i></div><div class="rt-body" id="tone-body"></div>`;
+    document.body.append(el); requestAnimationFrame(() => el.classList.add('in'));
+    $('#tone-x').onclick = () => this.close();
+    this.show();
+  },
+  show() {
+    const r = this.rounds[this.i]; if (!r) return this.finish();
+    $('#tone-n').textContent = `${this.i + 1}/${this.rounds.length}`; $('#tone-prog').style.width = (this.i / this.rounds.length * 100) + '%';
+    const body = $('#tone-body'); body.innerHTML = toneRoundHTML(r); wireToneRound(body, r, ok => { if (ok) this.score++; }, () => { this.i++; this.show(); });
+  },
+  finish() {
+    const xp = 5 + this.score * 2, body = $('#tone-body'); award(xp); Quests.bump('practice'); Store.save();
+    $('#tone-prog').style.width = '100%';
+    body.innerHTML = `<div class="rt-end"><div class="adv-cast">${TONE_CAST.map(v => `<div class="adv-mini" data-v="${v}"></div>`).join('')}</div><h2>${this.score >= 6 ? 'You’ve got an ear for feelings!' : 'Your ear is warming up!'}</h2>
+      <div class="tiles"><div><small>Right</small><b>${this.score}/${this.rounds.length}</b></div><div><small>XP</small><b>+${xp}</b></div></div>
+      <p class="note">In real conversations, HOW you say it matters as much as what you say.</p>
+      <div class="stack"><button class="btn primary" id="tone-again">Another round</button><button class="btn ghost" id="tone-done">Done</button></div></div>`;
+    $$('.adv-mini', body).forEach((el, k) => paintChar(el, el.dataset.v, ['cheer', 'laugh', 'happy'][k]));
+    React.rain('stars', 18);
+    $('#tone-again').onclick = () => { this.close(true); this.open(); };
+    $('#tone-done').onclick = () => this.close();
+  },
+  close(quiet) {
+    this.on = false; Prosody.stopReq = true; window.speechSynthesis?.cancel();
+    const el = $('#tone'); if (el) { el.classList.remove('in'); setTimeout(() => el.remove(), quiet ? 0 : 250); }
+    if (!quiet) renderChrome();
+  }
+};
+
+/* ---------- One round (shared by the Studio and by lessons) ---------- */
+function toneRoundHTML(r) {
+  const c = course(), cast = STORY_CAST[r.voice];
+  const head = { feel: `How does ${cast.short} feel?`, mean: `What does ${cast.short} mean?`, say: `Say it like you’re ${EMO_LABEL[r.v.emo].toLowerCase()}!` }[r.type];
+  const bare = x => String(x).replace(/[?!.…~¿¡؟,]/g, '').trim();
+  const line = r.type === 'feel' ? `<span class="script" ${attrs(c)}>${esc(bare(r.v.t))}</span><small>Listen closely…</small>` : r.type === 'mean' ? `<span class="script" ${attrs(c)}>${esc(r.it.word)}</span><small>…but how?</small>` : `<span class="script" ${attrs(c)}>${esc(r.v.t)}</span><small>${esc(r.v.r)}${r.type === 'say' ? ' · ' + esc(r.v.en) : ''}</small>`;
+  let opts = '';
+  if (r.type === 'feel') {
+    const others = shuffle(Object.keys(EMO_LABEL).filter(e => e !== r.v.emo && !(r.v.emo === 'question' && e === 'surprised') && !(r.v.emo === 'surprised' && e === 'question'))).slice(0, 2);
+    opts = shuffle([r.v.emo, ...others]).map(e => `<button class="emo-b" data-a="${e}" style="--ec:${EMO_COLOR[e]}"><i></i>${EMO_LABEL[e]}</button>`).join('');
+  } else if (r.type === 'mean') {
+    const vs = r.it.vars.length >= 2 ? r.it.vars : [r.v, ...shuffle(toneItems().flatMap(x => x.vars).filter(x => x !== r.v)).slice(0, 2)];
+    opts = shuffle(vs.slice()).map(x => `<button class="emo-b wide" data-a="${esc(x.t)}"><i style="--ec:${EMO_COLOR[x.emo]}"></i>${esc(x.en)}</button>`).join('');
+  }
+  return `<div class="tone-round"><p class="q">${esc(head)}</p>
+    <div class="tone-stage"><div class="tone-char" id="tone-char"></div><button class="tone-bubble" id="tone-play">${line}<span class="tone-wave"><i></i><i></i><i></i><i></i><i></i></span></button></div>
+    ${r.type === 'say' ? `<div class="tone-how"><b style="color:${EMO_COLOR[r.v.emo]}">${EMO_LABEL[r.v.emo]}</b> ${esc(r.v.how)}</div>
+      <canvas class="tone-canvas" id="tone-cv" width="640" height="220"></canvas><p class="tone-hint" id="tone-hint">Dashed line = the melody to aim for. Listen first, then tap the mic.</p>
+      <div class="live-btns"><button class="btn ghost" id="tone-listen">${ICON.speaker} Listen</button><button class="btn primary" id="tone-rec">${ICON.mic} Say it</button></div>
+      <button class="link-btn" id="tone-skip">Skip</button>` : `<div class="emo-opts">${opts}</div>`}
+    <div class="adv-fb" id="tone-fb" hidden></div></div>`;
+}
+function wireToneRound(el, r, onResult, onNext) {
+  delete el.dataset.done;
+  const ch = $('#tone-char', el), play = () => { paintChar(ch, r.voice, EMO_FACE[r.v.emo] || 'happy'); el.querySelector('.tone-bubble')?.classList.add('talking'); sayTone(r.v, r.voice).then(() => el.querySelector('.tone-bubble')?.classList.remove('talking')); };
+  paintChar(ch, r.voice, r.type === 'say' ? 'happy' : 'peek');
+  $('#tone-play', el).onclick = play; setTimeout(play, 350);
+  const fb = (ok, html, label = 'Next') => {
+    const f = $('#tone-fb', el); f.hidden = false; f.className = 'adv-fb ' + (ok ? 'ok' : 'bad'); f.innerHTML = html + `<button class="btn primary" id="tone-next">${label}</button>`;
+    requestAnimationFrame(() => f.classList.add('in')); $('#tone-next', el).onclick = onNext; onResult(ok);
+  };
+  const explain = `<p><span class="script" ${attrs(course())}>${esc(r.v.t)}</span> = <b>${esc(r.v.en)}</b></p><small>${esc(r.v.how)}</small>`;
+  $$('.emo-b', el).forEach(b => b.onclick = () => {
+    if (el.dataset.done) return; el.dataset.done = 1;
+    const ok = r.type === 'feel' ? b.dataset.a === r.v.emo : b.dataset.a === r.v.t;
+    b.classList.add(ok ? 'right' : 'wrong'); $$('.emo-b', el).forEach(x => { x.disabled = true; if ((r.type === 'feel' ? x.dataset.a === r.v.emo : x.dataset.a === r.v.t)) x.classList.add('right'); });
+    if (ok) { Sfx.correct(); paintChar(ch, r.voice, 'star'); React.burst(ch, 'stars', 8); } else { Sfx.wrong(); paintChar(ch, r.voice, 'oops'); }
+    fb(ok, `<b>${ok ? pick(['Great ear!', 'You felt it!', 'Exactly!']) : pick(['Listen again…', 'Close!', 'Tricky one!'])}</b>${explain}`);
+    setTimeout(() => sayTone(r.v, r.voice), 400);
+  });
+  if (r.type === 'say') {
+    const cv = $('#tone-cv', el); Prosody.draw(cv, [], r.v.emo);
+    $('#tone-listen', el).onclick = play;
+    $('#tone-skip', el).onclick = () => { if (!el.dataset.done) { el.dataset.done = 1; fb(false, `<b>Next time!</b>${explain}`); } };
+    $('#tone-rec', el).onclick = async () => {
+      const b = $('#tone-rec', el); b.disabled = true; b.innerHTML = `${ICON.mic} Listening…`; $('#tone-hint', el).textContent = 'Go! Say it with feeling.'; window.speechSynthesis?.cancel();
+      let frames;
+      try { frames = await Prosody.record(4500, fr => Prosody.draw(cv, fr, r.v.emo)); } catch (e) { b.disabled = false; b.innerHTML = `${ICON.mic} Say it`; $('#tone-hint', el).textContent = 'Microphone blocked. Allow it in your browser settings.'; return; }
+      b.disabled = false; b.innerHTML = `${ICON.mic} Again`;
+      const a = Prosody.analyse(frames);
+      if (!a) { $('#tone-hint', el).textContent = 'I couldn’t hear you. Get closer to the mic and try again!'; return; }
+      const j = Prosody.judge(a, r.v.emo), stars = '★'.repeat(j.score) + '☆'.repeat(3 - j.score);
+      $('#tone-hint', el).innerHTML = `<b class="tone-stars">${stars}</b> ${j.tips.length ? esc(j.tips[0]) : 'That sounded exactly right!'}`;
+      if (j.score >= 2 && !el.dataset.done) { el.dataset.done = 1; Sfx.correct(); paintChar(ch, r.voice, j.score === 3 ? 'love' : 'star'); React.burst(ch, 'hearts', 10); fb(true, `<b>${j.score === 3 ? 'You sound like a local!' : 'Nice feeling!'}</b>${explain}`); }
+      else if (j.score < 2) { Sfx.wrong(); paintChar(ch, r.voice, 'think'); }
+    };
+  }
+}
+
+/* ---------- Tone in lessons: one "hear the feeling" step per scene lesson ---------- */
+Object.assign(EX, { feel: () => { const items = toneItems(); if (!items.length) return null; const it = pick(items), v = pick(it.vars); return { kind: 'feel', r: { type: Math.random() < .5 ? 'feel' : 'mean', it, v, voice: pick(TONE_CAST) } }; } });
+RENDER.feel = function (step, el, R) {
+  el.innerHTML = toneRoundHTML(step.r);
+  wireToneRound(el, step.r, ok => { $('#tone-fb', el)?.remove(); R.grade(ok, { teach: `${step.r.v.t} = ${step.r.v.en}. ${step.r.v.how}`, noAuto: true }); }, () => {});
+};
+const _buildLesson3 = buildLesson;
+buildLesson = function (u, level) {
+  const out = _buildLesson3(u, level);
+  if (!u.letters && level <= 1 && out.some(s => s.kind === 'pop')) { const f = EX.feel(); if (f) out.splice(out.findIndex(s => s.kind === 'pop') + 1, 0, f); }
+  return out;
+};
+/* =====================================================================
+   SPEAKABOO — SPEAK MORE · ASK BOO · TAP ANY WORD
+   1. "Say your line": scenes where you SPEAK the answer (mic), not tap it.
+      Matching steps in lessons become speaking steps.
+   2. Ask Boo: a "?" in every lesson and game. Ask in English (type or
+      say it), get an English answer plus the phrase in your language,
+      read aloud.
+   3. Tap-to-translate: every sentence is made of tappable words; tap one
+      for its meaning, pronunciation and audio.
+   ===================================================================== */
+
+/* ---------- 1. Say your line ---------- */
+Object.assign(EX, { ctxsay: (w, pool, set) => Object.assign(EX.ctxpick(w, pool, set), { kind: 'ctxsay' }) });
+RENDER.ctxsay = function (step, el, R) {
+  if (!Mic.SR || Mic.blocked) return RENDER.ctxpick(step, el, R);
+  const c = course(), w = step.w; let tries = 0;
+  el.innerHTML = `<p class="q">${pick(['Say your line!', 'Your turn to talk!', 'What do you say? Out loud!'])}</p>${panelHTML(w, 'blank')}
+    <div class="say-hint" id="cs-hint">Think about who you’re talking to, then tap the mic.</div>
+    <div class="mic-row"><button class="mic-big" id="cs-mic" aria-label="Tap to speak">${ICON.mic}</button><div class="mic-status"><span id="cs-st">Tap and speak</span></div></div>
+    <button class="link-btn" id="cs-help">Show me the words</button>`;
+  const fillBubble = () => { const b = $('.pn-bub', el); if (b) { b.classList.remove('blank'); b.classList.add('fill'); b.innerHTML = `<span class="script" ${attrs(c)}>${esc(w.t)}</span><small>${esc(w.r)}</small>`; } };
+  $('#cs-help', el).onclick = () => { $('#cs-hint', el).innerHTML = `Try: <b>${esc(w.r)}</b> <span class="script" ${attrs(c)}>${esc(w.t)}</span>`; sayCtx(w); tries = Math.max(tries, 1); };
+  $('#cs-mic', el).onclick = async () => {
+    const btn = $('#cs-mic', el), st = $('#cs-st', el); if (R.locked) return; if (Mic.active) { Mic.stop(); return; }
+    btn.classList.add('on'); st.textContent = 'Listening…';
+    try {
+      const alts = await listenOnce(c.stt, { target: w.t, onInterim: t => { st.textContent = `Hearing: ${t}…`; } }); btn.classList.remove('on'); tries++;
+      const r = pronScore(w.t, alts || []);
+      if (r.ok) { fillBubble(); P().stats.spoken++; Quests.bump('speak'); R.grade(true, { show: { t: w.t, r: w.r, en: cleanEn(w.en) }, teach: `${r.pct}% match. You said it like a local!` }); }
+      else if (tries >= 3) { fillBubble(); sayCtx(w); R.grade(false, { you: r.best || '…', show: { t: w.t, r: w.r, en: cleanEn(w.en) } }); }
+      else { Sfx.wrong(); st.textContent = `I heard “${r.best || '…'}” (${r.pct}%). Try ${tries + 1}/3`; if (tries === 1) $('#cs-hint', el).innerHTML = `Hint: it starts with <b>${esc(String(w.r).split(/[\s-]/)[0])}…</b>`; if (tries === 2) $('#cs-help', el).click(); }
+    } catch (code) { btn.classList.remove('on'); st.textContent = Mic.explain(code); if (Mic.blocked) RENDER.ctxpick(step, el, R); }
+  };
+};
+const _buildLesson4 = buildLesson;
+buildLesson = function (u, level) {
+  const out = _buildLesson4(u, level);
+  if (u.letters) return out;
+  // Speaking beats matching: swap matching for "repeat after me".
+  for (let k = 0; k < out.length; k++) if (out[k].kind === 'match' && out[k].pairs) {
+    const ws = out[k].pairs.map(x => vocabPool(course()).find(w => w.t === x.a)).filter(Boolean);
+    out.splice(k, 1, ...shuffle(ws).slice(0, 2).map(w => EX.speak(w)));
+  }
+  // The last two "your line" moments are spoken, not tapped.
+  const idx = out.map((s, i) => s.kind === 'ctxpick' ? i : -1).filter(i => i >= 0).slice(-2);
+  idx.forEach(i => { out[i] = Object.assign({}, out[i], { kind: 'ctxsay' }); });
+  return out;
+};
+
+/* ---------- 3. Tap any word ---------- */
+const Gloss = {
+  index: null, code: null,
+  build() {
+    const c = course(); if (this.code === c.code && this.index) return this.index;
+    const m = new Map(); vocabPool(c).forEach(w => { const k = this.norm(w.t); if (k && !m.has(k)) m.set(k, w); });
+    (MOMENTS[c.code] ? Object.values(MOMENTS[c.code]).flat() : []).forEach(w => { const k = this.norm(w.t); if (k && !m.has(k) && !/\s/.test(k)) m.set(k, w); });
+    this.code = c.code; return (this.index = m);
+  },
+  norm(t) { return String(t || '').replace(/[.,!?¿¡،؟…~“”"«»()]/g, '').trim().toLowerCase(); },
+  lookup(tok) {
+    const idx = this.build(), code = course().code, k = this.norm(tok); if (!k) return null;
+    if (idx.has(k)) return idx.get(k);
+    if (code === 'ko') {
+      const parts = ['에서는', '에서', '에게', '한테', '으로', '이랑', '하고', '까지', '부터', '이에요', '예요', '이야', '은', '는', '이', '가', '을', '를', '에', '의', '도', '와', '과', '랑', '로', '만', '요'];
+      for (const p of parts) if (k.endsWith(p) && k.length > p.length && idx.has(k.slice(0, -p.length))) return idx.get(k.slice(0, -p.length));
+      let best = null; for (const [t, w] of idx) if (t.length >= 2 && !/\s/.test(t) && k.startsWith(t.slice(0, Math.max(2, t.length - 1))) && (!best || t.length > best.t.length)) best = w;
+      return best;
+    }
+    if (code === 'ar') {
+      const cands = [k, k.replace(/^(و|ف|ب|ل|ك)/, ''), k.replace(/^ال/, ''), k.replace(/^(و|ف|ب|ل)ال/, ''), k.replace(/(ي|ك|ه|ها|نا|كم|هم)$/, ''), k.replace(/ة$/, 'ه')];
+      for (const x of cands) if (idx.has(x)) return idx.get(x); for (const x of cands) if (idx.has('ال' + x)) return idx.get('ال' + x);
+      return null;
+    }
+    const strip = k.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    for (const [t, w] of idx) if (t.normalize('NFD').replace(/[̀-ͯ]/g, '') === strip) return w;
+    for (const x of [k.replace(/es$/, ''), k.replace(/s$/, ''), k.replace(/(a|o|as|os)$/, 'o')]) if (idx.has(x)) return idx.get(x);
+    for (const [t, w] of idx) if (/\s/.test(t) && t.split(' ').includes(k)) return w;
+    return null;
+  },
+  SEL: '.prompt-text.script, .speak-target.script, .t-main.script, .story-line .script, .ex-line .script, .adv-prim, .live-phrase .script, .rt-line .script, .bubble-line .script, .challenge-t',
+  SKIP: '.opt, .tile, .pic-card, .wt, [data-b], .pop-b, .emo-b, .adv-ch, .rt-opt, .tf-card, .oops-sent',
+  scan(root = document) {
+    $$(this.SEL, root).forEach(el => {
+      if (el.dataset.gl === el.textContent || el.closest(this.SKIP)) return;
+      const text = el.textContent.trim(); if (!/\s/.test(text) || text.length > 140 || el.querySelector('.gw')) { el.dataset.gl = el.textContent; return; }
+      const romEl = el.dataset.rom ? null : [el.nextElementSibling, el.parentElement && el.parentElement.querySelector('.t-rom, .speak-rom, .prompt-sub, small')].find(x => x && x !== el && /rom|sub|small/i.test(x.className + x.tagName));
+      const rom = el.dataset.rom || (romEl ? romEl.textContent.trim() : '');
+      const toks = text.split(/\s+/), rt = rom.split(/\s+/), align = rt.length === toks.length;
+      el.innerHTML = toks.map((t, i) => `<span class="gw" data-r="${align ? esc(rt[i]) : ''}">${esc(t)}</span>`).join(' ');
+      el.dataset.gl = el.textContent; el.classList.add('glossed');
+    });
+  },
+  pop(span) {
+    $('#gloss-pop')?.remove();
+    const c = course(), tok = span.textContent, w = this.lookup(tok), sent = span.closest('.glossed')?.textContent || '';
+    const box = document.createElement('div'); box.id = 'gloss-pop'; box.className = 'gloss-pop';
+    box.innerHTML = `<div class="gp-top"><span class="script" ${attrs(c)}>${esc(tok.replace(/[.,!?¿¡،؟…]/g, ''))}</span><button class="speaker sm" data-say="${esc(Gloss.norm(tok))}" aria-label="Play">${ICON.speaker}</button></div>
+      <small class="gp-rom">${esc(span.dataset.r || (w && w.r) || '')}</small>
+      <b class="gp-en">${w ? esc(cleanEn(w.en)) + (Gloss.norm(w.t) !== Gloss.norm(tok) ? `<em> (from ${esc(w.t)})</em>` : '') : 'Not in your word list yet'}</b>
+      <b class="gp-my muted" hidden></b>
+      <button class="gp-ask" data-ask-word="${esc(tok)}" data-ask-sent="${esc(sent)}">${ICON.chat} Ask Boo about it</button>`;
+    document.body.append(box);
+    const r = span.getBoundingClientRect(), bw = Math.min(260, innerWidth - 24);
+    box.style.width = bw + 'px'; box.style.left = Math.max(12, Math.min(innerWidth - bw - 12, r.left + r.width / 2 - bw / 2)) + 'px';
+    const below = r.bottom + 10, h = box.offsetHeight; box.style.top = (below + h < innerHeight - 10 ? below : Math.max(10, r.top - h - 10)) + 'px';
+    $$('.gw.on').forEach(x => x.classList.remove('on')); span.classList.add('on');
+    Voice.speak(Gloss.norm(tok));
+    const to = P().myLang || 'en', en = w && cleanEn(w.en), my = $('.gp-my', box);
+    if (to !== 'en' && en && my) { my.hidden = false; my.textContent = '…'; Tr.get(en, to).then(out => { my.textContent = out; }).catch(() => { my.textContent = 'Needs internet for ' + myLangName(to); }); }
+  }
+};
+document.addEventListener('click', e => {
+  const gw = e.target.closest && e.target.closest('.gw');
+  if (gw) { e.stopPropagation(); e.preventDefault(); Gloss.pop(gw); return; }
+  if (!e.target.closest('#gloss-pop')) { $('#gloss-pop')?.remove(); $$('.gw.on').forEach(x => x.classList.remove('on')); }
+}, true);
+let _scanT = 0;
+new MutationObserver(() => { clearTimeout(_scanT); _scanT = setTimeout(() => { if (!P()) return; Gloss.scan(); Ask.decorate(); }, 80); }).observe(document.body, { childList: true, subtree: true });
+
+/* ---------- 2. Ask Boo ---------- */
+const Ask = {
+  decorate() {
+    const lt = $('#lesson .l-top'); if (lt && !$('.ask-btn', lt)) $('#l-hearts').insertAdjacentHTML('beforebegin', `<button class="ask-btn" data-ask aria-label="Ask Boo a question">?</button>`);
+    $$('.rt-top').forEach(t => { if (!$('.ask-btn', t)) t.insertAdjacentHTML('beforeend', `<button class="ask-btn" data-ask aria-label="Ask Boo a question">?</button>`); });
+  },
+  context() {
+    const st = !$('#lesson').hidden && Runner.queue && Runner.queue[Runner.i];
+    const w = st && (st.w || (st.srsId && VOCAB_INDEX[st.srsId]) || st.item || st.s || (st.r && st.r.v));
+    if (w && w.t) return w;
+    const vis = [...document.querySelectorAll('.rt .script, #lesson .script')].find(x => x.offsetParent && x.textContent.trim());
+    return vis ? { t: vis.textContent.trim(), r: '', en: '' } : null;
+  },
+  open(word, sentence) {
+    const c = course(), ctx = this.context(), w = word ? (Gloss.lookup(word) || { t: Gloss.norm(word), r: '', en: '' }) : ctx;
+    const sugg = w ? [`What does “${w.t}” mean?`, `How do I pronounce “${w.t}”?`, `When do I use “${w.t}”?`] : ['How do I say “thank you”?', 'How do I say “where is the bathroom”?', 'What’s the difference between formal and casual?'];
+    if (sentence) sugg.unshift(`What does “${word}” mean in “${sentence}”?`);
+    openSheet(`<div class="sheet-head"><h2>Ask Boo anything</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
+      <div class="ask-wrap"><div class="ask-log" id="ask-log"><div class="ask-msg boo"><div class="mascot" id="ask-m"></div><div class="ask-bub">Confused? Ask me in English. I’ll explain in English and say it in ${esc(c.name)}.</div></div></div>
+      <div class="ask-sugg">${sugg.slice(0, 3).map(q => `<button class="chip-btn" data-ask-q="${esc(q)}">${esc(q)}</button>`).join('')}</div>
+      <form class="ask-form" id="ask-form"><input class="input" id="ask-in" placeholder="Type your question in English…" autocomplete="off" enterkeyhint="send">${Mic.SR && !Mic.blocked ? `<button type="button" class="round" id="ask-mic" aria-label="Ask with your voice">${ICON.mic}</button>` : ''}<button class="round send" aria-label="Send">${ICON.send}</button></form></div>`);
+    paintMascot($('#ask-m'), P().mascot, 'happy', true);
+    this.ctx = w;
+    $('#ask-form').onsubmit = e => { e.preventDefault(); const v = $('#ask-in').value.trim(); if (v) { $('#ask-in').value = ''; this.ask(v); } };
+    $('#ask-mic') && ($('#ask-mic').onclick = async () => { const b = $('#ask-mic'); b.classList.add('on'); try { const alts = await listenOnce('en-US', { onInterim: t => { $('#ask-in').value = t; } }); if (alts && alts[0]) { $('#ask-in').value = ''; this.ask(alts[0]); } } catch (x) { toast(Mic.explain(x)); } b.classList.remove('on'); });
+    $$('[data-ask-q]').forEach(b => b.onclick = () => this.ask(b.dataset.askQ));
+  },
+  push(html, who = 'boo') {
+    const log = $('#ask-log'); if (!log) return;
+    log.insertAdjacentHTML('beforeend', `<div class="ask-msg ${who}">${who === 'boo' ? '<div class="mascot sm"></div>' : ''}<div class="ask-bub">${html}</div></div>`);
+    const m = log.lastElementChild.querySelector('.mascot'); if (m) paintMascot(m, P().mascot, 'cheer', true);
+    log.scrollTop = log.scrollHeight; log.lastElementChild.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  },
+  exHTML(ex) { const c = course(); return ex.length ? `<div class="ask-ex">${ex.map(x => `<button class="ask-ex-i" data-say="${esc(x.t)}">${ICON.speaker}<span><span class="script" ${attrs(c)}>${esc(x.t)}</span><small>${esc(x.r || '')}${x.en ? ' · ' + esc(x.en) : ''}</small></span></button>`).join('')}</div>` : ''; },
+  async ask(q) {
+    this.push(esc(q), 'me');
+    const log = $('#ask-log'); log.insertAdjacentHTML('beforeend', '<div class="ask-msg boo typing-row"><span class="typing"><i></i><i></i><i></i></span></div>');
+    let res;
+    if (RealTalk.aiReady()) {
+      try {
+        const c = course(), ctx = this.ctx;
+        const rules = `You are Boo, a warm, funny tutor inside a ${c.name} learning app. The learner is a beginner and asks questions in English.
+Answer in simple English, max 3 short sentences, friendly. Always give 1–3 short, natural ${c.name} example phrases that help.${c.code === 'ar' ? ' Use everyday Arabic; mark Egyptian dialect if you use it.' : ''}
+${ctx ? `They are currently looking at: "${ctx.t}"${ctx.r ? ` (${ctx.r})` : ''}${ctx.en ? ` = "${ctx.en}"` : ''}.` : ''}
+Respond ONLY with JSON: {"answer":"English answer","examples":[{"t":"${c.name} script","r":"romanization / pronunciation","en":"English"}]}`;
+        const j = Tutor.brain === 'claude' ? await Tutor.askClaude(rules, [{ role: 'user', content: q }]) : await Tutor.askGemini(rules, [{ role: 'user', content: q }]);
+        const s = v => (typeof v === 'string' ? v : '').slice(0, 600);
+        res = { answer: s(j && j.answer), ex: (Array.isArray(j && j.examples) ? j.examples : []).slice(0, 3).map(x => ({ t: s(x.t), r: s(x.r), en: s(x.en) })).filter(x => x.t) };
+        if (!res.answer) throw new Error('empty');
+      } catch (e) { res = null; }
+    }
+    if (!res) res = this.offline(q);
+    await new Promise(r => setTimeout(r, 450));
+    $('.typing-row')?.remove();
+    this.push(`<p>${esc(res.answer)}</p>${this.exHTML(res.ex)}`);
+    if (res.ex[0]) setTimeout(() => Voice.speak(res.ex[0].t, undefined, .85, P().mascot, 'warm'), 300);
+    if (res.slow) setTimeout(() => Voice.speak(res.slow, undefined, .55, P().mascot, 'calm'), 2200);
+  },
+  /** No AI? Answer from the course itself: words, sentences, phrases and grammar tips. */
+  offline(q) {
+    const c = course(), ql = q.toLowerCase(), STOP = new Set('a an the to i you me my is are am do does how what say in of it this that for and or be can please korean arabic spanish mean means word'.split(' '));
+    const words = s => String(s).toLowerCase().replace(/[^a-z0-9' ]/g, ' ').split(/\s+/).filter(x => x && !STOP.has(x));
+    const pool = [...vocabPool(c), ...c.units.flatMap(u => u.sentences || []), ...(MOMENTS[c.code] ? Object.values(MOMENTS[c.code]).flat() : [])];
+    const bestFor = en => { const qw = words(en); if (!qw.length) return []; return pool.map(x => { const xw = words(cleanEn(x.en)); const hit = qw.filter(w => xw.includes(w)).length; return { x, s: hit / Math.max(qw.length, xw.length) + (hit === qw.length ? .5 : 0) }; }).filter(o => o.s > .3).sort((a, b) => b.s - a.s).slice(0, 3).map(o => o.x); };
+    const quoted = (q.match(/[“"']([^”"']+)[”"']/) || [])[1];
+    const target = quoted && /[^\x00-\x7F]/.test(quoted) ? quoted : (q.match(/[ㄱ-힣؀-ۿ]+(?:\s[ㄱ-힣؀-ۿ]+)*/) || [])[0];
+    const sayM = ql.match(/(?:how (?:do|can|would|should) (?:i|you|we) say|what(?:'s| is) the word for|translate|how to say)\s+(.+?)(?:\s+in\s+\w+)?\??$/);
+    // "How do I say X?"
+    if (sayM && !(target && /[^\x00-\x7F]/.test(sayM[1]))) {
+      const hits = bestFor(sayM[1].replace(/[“”"?]/g, ''));
+      return hits.length ? { answer: `Here’s how you’d say “${sayM[1].replace(/[“”"?]/g, '')}” in ${c.name}. Tap to hear it.`, ex: hits } : { answer: `I don’t have “${sayM[1]}” in your course yet. Switch on AI in Me → Chat tutor brain and I can answer anything!`, ex: [] };
+    }
+    const tipsFirst = /\b(why|difference|different|when (?:do|should|can) i use|which one|formal|polite|casual|grammar|particle|ending)\b/.test(ql);
+    const tipPick = () => { const tips = [...c.units, ...c.letterUnits].flatMap(u => u.guide || []), qw2 = words(q.replace(/[^\x00-\x7F]/g, ' ')), tg = q.match(/[\u3131-\uD7A3\u0600-\u06FF]+/g) || [];
+      const best = tips.map(g => ({ g, s: qw2.filter(w => (g.h + ' ' + g.p).toLowerCase().includes(w)).length + tg.filter(t => (g.h + ' ' + g.p).includes(t)).length * 2 })).sort((a, b) => b.s - a.s)[0];
+      return best && best.s >= 1 ? { answer: `${best.g.h}: ${best.g.p}`, ex: (best.g.ex || []).slice(0, 2).map(([t, r, en]) => ({ t, r, en })) } : null; };
+    if (tipsFirst) { const t = tipPick(); if (t) return t; }
+    const tw = target ? (Gloss.lookup(target) || pool.find(x => x.t && (x.t === target || x.t.includes(target)))) : (this.ctx && /this|it|that/.test(ql) ? this.ctx : null);
+    // "How do I pronounce X?"
+    if (/pronoun|sound|say it slow|accent/.test(ql)) {
+      const w = tw || this.ctx; if (w) return { answer: `Say it like this: “${w.r || w.t}”. I’ll say it at normal speed, then slowly. Copy the melody, not just the sounds!`, ex: [w], slow: w.t };
+    }
+    // "What does X mean?"
+    if (tw && (/mean|what is|what's|translate|meaning/.test(ql) || target)) {
+      const ex = pool.filter(x => x !== tw && x.t && x.t.includes(tw.t) && /\s/.test(x.t)).slice(0, 2);
+      return { answer: `“${tw.t}”${tw.r ? ` (${tw.r})` : ''} means “${cleanEn(tw.en)}”.${ex.length ? ' Here it is in real sentences:' : ''}`, ex: [tw, ...ex] };
+    }
+    // "Why / when / difference…" → the course's grammar tips
+    const tips = [...c.units, ...c.letterUnits].flatMap(u => u.guide || []), qw = words(q.replace(/[^\x00-\x7F]/g, ' ')).concat(target ? [target] : []);
+    const tip = tips.map(g => ({ g, s: qw.filter(w => (g.h + ' ' + g.p).toLowerCase().includes(w)).length })).sort((a, b) => b.s - a.s)[0];
+    if (tip && tip.s >= 1) return { answer: `${tip.g.h}: ${tip.g.p}`, ex: (tip.g.ex || []).slice(0, 2).map(([t, r, en]) => ({ t, r, en })) };
+    if (this.ctx) return { answer: `Good question! Here’s the word you’re on: “${this.ctx.t}”${this.ctx.en ? ` means “${cleanEn(this.ctx.en)}”` : ''}. For any question at all, switch on AI in Me → Chat tutor brain.`, ex: [this.ctx] };
+    return { answer: 'Hmm, I’m not sure yet. Try “How do I say …?” or “What does … mean?”. With AI switched on (Me → Chat tutor brain) I can answer anything.', ex: [] };
+  }
+};
+document.addEventListener('click', e => {
+  const a = e.target.closest && e.target.closest('[data-ask], [data-ask-word]'); if (!a) return;
+  e.preventDefault(); $('#gloss-pop')?.remove();
+  if (a.dataset.askWord) Ask.open(a.dataset.askWord, a.dataset.askSent); else Ask.open();
+});
+/* =====================================================================
+   SPEAKABOO — AMBIENT SOUND + FIRST-RUN ONBOARDING
+   Ambient: a soft, generated music-box lullaby for the home screen that
+   follows the time of day. Starts after your first tap, ducks under
+   voices, pauses in lessons and games. One tap turns it off for good.
+   Onboarding: find Boo, hear three cities, say your first word out loud
+   in under a minute, then pick a name and a buddy.
+   ===================================================================== */
+window.Ambient = {
+  ctx: null, master: null, timer: null, on: false, wanted: false, armed: false,
+  enabled() { const p = P(); return p ? p.ambient !== false : (Store.data.ambient !== false); },
+  gesture() { this.armed = true; if (this.wanted) this.start(); },
+  setWanted(w) { this.wanted = w; if (w && this.armed) this.start(); else if (!w) this.stop(); },
+  scale() {
+    const part = typeof dayPart === 'function' ? dayPart() : 'midday';
+    // gentle pentatonic sets: brighter in the morning, lower and slower at night
+    return { morning: [523.25, 587.33, 659.25, 783.99, 880, 1046.5], midday: [493.88, 554.37, 659.25, 739.99, 830.61, 987.77], evening: [440, 493.88, 587.33, 659.25, 739.99, 880], night: [349.23, 392, 440, 523.25, 587.33, 698.46] }[part];
+  },
+  start() {
+    if (this.on || !this.enabled()) return;
+    try {
+      this.ctx ||= new (window.AudioContext || window.webkitAudioContext)();
+      if (this.ctx.state === 'suspended') this.ctx.resume();
+      const c = this.ctx;
+      this.master = c.createGain(); this.master.gain.value = 0; this.master.connect(c.destination);
+      this.master.gain.linearRampToValueAtTime(.055, c.currentTime + 2.5);
+      // a soft room: feedback delay as a tiny reverb
+      const d = c.createDelay(1); d.delayTime.value = .33; const fb = c.createGain(); fb.gain.value = .35; const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2200;
+      d.connect(fb).connect(lp).connect(d); lp.connect(this.master); this.wet = d;
+      // a warm pad underneath
+      const pad = c.createGain(); pad.gain.value = .16; pad.connect(this.master);
+      const root = this.scale()[0] / 2;
+      this.pads = [root, root * 1.5, root * 2.01].map((f, i) => { const o = c.createOscillator(); o.type = 'sine'; o.frequency.value = f; const g = c.createGain(); g.gain.value = i === 2 ? .25 : .5; const lfo = c.createOscillator(), lg = c.createGain(); lfo.frequency.value = .07 + i * .03; lg.gain.value = .25; lfo.connect(lg).connect(g.gain); o.connect(g).connect(pad); o.start(); lfo.start(); return [o, lfo]; });
+      this.on = true; this.next();
+      $$('.amb-btn').forEach(b => b.classList.add('playing'));
+    } catch (e) { this.on = false; }
+  },
+  next() {
+    if (!this.on) return;
+    const c = this.ctx, s = this.scale(), slow = dayPart() === 'night' ? 1.5 : 1;
+    const note = (f, t, len = 2.4, g = .5) => {
+      const o = c.createOscillator(), o2 = c.createOscillator(), v = c.createGain();
+      o.type = 'sine'; o2.type = 'triangle'; o.frequency.value = f; o2.frequency.value = f * 2; const v2 = c.createGain(); v2.gain.value = .12;
+      v.gain.setValueAtTime(0, t); v.gain.linearRampToValueAtTime(g, t + .015); v.gain.exponentialRampToValueAtTime(.0008, t + len);
+      o.connect(v); o2.connect(v2).connect(v); v.connect(this.master); v.connect(this.wet); o.start(t); o2.start(t); o.stop(t + len + .1); o2.stop(t + len + .1);
+    };
+    const t = c.currentTime + .05, f = s[Math.floor(Math.random() * s.length)];
+    note(f, t);
+    if (Math.random() < .35) note(s[Math.floor(Math.random() * s.length)] / 2, t + .02, 3, .35);
+    if (Math.random() < .2) note(s[Math.min(s.length - 1, s.indexOf(f) + 2)], t + .28 * slow, 2, .3);
+    this.timer = setTimeout(() => this.next(), (900 + Math.random() * 1300) * slow);
+  },
+  stop() {
+    clearTimeout(this.timer); if (!this.on) return; this.on = false;
+    try { const c = this.ctx, m = this.master; m.gain.cancelScheduledValues(c.currentTime); m.gain.setValueAtTime(m.gain.value, c.currentTime); m.gain.linearRampToValueAtTime(0, c.currentTime + .8);
+      setTimeout(() => { try { this.pads.forEach(([o, l]) => { o.stop(); l.stop(); }); m.disconnect(); } catch (e) { /* ignore */ } }, 900); } catch (e) { /* ignore */ }
+    $$('.amb-btn').forEach(b => b.classList.remove('playing'));
+  },
+  duck() {
+    if (!this.on || !this.master) return; const c = this.ctx, g = this.master.gain;
+    g.cancelScheduledValues(c.currentTime); g.setValueAtTime(g.value, c.currentTime); g.linearRampToValueAtTime(.012, c.currentTime + .25);
+    clearTimeout(this.duckT); this.duckT = setTimeout(() => { if (this.on) { g.cancelScheduledValues(c.currentTime); g.linearRampToValueAtTime(.055, c.currentTime + 1.6); } }, 3500);
+  },
+  toggle() {
+    const p = P(); const now = !this.enabled(); if (p) { p.ambient = now; Store.save(); } else Store.data.ambient = now;
+    if (now) { this.armed = true; this.setWanted(true); toast('Soothing sounds on', '♪'); } else { this.stop(); toast('Sounds off. Tap ♪ any time to bring them back.', '♪'); }
+    $$('.amb-btn').forEach(b => { b.classList.toggle('off', !now); b.setAttribute('aria-pressed', now); });
+  },
+  /** Play only on the home screen (or onboarding) with nothing on top. */
+  sync() {
+    const overlay = document.querySelector('.rt, #lesson:not([hidden]), .call-screen');
+    const home = (UI.tab === 'now' && !$('#app').hidden) || !!document.querySelector('#ob');
+    this.setWanted(home && !overlay && document.visibilityState === 'visible' && this.enabled());
+  }
+};
+document.addEventListener('visibilitychange', () => Ambient.sync());
+setInterval(() => { if (P() || document.querySelector('#ob')) Ambient.sync(); }, 1200);
+const _renderNowA = renderNow;
+renderNow = function () {
+  _renderNowA.apply(this, arguments);
+  const top = $('#tab-now .sky-top'); if (top && !$('.amb-btn', top)) top.insertAdjacentHTML('beforeend', `<button class="amb-btn ${Ambient.enabled() ? '' : 'off'} ${Ambient.on ? 'playing' : ''}" data-amb aria-label="Soothing sounds" aria-pressed="${Ambient.enabled()}"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.6" fill="currentColor"/><circle cx="16.5" cy="16" r="2.6" fill="currentColor"/></svg><i></i></button>`);
+};
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-amb]')) { e.preventDefault(); Ambient.toggle(); } });
+
+/* ---------- First-run onboarding ---------- */
+const Onboard = {
+  step: 0, draft: { lang: 'ko', why: '', name: '', mascot: 'mandu', goal: 50 },
+  shouldShow() { return !Store.data.order.length && !/nointro/.test(location.search) && !Store.data.introDone; },
+  GREET: { ko: ['안녕하세요!', 'an-nyeong-ha-se-yo', 'Hello!'], ar: ['مرحبا!', 'mar-ha-ban', 'Hello!'], es: ['¡Hola!', 'OH-lah', 'Hello!'] },
+  open() {
+    $('#profiles').hidden = true;
+    const el = document.createElement('div'); el.id = 'ob'; el.className = 'ob'; document.body.append(el);
+    this.step = 0; this.show();
+  },
+  bar() { return `<div class="ob-top"><div class="ob-bar"><i style="width:${(this.step / 5) * 100}%"></i></div><button class="ob-skip" data-ob-skip>Skip intro</button></div>`; },
+  show() {
+    const el = $('#ob'); if (!el) return; const d = this.draft, g = this.GREET;
+    const screens = [
+      () => `<div class="ob-s s-hide"><h1>Psst… Boo is hiding.</h1><p>Can you find him?</p>
+        <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}<span class="peek-eyes"></span></button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
+      () => `<div class="ob-s"><div class="ob-boo mascot" id="ob-boo"></div><h1>Peekaboo! I’m Boo.</h1><p>I help you <b>speak</b> a new language, out loud, from day one. No boring drills, I promise.</p><button class="btn primary big" data-ob-next>Hi Boo!</button></div>`,
+      () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
+        <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
+        <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
+      () => `<div class="ob-s"><h1>What brings you here?</h1><p>Boo will pick moments that matter to you.</p>
+        <div class="ob-why">${[['travel', 'Travel', 'island'], ['culture', 'Shows & music', 'radio'], ['people', 'Family & friends', 'friends'], ['work', 'Work & study', 'work'], ['fun', 'Just for fun', 'gift']].map(([k, l, a]) => `<button class="ob-chip ${d.why === k ? 'on' : ''}" data-why="${k}">${artSVG(a)}<b>${l}</b></button>`).join('')}</div>
+        <button class="btn primary big" data-ob-next ${d.why ? '' : 'disabled'}>Next</button></div>`,
+      () => `<div class="ob-s"><h1>Say your very first word!</h1><p>Listen to Boo, then say it back.</p>
+        <button class="ob-word" data-ob-hear><span class="script" ${attrs(COURSES[d.lang])}>${esc(g[d.lang][0])}</span><small>${esc(g[d.lang][1])} · ${esc(g[d.lang][2])}</small><em>${ICON.speaker} Hear it</em></button>
+        <div class="ob-boo sm mascot" id="ob-boo"></div>
+        ${Mic.SR && !Mic.blocked ? `<button class="mic-big" id="ob-mic" aria-label="Say it">${ICON.mic}</button><p class="ob-hint" id="ob-hint">Tap the mic and say it</p><button class="link-btn" data-ob-said>I can’t talk right now</button>` : `<button class="btn primary big" data-ob-said>I said it out loud!</button>`}</div>`,
+      () => `<div class="ob-s"><h1>Last thing: who are you?</h1>
+        <input class="input ob-name" id="ob-name" maxlength="20" placeholder="Your name" value="${esc(d.name)}" autocomplete="off" enterkeyhint="done">
+        <p class="ob-label">Pick your buddy</p><div class="ob-buddies">${MASCOT_ORDER.map(k => `<button class="ob-buddy ${d.mascot === k ? 'on' : ''}" data-buddy="${k}"><div class="mascot" data-ob-art="${k}"></div><small>${esc(MASCOTS[k].name)}</small></button>`).join('')}</div>
+        <p class="ob-label">How much each day?</p><div class="ob-goal">${[[30, 'Chill', '5 min'], [50, 'Regular', '10 min'], [100, 'Serious', '20 min']].map(([v, l, m]) => `<button class="ob-chip sm ${d.goal === v ? 'on' : ''}" data-goal="${v}"><b>${l}</b><small>${m}</small></button>`).join('')}</div>
+        <p class="ob-label">My language <small>(for translations when you get stuck)</small></p><select class="input" id="ob-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (d.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select>
+        <button class="btn primary big" id="ob-go">Start my journey</button></div>`
+    ];
+    el.innerHTML = this.bar() + `<div class="ob-stage">${screens[this.step]()}</div>`;
+    this.wire();
+  },
+  next() { this.step++; Sfx.pop(); this.show(); },
+  wire() {
+    const el = $('#ob'), d = this.draft;
+    $('[data-ob-skip]', el).onclick = () => this.skip();
+    $$('[data-ob-next]', el).forEach(b => b.onclick = () => this.next());
+    const boo = $('#ob-boo', el); if (boo) paintMascot(boo, d.mascot, this.step === 1 ? 'cheer' : 'peek', true);
+    if (this.step === 0) {
+      const right = Math.floor(Math.random() * 3); let tries = 0;
+      $$('[data-spot]', el).forEach(b => b.onclick = () => {
+        tries++;
+        if (+b.dataset.spot === right || tries >= 3) { b.classList.add('found'); b.innerHTML = `<div class="mascot" id="ob-found"></div>`; paintMascot($('#ob-found'), d.mascot, 'laugh', true); Sfx.level(); React.burst(b, 'stars', 12); Voice.speak('Peekaboo!', 'en-US', 1, d.mascot, 'excited'); setTimeout(() => this.next(), 1600); }
+        else { b.classList.add('nope'); b.disabled = true; $('#ob-hint').textContent = pick(['Not here! Try another…', 'Nope, nobody here!', 'Hmm, keep looking!']); Sfx.wrong(); }
+      });
+    }
+    if (this.step === 1) setTimeout(() => Voice.speak('Hi! I’m Boo. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
+    if (this.step === 2) $$('[data-city]', el).forEach(b => b.onclick = () => { d.lang = b.dataset.city; $$('[data-city]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).textContent = `Let’s go to ${CITY[d.lang].city}`; Voice.speak(this.GREET[d.lang][0], COURSES[d.lang].tts, .9, d.mascot, 'happy'); });
+    if (this.step === 3) $$('[data-why]', el).forEach(b => b.onclick = () => { d.why = b.dataset.why; $$('[data-why]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).disabled = false; Sfx.tap(); });
+    if (this.step === 4) {
+      const c = COURSES[d.lang], w = this.GREET[d.lang], hear = () => Voice.speakThen(w[0], c.tts, .85, d.mascot, 'happy');
+      $('[data-ob-hear]', el).onclick = hear; setTimeout(hear, 500);
+      const win = (said) => { Sfx.level(); confetti(); paintMascot($('#ob-boo'), d.mascot, 'love', true); React.rain('hearts', 22); const h = $('#ob-hint'); if (h) h.textContent = ''; el.querySelector('.ob-s').insertAdjacentHTML('beforeend', `<div class="ob-win"><b>${said ? `You just spoke ${c.name}!` : 'Great start!'}</b><small>${said ? 'That’s more than most people do on day one.' : 'You’ll say it out loud next time.'}</small><button class="btn primary big" data-ob-next>Keep going</button></div>`); $('.ob-win [data-ob-next]', el).onclick = () => this.next(); };
+      $('[data-ob-said]', el) && ($('[data-ob-said]', el).onclick = e => win(e.target.textContent.startsWith('I said')));
+      $('#ob-mic', el) && ($('#ob-mic', el).onclick = async () => {
+        const b = $('#ob-mic', el), h = $('#ob-hint', el); b.classList.add('on'); h.textContent = 'Listening…';
+        try { const alts = await Mic.listen(c.stt, { target: w[0], onInterim: t => { h.textContent = `Hearing: ${t}`; } }); b.classList.remove('on');
+          const r = pronScore(w[0], alts || []); if (r.ok || r.pct >= 50) win(true); else { h.textContent = `I heard “${r.best || '…'}”. Try once more!`; Sfx.wrong(); paintMascot($('#ob-boo'), d.mascot, 'giggle', true); }
+        } catch (code) { b.classList.remove('on'); h.textContent = Mic.explain ? Mic.explain(code) : 'Mic unavailable.'; }
+      });
+    }
+    if (this.step === 5) {
+      const paint = () => $$('[data-ob-art]', el).forEach(x => paintMascot(x, x.dataset.obArt, x.dataset.obArt === d.mascot ? 'cheer' : 'happy', x.dataset.obArt === d.mascot));
+      paint();
+      $('#ob-name', el).oninput = e => { d.name = e.target.value; };
+      $$('[data-buddy]', el).forEach(b => b.onclick = () => { d.mascot = b.dataset.buddy; $$('[data-buddy]', el).forEach(x => x.classList.toggle('on', x === b)); paint(); Voice.speak(pick(['Pick me!', 'Yay!', 'Let’s go!']), 'en-US', 1, d.mascot, 'excited'); });
+      $$('[data-goal]', el).forEach(b => b.onclick = () => { d.goal = +b.dataset.goal; $$('[data-goal]', el).forEach(x => x.classList.toggle('on', x === b)); Sfx.tap(); });
+      $('#ob-mylang', el).onchange = e => { d.myLang = e.target.value; };
+      $('#ob-go', el).onclick = () => {
+        const name = d.name.trim(); if (!name) { $('#ob-name', el).focus(); $('#ob-name', el).classList.add('shake'); setTimeout(() => $('#ob-name', el)?.classList.remove('shake'), 500); return; }
+        const p = newProfile(name, d.mascot, d.lang); p.dailyGoal = d.goal; p.why = d.why; p.myLang = d.myLang || 'en';
+        Store.data.profiles[p.id] = p; Store.data.order.push(p.id); Store.data.introDone = true; Store.save();
+        const o = $('#ob'); o.classList.add('out'); setTimeout(() => o.remove(), 600); enterApp(p.id);
+      };
+    }
+  },
+  skip() { Store.data.introDone = true; Store.save(); $('#ob')?.remove(); $('#profiles').hidden = false; renderProfiles(); }
+};
+const _renderProfilesO = renderProfiles;
+renderProfiles = function () { if (Onboard.shouldShow() && !$('#ob')) { Onboard.open(); return; } return _renderProfilesO.apply(this, arguments); };
+
+
+/* =====================================================================
+   SPEAKABOO — MORE WAYS TO PRACTISE
+   · Shadow it: the sentence lights up word by word as it's spoken
+     (karaoke), then you say it with the same rhythm and get a score.
+   · Who said what, when? Hear a short conversation, put the lines in
+     the order you heard them.
+   · Two real example sentences on every new word, not one.
+   ===================================================================== */
+const SHADOW_MS = { ko: 175, ar: 85, es: 68 };   // rough speaking speed per character at normal pace
+function karaokeHTML(s, c) {
+  return `<div class="kara script" ${attrs(c)}>${String(s.t).split(/\s+/).map((w, i) => `<span class="kw" data-i="${i}">${esc(w)}</span>`).join(' ')}</div>`;
+}
+function karaokePlay(el, s, who, rate = .85) {
+  const c = course(), words = $$('.kw', el), per = (SHADOW_MS[c.code] || 90) / rate;
+  words.forEach(w => w.classList.remove('lit', 'done'));
+  let k = 0, timer = null;
+  const step = () => {
+    words.forEach((w, i) => { w.classList.toggle('lit', i === k); w.classList.toggle('done', i < k); });
+    if (k >= words.length) return;
+    const ms = Math.max(260, ([...words[k].textContent].length + 1) * per); k++; timer = setTimeout(step, ms);
+  };
+  const p = Voice.speakThen(s.t, c.tts, rate, who);
+  setTimeout(step, 180);
+  return p.then(() => { clearTimeout(timer); words.forEach(w => { w.classList.remove('lit'); w.classList.add('done'); }); setTimeout(() => words.forEach(w => w.classList.remove('done')), 900); });
+}
+Object.assign(EX, {
+  shadow: s => ({ kind: 'shadow', s, who: castMember() }),
+  order: list => ({ kind: 'order', items: list.slice(0, 3) })
+});
+RENDER.shadow = function (step, el, R) {
+  const c = course(), s = step.s, canMic = !!Mic.SR && !Mic.blocked; let tries = 0, heard = false;
+  el.innerHTML = `<p class="q">Shadow it!</p><p class="muted shadow-sub">Follow the glowing words, then say it with the same rhythm.</p>
+    <div class="shadow-card">${karaokeHTML(s, c)}<div class="speak-rom">${esc(s.r)}</div><div class="speak-en">${esc(s.en)}</div>
+      <div class="shadow-btns"><button class="btn ghost sm" id="sh-play">${ICON.speaker} Play</button><button class="btn ghost sm" id="sh-slow">${ICON.turtle} Slow</button></div></div>
+    ${canMic ? `<div class="mic-row"><button class="mic-big" id="sh-mic" aria-label="Your turn">${ICON.mic}</button><div class="mic-status"><span id="sh-st">Listen first, then tap the mic</span></div></div>`
+      : `<div class="fallback">Say it out loud along with the voice, then rate yourself.<div class="row"><button class="btn good sm" id="sh-ok">I shadowed it</button></div></div>`}`;
+  const play = r => karaokePlay(el, s, step.who, r).then(() => { heard = true; const st = $('#sh-st', el); if (st && !R.locked) st.textContent = 'Your turn! Tap the mic.'; });
+  $('#sh-play', el).onclick = () => play(.85); $('#sh-slow', el).onclick = () => play(.55);
+  setTimeout(() => play(.85), 300);
+  R.skipAllowed('Can’t speak now');
+  $('#sh-ok', el) && ($('#sh-ok', el).onclick = () => R.grade(true, { teach: 'Shadowing daily is how actors learn accents.' }));
+  $('#sh-mic', el) && ($('#sh-mic', el).onclick = async () => {
+    const btn = $('#sh-mic', el), st = $('#sh-st', el); if (R.locked) return; if (Mic.active) { Mic.stop(); return; }
+    btn.classList.add('on'); st.textContent = 'Listening…';
+    try {
+      const alts = await listenOnce(c.stt, { target: s.t, onInterim: t => { st.textContent = `Hearing: ${t}…`; } }); btn.classList.remove('on'); tries++;
+      const r = pronScore(s.t, alts || []); $('.kara', el).innerHTML = r.html;
+      if (r.ok) { P().stats.spoken++; Quests.bump('speak'); R.grade(true, { teach: `${r.pct}% match. Smooth rhythm!` }); }
+      else if (tries >= 3) R.grade(true, { teach: `${r.pct}% after 3 tries. Play it slow and shadow it again tomorrow.`, noAuto: true });
+      else { Sfx.wrong(); st.textContent = `${r.pct}%. Red parts need love. Try ${tries + 1}/3`; setTimeout(() => { if (!R.locked) { $('.kara', el).outerHTML = karaokeHTML(s, c); } }, 1800); }
+    } catch (code) { btn.classList.remove('on'); st.textContent = Mic.explain(code); }
+  });
+};
+RENDER.order = function (step, el, R) {
+  const c = course(), items = step.items, voices = ['voice_leo_04', 'voice_sophia_02', 'voice_hiro_01'];
+  const cards = shuffle(items.map((s, i) => ({ s, i }))); let picked = [], playing = false;
+  el.innerHTML = `<p class="q">Who said what, when?</p><p class="muted shadow-sub">Listen to the conversation, then tap the lines in the order you heard them.</p>
+    <button class="order-play" id="or-play"><span class="tone-wave"><i></i><i></i><i></i><i></i><i></i></span><b>Play the conversation</b></button>
+    <div class="order-cards">${cards.map((x, k) => `<button class="order-card" data-k="${k}"><span class="order-n"></span><span class="order-t"><span class="script" ${attrs(c)}>${esc(x.s.t)}</span><small>${esc(x.s.r)}</small></span></button>`).join('')}</div>`;
+  const play = async () => {
+    if (playing) return; playing = true; const b = $('#or-play', el); b.classList.add('talking');
+    for (let i = 0; i < items.length; i++) { if (!el.isConnected) break; b.querySelector('b').textContent = `Line ${i + 1} of ${items.length}…`; await Voice.speakThen(items[i].t, c.tts, .88, { id: voices[i % 3] }); await new Promise(r => setTimeout(r, 350)); }
+    b.classList.remove('talking'); b.querySelector('b').textContent = 'Play it again'; playing = false;
+  };
+  $('#or-play', el).onclick = play; setTimeout(play, 400);
+  $$('.order-card', el).forEach(b => b.onclick = () => {
+    if (R.locked) return; const k = +b.dataset.k;
+    if (picked.includes(k)) { picked = picked.filter(x => x !== k); } else picked.push(k);
+    $$('.order-card', el).forEach(x => { const n = picked.indexOf(+x.dataset.k); x.classList.toggle('on', n >= 0); x.querySelector('.order-n').textContent = n >= 0 ? n + 1 : ''; });
+    Sfx.tap();
+    if (picked.length === items.length) {
+      const ok = picked.every((k2, pos) => cards[k2].i === pos);
+      $$('.order-card', el).forEach(x => { const real = cards[+x.dataset.k].i; x.classList.add(picked.indexOf(+x.dataset.k) === real ? 'right' : 'wrong'); x.querySelector('.order-n').textContent = real + 1; x.insertAdjacentHTML('beforeend', `<em class="order-en">${esc(cards[+x.dataset.k].s.en)}</em>`); });
+      R.grade(ok, { show: ok ? null : 'the order shown by the numbers', teach: ok ? 'Great ears: you followed the whole conversation!' : 'Tap Play to hear it again.', noAuto: !ok });
+    }
+  });
+};
+/* Two examples on every new word */
+const _teachR9 = RENDER.teach;
+RENDER.teach = function (step, el, R) {
+  _teachR9(step, el, R);
+  if (!step.isWord || !step.ex) return;
+  const t = norm(step.say), more = allSentences().filter(s => norm(s.t).includes(t) && s.t !== step.ex.t && norm(s.t) !== t);
+  const ex2 = more.length ? pick(more) : null, line = $('.ex-line', el), c = course();
+  if (ex2 && line) line.insertAdjacentHTML('afterend', `<button class="ex-line" data-say="${esc(ex2.t)}">${ICON.speaker}<span><span class="script" ${attrs(c)}>${esc(ex2.t)}</span><small>${esc(ex2.en)}</small></span></button>`);
+};
+/* Put the new exercises into lessons and practice */
+const _buildLesson9 = buildLesson;
+buildLesson = function (u, level) {
+  const out = _buildLesson9(u, level), S = (u.sentences || []).filter(s => s.t && /\s/.test(s.t));
+  if (u.letters || !S.length) return out;
+  const at = Math.max(1, Math.floor(out.length * .6));
+  if (level === 2) out.splice(at, 0, EX.shadow(pick(S)));
+  if (level === 3 && S.length >= 3) { const i = Math.floor(Math.random() * (S.length - 2)); out.splice(at, 0, EX.order(S.slice(i, i + 3))); }
+  if (level === 4) out.splice(at, 0, EX.shadow(pick(S)));
+  return out;
+};
+const _buildPractice9 = buildPractice;
+buildPractice = function (kind) {
+  const out = _buildPractice9(kind);
+  if (kind === 'speak' || kind === 'sentences' || kind === 'mix') {
+    const S = course().units.filter(u => unitProgress(P(), course().code, u.id) > 0).flatMap(u => u.sentences || []).filter(s => /\s/.test(s.t));
+    if (S.length) { out.splice(Math.min(3, out.length), 0, EX.shadow(pick(S))); if (S.length >= 3 && kind !== 'speak') { const i = Math.floor(Math.random() * (S.length - 2)); out.push(EX.order(S.slice(i, i + 3))); } }
+  }
+  return out;
+};
+/* =====================================================================
+   SPEAKABOO — ACCOUNTS, FREE TRIAL, PLANS, AND "WHY SPEAKABOO"
+   Everyone signs up with email + password.
+   · With Firebase keys in config.js: real cloud accounts (sync, Google
+     Play subscriptions verified on the server).
+   · Without them: the account lives on this device (password hashed),
+     so the full sign-up → trial → plans flow already works.
+   Access:
+     trial   (7 days from sign-up) → all of Season 1, every game, Call Boo, 10 Talk rounds/day
+     free    (after the trial)     → 2 sample episodes, Live it, 1 round a day of each game, 3 Talk rounds/day
+     premium / owner               → everything
+   ===================================================================== */
+const QA = /[?&]qa=sb7731\b/.test(location.search) && !Account.enabled();
+const TRIAL_DAYS = CFG.trialDays || 7;
+const FREE = { episodes: 2, talkPerDay: 3, gamesPerDay: 1 };
+Object.assign(TRIAL, { callBoo: true });
+const WHY_SB = [
+  ['speak', 'You speak from minute one', 'Most apps have you tap tiles and match pairs. In Speakaboo you answer out loud and Boo listens, scores and reacts.'],
+  ['friends', 'Moments, not word lists', 'Every phrase lives in a tiny comic scene: who you’re talking to and where. That’s how you learn when to be polite or casual.'],
+  ['clock', 'It follows your day', 'Today shows what people actually say in the next few hours, then sends you out with a real-life mission.'],
+  ['radio', 'Hear the feeling', '진짜? vs 진짜! Tone Studio teaches the melody of real speech and draws your own voice so you can match it.'],
+  ['question', 'Ask anything, tap any word', 'Confused? Ask Boo in English. Tap any word in any sentence for its meaning and sound.'],
+  ['book', 'Sounds first, letters later', 'No wall of foreign letters on day one. You speak first, then the alphabet clicks because you already know the words.']
+];
+function whyHTML(compact) {
+  return `<div class="why-list ${compact ? 'compact' : ''}">${WHY_SB.map(([a, h, p], i) => `<div class="why-i" style="animation-delay:${i * 90}ms"><span class="why-ic">${artSVG(a)}</span><span><b>${esc(h)}</b>${compact ? '' : `<small>${esc(p)}</small>`}</span></div>`).join('')}</div>`;
+}
+
+/* ---------- Device accounts (no Firebase) ---------- */
+const DeviceAcct = {
+  K: 'speakaboo.accounts', S: 'speakaboo.session',
+  all() { try { return JSON.parse(localStorage.getItem(this.K) || '{}'); } catch (e) { return {}; } },
+  saveAll(a) { try { localStorage.setItem(this.K, JSON.stringify(a)); } catch (e) { /* ignore */ } },
+  session() { try { const e = localStorage.getItem(this.S); return e && this.all()[e] ? e : null; } catch (e) { return null; } },
+  rec() { const e = this.session(); return e ? this.all()[e] : null; },
+  keyFor(email) { let h = 5381; for (const ch of email) h = ((h * 33) ^ ch.charCodeAt(0)) >>> 0; return 'speakaboo.d.' + h.toString(36); },
+  async hash(pw, salt) {
+    try { const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + '|' + pw)); return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join(''); }
+    catch (e) { let h = 7; for (const ch of salt + pw) h = (h * 131 + ch.charCodeAt(0)) % 1e12; return 'x' + h; }
+  },
+  async create(email, pw) {
+    const all = this.all(); if (all[email]) throw { code: 'auth/email-already-in-use' };
+    const salt = Math.random().toString(36).slice(2) + Date.now().toString(36);
+    all[email] = { salt, hash: await this.hash(pw, salt), created: Date.now(), premiumUntil: 0 }; this.saveAll(all);
+    this.open(email, true);
+  },
+  async signIn(email, pw) {
+    const r = this.all()[email]; if (!r) throw { code: 'auth/user-not-found' };
+    if (await this.hash(pw, r.salt) !== r.hash) throw { code: 'auth/wrong-password' };
+    this.open(email, false);
+  },
+  open(email, fresh) {
+    try { localStorage.setItem(this.S, email); } catch (e) { /* ignore */ }
+    const key = this.keyFor(email), had = (() => { try { return !!localStorage.getItem(key); } catch (e) { return false; } })();
+    Store.KEY = key; Store.load();
+    if (fresh && !had) {   // bring along progress made before accounts existed on this phone
+      try { const old = JSON.parse(localStorage.getItem('dari.v2') || 'null'); if (old && old.v === 2 && old.order && old.order.length) { old.ai = Object.assign(Store.fresh().ai, old.ai || {}); Store.data = old; Store.save(); } } catch (e) { /* ignore */ }
+    }
+  },
+  signOut() { try { localStorage.removeItem(this.S); } catch (e) { /* ignore */ } },
+  remove() { const e = this.session(); if (!e) return; const all = this.all(); delete all[e]; this.saveAll(all); try { localStorage.removeItem(this.keyFor(e)); } catch (x) { /* ignore */ } this.signOut(); }
+};
+const Acct = {
+  cloud() { return Account.enabled(); },
+  email() { return this.cloud() ? (Account.user && Account.user.email) || '' : DeviceAcct.session() || ''; },
+  async signUp(email, pw) { if (this.cloud()) return Account.signUp(email, pw); return DeviceAcct.create(email, pw); },
+  async signIn(email, pw) { if (this.cloud()) return Account.signIn(email, pw); return DeviceAcct.signIn(email, pw); },
+  async signOut() {
+    if (this.cloud()) return Account.signOut();
+    DeviceAcct.signOut(); Store.KEY = 'speakaboo.signedout'; Store.data = Store.fresh();
+    $('#app').hidden = true; $('#profiles').hidden = true; Paywall.hide(); authScreen('signin');
+  }
+};
+const isOwner = () => OWNERS.includes(String(Acct.email() || '').toLowerCase());
+
+/* ---------- Who gets what ---------- */
+Access.state = function () {
+  if (QA || Tester.on() || isOwner()) return { ok: true, mode: 'owner' };
+  const now = Date.now();
+  let start, until;
+  if (Acct.cloud()) { if (!Account.user) return { ok: false, mode: 'signedout' }; until = Account.ms(Account.meta.premiumUntil); start = Account.ms(Account.meta.trialStart) || now; }
+  else { const r = DeviceAcct.rec(); if (!r) return { ok: false, mode: 'signedout' }; until = r.premiumUntil || 0; start = r.created || now; }
+  if (until > now) return { ok: true, mode: 'premium', until };
+  const end = start + TRIAL_DAYS * DAY;
+  if (end > now) return { ok: true, mode: 'trial', end, daysLeft: Math.max(1, Math.ceil((end - now) / DAY)) };
+  return { ok: true, mode: 'free', ended: end };
+};
+Access.check = function () { if (P() && !$('#app').hidden && UI.tab === 'learn') renderLearn(); };
+Object.assign(LOCK_REASON, {
+  season: 'This episode is part of Premium. Your free plan includes the first 2 episodes.',
+  talk: 'That’s today’s free Talk rounds. Premium talks all day.',
+  call: 'Call Boo is part of Premium: hands-free voice practice, as long as you like.',
+  drill: 'This drill is part of Premium.',
+  game: 'You’ve had today’s free round. Premium plays all day.'
+});
+Access.allows = function (what, ctx) {
+  const s = this.state(), p = P(), t = dayKey();
+  if (what === 'skip') return Tester.on() || isOwner() || QA;
+  if (s.mode === 'premium' || s.mode === 'owner' || s.mode === 'local') return true;
+  if (!s.ok) return false;
+  const day = (k) => { if (!p) return 0; p.gameDay ||= {}; if (p.gameDay.day !== t) p.gameDay = { day: t }; return p.gameDay[k] || 0; };
+  if (s.mode === 'trial') {
+    if (what === 'season') return !ctx || ctx.track === 'letters' || (ctx.s || 0) < TRIAL.seasons;
+    if (what === 'talk') { if (!p) return true; if (!p.talkDay || p.talkDay.day !== t) p.talkDay = { day: t, n: 0 }; return p.talkDay.n < TRIAL.talkPerDay; }
+    return true;
+  }
+  // free plan (trial over)
+  if (what === 'season') return !ctx || (ctx.track === 'letters' ? (ctx.index || 0) < 1 : (ctx.s || 0) === 0 && (ctx.index || 0) < FREE.episodes);
+  if (what === 'drill') return ['mix', 'listen', 'water', 'mistakes'].includes(ctx);
+  if (what === 'call') return false;
+  if (what === 'talk') { if (!p) return true; if (!p.talkDay || p.talkDay.day !== t) p.talkDay = { day: t, n: 0 }; return p.talkDay.n < FREE.talkPerDay; }
+  if (what === 'game') return ctx === 'live' || day(ctx) < FREE.gamesPerDay;
+  return true;
+};
+Access.countTalk = function () { const p = P(), m = this.state().mode; if (!p || (m !== 'trial' && m !== 'free')) return; const t = dayKey(); if (!p.talkDay || p.talkDay.day !== t) p.talkDay = { day: t, n: 0 }; p.talkDay.n++; };
+Access.countGame = function (k) { const p = P(); if (!p || this.state().mode !== 'free') return; const t = dayKey(); p.gameDay ||= {}; if (p.gameDay.day !== t) p.gameDay = { day: t }; p.gameDay[k] = (p.gameDay[k] || 0) + 1; Store.save(); };
+for (const [obj, key] of [[RealTalk, 'realtalk'], [Adventure, 'story'], [ToneLab, 'tone']]) {
+  const o = obj.open.bind(obj);
+  obj.open = function (...a) { if (this.on) return; if (!Access.need('game', key)) return; Access.countGame(key); return o(...a); };
+}
+trialBannerHTML = function () {
+  const s = Access.state();
+  if (s.mode === 'trial') return `<button class="trial-pill" data-plans>${artSVG('gift')}<span><b>Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left</b><small>All of Season 1, every game and Call Boo. See plans</small></span></button>`;
+  if (s.mode === 'free') return `<button class="trial-pill free" data-plans>${artSVG('gift')}<span><b>Free plan</b><small>2 sample episodes + a daily round of each game. Unlock everything</small></span></button>`;
+  return '';
+};
+/* Show the plan pill on Today too */
+const _renderNowB = renderNow;
+renderNow = function () { _renderNowB.apply(this, arguments); const m = $('#tab-now .moment'); const pill = trialBannerHTML(); if (m && pill && !$('#tab-now .trial-pill')) m.insertAdjacentHTML('afterend', `<div class="now-pill">${pill}</div>`); };
+
+/* ---------- Sign-in / sign-up screens ---------- */
+authScreen = function (mode, msg = '') {
+  let el = $('#auth');
+  if (!el) { el = document.createElement('div'); el.id = 'auth'; el.className = 'auth'; document.body.append(el); }
+  el.hidden = false; $('#app').hidden = true; $('#profiles').hidden = true; $('#splash')?.remove();
+  const boo = `<div class="auth-boo mascot" id="auth-m"></div>`;
+  if (mode === 'loading') { el.innerHTML = `<div class="auth-card">${boo}<h1>Speakaboo</h1><p class="note">Peeking at your account…</p></div>`; paintMascot($('#auth-m'), 'mandu', 'peek', true); return; }
+  if (mode === 'offline') { el.innerHTML = `<div class="auth-card">${boo}<h1>No connection</h1><p class="note">Speakaboo needs the internet the first time you sign in.</p><button class="btn primary" onclick="location.reload()">Try again</button></div>`; paintMascot($('#auth-m'), 'mandu', 'sad', true); return; }
+  const titles = { signup: ['Create your account', `Your ${TRIAL_DAYS}-day free trial starts today. No payment needed.`, 'Create account'], signin: ['Welcome back!', 'Sign in to pick up where you left off.', 'Sign in'], reset: ['Forgot your password?', Acct.cloud() ? 'We’ll email you a link to choose a new one.' : 'Your account lives on this phone, so there’s no email to send. Create a new account, or try your password again.', Acct.cloud() ? 'Send reset link' : 'Back to sign in'] };
+  const [h, sub, cta] = titles[mode];
+  el.innerHTML = `<div class="auth-card">${boo}<div class="auth-brand">${BRAND_SVG}<b>Speakaboo</b></div><h1>${h}</h1><p class="note">${sub}</p>
+    <form id="auth-form" class="stack" autocomplete="on" novalidate>
+      ${mode !== 'reset' || Acct.cloud() ? `<label class="field"><span>Email</span><input class="input" id="au-email" type="email" autocomplete="email" required inputmode="email" placeholder="you@example.com"></label>` : ''}
+      ${mode !== 'reset' ? `<label class="field"><span>Password</span><div class="pw-wrap"><input class="input" id="au-pw" type="password" autocomplete="${mode === 'signup' ? 'new-password' : 'current-password'}" minlength="8" required placeholder="${mode === 'signup' ? 'At least 8 characters' : 'Your password'}"><button type="button" class="pw-eye" id="au-eye" aria-label="Show password">Show</button></div></label>` : ''}
+      <p class="auth-err" id="au-err" role="alert">${esc(msg)}</p>
+      <button class="btn primary" type="submit">${cta}</button>
+    </form>
+    <div class="auth-links">${mode === 'signup' ? '<button class="link" data-auth="signin">I already have an account</button>' : '<button class="link" data-auth="signup">Create a new account</button>'}
+      ${mode === 'signin' ? '<button class="link" data-auth="reset">Forgot password?</button>' : mode === 'reset' ? '<button class="link" data-auth="signin">Back to sign in</button>' : ''}</div>
+    ${mode === 'signup' ? `<details class="auth-why"><summary>What makes Speakaboo different?</summary>${whyHTML(true)}</details>
+      <p class="auth-fine">By creating an account you agree to the Terms and Privacy policy. After the ${TRIAL_DAYS}-day trial you keep a free plan, or subscribe monthly or yearly through Google Play to unlock everything. Cancel any time.</p>` : ''}</div>`;
+  paintMascot($('#auth-m'), 'mandu', mode === 'signup' ? 'cheer' : 'happy', true);
+  $$('[data-auth]', el).forEach(b => b.onclick = () => authScreen(b.dataset.auth));
+  $('#au-eye') && ($('#au-eye').onclick = () => { const i = $('#au-pw'); i.type = i.type === 'password' ? 'text' : 'password'; $('#au-eye').textContent = i.type === 'password' ? 'Show' : 'Hide'; });
+  $('#auth-form').onsubmit = async e => {
+    e.preventDefault(); const err = $('#au-err'), btn = $('#auth-form button[type=submit]');
+    if (mode === 'reset' && !Acct.cloud()) return authScreen('signin');
+    const email = ($('#au-email')?.value || '').trim().toLowerCase(), pw = $('#au-pw')?.value || '';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { err.textContent = 'Please enter a valid email address.'; return; }
+    if (mode !== 'reset' && pw.length < (mode === 'signup' ? 8 : 1)) { err.textContent = 'Use at least 8 characters for your password.'; return; }
+    btn.disabled = true; err.textContent = '';
+    try {
+      if (mode === 'signup') await Acct.signUp(email, pw);
+      else if (mode === 'signin') await Acct.signIn(email, pw);
+      else { await Account.reset(email); authScreen('signin', 'Check your inbox for the reset link, then sign in.'); return; }
+      if (!Acct.cloud()) { el.hidden = true; Starter.go(); }
+    } catch (x) { err.textContent = authError(x); btn.disabled = false; }
+  };
+};
+
+/* ---------- Where the app starts ---------- */
+const Starter = {
+  start: null,
+  introDone() { try { return localStorage.getItem('speakaboo.intro') === '1'; } catch (e) { return false; } },
+  /** Signed in: open the app, or finish setting up the learner if there isn't one yet. */
+  go() {
+    Object.values(Store.data.profiles).forEach(upgradeProfile);
+    const d = Store.data, id = d.active && d.profiles[d.active] ? d.active : d.order[0];
+    $('#auth') && ($('#auth').hidden = true); $('#splash')?.remove();
+    if (id) { enterApp(id); Access.check(); } else Onboard2.open(Onboard2.PROFILE);
+  }
+};
+const _accountBoot = Account.boot.bind(Account);
+Account.boot = function (start) {
+  Starter.start = start;
+  if (QA) { this.ready = true; return start(); }
+  if (Acct.cloud()) {
+    // Same as before, but first-timers get the guided intro instead of a bare sign-up form.
+    authScreen('loading');
+    this.sdk().then(() => { firebase.initializeApp(CFG.firebase); this.db = firebase.firestore(); try { this.db.enablePersistence({ synchronizeTabs: true }).catch(() => {}); } catch (e) { /* ignore */ }
+      firebase.auth().onAuthStateChanged(async u => {
+        if (!u) { this.user = null; this.meta = {}; if (!Starter.introDone()) { $('#auth') && ($('#auth').hidden = true); Onboard2.open(0); } else authScreen('signin'); return; }
+        this.user = u; if (!$('#ob')) authScreen('loading');
+        try { await this.pull(); } catch (e) { toast('Couldn’t reach your cloud save. Using this phone’s copy for now.'); }
+        this.ready = true; Billing.refresh();
+        if ($('#ob')) Onboard2.accountReady(); else Starter.go();
+      });
+    }).catch(() => authScreen('offline'));
+    return;
+  }
+  this.ready = true;
+  if (DeviceAcct.session()) { DeviceAcct.open(DeviceAcct.session(), false); Starter.go(); return; }
+  // Nobody signed in on this phone yet.
+  const hadOld = (() => { try { const o = JSON.parse(localStorage.getItem('dari.v2') || 'null'); return !!(o && o.order && o.order.length); } catch (e) { return false; } })();
+  if (hadOld) { authScreen('signup', ''); $('#auth .note').textContent = 'Create your account to keep your progress safe. Your streak and words come with you.'; return; }
+  if (Object.keys(DeviceAcct.all()).length || Starter.introDone()) return authScreen('signin');
+  Onboard2.open(0);
+};
+renderProfiles = function () { Starter.go(); };   // one learner per account
+
+/* ---------- Me: account card for both kinds of account ---------- */
+accountHTML = function () {
+  if (QA) return '';
+  const s = Access.state(), email = Acct.email();
+  const status = s.mode === 'owner' ? 'Owner · everything unlocked' : s.mode === 'premium' ? `Premium · renews or ends ${new Date(s.until).toLocaleDateString()}` : s.mode === 'trial' ? `Free trial · ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left` : 'Free plan';
+  return `<div class="card account"><h3>Account</h3>
+    <label class="row">Email<span class="note">${esc(email)}</span></label>
+    <label class="row">Plan<span class="note">${esc(status)}</span></label>
+    <div class="row" style="flex-wrap:wrap;gap:8px;justify-content:flex-start">
+      ${s.mode !== 'premium' && s.mode !== 'owner' ? '<button class="btn primary sm" data-plans>See plans</button>' : ''}
+      ${Billing.available() ? '<button class="btn ghost sm" data-restore>Restore purchase</button>' : ''}
+      <button class="btn ghost sm" data-signout>Sign out</button>
+      <button class="btn ghost sm danger" data-delete-account>Delete account</button></div>
+    <p class="note">${Acct.cloud() ? 'Progress saves to your account automatically, so you can switch phones any time.' : 'Your account and progress are saved on this phone.'}</p></div>
+    <div class="card why-card"><h3>What makes Speakaboo different</h3>${whyHTML(false)}</div>`;
+};
+document.addEventListener('click', e => {
+  const t = e.target; if (!t.closest) return;
+  if (t.closest('[data-signout]')) { e.stopImmediatePropagation(); Acct.signOut(); }
+  if (t.closest('[data-delete-account]') && !Acct.cloud()) {
+    e.stopImmediatePropagation();
+    openSheet(`<div class="sheet-head"><h2>Delete your account?</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div><p>This permanently deletes your Speakaboo account and progress from this phone.</p>
+      <div class="stack"><button class="btn danger" id="del-yes">Delete my account</button><button class="btn ghost" data-close>Keep my account</button></div>`);
+    $('#del-yes').onclick = () => { closeSheet(); DeviceAcct.remove(); Store.data = Store.fresh(); $('#app').hidden = true; toast('Your account was deleted.'); authScreen('signup'); };
+  }
+}, true);
+
+/* ---------- Plans screen: Free vs Premium, clearly ---------- */
+Paywall.show = async function (soft, reason) {
+  let el = $('#paywall'); if (!el) { el = document.createElement('div'); el.id = 'paywall'; el.className = 'paywall'; document.body.append(el); }
+  const s = Access.state(), p = P(), inPlay = Billing.available();
+  if (inPlay) await Billing.loadPrices();
+  const plans = (CFG.products || [{ id: 'speakaboo_monthly', name: 'Monthly', period: 'month', price: '$4.99' }, { id: 'speakaboo_yearly', name: 'Yearly', period: 'year', price: '$39.99', note: 'save 33%', best: true }]).map(x => {
+    const pr = Billing.prices[x.id];
+    return `<button class="plan ${x.best ? 'best' : ''}" data-sub="${esc(x.id)}">${x.best ? '<span class="plan-tag">Best value</span>' : ''}<b>${esc(x.name)}</b><span class="plan-price">${pr ? esc(pr.label) : esc(x.price || '')}</span><small>per ${esc(x.period)}${x.note ? ` · ${esc(x.note)}` : ''}</small></button>`;
+  }).join('');
+  const rows = [['Season 1 episodes', '2 samples', 'All', 'All 6 seasons'], ['Languages', '1', '1', 'Korean, Arabic & Spanish'], ['Talk with Boo', '3 a day', '10 a day', 'Unlimited'], ['Call Boo (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
+  el.innerHTML = `<div class="pw-card">${soft ? `<button class="icon-btn pw-x" data-pw-close aria-label="Close">${ICON.x}</button>` : ''}
+    <div class="mascot pw-boo" id="pw-m"></div>
+    <h2>${s.mode === 'free' ? 'Your free week is over. Boo isn’t!' : s.mode === 'trial' ? `Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left` : 'Speakaboo Premium'}</h2>
+    ${reason ? `<p class="pw-reason">${esc(reason)}</p>` : ''}
+    <table class="pw-table"><thead><tr><th></th><th>Free</th><th>Trial</th><th class="pro">Premium</th></tr></thead><tbody>${rows.map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="pro">${esc(r[3])}</td></tr>`).join('')}</tbody></table>
+    <div class="plans">${plans}</div>
+    ${inPlay ? '' : `<p class="pw-note">Subscriptions are bought securely through Google Play in the Speakaboo app.${CFG.playStoreUrl ? ` <a href="${esc(CFG.playStoreUrl)}" target="_blank" rel="noopener">Get it on Google Play</a>` : ''}</p>`}
+    <details class="auth-why" open><summary>Why people pick Speakaboo</summary>${whyHTML(true)}</details>
+    <div class="pw-links">${inPlay ? '<button class="link" data-restore>Restore purchase</button><a class="link" href="https://play.google.com/store/account/subscriptions" target="_blank" rel="noopener">Manage in Google Play</a>' : ''}</div>
+    <p class="auth-fine">Payment is charged to your Google Play account. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the period.</p></div>`;
+  paintMascot($('#pw-m'), p ? p.mascot : 'mandu', s.mode === 'free' ? 'sad' : 'cheer', true);
+};
+const _buyClick = Billing.buy.bind(Billing);
+Billing.buy = async function (sku) { if (!this.available()) { toast('Subscriptions open in the Speakaboo app from Google Play.'); return false; } return _buyClick(sku); };
+/* =====================================================================
+   SPEAKABOO — FIRST RUN, v2
+   Find Boo → meet Boo → what makes Speakaboo different → pick a city →
+   why you're learning → SAY your first word → create your account
+   (email + password, trial starts) → name, buddy and daily goal.
+   ===================================================================== */
+Onboard.shouldShow = () => false;   // the old intro is replaced by this one
+const Onboard2 = {
+  step: 0, PROFILE: 7, ACCOUNT: 6, LAST: 7,
+  draft: { lang: 'ko', why: '', name: '', mascot: 'mandu', goal: 50, email: '' },
+  open(step = 0) {
+    $('#profiles').hidden = true; $('#auth') && ($('#auth').hidden = true);
+    let el = $('#ob'); if (!el) { el = document.createElement('div'); el.id = 'ob'; el.className = 'ob'; document.body.append(el); }
+    this.step = step; this.show();
+  },
+  show() {
+    const el = $('#ob'); if (!el) return; const d = this.draft, g = Onboard.GREET, c = COURSES[d.lang];
+    const S = [
+      () => `<div class="ob-s s-hide"><h1>Psst… Boo is hiding.</h1><p>Can you find him?</p>
+        <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}</button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
+      () => `<div class="ob-s"><div class="ob-boo mascot" id="ob-boo"></div><h1>Peekaboo! I’m Boo.</h1><p>I’ll help you <b>speak</b> a new language, out loud, from day one.</p><button class="btn primary big" data-ob-next>Hi Boo!</button></div>`,
+      () => `<div class="ob-s"><h1>Not another tap-the-tiles app</h1><p>Here’s what you’ll do differently with Speakaboo:</p>${whyHTML(false)}<button class="btn primary big" data-ob-next>Sounds good!</button></div>`,
+      () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
+        <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
+        <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
+      () => `<div class="ob-s"><h1>What brings you here?</h1><p>Boo will pick moments that matter to you.</p>
+        <div class="ob-why">${[['travel', 'Travel', 'island'], ['culture', 'Shows & music', 'radio'], ['people', 'Family & friends', 'friends'], ['work', 'Work & study', 'work'], ['fun', 'Just for fun', 'gift']].map(([k, l, a]) => `<button class="ob-chip ${d.why === k ? 'on' : ''}" data-why="${k}">${artSVG(a)}<b>${l}</b></button>`).join('')}</div>
+        <button class="btn primary big" data-ob-next ${d.why ? '' : 'disabled'}>Next</button></div>`,
+      () => `<div class="ob-s"><h1>Say your very first word!</h1><p>Listen to Boo, then say it back.</p>
+        <button class="ob-word" data-ob-hear><span class="script" ${attrs(c)}>${esc(g[d.lang][0])}</span><small>${esc(g[d.lang][1])} · ${esc(g[d.lang][2])}</small><em>${ICON.speaker} Hear it</em></button>
+        <div class="ob-boo sm mascot" id="ob-boo"></div>
+        ${Mic.SR && !Mic.blocked ? `<button class="mic-big" id="ob-mic" aria-label="Say it">${ICON.mic}</button><p class="ob-hint" id="ob-hint">Tap the mic and say it</p><button class="link-btn" data-ob-said>I can’t talk right now</button>` : `<button class="btn primary big" data-ob-said>I said it out loud!</button>`}</div>`,
+      () => `<div class="ob-s"><h1>Save your progress</h1><p>Create your account. Your <b>${TRIAL_DAYS}-day free trial</b> starts now, no payment needed.</p>
+        <form class="ob-form" id="ob-acct" novalidate>
+          <input class="input" id="ob-email" type="email" inputmode="email" autocomplete="email" placeholder="Email address" value="${esc(d.email)}">
+          <div class="pw-wrap"><input class="input" id="ob-pw" type="password" autocomplete="new-password" placeholder="Password (8+ characters)"><button type="button" class="pw-eye" id="ob-eye">Show</button></div>
+          <p class="auth-err" id="ob-err" role="alert"></p>
+          <button class="btn primary big" type="submit">Create my account</button></form>
+        <button class="link-btn" data-ob-signin>I already have an account</button>
+        <p class="ob-fine">After the trial you keep a free plan, or subscribe monthly or yearly through Google Play. Cancel any time.</p></div>`,
+      () => `<div class="ob-s"><h1>Last thing: who are you?</h1>
+        <input class="input ob-name" id="ob-name" maxlength="20" placeholder="Your name" value="${esc(d.name)}" autocomplete="given-name" enterkeyhint="done">
+        <p class="ob-label">Pick your buddy</p><div class="ob-buddies">${MASCOT_ORDER.map(k => `<button class="ob-buddy ${d.mascot === k ? 'on' : ''}" data-buddy="${k}"><div class="mascot" data-ob-art="${k}"></div><small>${esc(MASCOTS[k].name)}</small></button>`).join('')}</div>
+        <p class="ob-label">How much each day?</p><div class="ob-goal">${[[30, 'Chill', '5 min'], [50, 'Regular', '10 min'], [100, 'Serious', '20 min']].map(([v, l, m]) => `<button class="ob-chip sm ${d.goal === v ? 'on' : ''}" data-goal="${v}"><b>${l}</b><small>${m}</small></button>`).join('')}</div>
+        <p class="ob-label">My language <small>(for translations when you get stuck)</small></p><select class="input" id="ob-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (d.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select>
+        <button class="btn primary big" id="ob-go">Start my journey</button></div>`
+    ];
+    const pct = Math.round(this.step / this.LAST * 100);
+    el.innerHTML = `<div class="ob-top"><div class="ob-bar"><i style="width:${pct}%"></i></div>${this.step < this.ACCOUNT ? '<button class="ob-skip" data-ob-skip>Skip</button>' : ''}</div><div class="ob-stage">${S[this.step]()}</div>`;
+    this.wire();
+  },
+  next() { this.step = Math.min(this.LAST, this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
+  accountReady() { if (this.step <= this.ACCOUNT) { this.step = this.PROFILE; this.show(); } },
+  wire() {
+    const el = $('#ob'), d = this.draft;
+    $('[data-ob-skip]', el) && ($('[data-ob-skip]', el).onclick = () => { this.step = Acct.email() ? this.PROFILE : this.ACCOUNT; this.show(); });
+    $$('[data-ob-next]', el).forEach(b => b.onclick = () => this.next());
+    const boo = $('#ob-boo', el); if (boo) paintMascot(boo, d.mascot, this.step === 1 ? 'cheer' : 'peek', true);
+    if (this.step === 0) {
+      const right = Math.floor(Math.random() * 3); let tries = 0;
+      $$('[data-spot]', el).forEach(b => b.onclick = () => {
+        tries++;
+        if (+b.dataset.spot === right || tries >= 3) { b.classList.add('found'); b.innerHTML = `<div class="mascot" id="ob-found"></div>`; paintMascot($('#ob-found'), d.mascot, 'laugh', true); Sfx.level(); React.burst(b, 'stars', 12); Voice.speak('Peekaboo!', 'en-US', 1, d.mascot, 'excited'); setTimeout(() => this.next(), 1700); }
+        else { b.classList.add('nope'); b.disabled = true; $('#ob-hint').textContent = pick(['Not here! Try another…', 'Nope, nobody here!', 'Hmm, keep looking!']); Sfx.wrong(); }
+      });
+    }
+    if (this.step === 1) setTimeout(() => Voice.speak('Hi! I’m Boo. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
+    if (this.step === 3) $$('[data-city]', el).forEach(b => b.onclick = () => { d.lang = b.dataset.city; $$('[data-city]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).textContent = `Let’s go to ${CITY[d.lang].city}`; Voice.speak(Onboard.GREET[d.lang][0], COURSES[d.lang].tts, .9, d.mascot, 'happy'); });
+    if (this.step === 4) $$('[data-why]', el).forEach(b => b.onclick = () => { d.why = b.dataset.why; $$('[data-why]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).disabled = false; Sfx.tap(); });
+    if (this.step === 5) {
+      const c = COURSES[d.lang], w = Onboard.GREET[d.lang], hear = () => Voice.speakThen(w[0], c.tts, .85, d.mascot, 'happy');
+      $('[data-ob-hear]', el).onclick = hear; setTimeout(hear, 500);
+      const win = said => { Sfx.level(); confetti(); paintMascot($('#ob-boo'), d.mascot, 'love', true); React.rain('hearts', 22); const h = $('#ob-hint'); if (h) h.textContent = ''; $('#ob-mic')?.remove(); $('[data-ob-said]')?.remove();
+        el.querySelector('.ob-s').insertAdjacentHTML('beforeend', `<div class="ob-win"><b>${said ? `You just spoke ${c.name}!` : 'Great start!'}</b><small>${said ? 'That’s more than most people do on day one.' : 'You’ll say it out loud next time.'}</small><button class="btn primary big" data-ob-next>Keep going</button></div>`); $('.ob-win [data-ob-next]', el).onclick = () => this.next(); };
+      $('[data-ob-said]', el) && ($('[data-ob-said]', el).onclick = e => win(e.target.textContent.startsWith('I said')));
+      $('#ob-mic', el) && ($('#ob-mic', el).onclick = async () => {
+        const b = $('#ob-mic', el), h = $('#ob-hint', el); b.classList.add('on'); h.textContent = 'Listening…';
+        try { const alts = await Mic.listen(c.stt, { target: w[0], onInterim: t => { h.textContent = `Hearing: ${t}`; } }); b.classList.remove('on');
+          const r = pronScore(w[0], alts || []); if (r.ok || r.pct >= 50) win(true); else { h.textContent = `I heard “${r.best || '…'}”. Try once more!`; Sfx.wrong(); paintMascot($('#ob-boo'), d.mascot, 'giggle', true); }
+        } catch (code) { b.classList.remove('on'); h.textContent = Mic.explain ? Mic.explain(code) : 'Mic unavailable.'; }
+      });
+    }
+    if (this.step === this.ACCOUNT) {
+      $('#ob-eye', el).onclick = () => { const i = $('#ob-pw'); i.type = i.type === 'password' ? 'text' : 'password'; $('#ob-eye').textContent = i.type === 'password' ? 'Show' : 'Hide'; };
+      $('[data-ob-signin]', el).onclick = () => { try { localStorage.setItem('speakaboo.intro', '1'); } catch (e) { /* ignore */ } $('#ob')?.remove(); authScreen('signin'); };
+      $('#ob-acct', el).onsubmit = async e => {
+        e.preventDefault(); const err = $('#ob-err'), btn = $('#ob-acct button[type=submit]');
+        const email = $('#ob-email').value.trim().toLowerCase(), pw = $('#ob-pw').value; d.email = email;
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { err.textContent = 'Please enter a valid email address.'; return; }
+        if (pw.length < 8) { err.textContent = 'Use at least 8 characters for your password.'; return; }
+        btn.disabled = true; btn.textContent = 'Creating your account…'; err.textContent = '';
+        try { await Acct.signUp(email, pw); if (!Acct.cloud()) { this.step = this.PROFILE; this.show(); } }
+        catch (x) { err.textContent = authError(x); btn.disabled = false; btn.textContent = 'Create my account'; }
+      };
+    }
+    if (this.step === this.PROFILE) {
+      const paint = () => $$('[data-ob-art]', el).forEach(x => paintMascot(x, x.dataset.obArt, x.dataset.obArt === d.mascot ? 'cheer' : 'happy', x.dataset.obArt === d.mascot));
+      paint();
+      $('#ob-name', el).oninput = e => { d.name = e.target.value; };
+      $$('[data-buddy]', el).forEach(b => b.onclick = () => { d.mascot = b.dataset.buddy; $$('[data-buddy]', el).forEach(x => x.classList.toggle('on', x === b)); paint(); Voice.speak(pick(['Pick me!', 'Yay!', 'Let’s go!']), 'en-US', 1, d.mascot, 'excited'); });
+      $$('[data-goal]', el).forEach(b => b.onclick = () => { d.goal = +b.dataset.goal; $$('[data-goal]', el).forEach(x => x.classList.toggle('on', x === b)); Sfx.tap(); });
+      $('#ob-mylang', el).onchange = e => { d.myLang = e.target.value; };
+      $('#ob-go', el).onclick = () => {
+        const name = d.name.trim(); if (!name) { const i = $('#ob-name', el); i.focus(); i.classList.add('shake'); setTimeout(() => i.classList.remove('shake'), 500); return; }
+        const p = newProfile(name, d.mascot, d.lang); p.dailyGoal = d.goal; p.why = d.why; p.myLang = d.myLang || 'en';
+        Store.data.profiles[p.id] = p; Store.data.order.push(p.id); Store.data.introDone = true; Store.save();
+        try { localStorage.setItem('speakaboo.intro', '1'); } catch (e) { /* ignore */ }
+        const o = $('#ob'); o.classList.add('out'); setTimeout(() => o.remove(), 600);
+        enterApp(p.id);
+        const s = Access.state(); if (s.mode === 'trial') setTimeout(() => toast(`Your ${TRIAL_DAYS}-day free trial has started!`, '★'), 900);
+      };
+    }
+  }
+};
+/* Start the app once every module has loaded. */
+bootApp();
