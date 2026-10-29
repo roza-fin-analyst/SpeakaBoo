@@ -1601,3 +1601,17 @@ details.more > .drills, details.more > .card { margin-bottom: 12px; }
 .wd-sound { padding: 10px 0 4px; border-bottom: 1px solid var(--line); } .wd-sound small { display: block; color: var(--ink-2); font-weight: 700; margin-bottom: 6px; text-align: center; }
 .wd-chars { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; } .wd-chars .hear { min-width: 48px; height: 48px; padding: 0 12px; } .wd-chars .script { font-size: 22px; font-weight: 800; color: var(--ink); }
 .prompt .hear.words, .glyph-btn + .hear.words { align-self: center; margin-inline-start: 8px; }
+
+/* Pronunciation lines (romaji, pinyin, respelling) next to every line of the language */
+.ex-line > span { display: flex; flex-direction: column; gap: 1px; } .ex-line .script { order: 1; } .ex-line .ex-rom { order: 3; font: 800 15px var(--font-body); color: var(--ink); } .ex-line .ex-en { order: 4; }
+html.sound-first .ex-line .ex-rom { order: 0; font-size: 17px; } html.sound-first .ex-line .script { font-size: 15px; }
+.tip-chip { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; } .tip-chip .wt-rom { font-size: 14px; color: var(--ink); }
+.wt { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2; }
+.wt-rom { display: block; font: 700 12px var(--font-body); color: var(--ink2); }
+html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first .wt-rom { font-size: 15px; color: var(--ink); font-weight: 800; }
+.blank-rom { display: block; margin: -6px 0 6px; font: 800 16px var(--font-body); color: var(--ink); }
+.ask-rom { color: var(--ink); }
+
+/* Real Talk: after a pick, just highlight the right answer clearly */
+.rt-opt.was { border-color: var(--jade) !important; background: var(--jade-soft) !important; box-shadow: 0 0 0 3px var(--jade); }
+.rt-opt.was, .rt-opt.was * { color: var(--ink); }
