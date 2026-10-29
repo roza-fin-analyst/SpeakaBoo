@@ -817,14 +817,14 @@ COURSES.ar.units = [
 
 /* ---------- Pictures for words (emoji render as full-colour pictures on every phone) ---------- */
 const PICS = {
-  '아이': '🧒', '오이': '🥒', '이': '🦷', '오': '5️⃣', '나': '🙋', '나무': '🌳', '다리': '🌉', '머리': '💇', '고기': '🥩', '누나': '👩', '어머니': '👩‍👧', '라디오': '📻',
+  '아이': '🧒', '오이': '🥒', '이': '🦷', '오': '5️⃣', '나': '🙋', '나무': '🌳', '다리': '🌉', '머리': '💇', '고기': '🥩', '누나': '👩', '어머니': '👩', '라디오': '📻',
   '바다': '🌊', '사자': '🦁', '모자': '🧢', '하나': '1️⃣', '바지': '👖', '지도': '🗺️', '버스': '🚌', '두부': '🧈', '가수': '🎤',
   '차': '🍵', '커피': '☕', '코': '👃', '토마토': '🍅', '피자': '🍕', '아빠': '👨', '오빠': '👦', '코끼리': '🐘', '아저씨': '👨‍🦳',
   '야구': '⚾', '여자': '👩', '요리': '🍳', '우유': '🥛', '개': '🐕', '네': '🙆', '메뉴': '📋', '여기': '👇', '휴지': '🧻',
   '사과': '🍎', '과자': '🍪', '뭐': '❓', '돼지': '🐖', '회사': '🏢', '의사': '🧑‍⚕️', '위': '⬆️', '샤워': '🚿',
   '밥': '🍚', '물': '💧', '집': '🏠', '한국': '🇰🇷', '사람': '🧍', '이름': '📛', '책': '📖', '방': '🛏️', '빵': '🍞', '옷': '👕', '꽃': '🌸', '한국어': '🗣️',
   '안녕하세요': '👋', '감사합니다': '🙏', '고마워요': '😊', '죄송합니다': '🙇', '미안해요': '😣', '아니요': '🙅', '괜찮아요': '👌', '만나서 반가워요': '🤝', '안녕히 가세요': '🚶', '안녕히 계세요': '🏡',
-  '저': '🙋', '제': '👉', '학생': '🧑‍🎓', '선생님': '🧑‍🏫', '회사원': '🧑‍💼', '친구': '🧑‍🤝‍🧑', '한국 사람': '🇰🇷', '미국 사람': '🇺🇸', '방글라데시 사람': '🇧🇩',
+  '저': '🙋', '제': '👉', '학생': '🧑‍🎓', '선생님': '🧑‍🏫', '회사원': '🧑‍💼', '친구': '👫', '한국 사람': '🇰🇷', '미국 사람': '🇺🇸', '방글라데시 사람': '🇧🇩',
   '이거': '👇', '그거': '👉', '저거': '🔭', '주세요': '🤲', '가방': '👜', '핸드폰': '📱', '우산': '☂️', '아니에요': '❌',
   '일': '1️⃣', '삼': '3️⃣', '사': '4️⃣', '육': '6️⃣', '칠': '7️⃣', '팔': '8️⃣', '구': '9️⃣', '십': '🔟', '백': '💯', '천': '💵', '만': '💰', '원': '💴', '얼마': '🏷️',
   '있어요': '✅', '없어요': '🚫', '시간': '⏰', '돈': '💵', '동생': '👶', '고양이': '🐈', '화장실': '🚻', '어디': '📍',
@@ -1535,10 +1535,10 @@ COURSES.es.chat.topics.push(
 Object.assign(PICS, {
   'ذهب': '🪙', 'زيت': '🫒', 'سمك': '🐟', 'شمس': '☀️', 'صباح': '🌅', 'طبيب': '🧑‍⚕️', 'عين': '👁️', 'غزال': '🦌', 'فيل': '🐘', 'قمر': '🌙', 'كلب': '🐕', 'ليمون': '🍋', 'موز': '🍌', 'نار': '🔥', 'ورد': '🌹', 'يد': '✋',
   'أنا': '🙋', 'هو': '👨', 'هي': '👩', 'طالب': '🧑‍🎓', 'طالبة': '👩‍🎓', 'مهندس': '👷', 'مصر': '🇪🇬', 'تشرفنا': '🤝', 'كتاب': '📖', 'سيارة': '🚗', 'قلم': '🖊️', 'أريد': '🤲', 'ماء': '💧', 'قهوة': '☕',
-  'خمسة': '5️⃣', 'عشرة': '🔟', 'غالي': '💸', 'رخيص': '🏷️', 'أم': '👩', 'أخ': '👦', 'أخت': '👧', 'ابن': '👦', 'بنت': '👧', 'عائلة': '👨‍👩‍👧‍👦', 'عندي': '🤲', 'شاي': '🍵', 'طعام': '🍲', 'لذيذ': '😋', 'الحساب': '🧾', 'تمر': '🌴', 'مطعم': '🍽️', 'عفوا': '😊',
+  'خمسة': '5️⃣', 'عشرة': '🔟', 'غالي': '💸', 'رخيص': '🏷️', 'أم': '👩', 'أخ': '👦', 'أخت': '👧', 'ابن': '👦', 'بنت': '👧', 'عائلة': '👪', 'عندي': '🤲', 'شاي': '🍵', 'طعام': '🍲', 'لذيذ': '😋', 'الحساب': '🧾', 'تمر': '🌴', 'مطعم': '🍽️', 'عفوا': '😊',
   'agua': '💧', 'oso': '🐻', 'uva': '🍇', 'isla': '🏝️', 'casa': '🏠', 'niño': '🧒', 'llama': '🦙', 'perro': '🐕', 'jamón': '🍖', 'hola': '👋', 'zapato': '👞',
   'buenos días': '🌅', 'buenas tardes': '🌇', 'buenas noches': '🌙', 'gracias': '🙏', 'por favor': '🤲', 'sí': '🙆', 'no': '🙅', 'adiós': '🚶', 'de nada': '😊',
-  'estudiante': '🧑‍🎓', 'profesora': '👩‍🏫', 'médico': '🧑‍⚕️', 'amigo': '🧑‍🤝‍🧑', 'España': '🇪🇸', 'México': '🇲🇽',
+  'estudiante': '🧑‍🎓', 'profesora': '👩‍🏫', 'médico': '🧑‍⚕️', 'amigo': '👫', 'España': '🇪🇸', 'México': '🇲🇽',
   'café': '☕', 'té': '🍵', 'pan': '🍞', 'la cuenta': '🧾', 'euro': '💶', 'hambre': '🍽️', 'sed': '🥤', 'tiempo': '⏰', 'hermano': '👦', 'hermana': '👧', 'gato': '🐈',
   'hablo': '🗣️', 'trabajo': '💼', 'estudio': '📚', 'como': '🍽️', 'vivo': '🏡', 'español': '🇪🇸', 'inglés': '🇬🇧', 'ciudad': '🏙️',
   'una mesa': '🪑', 'la carta': '📋', 'la tortilla': '🍳', 'rico': '😋', 'la tarjeta': '💳', 'el vaso': '🥛', 'el queso': '🧀'
@@ -1958,18 +1958,18 @@ function artSVG(key, cls = 'art') { const f = ART[key]; return f ? `<svg viewBox
 
 /* Map every old emoji picture to an illustration. Abstract ones get none. */
 const EMOJI_ART = {
-  '🧒': 'child', '🥒': 'cucumber', '🦷': 'tooth', '5️⃣': 'n5', '🙋': 'me', '🌳': 'tree', '🌉': 'bridge', '💇': 'head', '🥩': 'meat', '👩': 'woman', '👩‍👧': 'mother', '📻': 'radio',
+  '🧒': 'child', '🥒': 'cucumber', '🦷': 'tooth', '5️⃣': 'n5', '🙋': 'me', '🌳': 'tree', '🌉': 'bridge', '💇': 'head', '🥩': 'meat', '👩': 'woman', '👩': 'mother', '📻': 'radio',
   '🌊': 'sea', '🦁': 'lion', '🧢': 'hat', '1️⃣': 'n1', '👖': 'pants', '🗺️': 'map', '🚌': 'bus', '🧈': 'tofu', '🎤': 'singer', '🍵': 'tea', '☕': 'coffee', '👃': 'nose', '🍅': 'tomato',
   '🍕': 'pizza', '👨': 'father', '👦': 'boy', '🐘': 'elephant', '👨‍🦳': 'oldman', '⚾': 'baseball', '🍳': 'egg', '🥛': 'milk', '🐕': 'dog', '🙆': 'yes', '📋': 'menu', '👇': 'pointdown', '🧻': 'tissue',
   '🍎': 'apple', '🍪': 'cookie', '❓': 'question', '🐖': 'pig', '🏢': 'building', '🧑‍⚕️': 'doctor', '🚿': 'shower', '🍚': 'rice', '💧': 'water', '🏠': 'house', '🇰🇷': 'flag_kr', '🧍': 'person',
   '📛': 'namebadge', '📖': 'book', '🛏️': 'bed', '🍞': 'bread', '👕': 'shirt', '🌸': 'flower', '🗣️': 'speak', '👋': 'wave', '🙏': 'thanks', '😊': 'happy', '🙇': 'sorry', '😣': 'sorry', '🙅': 'no',
-  '👌': 'ok', '🤝': 'handshake', '🚶': 'walk', '🏡': 'goodbye_home', '🧑‍🎓': 'student', '🧑‍🏫': 'teacher', '🧑‍💼': 'worker', '🧑‍🤝‍🧑': 'friends', '🇺🇸': 'flag_us', '🇧🇩': 'flag_bd',
+  '👌': 'ok', '🤝': 'handshake', '🚶': 'walk', '🏡': 'goodbye_home', '🧑‍🎓': 'student', '🧑‍🏫': 'teacher', '🧑‍💼': 'worker', '👫': 'friends', '🇺🇸': 'flag_us', '🇧🇩': 'flag_bd',
   '🤲': 'gift', '👜': 'bag', '📱': 'phone', '☂️': 'umbrella', '❌': 'no', '3️⃣': 'n3', '4️⃣': 'n4', '6️⃣': 'n6', '7️⃣': 'n7', '8️⃣': 'n8', '9️⃣': 'n9', '🔟': 'n10', '💯': 'n100',
   '💵': 'money', '💰': 'money', '💴': 'money', '🏷️': 'tag', '✅': 'yes', '🚫': 'no', '⏰': 'clock', '👶': 'baby', '🐈': 'cat', '🚻': 'bathroom', '📍': 'pin', '🏃': 'walk', '🍽️': 'meal',
   '🥤': 'drink', '👀': 'eye', '📚': 'study', '❤️': 'heart', '🎬': 'movie', '🏫': 'school', '🥬': 'cabbage', '🧊': 'ice', '🥃': 'cup1', '🥂': 'cup2', '🛍️': 'takeout', '🪑': 'table', '💳': 'card',
   '😋': 'yummy', '🚪': 'door', '🫐': 'berries', '👴': 'grandpa', '🐻': 'bear', '🕊️': 'peace', '🪙': 'gold', '🫒': 'oil', '🐟': 'fish', '☀️': 'sun', '🌅': 'sunrise', '👁️': 'eye', '🦌': 'deer',
   '🌙': 'night', '🍋': 'lemon', '🍌': 'banana', '🔥': 'fire', '🌹': 'rose', '✋': 'hand', '👩‍🎓': 'student_f', '👷': 'engineer', '🇪🇬': 'flag_eg', '🚗': 'car', '🖊️': 'pen', '💸': 'expensive',
-  '👧': 'girl', '👨‍👩‍👧‍👦': 'family', '🍲': 'soup', '🧾': 'receipt', '🌴': 'palm', '🍇': 'grapes', '🏝️': 'island', '🦙': 'llama', '🍖': 'ham', '👞': 'shoe', '🌇': 'afternoon',
+  '👧': 'girl', '👪': 'family', '🍲': 'soup', '🧾': 'receipt', '🌴': 'palm', '🍇': 'grapes', '🏝️': 'island', '🦙': 'llama', '🍖': 'ham', '👞': 'shoe', '🌇': 'afternoon',
   '👩‍🏫': 'teacher', '🇪🇸': 'flag_es', '🇲🇽': 'flag_mx', '💶': 'money', '💼': 'work', '🇬🇧': 'flag_gb', '🏙️': 'city', '🧀': 'cheese', '👉': '', '🔭': '', '⬆️': ''
 };
 /* Pictures that don't show a concrete thing: fine on teaching cards, never used as picture questions. */
@@ -3491,7 +3491,7 @@ const EN_EMOJI = {
   "expensive": "💸",
   "eye": "👁️",
   "eyes": "👀",
-  "family": "👨‍👩‍👧‍👦",
+  "family": "👪",
   "far": "🔭",
   "father": "👨",
   "fever": "🤒",
@@ -3505,8 +3505,8 @@ const EN_EMOJI = {
   "fork": "🍴",
   "four": "4️⃣",
   "friday": "🗓️",
-  "friend": "🧑‍🤝‍🧑",
-  "friends": "🧑‍🤝‍🧑",
+  "friend": "👫",
+  "friends": "👫",
   "fruit": "🍎",
   "garlic": "🧄",
   "gazelle": "🦌",
@@ -3616,7 +3616,7 @@ const EN_EMOJI = {
   "moon": "🌙",
   "morning": "🌅",
   "mosque": "🕌",
-  "mother": "👩‍👧",
+  "mother": "👩",
   "mountain": "⛰️",
   "mouth": "👄",
   "movie": "🎬",
@@ -3777,8 +3777,8 @@ const EN_EMOJI = {
   "travel": "🧳",
   "tree": "🌳",
   "tuesday": "🗓️",
-  "twenty": "2️⃣0️⃣",
-  "twenty (20)": "2️⃣0️⃣",
+  "twenty": "🔢",
+  "twenty (20)": "🔢",
   "two": "2️⃣",
   "two cups": "🥤",
   "umbrella": "☂️",
@@ -3812,7 +3812,9 @@ function emojiFor(gloss) {
   return '';
 }
 const NO_PIC = new Set(['he', 'she', 'really', 'I live', 'I want', 'I have', 'please give me', 'have / there is', 'don’t have / there isn’t', 'it is not', 'how much', 'where', 'what', 'this', 'go', 'come', 'I', 'I (polite)', 'fine / well']);
-function emojiArt(e) { if (!ART[e]) ART[e] = () => `<text x="50" y="74" font-size="76" text-anchor="middle" font-family="'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">${e}</text>`; return e; }
+/* Flat illustrations (Microsoft Fluent Emoji, flat style, MIT licence) stored in /pics. A word with no flat picture gets none. */
+const PIC_FILES = {"0️⃣": "0030-fe0f-20e3.svg", "1️⃣": "0031-fe0f-20e3.svg", "2️⃣": "0032-fe0f-20e3.svg", "3️⃣": "0033-fe0f-20e3.svg", "4️⃣": "0034-fe0f-20e3.svg", "5️⃣": "0035-fe0f-20e3.svg", "6️⃣": "0036-fe0f-20e3.svg", "7️⃣": "0037-fe0f-20e3.svg", "8️⃣": "0038-fe0f-20e3.svg", "9️⃣": "0039-fe0f-20e3.svg", "⌚": "231a.svg", "⏪": "23ea.svg", "⏰": "23f0.svg", "☀️": "2600-fe0f.svg", "☁️": "2601-fe0f.svg", "☂️": "2602-fe0f.svg", "☕": "2615.svg", "⚖️": "2696-fe0f.svg", "⚽": "26bd.svg", "⚾": "26be.svg", "⛪": "26ea.svg", "⛰️": "26f0-fe0f.svg", "⛴️": "26f4-fe0f.svg", "✅": "2705.svg", "✈️": "2708-fe0f.svg", "✋": "270b.svg", "❄️": "2744-fe0f.svg", "❌": "274c.svg", "❤️": "2764-fe0f.svg", "➕": "2795.svg", "➖": "2796.svg", "➡️": "27a1-fe0f.svg", "⬅️": "2b05-fe0f.svg", "⬆️": "2b06-fe0f.svg", "⭐": "2b50.svg", "🆘": "1f198.svg", "🇪🇸": "1f1ea-1f1f8.svg", "🇬🇧": "1f1ec-1f1e7.svg", "🇰🇷": "1f1f0-1f1f7.svg", "🇸🇦": "1f1f8-1f1e6.svg", "🌅": "1f305.svg", "🌆": "1f306.svg", "🌉": "1f309.svg", "🌊": "1f30a.svg", "🌙": "1f319.svg", "🌤️": "1f324-fe0f.svg", "🌧️": "1f327-fe0f.svg", "🌳": "1f333.svg", "🌴": "1f334.svg", "🌸": "1f338.svg", "🌹": "1f339.svg", "🍅": "1f345.svg", "🍇": "1f347.svg", "🍉": "1f349.svg", "🍊": "1f34a.svg", "🍋": "1f34b.svg", "🍌": "1f34c.svg", "🍎": "1f34e.svg", "🍓": "1f353.svg", "🍕": "1f355.svg", "🍖": "1f356.svg", "🍗": "1f357.svg", "🍚": "1f35a.svg", "🍞": "1f35e.svg", "🍦": "1f366.svg", "🍪": "1f36a.svg", "🍰": "1f370.svg", "🍱": "1f371.svg", "🍲": "1f372.svg", "🍳": "1f373.svg", "🍴": "1f374.svg", "🍵": "1f375.svg", "🍷": "1f377.svg", "🍺": "1f37a.svg", "🍽️": "1f37d-fe0f.svg", "🎁": "1f381.svg", "🎂": "1f382.svg", "🎤": "1f3a4.svg", "🎨": "1f3a8.svg", "🎫": "1f3ab.svg", "🎬": "1f3ac.svg", "🎵": "1f3b5.svg", "🎶": "1f3b6.svg", "🏅": "1f3c5.svg", "🏋️": "1f3cb-fe0f.svg", "🏖️": "1f3d6-fe0f.svg", "🏙️": "1f3d9-fe0f.svg", "🏝️": "1f3dd-fe0f.svg", "🏞️": "1f3de-fe0f.svg", "🏠": "1f3e0.svg", "🏡": "1f3e1.svg", "🏢": "1f3e2.svg", "🏥": "1f3e5.svg", "🏦": "1f3e6.svg", "🏨": "1f3e8.svg", "🏪": "1f3ea.svg", "🏫": "1f3eb.svg", "🏷️": "1f3f7-fe0f.svg", "🐄": "1f404.svg", "🐇": "1f407.svg", "🐈": "1f408.svg", "🐕": "1f415.svg", "🐖": "1f416.svg", "🐘": "1f418.svg", "🐜": "1f41c.svg", "🐟": "1f41f.svg", "🐦": "1f426.svg", "🐴": "1f434.svg", "🐻": "1f43b.svg", "👀": "1f440.svg", "👁️": "1f441-fe0f.svg", "👂": "1f442.svg", "👃": "1f443.svg", "👄": "1f444.svg", "👋": "1f44b.svg", "👌": "1f44c.svg", "👍": "1f44d.svg", "👎": "1f44e.svg", "👓": "1f453.svg", "👕": "1f455.svg", "👖": "1f456.svg", "👗": "1f457.svg", "👛": "1f45b.svg", "👜": "1f45c.svg", "👞": "1f45e.svg", "👥": "1f465.svg", "👦": "1f466.svg", "👧": "1f467.svg", "👨": "1f468.svg", "👩": "1f469.svg", "👮": "1f46e.svg", "👴": "1f474.svg", "👵": "1f475.svg", "👶": "1f476.svg", "👷": "1f477.svg", "💃": "1f483.svg", "💇": "1f487.svg", "💊": "1f48a.svg", "💧": "1f4a7.svg", "💨": "1f4a8.svg", "💯": "1f4af.svg", "💰": "1f4b0.svg", "💳": "1f4b3.svg", "💴": "1f4b4.svg", "💵": "1f4b5.svg", "💶": "1f4b6.svg", "💸": "1f4b8.svg", "💼": "1f4bc.svg", "📅": "1f4c5.svg", "📆": "1f4c6.svg", "📋": "1f4cb.svg", "📍": "1f4cd.svg", "📏": "1f4cf.svg", "📖": "1f4d6.svg", "📚": "1f4da.svg", "📛": "1f4db.svg", "📞": "1f4de.svg", "📱": "1f4f1.svg", "📶": "1f4f6.svg", "📻": "1f4fb.svg", "🔁": "1f501.svg", "🔋": "1f50b.svg", "🔌": "1f50c.svg", "🔐": "1f510.svg", "🔑": "1f511.svg", "🔟": "1f51f.svg", "🔢": "1f522.svg", "🔥": "1f525.svg", "🔪": "1f52a.svg", "🔭": "1f52d.svg", "🕌": "1f54c.svg", "🖊️": "1f58a-fe0f.svg", "🖥️": "1f5a5-fe0f.svg", "🗓️": "1f5d3-fe0f.svg", "🗣️": "1f5e3-fe0f.svg", "🗺️": "1f5fa-fe0f.svg", "😊": "1f60a.svg", "😋": "1f60b.svg", "😠": "1f620.svg", "😢": "1f622.svg", "😴": "1f634.svg", "🙇": "1f647.svg", "🙏": "1f64f.svg", "🚆": "1f686.svg", "🚇": "1f687.svg", "🚉": "1f689.svg", "🚌": "1f68c.svg", "🚑": "1f691.svg", "🚕": "1f695.svg", "🚗": "1f697.svg", "🚨": "1f6a8.svg", "🚪": "1f6aa.svg", "🚲": "1f6b2.svg", "🚶": "1f6b6.svg", "🚻": "1f6bb.svg", "🚿": "1f6bf.svg", "🛂": "1f6c2.svg", "🛍️": "1f6cd-fe0f.svg", "🛏️": "1f6cf-fe0f.svg", "🛑": "1f6d1.svg", "🛒": "1f6d2.svg", "🛣️": "1f6e3-fe0f.svg", "🤒": "1f912.svg", "🤕": "1f915.svg", "🤝": "1f91d.svg", "🤢": "1f922.svg", "🤧": "1f927.svg", "🥄": "1f944.svg", "🥒": "1f952.svg", "🥔": "1f954.svg", "🥕": "1f955.svg", "🥗": "1f957.svg", "🥚": "1f95a.svg", "🥛": "1f95b.svg", "🥤": "1f964.svg", "🥩": "1f969.svg", "🥬": "1f96c.svg", "🥵": "1f975.svg", "🥶": "1f976.svg", "🦁": "1f981.svg", "🦌": "1f98c.svg", "🦙": "1f999.svg", "🦵": "1f9b5.svg", "🦶": "1f9b6.svg", "🦷": "1f9b7.svg", "🧀": "1f9c0.svg", "🧃": "1f9c3.svg", "🧄": "1f9c4.svg", "🧅": "1f9c5.svg", "🧈": "1f9c8.svg", "🧊": "1f9ca.svg", "🧍": "1f9cd.svg", "🧑‍⚕️": "1f9d1-200d-2695-fe0f.svg", "🧑‍🎓": "1f9d1-200d-1f393.svg", "🧑‍🏫": "1f9d1-200d-1f3eb.svg", "🧑‍💼": "1f9d1-200d-1f4bc.svg", "🧒": "1f9d2.svg", "🧢": "1f9e2.svg", "🧥": "1f9e5.svg", "🧦": "1f9e6.svg", "🧭": "1f9ed.svg", "🧳": "1f9f3.svg", "🧻": "1f9fb.svg", "🧾": "1f9fe.svg", "🪑": "1fa91.svg", "🪙": "1fa99.svg", "🪟": "1fa9f.svg", "🫐": "1fad0.svg", "🫒": "1fad2.svg"};
+function emojiArt(e) { const f = PIC_FILES[e]; if (!f) return ''; if (!ART[e]) ART[e] = () => `<image href="pics/${f}" x="4" y="4" width="92" height="92"/>`; return e; }
 /* =====================================================================
    SPEAKABOO — SEASONS 5 & 6: from "getting by" to "speaking your mind"
    Season 5 "Real life": shopping & sizes, phone & messages.
@@ -8074,7 +8076,7 @@ const RENDER = {
     const short = (String(g.p).match(/^.*?[.!?](\s|$)/) || [g.p])[0].trim();
     el.innerHTML = `<div class="tip-wrap"><div class="tip-boo mascot" id="tip-m"></div>
       <div class="tip-say"><b>${esc(g.h)}</b><p>${esc(short)}</p></div></div>
-      ${(g.ex || []).length ? `<div class="tip-ex">${g.ex.slice(0, 3).map(([t, r, en]) => `<button class="tip-chip" data-say="${esc(t.replace(/→.*/, '').trim())}"><span class="script" ${attrs(c)}>${esc(t)}</span><small>${esc(cleanEn(en))}</small></button>`).join('')}</div>` : ''}`;
+      ${(g.ex || []).length ? `<div class="tip-ex">${g.ex.slice(0, 3).map(([t, r, en]) => `<button class="tip-chip" data-say="${esc(t.replace(/→.*/, '').trim())}"><span class="script" ${attrs(c)}>${esc(t)}</span>${(r || romFor(t)) && !isLatinLang(c.code) ? `<small class="wt-rom">${esc(r || romFor(t))}</small>` : ''}<small>${esc(cleanEn(en))}</small></button>`).join('')}</div>` : ''}`;
     paintMascot($('#tip-m', el), P().mascot, 'think', true);
     R.nextOnly('Got it');
   },
@@ -8084,7 +8086,7 @@ const RENDER = {
       ${step.pic ? `<div class="pic-hero" aria-hidden="true">${artSVG(step.pic)}</div>` : ''}
       <button class="glyph-btn" data-say="${esc(step.say)}"><span class="big script ${[...step.big].length > 3 || step.pic ? 'long' : ''}" ${attrs(c)}>${esc(step.big)}</span><small>${ICON.speaker} Tap to hear</small></button>
       <div class="rom">${esc(step.rom)}</div><div class="${step.isWord ? 'en' : 'hint'}">${esc(step.note)}</div>
-      ${step.ex ? `<button class="ex-line" data-say="${esc(step.ex.t)}">${ICON.speaker}<span><span class="script" ${attrs(c)}>${esc(step.ex.t)}</span><small>${esc(step.ex.en)}</small></span></button>` : ''}
+      ${step.ex ? `<button class="ex-line" data-say="${esc(step.ex.t)}">${ICON.speaker}<span><span class="script" ${attrs(c)}>${esc(step.ex.t)}</span>${(step.ex.r || romFor(step.ex.t)) && !isLatinLang(c.code) ? `<small class="ex-rom">${esc(step.ex.r || romFor(step.ex.t))}</small>` : ''}<small class="ex-en">${esc(step.ex.en)}</small></span></button>` : ''}
       <div class="card-actions">${step.isWord ? starBtn({ t: step.say, r: step.rom, en: step.note }) : ''}<button class="speaker slow" data-say="${esc(step.say)}" data-rate=".55" aria-label="Play slowly">${ICON.turtle}</button>
         ${Mic.SR && !Mic.blocked ? `<button class="say-it" id="t-mic">${ICON.mic}<span>Say it</span></button>` : ''}</div>
       <div class="pron-line" id="t-pron"></div>${step.isWord ? echoHTML() : ''}</div>`;
@@ -8212,7 +8214,7 @@ const RENDER = {
     if (step.listen) bubblePrompt(el, `<button class="speaker big" data-say="${esc(s.t)}" data-who="${who}" aria-label="Play">${ICON.speaker}</button><button class="speaker slow" data-say="${esc(s.t)}" data-who="${who}" data-rate=".55" aria-label="Play slowly">${ICON.turtle}</button>`, who);
     else if (toEn) bubblePrompt(el, `<button class="speaker sm" data-say="${esc(s.t)}" data-who="${who}" aria-label="Play">${ICON.speaker}</button><span class="script" ${attrs(c)}>${koTokens(s.t).map(tok => `<button class="hw" data-say="${esc(tok)}" title="${esc(hintFor(tok))}">${esc(tok)}</button>`).join('')}</span><small class="bubble-rom">${esc(s.r)}</small>`, who);
     else bubblePrompt(el, `<span style="font-size:19px;font-weight:700">${esc(s.en)}</span>`, who);
-    el.insertAdjacentHTML('beforeend', `<div class="answer-line" id="ans"></div><p class="note tiles-note">Tap words in order. It checks itself when the sentence is full.</p><div class="bank" id="bank">${bank.map(b => `<button class="wt ${toEn ? '' : 'script'}" ${toEn ? '' : attrs(c)} data-b="${b.i}">${esc(b.w)}</button>`).join('')}</div>`);
+    el.insertAdjacentHTML('beforeend', `<div class="answer-line" id="ans"></div><p class="note tiles-note">Tap words in order. It checks itself when the sentence is full.</p><div class="bank" id="bank">${bank.map(b => `<button class="wt ${toEn ? '' : 'script'}" ${toEn ? '' : attrs(c)} data-b="${b.i}">${esc(b.w)}${toEn ? '' : romSub(b.w)}</button>`).join('')}</div>`);
     const chosen = [], ans = $('#ans', el);
     const submit = () => {
       const words = chosen.map(i => bank.find(b => b.i === i).w);
@@ -8222,7 +8224,7 @@ const RENDER = {
       R.grade(ok, { you: words.join(' '), show: toEn ? (ok ? null : s.en) : { t: s.t, r: s.r, en: s.en }, teach: ok && toEn ? `${s.t} (${s.r})` : '' });
     };
     const redraw = () => {
-      ans.innerHTML = chosen.map(i => `<button class="wt ${toEn ? '' : 'script'}" ${toEn ? '' : attrs(c)} data-a="${i}">${esc(bank.find(b => b.i === i).w)}</button>`).join('');
+      ans.innerHTML = chosen.map(i => `<button class="wt ${toEn ? '' : 'script'}" ${toEn ? '' : attrs(c)} data-a="${i}">${esc(bank.find(b => b.i === i).w)}${toEn ? '' : romSub(bank.find(b => b.i === i).w)}</button>`).join('');
       $$('[data-b]', el).forEach(b => b.classList.toggle('ghost', chosen.includes(+b.dataset.b)));
       if (chosen.length === answer.length) setTimeout(() => { if (!R.locked && chosen.length === answer.length) submit(); }, 450);
     };
@@ -8239,7 +8241,8 @@ const RENDER = {
     const c = course(), b = step.b, [pre, post] = b.t.split('__');
     el.innerHTML = `<p class="q">${step.retry ? '<span class="badge-new" style="margin-right:8px">Previous mistake</span>' : ''}Fill in the blank</p><p class="muted" style="margin:-10px 0 0;font-weight:700">${esc(b.en)}</p>
       <div class="blank-sent script" ${attrs(c)}>${esc(pre)}<span class="gap" id="gap">&nbsp;</span>${esc(post || '')}</div>
-      <div class="chips">${shuffle(b.options).map(o => `<button class="wt script" ${attrs(c)} data-o="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
+      ${romFor(b.t.replace('__', b.answer)) ? `<small class="blank-rom">${esc(romFor(b.t.replace('__', b.answer)))}</small>` : ''}
+      <div class="chips">${shuffle(b.options).map(o => `<button class="wt script" ${attrs(c)} data-o="${esc(o)}">${esc(o)}${romSub(o)}</button>`).join('')}</div>`;
     const answer = x => {
       if (R.locked || !x) return; const sel = x.dataset.o;
       $$('[data-o]', el).forEach(y => y.classList.toggle('sel', y === x)); const g = $('#gap', el); g.textContent = sel; g.classList.add('filled');
@@ -9089,7 +9092,7 @@ Object.assign(RENDER, {
   guess(step, el, R) {
     const c = course(), w = step.w;
     el.innerHTML = `<p class="q">Guess first! <span class="muted" style="font-size:15px">No hearts lost.</span></p>${panelHTML(w, 'word', { rom: true })}
-      <p class="muted" style="margin:6px 0 10px;font-weight:700">What do you think <span class="script" ${attrs(c)}>${esc(w.t)}</span> means here?</p>
+      <p class="muted" style="margin:6px 0 10px;font-weight:700">What do you think <span class="script" ${attrs(c)}>${esc(w.t)}</span>${w.r && !isLatinLang(c.code) ? ` <b class="ask-rom">(${esc(w.r)})</b>` : ''} means here?</p>
       <div class="opts">${step.options.map((o, i) => `<button class="opt" data-i="${i}"><span class="num-k">${i + 1}</span>${esc(o)}</button>`).join('')}</div>`;
     setTimeout(() => sayCtx(w), 300);
     const answer = i => {
@@ -9512,6 +9515,32 @@ buildLesson = function (u, level) {
 };
 
 /* ---------- 3. Tap any word ---------- */
+/* =====================================================================
+   PRONUNCIATION EVERYWHERE
+   romFor(text) finds how a word or sentence is pronounced in English
+   letters, from the course data, so no line of the new language is shown
+   without its pronunciation.
+   ===================================================================== */
+const _romIdx = {};
+function romKey(t) { return String(t || '').normalize('NFC').toLowerCase().replace(/[\s.,!?¿¡،؟…~“”"«»()·'’\-。、！？，]/g, ''); }
+function romFor(text) {
+  const c = course(); if (!c || isLatinLang(c.code)) return '';
+  let idx = _romIdx[c.code];
+  if (!idx) {
+    idx = _romIdx[c.code] = new Map();
+    const put = (t, r) => { const k = romKey(t); if (k && r && !idx.has(k)) idx.set(k, String(r).trim()); };
+    const tok = (t, r) => { const a = String(t).trim().split(/\s+/), b = String(r).trim().split(/\s+/); if (a.length === b.length && a.length > 1) a.forEach((x, i) => put(x, b[i])); };
+    for (const u of [...c.units, ...(c.letterUnits || [])]) {
+      (u.words || []).forEach(w => put(w.t, w.r)); (u.letters || []).forEach(l => put(l.g, l.r));
+      (u.sentences || []).forEach(x => { put(x.t, x.r); tok(x.t, x.r); });
+      (u.guide || []).forEach(g => (g.ex || []).forEach(([t, r]) => { put(t, r); tok(t, r); }));
+    }
+    Object.values(MOMENTS[c.code] || {}).flat().forEach(x => { put(x.t, x.r); tok(x.t, x.r); });
+    ((c.chat && c.chat.topics) || []).forEach(tp => (tp.steps || []).forEach(st => { [st.say, ...(st.chips || []), ...(st.words || [])].forEach(x => x && put(x.t, x.r)); }));
+  }
+  return idx.get(romKey(text)) || '';
+}
+const romSub = t => { const r = romFor(t); return r ? `<small class="wt-rom">${esc(r)}</small>` : ''; };
 const Hear = {
   /** Put a word-by-word button next to every speaker in a lesson prompt. */
   decorate() {
@@ -9950,7 +9979,7 @@ RENDER.teach = function (step, el, R) {
   if (!step.isWord || !step.ex) return;
   const t = norm(step.say), more = allSentences().filter(s => norm(s.t).includes(t) && s.t !== step.ex.t && norm(s.t) !== t);
   const ex2 = more.length ? pick(more) : null, line = $('.ex-line', el), c = course();
-  if (ex2 && line) line.insertAdjacentHTML('afterend', `<button class="ex-line" data-say="${esc(ex2.t)}">${ICON.speaker}<span><span class="script" ${attrs(c)}>${esc(ex2.t)}</span><small>${esc(ex2.en)}</small></span></button>`);
+  if (ex2 && line) line.insertAdjacentHTML('afterend', `<button class="ex-line" data-say="${esc(ex2.t)}">${ICON.speaker}<span><span class="script" ${attrs(c)}>${esc(ex2.t)}</span>${(ex2.r || romFor(ex2.t)) && !isLatinLang(c.code) ? `<small class="ex-rom">${esc(ex2.r || romFor(ex2.t))}</small>` : ''}<small class="ex-en">${esc(ex2.en)}</small></span></button>`);
 };
 /* Put the new exercises into lessons and practice */
 const _buildLesson9 = buildLesson;
