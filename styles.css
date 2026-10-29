@@ -1639,3 +1639,5 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 .sp2-rom { font-size: 20px; } .sp2 .meter { display: none; } .sp2 .meter.on { display: block; }
 /* Real Talk feedback sits below the answers instead of floating over them */
 .rt-fb { position: static; margin-bottom: 16px; }
+.gp-load { display: inline-block; width: 90px; height: 1em; border-radius: 6px; vertical-align: middle; background: linear-gradient(90deg, var(--surface-2) 25%, var(--line) 50%, var(--surface-2) 75%); background-size: 200% 100%; animation: gpShim 1s linear infinite; }
+@keyframes gpShim { to { background-position: -200% 0; } }

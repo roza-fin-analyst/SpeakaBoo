@@ -7203,7 +7203,7 @@ const Tr = {
   async get(text, to, from = 'en') {
     text = String(text || '').trim(); if (!text || to === from) return text;
     const key = from === 'en' ? `${to}|${text}` : `${from}>${to}|${text}`; if (this.cache[key]) return this.cache[key];
-    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 9000);
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 5000);
     try {
       const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${encodeURIComponent(from)}|${encodeURIComponent(to)}`, { signal: ctl.signal });
       const j = await r.json(), out = j && j.responseData && j.responseData.translatedText;
@@ -8715,7 +8715,14 @@ function splash() {
   setTimeout(hide, 2400);   // never block sign-in or slow networks
   return hide;
 }
+/** Warm the flat pictures in idle time so the next exercise never waits for them. */
+function warmPics() {
+  const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
+  const next = () => { for (let n = 0; n < 6 && i < files.length; n++) { const im = new Image(); im.decoding = 'async'; im.src = 'pics/' + files[i++]; } if (i < files.length) setTimeout(next, 120); };
+  (window.requestIdleCallback || (f => setTimeout(f, 800)))(next);
+}
 function bootApp() {
+  warmPics();
   const hideSplash = splash();
   Store.load(); Voice.init();
   Account.boot(() => {
@@ -9605,7 +9612,7 @@ const Gloss = {
     const box = document.createElement('div'); box.id = 'gloss-pop'; box.className = 'gloss-pop';
     box.innerHTML = `<div class="gp-top"><span class="script" ${attrs(c)}>${esc(tok.replace(/[.,!?¿¡،؟…]/g, ''))}</span><button class="speaker sm" data-say="${esc(Gloss.norm(tok))}" aria-label="Play">${ICON.speaker}</button></div>
       <small class="gp-rom">${esc(span.dataset.r || (w && w.r) || '')}</small>
-      <b class="gp-en">${w ? esc(cleanEn(w.en)) + (Gloss.norm(w.t) !== Gloss.norm(tok) ? `<em> (from ${esc(w.t)})</em>` : '') : '<span id="gp-auto">…</span>'}</b>
+      <b class="gp-en">${w ? esc(cleanEn(w.en)) + (Gloss.norm(w.t) !== Gloss.norm(tok) ? `<em> (from ${esc(w.t)})</em>` : '') : '<span id="gp-auto" class="gp-load">&nbsp;</span>'}</b>
       <b class="gp-my muted" hidden></b>
       <button class="gp-ask" data-ask-word="${esc(tok)}" data-ask-sent="${esc(sent)}">${ICON.chat} Ask Boo about it</button>`;
     document.body.append(box);
@@ -9618,11 +9625,15 @@ const Gloss = {
     let en = w && cleanEn(w.en);
     if (!w) {   // a word the learner hasn't met yet: show a machine translation, marked as such
       const auto = $('#gp-auto', box);
-      Tr.get(Gloss.norm(tok), 'en', c.code).then(o => { en = o; if (auto) auto.textContent = o; if (to !== 'en' && my) { my.hidden = false; my.textContent = '…'; Tr.get(o, to).then(x => { my.textContent = x; }).catch(() => { my.textContent = ''; }); } }).catch(() => { const b = auto && auto.closest('.gp-en'); if (b) b.remove(); });
+      Tr.get(Gloss.norm(tok), 'en', c.code).then(o => { en = o; if (auto) { auto.textContent = o; auto.classList.remove('gp-load'); } if (to !== 'en' && my) { my.hidden = false; my.textContent = '…'; Tr.get(o, to).then(x => { my.textContent = x; }).catch(() => { my.textContent = ''; }); } }).catch(() => { const b = auto && auto.closest('.gp-en'); if (b) b.remove(); });
     }
     if (to !== 'en' && en && my) { my.hidden = false; my.textContent = '…'; Tr.get(en, to).then(out => { my.textContent = out; }).catch(() => { my.hidden = true; }); }
   }
 };
+document.addEventListener('pointerdown', e => {   // start the lookup the moment a word is touched
+  const gw = e.target.closest && e.target.closest('.gw'); if (!gw || Gloss.lookup(gw.textContent)) return;
+  const c = course(); if (c) Tr.get(Gloss.norm(gw.textContent), 'en', c.code).catch(() => {});
+});
 document.addEventListener('click', e => {
   const gw = e.target.closest && e.target.closest('.gw');
   if (gw) { e.stopPropagation(); e.preventDefault(); Gloss.pop(gw); return; }
