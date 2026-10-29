@@ -17,6 +17,8 @@
   --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-cute-ko: "Jua", "Noto Sans KR", sans-serif;
   --font-ko: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-ja: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --font-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-ar: "Noto Naskh Arabic", "Geeza Pro", "Arabic Typesetting", serif;
   --script: var(--font-ko);
 
@@ -137,7 +139,7 @@ svg.i { width: 22px; height: 22px; flex: none; }
    Desktop (1100+):  labelled rail | main | right column (stats, quests, mascot)
    ============================================================= */
 .shell { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; grid-template-areas: "top" "main" "nav"; }
-.rail, .right { display: none; }
+.rail, aside.right { display: none; }
 .topbar { grid-area: top; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 2px solid var(--line); background: var(--surface); }
 .topbar .spacer { flex: 1; }
 .main { grid-area: main; position: relative; min-height: 0; overflow: hidden; }
@@ -179,8 +181,8 @@ svg.i { width: 22px; height: 22px; flex: none; }
   .rail .logo small { display: inline; font: 400 15px var(--font-cute-ko); color: var(--ink-2); margin-left: 6px; }
   .rail button.nav-i { justify-content: flex-start; }
   .rail button.nav-i span { display: inline; }
-  .right { grid-area: right; display: flex; flex-direction: column; gap: 16px; padding: 22px 24px 22px 8px; overflow-y: auto; }
-  .right .stats-row { display: flex; justify-content: space-between; gap: 4px; }
+  aside.right { grid-area: right; display: flex; flex-direction: column; gap: 16px; padding: 22px 24px 22px 8px; overflow-y: auto; }
+  aside.right .stats-row { display: flex; justify-content: space-between; gap: 4px; }
 }
 .who-btn { display: flex; align-items: center; gap: 10px; padding: 6px; border: 2px solid var(--line); border-radius: var(--r-lg); background: var(--surface); min-height: 56px; text-align: left; }
 .who-btn .mascot { width: 42px; height: 42px; flex: none; }
@@ -1586,3 +1588,16 @@ details.more > .drills, details.more > .card { margin-bottom: 12px; }
 
 /* Long lists: skip drawing episodes that are off screen (smoother scrolling, faster tab switches) */
 .ep, .season-head { content-visibility: auto; contain-intrinsic-size: auto 240px; }
+
+/* Hear / Slow / Say it under pictures and words */
+.listen-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0 4px; }
+.listen-tools .btn.sm { min-height: 40px; padding: 8px 14px; font-size: 13px; }
+.listen-tools .btn svg { width: 18px; height: 18px; }
+.listen-tools .btn.on { animation: pulse 1s infinite; }
+.say-res { flex-basis: 100%; min-height: 20px; font-weight: 700; color: var(--ink-2); } .say-res.good { color: var(--jade); } .say-res.try { color: var(--coral-ink); }
+.say-res b { font-size: 18px; margin-inline-end: 4px; color: inherit; }
+.gp-new { display: inline-block; background: var(--berry-soft); color: var(--berry-text); border-radius: 99px; padding: 2px 10px; font: 800 11px var(--font-body); letter-spacing: .06em; text-transform: uppercase; margin-inline-end: 6px; }
+.gp-my { display: block; margin-top: 2px; }
+.wd-sound { padding: 10px 0 4px; border-bottom: 1px solid var(--line); } .wd-sound small { display: block; color: var(--ink-2); font-weight: 700; margin-bottom: 6px; text-align: center; }
+.wd-chars { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; } .wd-chars .hear { min-width: 48px; height: 48px; padding: 0 12px; } .wd-chars .script { font-size: 22px; font-weight: 800; color: var(--ink); }
+.prompt .hear.words, .glyph-btn + .hear.words { align-self: center; margin-inline-start: 8px; }
