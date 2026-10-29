@@ -1615,3 +1615,25 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 /* Real Talk: after a pick, just highlight the right answer clearly */
 .rt-opt.was { border-color: var(--jade) !important; background: var(--jade-soft) !important; box-shadow: 0 0 0 3px var(--jade); }
 .rt-opt.was, .rt-opt.was * { color: var(--ink); }
+
+/* Speak step: one line to say, Boo, one big mic (simple, Boo-led) */
+.sp2 { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+.sp2-bubble { position: relative; display: flex; align-items: center; gap: 12px; width: 100%; max-width: 420px; padding: 16px 18px; border: 2px solid var(--line); border-radius: 22px; background: var(--surface); }
+.sp2-bubble::after { content: ""; position: absolute; left: 50%; bottom: -10px; width: 16px; height: 16px; background: var(--surface); border-right: 2px solid var(--line); border-bottom: 2px solid var(--line); transform: translateX(-50%) rotate(45deg); }
+.sp2-btns { display: flex; flex-direction: column; gap: 8px; flex: none; }
+.sp2-text { flex: 1; min-width: 0; text-align: center; }
+.sp2-rom { font: 800 24px var(--font-display); color: var(--ink); line-height: 1.25; }
+.sp2 .speak-target { font-size: 22px !important; opacity: .8; line-height: 1.4; }
+.sp2-en { color: var(--ink-2); font-weight: 600; margin-top: 4px; }
+.sp2-boo { width: 140px; height: 140px; margin: 2px 0; }
+.mic-pill { position: relative; display: flex; align-items: center; justify-content: center; gap: 12px; width: min(100%, 300px); height: 68px; border: 0; border-radius: 20px; background: var(--berry); color: var(--on-berry); box-shadow: 0 6px 0 var(--berry-deep); cursor: pointer; }
+.mic-pill:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--berry-deep); }
+.mic-pill svg { width: 30px; height: 30px; }
+.mic-pill .bars { display: none; gap: 4px; align-items: center; height: 32px; }
+.mic-pill .bars i { width: 5px; height: 12px; border-radius: 3px; background: currentColor; animation: spBar .9s ease-in-out infinite; }
+.mic-pill .bars i:nth-child(2) { animation-delay: .12s; } .mic-pill .bars i:nth-child(3) { animation-delay: .24s; } .mic-pill .bars i:nth-child(4) { animation-delay: .36s; } .mic-pill .bars i:nth-child(5) { animation-delay: .48s; }
+.mic-pill.on .bars { display: flex; }
+@keyframes spBar { 50% { height: 30px; } }
+.sp2 .mic-status { width: 100%; max-width: 360px; font-weight: 600; color: var(--ink-2); }
+.sp2 .mic-status .meter { margin-top: 8px; }
+.sp2-rom { font-size: 20px; } .sp2 .meter { display: none; } .sp2 .meter.on { display: block; }
