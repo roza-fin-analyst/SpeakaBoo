@@ -6252,6 +6252,27 @@ function hearBar(t, r, en, emo) {
   return `<span class="hear-bar"><span class="hear" role="button" tabindex="0" aria-label="Hear it" data-say="${a(t)}" ${emo ? `data-emo="${a(emo)}"` : ''}>${ICON.speaker}</span>`
     + `<span class="hear words" role="button" tabindex="0" aria-label="Word by word" data-words data-t="${a(t)}" data-r="${a(r)}" data-en="${a(en)}">${ICON.chat}<b>Aa</b></span></span>`;
 }
+/** Hear / Slow / Say it, with a score. Sits under any picture or word the learner should be able to say. */
+function listenTools(t, r, en) {
+  if (!t) return '';
+  const a = k => esc(String(k || ''));
+  return `<div class="listen-tools"><button class="btn ghost sm" data-say="${a(t)}">${ICON.speaker} Hear</button><button class="btn ghost sm" data-say="${a(t)}" data-rate=".6">${ICON.turtle} Slow</button>`
+    + `${Mic.SR ? `<button class="btn primary sm" data-sayit data-t="${a(t)}">${ICON.mic} Say it</button>` : ''}`
+    + `<span class="hear words" role="button" tabindex="0" aria-label="Word by word" data-words data-t="${a(t)}" data-r="${a(r)}" data-en="${a(en)}"><b>Aa</b></span><span class="say-res" aria-live="polite"></span></div>`;
+}
+async function sayIt(btn) {
+  const t = btn.dataset.t, c = course(), box = btn.closest('.listen-tools') || btn.parentElement, res = $('.say-res', box);
+  if (!Mic.supported()) { toast(Mic.explain(Mic.blocked ? 'not-allowed' : 'unsupported')); return; }
+  if (btn.classList.contains('on')) return;
+  btn.classList.add('on'); if (res) { res.className = 'say-res'; res.textContent = 'Listening…'; }
+  try {
+    const alts = await listenOnce(c.stt, { target: t, onInterim: x => { if (res) res.textContent = x; } });
+    const r = pronScore(t, alts || []);
+    if (res) { res.className = 'say-res ' + (r.ok ? 'good' : 'try'); res.innerHTML = `<b>${r.pct}%</b> ${r.ok ? 'Great!' : 'Close. Hear it again, then try once more.'}`; }
+    if (r.ok) { Sfx.correct(); React.burst(btn, 'stars', 6); } else Sfx.wrong();
+  } catch (code) { if (res) { res.className = 'say-res try'; res.textContent = Mic.explain(code); } }
+  finally { btn.classList.remove('on'); }
+}
 function wordsSheet(text, rom, en, emo) {
   const c = course(), p = P(), my = p.myLang || 'en';
   const toks = String(text).trim().split(/\s+/).filter(Boolean), rt = String(rom || '').trim().split(/\s+/).filter(Boolean), align = rt.length === toks.length;
@@ -6260,6 +6281,7 @@ function wordsSheet(text, rom, en, emo) {
   openSheet(`<div class="sheet-head"><h2>Word by word</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
     <div class="wd-top"><div class="script wd-line" ${attrs(c)}>${esc(text)}</div>${rom ? `<small class="wd-rom">${esc(rom)}</small>` : ''}${whole ? `<b class="wd-en">${esc(whole)}</b>` : ''}${my !== 'en' && whole ? `<b class="wd-my" id="wd-my">…</b>` : ''}
       <div class="wd-btns"><button class="btn primary sm" data-say="${esc(text)}" ${emo ? `data-emo="${esc(emo)}"` : ''}>${ICON.speaker} Hear it</button><button class="btn ghost sm" data-say="${esc(text)}" data-rate=".6">${ICON.turtle} Slow</button></div></div>
+    ${/^(ko|ar|ja|zh)$/.test(c.code) ? `<div class="wd-sound"><small>Sound it out, one ${c.code === 'ko' ? 'syllable' : 'character'} at a time</small><div class="wd-chars">${[...String(text)].filter(ch => /\p{L}/u.test(ch)).map(ch => `<button class="hear" data-say="${esc(ch)}" data-rate=".7"><span class="script" ${attrs(c)}>${esc(ch)}</span></button>`).join('')}</div></div>` : ''}
     <div class="wd-list">${rows.map((x, i) => `<div class="wd-row"><button class="hear" data-say="${esc(Gloss.norm(x.tok))}" aria-label="Hear ${esc(x.tok)}">${ICON.speaker}</button><span class="script wd-w" ${attrs(c)}>${esc(x.tok)}</span><span class="wd-m"><small>${esc(x.r)}</small>${x.en ? `<b>${esc(x.en)}</b>` : `<button class="chip-btn" data-ask-word="${esc(x.tok)}" data-ask-sent="${esc(text)}">${ICON.chat} Ask Boo</button>`}<i class="wd-my2" data-i="${i}"></i></span></div>`).join('')}</div>`,
   sheet => {
     if (whole && my !== 'en') Tr.get(whole, my).then(o => { const el = $('#wd-my', sheet); if (el) el.textContent = o; }).catch(() => { const el = $('#wd-my', sheet); if (el) el.textContent = 'Needs internet for ' + myLangName(my); });
@@ -6271,6 +6293,7 @@ function wordsSheet(text, rom, en, emo) {
   });
 }
 document.addEventListener('click', e => {
+  const si = e.target.closest && e.target.closest('[data-sayit]'); if (si) { e.stopPropagation(); e.preventDefault(); sayIt(si); return; }
   const h = e.target.closest && e.target.closest('.hear'); if (!h) return;
   e.stopPropagation(); e.preventDefault();
   if (h.hasAttribute('data-words')) { wordsSheet(h.dataset.t, h.dataset.r, h.dataset.en, h.dataset.emo); return; }
@@ -8919,7 +8942,7 @@ function panelHTML(w, bubble = 'word', opts = {}) {
     ${charInSVG(them, 196, 52, 106, opts.themMood || (speakerYou ? 'happy' : 'cheer'))}
     ${counter ? '<rect x="184" y="128" width="136" height="42" fill="#C98B5E"/><rect x="184" y="124" width="136" height="8" rx="3" fill="#E0A877"/>' : ''}</svg>`;
   const bub = bubble === 'none' ? '' : `<div class="pn-bub ${speakerYou ? 'you' : 'them'} ${bubble === 'blank' ? 'blank' : ''}">${bubble === 'blank' ? '<b>?</b>' : `<span class="script" ${attrs(c)}>${esc(w.t)}</span>${w.r && course().code !== 'es' || opts.rom ? `<small>${esc(w.r)}</small>` : ''}`}</div>`;
-  return `<figure class="panel ${opts.small ? 'small' : ''}">${svg}${bub}<figcaption>${ROLE_NAME[x.role] ? `<b>${esc(ROLE_NAME[x.role])}</b> · ` : ''}${esc(x.cap)}</figcaption></figure>`;
+  return `<figure class="panel ${opts.small ? 'small' : ''}">${svg}${bub}<figcaption>${ROLE_NAME[x.role] ? `<b>${esc(ROLE_NAME[x.role])}</b> · ` : ''}${esc(x.cap)}</figcaption></figure>${bubble !== 'blank' && bubble !== 'none' && opts.tools !== false ? listenTools(w.t, w.r, cleanEn(w.en || '')) : ''}`;
 }
 function sayCtx(w) { const x = ctxOf(w); if (x && x.who === 'them' && ROLE_VOICE[x.role]) charSpeak(w.t, { tts_voice_id: ROLE_VOICE[x.role], tts_modifiers: { emotion: 'warm', speed: 1 } }); else Voice.speak(w.t); }
 
@@ -9412,6 +9435,15 @@ buildLesson = function (u, level) {
 };
 
 /* ---------- 3. Tap any word ---------- */
+const Hear = {
+  /** Put a word-by-word button next to every speaker in a lesson prompt. */
+  decorate() {
+    $$('#lesson .speaker[data-say]:not([data-dec]):not(.slow), #lesson .glyph-btn[data-say]:not([data-dec])').forEach(b => {
+      b.dataset.dec = '1'; const t = b.dataset.say; if (!t || /^[\x00-\x7f]*$/.test(t) && course().code === 'es' && t.length < 2) return;
+      b.insertAdjacentHTML('afterend', `<span class="hear words" role="button" tabindex="0" aria-label="Word by word" data-words data-t="${esc(t)}" data-r="" data-en="${esc(englishFor(t))}"><b>Aa</b></span>`);
+    });
+  }
+};
 const Gloss = {
   index: null, code: null,
   build() {
@@ -9460,7 +9492,7 @@ const Gloss = {
     const box = document.createElement('div'); box.id = 'gloss-pop'; box.className = 'gloss-pop';
     box.innerHTML = `<div class="gp-top"><span class="script" ${attrs(c)}>${esc(tok.replace(/[.,!?¿¡،؟…]/g, ''))}</span><button class="speaker sm" data-say="${esc(Gloss.norm(tok))}" aria-label="Play">${ICON.speaker}</button></div>
       <small class="gp-rom">${esc(span.dataset.r || (w && w.r) || '')}</small>
-      <b class="gp-en">${w ? esc(cleanEn(w.en)) + (Gloss.norm(w.t) !== Gloss.norm(tok) ? `<em> (from ${esc(w.t)})</em>` : '') : 'Not in your word list yet'}</b>
+      <b class="gp-en">${w ? esc(cleanEn(w.en)) + (Gloss.norm(w.t) !== Gloss.norm(tok) ? `<em> (from ${esc(w.t)})</em>` : '') : '<span class="gp-new">Not learnt yet</span><span id="gp-auto"> …</span>'}</b>
       <b class="gp-my muted" hidden></b>
       <button class="gp-ask" data-ask-word="${esc(tok)}" data-ask-sent="${esc(sent)}">${ICON.chat} Ask Boo about it</button>`;
     document.body.append(box);
@@ -9469,7 +9501,12 @@ const Gloss = {
     const below = r.bottom + 10, h = box.offsetHeight; box.style.top = (below + h < innerHeight - 10 ? below : Math.max(10, r.top - h - 10)) + 'px';
     $$('.gw.on').forEach(x => x.classList.remove('on')); span.classList.add('on');
     Voice.speak(Gloss.norm(tok));
-    const to = P().myLang || 'en', en = w && cleanEn(w.en), my = $('.gp-my', box);
+    const to = P().myLang || 'en', my = $('.gp-my', box);
+    let en = w && cleanEn(w.en);
+    if (!w) {   // a word the learner hasn't met yet: show a machine translation, marked as such
+      const auto = $('#gp-auto', box);
+      Tr.get(Gloss.norm(tok), 'en', c.code).then(o => { en = o; if (auto) auto.textContent = ' ' + o; if (to !== 'en' && my) { my.hidden = false; my.textContent = '…'; Tr.get(o, to).then(x => { my.textContent = x; }).catch(() => { my.textContent = ''; }); } }).catch(() => { if (auto) auto.textContent = ' (needs internet for the meaning)'; });
+    }
     if (to !== 'en' && en && my) { my.hidden = false; my.textContent = '…'; Tr.get(en, to).then(out => { my.textContent = out; }).catch(() => { my.textContent = 'Needs internet for ' + myLangName(to); }); }
   }
 };
@@ -9479,7 +9516,7 @@ document.addEventListener('click', e => {
   if (!e.target.closest('#gloss-pop')) { $('#gloss-pop')?.remove(); $$('.gw.on').forEach(x => x.classList.remove('on')); }
 }, true);
 let _scanT = 0;
-new MutationObserver(() => { clearTimeout(_scanT); _scanT = setTimeout(() => { if (!P()) return; Gloss.scan(); Ask.decorate(); }, 80); }).observe(document.body, { childList: true, subtree: true });
+new MutationObserver(() => { clearTimeout(_scanT); _scanT = setTimeout(() => { if (!P()) return; Gloss.scan(); Ask.decorate(); Hear.decorate(); }, 80); }).observe(document.body, { childList: true, subtree: true });
 
 /* ---------- 2. Ask Boo ---------- */
 const Ask = {
