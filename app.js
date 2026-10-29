@@ -6483,7 +6483,7 @@ const RealTalk = {
     if (f.is_successful && this.wins >= 3 && this.wins === this.i + 1) setTimeout(() => React.rain('hearts', 14), 200);
     const best = r && !r.ai ? r.options.find(o => o.ok) : null;
     const altSay = best && best.r ? best.t : '';
-    const head = /^Too slow/.test(f.explanation) ? 'Too slow!' : f.is_successful ? pick(j.ui_state.character_emotion === 'impressed' ? ['Native vibes!', 'Smooth!', 'They’re impressed!'] : ['Nailed it!', 'So natural!', 'Yes!']) : ({ 'Too Stiff': pick(['Bit stiff!', 'Robot alert!']), 'Culturally Awkward': pick(['Awkward…', 'Hmm, not quite!']), Inappropriate: pick(['Yikes!', 'Oof, no!']) }[f.rating] || 'Not quite');
+    const head = /^Too slow/.test(f.explanation) ? 'Too slow!' : f.is_successful ? pick(j.ui_state.character_emotion === 'impressed' ? ['Native vibes!', 'Smooth!', 'They’re impressed!'] : ['Nailed it!', 'So natural!', 'Yes!']) : ({ 'Too Stiff': pick(['Bit too formal!', 'Too textbook!']), 'Culturally Awkward': pick(['Awkward…', 'Hmm, not quite!']), Inappropriate: pick(['Yikes!', 'Oof, no!']) }[f.rating] || 'Not quite');
     const fb = $('#rt-fb'); fb.hidden = false; fb.className = 'rt-fb ' + (f.is_successful ? 'ok' : 'bad');
     fb.innerHTML = `<div class="rt-fb-head"><b>${esc(head)}</b>${r && !r.ai ? '' : `<span class="rt-rate r${RT_RATINGS.indexOf(f.rating)}">${esc(f.rating)}</span>`}</div>
       ${said ? `<p class="rt-said">You said: <span class="script" ${attrs(c)}>${esc(said)}</span></p>` : ''}
@@ -6496,7 +6496,7 @@ const RealTalk = {
       const b = $('#rt-sayit'); b.disabled = true; const alts = await listenOnce(c.stt, { target: altSay }); b.disabled = false;
       const s = pronScore(altSay, alts || []); b.innerHTML = `${ICON.mic} ${s.pct}%`; if (s.ok) { React.burst(b, 'stars', 8); Sfx.correct(); }
     });
-    requestAnimationFrame(() => fb.classList.add('in'));
+    requestAnimationFrame(() => { fb.classList.add('in'); fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
   },
   finish() {
     const n = this.list.length, xp = 5 + this.wins * 3, p = P(), body = $('#rt-body');

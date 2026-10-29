@@ -1637,3 +1637,5 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 .sp2 .mic-status { width: 100%; max-width: 360px; font-weight: 600; color: var(--ink-2); }
 .sp2 .mic-status .meter { margin-top: 8px; }
 .sp2-rom { font-size: 20px; } .sp2 .meter { display: none; } .sp2 .meter.on { display: block; }
+/* Real Talk feedback sits below the answers instead of floating over them */
+.rt-fb { position: static; margin-bottom: 16px; }
