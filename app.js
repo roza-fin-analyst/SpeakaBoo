@@ -9085,7 +9085,7 @@ Object.assign(RENDER, {
 const _buildLesson = buildLesson;
 buildLesson = function (u, level) {
   if (u.letters || level > 1 || !(u.words || []).length) return _buildLesson(u, level);
-  const W = u.words, half = Math.ceil(W.length / 2), set = (level === 0 ? W.slice(0, half) : W.slice(half)).slice(0, 7), wp = vocabPool(course());
+  const W = u.words, half = Math.ceil(W.length / 2), set = (level === 0 ? W.slice(0, 5) : (W.slice(5, 10).length ? W.slice(5, 10) : W.slice(-5))), wp = vocabPool(course());
   const ctx = set.filter(ctxOf), out = [];
   if (ctx.length >= 2) out.push(EX.scene(ctx.slice(0, 3)));
   const guessW = ctx[1] || ctx[0];
@@ -10282,5 +10282,29 @@ const Onboard2 = {
     }
   }
 };
+/* =====================================================================
+   EPISODE FLOW
+   Each word scene teaches 5 words one by one (picture, sound, meaning),
+   then uses them in sentences, then has the learner say a sentence out
+   loud, then shows English and asks for it in the new language.
+   ===================================================================== */
+const _buildLessonFlow = buildLesson;
+buildLesson = function (u, level) {
+  const out = _buildLessonFlow(u, level);
+  if (u.letters || level > 1 || !(u.words || []).length || !(u.sentences || []).length) return out;
+  const W = u.words, set = level === 0 ? W.slice(0, 5) : (W.slice(5, 10).length ? W.slice(5, 10) : W.slice(-5));
+  const clean = x => String(x).replace(/[.,!?¿¡،؟…~“”"«»()]/g, '').trim().toLowerCase();
+  const score = sn => set.reduce((n, w) => { const t = clean(w.t), st = t.length > 2 ? t.slice(0, -1) : t; return n + (t && clean(sn.t).includes(st) ? 1 : 0); }, 0);
+  const ranked = u.sentences.slice().sort((a, b) => score(b) - score(a));
+  const picks = shuffle(ranked.slice(0, 4)).slice(0, 3);
+  const block = [];
+  picks.slice(0, 2).forEach(sn => block.push(EX.listenTiles(sn)));            // hear it, build it
+  if (picks[0]) block.push(EX.speak(picks[0]));                                // say it
+  picks.forEach(sn => block.push(EX.toKo(sn)));                                // English in, new language out
+  const at = out.map(x => x.kind).lastIndexOf('speak');
+  out.splice(at >= 0 ? at : out.length, 0, ...block);
+  return out;
+};
+
 /* Start the app once every module has loaded. */
 bootApp();
