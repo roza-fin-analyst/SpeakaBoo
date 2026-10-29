@@ -17,6 +17,8 @@
   --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-cute-ko: "Jua", "Noto Sans KR", sans-serif;
   --font-ko: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-ja: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --font-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --font-ar: "Noto Naskh Arabic", "Geeza Pro", "Arabic Typesetting", serif;
   --script: var(--font-ko);
 
