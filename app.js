@@ -6483,7 +6483,7 @@ const RealTalk = {
     if (f.is_successful && this.wins >= 3 && this.wins === this.i + 1) setTimeout(() => React.rain('hearts', 14), 200);
     const best = r && !r.ai ? r.options.find(o => o.ok) : null;
     const altSay = best && best.r ? best.t : '';
-    const head = /^Too slow/.test(f.explanation) ? 'Too slow!' : f.is_successful ? pick(j.ui_state.character_emotion === 'impressed' ? ['Native vibes!', 'Smooth!', 'They’re impressed!'] : ['Nailed it!', 'So natural!', 'Yes!']) : ({ 'Too Stiff': pick(['Bit stiff!', 'Robot alert!']), 'Culturally Awkward': pick(['Awkward…', 'Hmm, not quite!']), Inappropriate: pick(['Yikes!', 'Oof, no!']) }[f.rating] || 'Not quite');
+    const head = /^Too slow/.test(f.explanation) ? 'Too slow!' : f.is_successful ? pick(j.ui_state.character_emotion === 'impressed' ? ['Native vibes!', 'Smooth!', 'They’re impressed!'] : ['Nailed it!', 'So natural!', 'Yes!']) : ({ 'Too Stiff': pick(['Bit too formal!', 'Too textbook!']), 'Culturally Awkward': pick(['Awkward…', 'Hmm, not quite!']), Inappropriate: pick(['Yikes!', 'Oof, no!']) }[f.rating] || 'Not quite');
     const fb = $('#rt-fb'); fb.hidden = false; fb.className = 'rt-fb ' + (f.is_successful ? 'ok' : 'bad');
     fb.innerHTML = `<div class="rt-fb-head"><b>${esc(head)}</b>${r && !r.ai ? '' : `<span class="rt-rate r${RT_RATINGS.indexOf(f.rating)}">${esc(f.rating)}</span>`}</div>
       ${said ? `<p class="rt-said">You said: <span class="script" ${attrs(c)}>${esc(said)}</span></p>` : ''}
@@ -6496,7 +6496,7 @@ const RealTalk = {
       const b = $('#rt-sayit'); b.disabled = true; const alts = await listenOnce(c.stt, { target: altSay }); b.disabled = false;
       const s = pronScore(altSay, alts || []); b.innerHTML = `${ICON.mic} ${s.pct}%`; if (s.ok) { React.burst(b, 'stars', 8); Sfx.correct(); }
     });
-    requestAnimationFrame(() => fb.classList.add('in'));
+    requestAnimationFrame(() => { fb.classList.add('in'); fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
   },
   finish() {
     const n = this.list.length, xp = 5 + this.wins * 3, p = P(), body = $('#rt-body');
@@ -8256,14 +8256,22 @@ const RENDER = {
   speak(step, el, R) {
     const c = course(), it = step.item, who = step.who || P().mascot, mc = MASCOTS[P().mascot];
     const canMic = !!Mic.SR && !Mic.blocked;
-    el.innerHTML = `<p class="q">${it.pic ? 'Say this word' : 'Speak this sentence'}</p>`;
-    bubblePrompt(el, `<button class="speaker sm" data-say="${esc(it.t)}" data-who="${who}" aria-label="Play">${ICON.speaker}</button><button class="speaker sm slow" data-say="${esc(it.t)}" data-who="${who}" data-rate=".55" aria-label="Play slowly">${ICON.turtle}</button><span>${esc(MASCOTS[who].name)}: “Repeat after me!”</span>`, who);
-    el.insertAdjacentHTML('beforeend', `<div class="speak-card">${it.pic ? `<div class="pic-hero sm" aria-hidden="true">${artSVG(it.pic)}</div>` : ''}
-        <div class="speak-target script" id="sp-t" ${attrs(c)}>${esc(it.t)}</div><div class="speak-rom">${esc(it.r)}</div><div class="speak-en">${esc(it.en)}</div>${starBtn(it)}${echoHTML()}</div>
-      ${canMic ? `<div class="mic-row"><button class="mic-big" id="sp-mic" aria-label="Tap to speak">${ICON.mic}</button>
-          <div class="mic-status" id="sp-st"><span>${P().micReady ? 'Listen… then speak when the mic glows.' : 'Tap the mic and repeat. Your browser asks for the microphone once.'}</span><div class="meter" style="margin-top:8px"><i id="sp-meter" style="width:0"></i></div></div></div>`
+    const rom = it.r && it.r !== it.t ? it.r : '';
+    el.innerHTML = `<p class="q">Repeat after ${esc(MASCOTS[who].name)}</p>
+      <div class="sp2">
+        <div class="sp2-bubble">
+          <div class="sp2-btns"><button class="speaker sm" data-say="${esc(it.t)}" data-who="${who}" aria-label="Play">${ICON.speaker}</button><button class="speaker sm slow" data-say="${esc(it.t)}" data-who="${who}" data-rate=".55" aria-label="Play slowly">${ICON.turtle}</button></div>
+          <div class="sp2-text">${rom ? `<div class="sp2-rom">${esc(rom)}</div>` : ''}<div class="speak-target script" id="sp-t" ${attrs(c)}>${esc(it.t)}</div></div>
+        </div>
+        <div class="sp2-en">${esc(it.en)}</div>
+        <div class="mascot sp2-boo" id="sp-boo"></div>
+        ${canMic ? `<button class="mic-pill" id="sp-mic" aria-label="Tap to speak">${ICON.mic}<span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></button>
+          <div class="mic-status" id="sp-st"><span>${P().micReady ? 'Listen, then speak when the mic glows.' : 'Tap the mic and repeat.'}</span><div class="meter"><i id="sp-meter" style="width:0"></i></div></div>`
         : `<div class="fallback">${IN_ARTIFACT ? `The microphone is blocked inside claude.ai.${APP_URL ? ` Open the app at <b style="user-select:all">${esc(APP_URL)}</b> to be checked by voice.` : ''}` : 'This browser has no speech recognition. Chrome (Android, desktop) and Safari (iPhone) support it.'} Say it out loud, then rate yourself.
-          <div class="row"><button class="btn good sm" id="sp-self-ok">I said it well</button><button class="btn ghost sm" id="sp-self-no">Needs practice</button></div></div>`}`);
+          <div class="row"><button class="btn good sm" id="sp-self-ok">I said it well</button><button class="btn ghost sm" id="sp-self-no">Needs practice</button></div></div>`}
+        ${echoHTML()}
+      </div>`;
+    paintMascot($('#sp-boo', el), who, 'think', true);
     R.skipAllowed('Can’t speak now'); wireEcho(el, it.t, who);
     if (!canMic) { setTimeout(() => Voice.speak(it.t, c.tts, .9, who), 250); $('#sp-self-ok', el).onclick = () => R.grade(true, { teach: 'Honor system accepted.' }); $('#sp-self-no', el).onclick = () => R.grade(true, { teach: 'Replay the slow version a few times.' }); return; }
     let tries = 0, alive = true;
@@ -8274,8 +8282,8 @@ const RENDER = {
       try {
         const alts = await listenOnce(c.stt, { target: it.t, onInterim: t => { st.textContent = `Hearing: ${t}…`; } }); btn.classList.remove('on'); tries++;
         const r = pronScore(it.t, alts); Journal.log(it, r.pct);
-        $('#sp-t', el).innerHTML = r.html;
-        const meter = $('#sp-meter', el); meter.style.width = r.pct + '%'; meter.style.background = r.ok ? 'var(--jade)' : 'var(--coral)';
+        $('#sp-t', el).innerHTML = r.html; paintMascot($('#sp-boo', el), who, r.ok ? 'cheer' : 'pout', true);
+        const meter = $('#sp-meter', el); meter.parentElement.classList.add('on'); meter.style.width = r.pct + '%'; meter.style.background = r.ok ? 'var(--jade)' : 'var(--coral)';
         if (r.ok) { P().stats.spoken++; Quests.bump('speak'); R.grade(true, { teach: `${r.pct}% match. I heard “${r.best}”.` }); }
         else if (tries >= 3) R.grade(true, { teach: `${r.pct}% after 3 tries. Red syllables need practice. No heart lost for pronunciation.`, noAuto: true });
         else { st.textContent = `${fill(pick(mc.mishear), { heard: r.best, right: it.t, rom: it.r })} (${r.pct}% · try ${tries}/3) Tap the mic to try again.`; Sfx.wrong(); }
