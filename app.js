@@ -5650,6 +5650,7 @@ Store.save = function (fromCloud) { if (this.data && !fromCloud) this.data.saved
 const OWNERS = (CFG.owners || ['ayeshaferozroza@gmail.com']).map(e => String(e).toLowerCase());
 const Tester = {
   on() {
+    try { if (isOwner()) return true; } catch (e) { /* not ready yet */ }
     if (Account.enabled()) return !!(Account.user && OWNERS.includes(String(Account.user.email || '').toLowerCase()));
     try { return localStorage.getItem('speakaboo-tester') === '1'; } catch (e) { return false; }
   },
@@ -7392,7 +7393,7 @@ function renderPath(track) {
     for (let i = 0; i <= UNIT_LESSONS; i++) {
       const isTest = i === UNIT_LESSONS, done = isTest ? prog > UNIT_LESSONS : prog > i;
       const isCur = cur && cur.u === u && cur.i === i;
-      const state = done ? 'done' : (open && prog >= i) ? 'open' : 'locked';
+      const state = done ? 'done' : (open && (prog >= i || Tester.on())) ? 'open' : 'locked';
       html += `<button class="ep-seg ${state} ${isTest ? 'test' : ''} ${isCur ? 'current' : ''}" data-node="${u.id}:${i}" data-stop="${u.id}:${i}" aria-label="${isTest ? 'Unit test' : 'Scene ' + (i + 1)} (${state})">${isTest ? ICON.trophy : isCur ? `<span><svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>Scene ${i + 1}</span>` : ''}</button>`;
     }
     html += `</div></section>`;
@@ -7458,9 +7459,11 @@ function showNodePop(key) {
   if (isTest) {
     if (prog > UNIT_LESSONS) body = `<b>${esc(u.title)}: mastered</b><p>Retake the test any time for XP.</p><button class="btn" data-go="${key}:test">Retake test +20 XP</button>`;
     else if (open && prog >= UNIT_LESSONS) body = `<b>Unit test</b><p>Prove you’ve mastered ${esc(u.title)}. Score 80% to earn the trophy.</p><button class="btn" data-go="${key}:test">Start test +20 XP</button>`;
+    else if (Tester.on()) body = `<b>Unit test</b><p>Owner access: open the test any time.</p><button class="btn" data-go="${key}:test">Start test</button>`;
     else { cls = 'locked'; body = `<b>Already know this?</b><p>Pass this unit test to jump straight here and unlock everything above.</p><button class="btn" data-go="${key}:jump">Jump here</button>`; }
   } else if (prog > i) body = `<b>${esc(u.title)}</b><p>Lesson ${i + 1} of ${UNIT_LESSONS} · ${esc(lessonDesc(u, i))}</p><button class="btn" data-go="${key}:lesson">Practice +5 XP</button>`;
   else if (open && prog === i) body = `<b>${esc(u.title)}</b><p>Lesson ${i + 1} of ${UNIT_LESSONS} · ${esc(lessonDesc(u, i))}</p><button class="btn" data-go="${key}:lesson">Start +10 XP</button>`;
+  else if (Tester.on()) body = `<b>${esc(u.title)}</b><p>Owner access · Lesson ${i + 1} of ${UNIT_LESSONS} · ${esc(lessonDesc(u, i))}</p><button class="btn" data-go="${key}:lesson">Open this scene</button>`;
   else { cls = 'locked'; body = `<b>${esc(u.title)}</b><p>Complete the lessons above to unlock this one.</p>`; }
   const who = courseCast()[(u.index + (u.track === 'letters' ? 1 : 0)) % courseCast().length];
   openSheet(`<div class="node-sheet ${cls}"><div class="mascot" data-ns-m></div><div class="ns-body">${body}</div></div>`);
