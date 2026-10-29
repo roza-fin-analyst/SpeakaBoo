@@ -1611,3 +1611,7 @@ html.sound-first .ex-line .ex-rom { order: 0; font-size: 17px; } html.sound-firs
 html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first .wt-rom { font-size: 15px; color: var(--ink); font-weight: 800; }
 .blank-rom { display: block; margin: -6px 0 6px; font: 800 16px var(--font-body); color: var(--ink); }
 .ask-rom { color: var(--ink); }
+
+/* Real Talk: after a pick, just highlight the right answer clearly */
+.rt-opt.was { border-color: var(--jade) !important; background: var(--jade-soft) !important; box-shadow: 0 0 0 3px var(--jade); }
+.rt-opt.was, .rt-opt.was * { color: var(--ink); }

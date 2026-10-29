@@ -6485,11 +6485,10 @@ const RealTalk = {
     const altSay = best && best.r ? best.t : '';
     const head = /^Too slow/.test(f.explanation) ? 'Too slow!' : f.is_successful ? pick(j.ui_state.character_emotion === 'impressed' ? ['Native vibes!', 'Smooth!', 'They’re impressed!'] : ['Nailed it!', 'So natural!', 'Yes!']) : ({ 'Too Stiff': pick(['Bit stiff!', 'Robot alert!']), 'Culturally Awkward': pick(['Awkward…', 'Hmm, not quite!']), Inappropriate: pick(['Yikes!', 'Oof, no!']) }[f.rating] || 'Not quite');
     const fb = $('#rt-fb'); fb.hidden = false; fb.className = 'rt-fb ' + (f.is_successful ? 'ok' : 'bad');
-    fb.innerHTML = `<div class="rt-fb-head"><b>${esc(head)}</b><span class="rt-rate r${RT_RATINGS.indexOf(f.rating)}">${esc(f.rating)}</span></div>
+    fb.innerHTML = `<div class="rt-fb-head"><b>${esc(head)}</b>${r && !r.ai ? '' : `<span class="rt-rate r${RT_RATINGS.indexOf(f.rating)}">${esc(f.rating)}</span>`}</div>
       ${said ? `<p class="rt-said">You said: <span class="script" ${attrs(c)}>${esc(said)}</span></p>` : ''}
-      ${f.explanation ? `<p class="rt-why">${esc(f.explanation)}</p>` : ''}
-      ${r && r.story && j.game_mode === 'SPEED_ROUND' ? `<p class="rt-story"><b>Backstory:</b> ${esc(r.story)}</p>` : ''}
-      ${f.alternative_suggestion && !(f.is_successful && j.game_mode === 'SPEED_ROUND') ? `<div class="rt-alt"><small>${f.is_successful ? 'Also great' : 'Say it like a local'}</small>${altSay ? `<button class="rt-alt-line" data-say="${esc(altSay)}">${ICON.speaker}<span class="script" ${attrs(c)}>${esc(best.t)}</span></button><small>${esc(best.r)} · ${esc(best.en)}</small>` : `<b class="script" ${attrs(c)}>${esc(f.alternative_suggestion)}</b>`}</div>` : ''}
+      ${r && !r.ai ? '' : `${f.explanation ? `<p class="rt-why">${esc(f.explanation)}</p>` : ''}
+      ${f.alternative_suggestion ? `<div class="rt-alt"><small>${f.is_successful ? 'Also great' : 'Say it like a local'}</small><b class="script" ${attrs(c)}>${esc(f.alternative_suggestion)}</b></div>` : ''}`}
       <div class="rt-fb-btns">${altSay && Mic.SR && !Mic.blocked ? `<button class="btn ghost sm" id="rt-sayit">${ICON.mic} Say it</button>` : ''}<button class="btn primary" id="rt-next">${this.i + 1 >= this.list.length ? 'See results' : 'Next'}</button></div>`;
     if (altSay) setTimeout(() => Voice.speak(altSay), 500);
     $('#rt-next').onclick = () => { this.i++; this.round(); };
