@@ -7841,6 +7841,7 @@ const Runner = {
     const stage = $('#l-stage'); stage.innerHTML = '<div class="l-inner"></div>'; stage.scrollTop = 0;
     paintMascot($('#l-boo'), P().mascot, 'happy', false);
     RENDER[step.kind](step, $('.l-inner', stage), this);
+    fitStage();
   },
   /** Show a single Continue button (teaching cards). */
   nextOnly(label = 'Continue') { const f = $('#l-foot'); f.hidden = false; const b = $('#l-main'); b.hidden = false; b.textContent = label; b.disabled = false; this.mode = 'next'; },
@@ -8715,6 +8716,22 @@ function splash() {
   setTimeout(hide, 2400);   // never block sign-in or slow networks
   return hide;
 }
+/** Phones: shrink an exercise a little so it fits the screen and never needs scrolling. */
+let _fitQ = 0;
+function fitStage() {
+  cancelAnimationFrame(_fitQ);
+  _fitQ = requestAnimationFrame(() => {
+    const st = $('#l-stage'), inn = st && $('.l-inner', st); if (!inn || $('#lesson').hidden) return;
+    inn.style.zoom = ''; const cs = getComputedStyle(st);
+    const avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom), need = inn.offsetHeight;
+    if (need > avail + 2) inn.style.zoom = Math.max(0.6, avail / need).toFixed(3);
+  });
+}
+{ const wire = () => { const st = document.getElementById('l-stage'); if (!st) return setTimeout(wire, 500);
+    new MutationObserver(() => fitStage()).observe(st, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'hidden'] });
+    new MutationObserver(() => fitStage()).observe(document.getElementById('l-foot'), { attributes: true, attributeFilter: ['class', 'hidden'], subtree: true, childList: true });
+    addEventListener('resize', fitStage); };
+  wire(); }
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
