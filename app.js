@@ -6359,7 +6359,7 @@ function wordsSheet(text, rom, en, emo) {
     ${/^(ko|ar|ja|zh)$/.test(c.code) ? `<div class="wd-sound"><small>Sound it out, one ${c.code === 'ko' ? 'syllable' : 'character'} at a time</small><div class="wd-chars">${[...String(text)].filter(ch => /\p{L}/u.test(ch)).map(ch => `<button class="hear" data-say="${esc(ch)}" data-rate=".7"><span class="script" ${attrs(c)}>${esc(ch)}</span></button>`).join('')}</div></div>` : ''}
     <div class="wd-list">${rows.map((x, i) => `<div class="wd-row"><button class="hear" data-say="${esc(Gloss.norm(x.tok))}" aria-label="Hear ${esc(x.tok)}">${ICON.speaker}</button><span class="script wd-w" ${attrs(c)}>${esc(x.tok)}</span><span class="wd-m"><small>${esc(x.r)}</small>${x.en ? `<b>${esc(x.en)}</b>` : `<button class="chip-btn" data-ask-word="${esc(x.tok)}" data-ask-sent="${esc(text)}">${ICON.chat} Ask Boo</button>`}<i class="wd-my2" data-i="${i}"></i></span></div>`).join('')}</div>`,
   sheet => {
-    if (whole && my !== 'en') Tr.get(whole, my).then(o => { const el = $('#wd-my', sheet); if (el) el.textContent = o; }).catch(() => { const el = $('#wd-my', sheet); if (el) el.textContent = 'Needs internet for ' + myLangName(my); });
+    if (whole && my !== 'en') Tr.get(whole, my).then(o => { const el = $('#wd-my', sheet); if (el) el.textContent = o; }).catch(() => { const el = $('#wd-my', sheet); if (el) el.hidden = true; });
     rows.forEach((x, i) => {
       const slot = $(`.wd-my2[data-i="${i}"]`, sheet); if (!slot) return;
       if (x.en) { if (my !== 'en') Tr.get(x.en, my).then(o => { slot.textContent = o; }).catch(() => {}); return; }
@@ -9597,7 +9597,7 @@ const Gloss = {
     const box = document.createElement('div'); box.id = 'gloss-pop'; box.className = 'gloss-pop';
     box.innerHTML = `<div class="gp-top"><span class="script" ${attrs(c)}>${esc(tok.replace(/[.,!?¿¡،؟…]/g, ''))}</span><button class="speaker sm" data-say="${esc(Gloss.norm(tok))}" aria-label="Play">${ICON.speaker}</button></div>
       <small class="gp-rom">${esc(span.dataset.r || (w && w.r) || '')}</small>
-      <b class="gp-en">${w ? esc(cleanEn(w.en)) + (Gloss.norm(w.t) !== Gloss.norm(tok) ? `<em> (from ${esc(w.t)})</em>` : '') : '<span class="gp-new">Not learnt yet</span><span id="gp-auto"> …</span>'}</b>
+      <b class="gp-en">${w ? esc(cleanEn(w.en)) + (Gloss.norm(w.t) !== Gloss.norm(tok) ? `<em> (from ${esc(w.t)})</em>` : '') : '<span id="gp-auto">…</span>'}</b>
       <b class="gp-my muted" hidden></b>
       <button class="gp-ask" data-ask-word="${esc(tok)}" data-ask-sent="${esc(sent)}">${ICON.chat} Ask Boo about it</button>`;
     document.body.append(box);
@@ -9610,9 +9610,9 @@ const Gloss = {
     let en = w && cleanEn(w.en);
     if (!w) {   // a word the learner hasn't met yet: show a machine translation, marked as such
       const auto = $('#gp-auto', box);
-      Tr.get(Gloss.norm(tok), 'en', c.code).then(o => { en = o; if (auto) auto.textContent = ' ' + o; if (to !== 'en' && my) { my.hidden = false; my.textContent = '…'; Tr.get(o, to).then(x => { my.textContent = x; }).catch(() => { my.textContent = ''; }); } }).catch(() => { if (auto) auto.textContent = ' (needs internet for the meaning)'; });
+      Tr.get(Gloss.norm(tok), 'en', c.code).then(o => { en = o; if (auto) auto.textContent = o; if (to !== 'en' && my) { my.hidden = false; my.textContent = '…'; Tr.get(o, to).then(x => { my.textContent = x; }).catch(() => { my.textContent = ''; }); } }).catch(() => { const b = auto && auto.closest('.gp-en'); if (b) b.remove(); });
     }
-    if (to !== 'en' && en && my) { my.hidden = false; my.textContent = '…'; Tr.get(en, to).then(out => { my.textContent = out; }).catch(() => { my.textContent = 'Needs internet for ' + myLangName(to); }); }
+    if (to !== 'en' && en && my) { my.hidden = false; my.textContent = '…'; Tr.get(en, to).then(out => { my.textContent = out; }).catch(() => { my.hidden = true; }); }
   }
 };
 document.addEventListener('click', e => {
