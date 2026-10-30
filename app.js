@@ -6354,7 +6354,8 @@ function wordsSheet(text, rom, en, emo) {
   const rows = toks.map((tok, i) => { const w = Gloss.lookup(tok); return { tok, r: align ? rt[i] : (w && w.r) || '', en: w ? cleanEn(w.en) : '' }; });
   openSheet(`<div class="sheet-head"><h2>Word by word</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
     <div class="wd-top"><div class="script wd-line" ${attrs(c)}>${esc(text)}</div>${rom ? `<small class="wd-rom">${esc(rom)}</small>` : ''}${whole ? `<b class="wd-en">${esc(whole)}</b>` : ''}${my !== 'en' && whole ? `<b class="wd-my" id="wd-my">…</b>` : ''}
-      <div class="wd-btns"><button class="btn primary sm" data-say="${esc(text)}" ${emo ? `data-emo="${esc(emo)}"` : ''}>${ICON.speaker} Hear it</button><button class="btn ghost sm" data-say="${esc(text)}" data-rate=".6">${ICON.turtle} Slow</button></div></div>
+      <div class="wd-btns"><button class="btn primary sm" data-say="${esc(text)}" ${emo ? `data-emo="${esc(emo)}"` : ''}>${ICON.speaker} Hear it</button><button class="btn ghost sm" data-say="${esc(text)}" data-rate=".6">${ICON.turtle} Slow</button></div>
+      <a class="report-link" href="${reportHref(text, rom, whole)}">Report a mistake</a></div>
     ${/^(ko|ar|ja|zh)$/.test(c.code) ? `<div class="wd-sound"><small>Sound it out, one ${c.code === 'ko' ? 'syllable' : 'character'} at a time</small><div class="wd-chars">${[...String(text)].filter(ch => /\p{L}/u.test(ch)).map(ch => `<button class="hear" data-say="${esc(ch)}" data-rate=".7"><span class="script" ${attrs(c)}>${esc(ch)}</span></button>`).join('')}</div></div>` : ''}
     <div class="wd-list">${rows.map((x, i) => `<div class="wd-row"><button class="hear" data-say="${esc(Gloss.norm(x.tok))}" aria-label="Hear ${esc(x.tok)}">${ICON.speaker}</button><span class="script wd-w" ${attrs(c)}>${esc(x.tok)}</span><span class="wd-m"><small>${esc(x.r)}</small>${x.en ? `<b>${esc(x.en)}</b>` : `<button class="chip-btn" data-ask-word="${esc(x.tok)}" data-ask-sent="${esc(text)}">${ICON.chat} Ask Boo</button>`}<i class="wd-my2" data-i="${i}"></i></span></div>`).join('')}</div>`,
   sheet => {
@@ -7019,6 +7020,7 @@ function renderNow() {
       <button class="sky-boo" data-sky-boo aria-label="Tap ${esc(mc.name)}"></button><div class="sky-bubble" id="sky-bubble" hidden></div>
       ${skylineSVG(c.code, sky)}
     </section>
+    ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Episode ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
     <section class="moment card-lift">
       <div class="moment-head"><span class="chip-time">${DAYPARTS[part].name}</span><b>Your next few hours</b></div>
       ${ph.map((x, i) => `<div class="phrase" style="animation-delay:${i * 80}ms"><button class="ph-play" data-say="${esc(x.t)}" aria-label="Play">${ICON.speaker}</button>
@@ -7030,7 +7032,6 @@ function renderNow() {
       : `<div><small>Real-life mission</small><b>Say “<span class="script" ${attrs(c)}>${esc(mis.t)}</span>” out loud today, to anyone (even your cat).</b></div><button class="btn primary sm" data-mission-done>I did it</button>`)
       : `<div><small>Real-life mission</small><b>Tap “Live it” to get today’s phrase to use for real.</b></div>`}</section>
     ${readyToReadHTML()}
-    ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Episode ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
     ${placesHTML()}
     ${showInstall ? `<div class="install-banner">${ICON.download}<p>Add Speakaboo to your home screen</p><button class="btn primary sm" data-install>Install</button><button class="icon-btn" data-hide-install aria-label="Dismiss">${ICON.x}</button></div>` : ''}
   </div>`;
@@ -8759,7 +8760,7 @@ Object.values(MASCOTS).forEach(m => Object.assign(m, {
     _renderProfile();
     const root = $('#tab-profile'), stack = root && root.querySelector('.stack'); if (!stack) return;
     root.querySelectorAll('.why-card').forEach(x => x.remove());
-    if (!Tester.on()) { const h = $('#me-hearts'); if (h) h.closest('label').remove(); }
+    if (!Tester.on()) { const h = $('#me-hearts'); if (h) h.closest('label').remove(); const ai = $('#ai-panel'); if (ai) ai.remove(); }
     const order = ['Preferences', 'Profile', 'Account', 'Microphone & app', 'Writing', 'Boo’s wardrobe', 'Chat tutor brain', 'Data'];
     const label = { 'Chat tutor brain': 'AI tutor (advanced)' };
     const list = document.createElement('div'); list.className = 'me-list';
@@ -8773,6 +8774,21 @@ Object.values(MASCOTS).forEach(m => Object.assign(m, {
     });
     const ver = stack.querySelector('#ver-line'); stack.insertBefore(list, ver || null);
   };
+}
+/* Report a mistake: opens an email to the app owner with the sentence filled in. */
+const REPORT_EMAIL = 'ayeshaferozroza@gmail.com';
+function reportHref(t, r, en) {
+  const c = course(), body = `Language: ${c ? c.name : ''}\nText: ${t}\nPronunciation: ${r || ''}\nMeaning: ${en || ''}\n\nWhat is wrong:\n`;
+  return `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent('Speakaboo mistake')}&body=${encodeURIComponent(body)}`;
+}
+/* Offline note: lessons keep working, translations need internet. */
+{
+  const note = () => {
+    let el = document.getElementById('offline-note');
+    if (navigator.onLine === false) { if (!el) { el = document.createElement('div'); el.id = 'offline-note'; el.textContent = 'You’re offline. Lessons still work. Translations need internet.'; document.body.append(el); } }
+    else if (el) el.remove();
+  };
+  addEventListener('online', note); addEventListener('offline', note); setTimeout(note, 1500);
 }
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
@@ -10358,8 +10374,9 @@ Billing.buy = async function (sku) { if (!this.available()) { toast('Subscriptio
 Onboard.shouldShow = () => false;   // the old intro is replaced by this one
 const Onboard2 = {
   step: 0, PROFILE: 7, ACCOUNT: 6, LAST: 7,
-  draft: { lang: 'ko', why: '', name: '', mascot: 'mandu', goal: 50, email: '' },
+  draft: { lang: 'ko', why: 'fun', name: '', mascot: 'mandu', goal: 50, email: '' },
   open(step = 0) {
+    if (step === 0) step = 1;   // short welcome: skip hide-and-seek
     $('#profiles').hidden = true; $('#auth') && ($('#auth').hidden = true);
     let el = $('#ob'); if (!el) { el = document.createElement('div'); el.id = 'ob'; el.className = 'ob'; document.body.append(el); }
     this.step = step; this.show();
@@ -10372,7 +10389,7 @@ const Onboard2 = {
       () => `<div class="ob-s"><div class="ob-boo mascot" id="ob-boo"></div><h1>Peekaboo! I’m Boo.</h1><p>I’ll help you <b>speak</b> a new language, out loud, from day one.</p><button class="btn primary big" data-ob-next>Hi Boo!</button></div>`,
       () => `<div class="ob-s"><h1>Not another tap-the-tiles app</h1><p>Here’s what you’ll do differently with Speakaboo:</p>${whyHTML(false)}<button class="btn primary big" data-ob-next>Sounds good!</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
-        <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
+        <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
       () => `<div class="ob-s"><h1>What brings you here?</h1><p>Boo will pick moments that matter to you.</p>
         <div class="ob-why">${[['travel', 'Travel', 'island'], ['culture', 'Shows & music', 'radio'], ['people', 'Family & friends', 'friends'], ['work', 'Work & study', 'work'], ['fun', 'Just for fun', 'gift']].map(([k, l, a]) => `<button class="ob-chip ${d.why === k ? 'on' : ''}" data-why="${k}">${artSVG(a)}<b>${l}</b></button>`).join('')}</div>
@@ -10390,18 +10407,16 @@ const Onboard2 = {
         <button class="link-btn" data-ob-signin>I already have an account</button>
         ${Acct.cloud() ? '' : '<button class="link-btn" data-ob-guest>Skip for now · use without an email</button>'}
         <p class="ob-fine">After the trial you keep a free plan, or subscribe monthly or yearly through Google Play. Cancel any time.</p></div>`,
-      () => `<div class="ob-s"><h1>Last thing: who are you?</h1>
+      () => `<div class="ob-s"><h1>What’s your name?</h1>
         <input class="input ob-name" id="ob-name" maxlength="20" placeholder="Your name" value="${esc(d.name)}" autocomplete="given-name" enterkeyhint="done">
-        <p class="ob-label">Pick your buddy</p><div class="ob-buddies">${MASCOT_ORDER.map(k => `<button class="ob-buddy ${d.mascot === k ? 'on' : ''}" data-buddy="${k}"><div class="mascot" data-ob-art="${k}"></div><small>${esc(MASCOTS[k].name)}</small></button>`).join('')}</div>
-        <p class="ob-label">How much each day?</p><div class="ob-goal">${[[30, 'Chill', '5 min'], [50, 'Regular', '10 min'], [100, 'Serious', '20 min']].map(([v, l, m]) => `<button class="ob-chip sm ${d.goal === v ? 'on' : ''}" data-goal="${v}"><b>${l}</b><small>${m}</small></button>`).join('')}</div>
         <p class="ob-label">My language <small>(for translations when you get stuck)</small></p><select class="input" id="ob-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (d.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select>
         <button class="btn primary big" id="ob-go">Start my journey</button></div>`
     ];
-    const pct = Math.round(this.step / this.LAST * 100);
+    const pct = Math.round(([1, 3, 5, 6, 7].indexOf(this.step) + 1) / 5 * 100);
     el.innerHTML = `<div class="ob-top"><div class="ob-bar"><i style="width:${pct}%"></i></div>${this.step < this.ACCOUNT ? '<button class="ob-skip" data-ob-skip>Skip</button>' : ''}</div><div class="ob-stage">${S[this.step]()}</div>`;
     this.wire();
   },
-  next() { this.step = Math.min(this.LAST, this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
+  next() { this.step = Math.min(this.LAST, ({ 1: 3, 3: 5, 5: 6 })[this.step] || this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
   accountReady() { if (this.step <= this.ACCOUNT) { this.step = this.PROFILE; this.show(); } },
   wire() {
     const el = $('#ob'), d = this.draft;

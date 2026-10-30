@@ -1703,3 +1703,11 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 .me-group > summary::after { content: "›"; font-size: 26px; color: var(--ink-2); transition: transform .2s; }
 .me-group[open] > summary::after { transform: rotate(90deg); }
 .me-body { padding: 0 18px 18px; display: flex; flex-direction: column; gap: 12px; }
+.report-link { display: block; text-align: center; margin-top: 10px; font-size: 14px; color: var(--ink-2); text-decoration: underline; }
+#offline-note { position: fixed; top: calc(8px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); z-index: 300; background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 700; max-width: calc(100% - 24px); text-align: center; }
+/* Welcome screens: typed text must be readable */
+.ob .input, .ob select.input, .ob-form .input { color: #1C1B2E !important; background: #fff !important; }
+.ob .input::placeholder { color: #6B6A80; }
+/* Today: Continue card sits above the phrases without being covered */
+.journey-card + .moment { margin-top: 14px; }
+.sky + .journey-card { position: relative; z-index: 4; margin-top: -28px; }
