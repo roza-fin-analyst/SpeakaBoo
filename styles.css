@@ -1655,3 +1655,12 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 @media (max-height: 820px) { .listen-tools { flex-wrap: nowrap; gap: 6px; } .listen-tools .btn { padding-left: 10px; padding-right: 10px; } .sp2-rom { font-size: 18px; } .sp2 .speak-target { font-size: 19px !important; } .sp2-en { margin-top: 0; } }
 /* Answer bar: Boo sits inside the card so it never covers the answers */
 .l-foot.ok .fb .mascot, .l-foot.bad .fb .mascot { top: 10px !important; left: auto !important; right: 16px; width: 56px !important; height: 56px !important; }
+
+/* Larger text inside exercises (two sizes up) */
+.l-inner .opt, .l-inner .rt-opt { font-size: 20px; } .l-inner .opt small, .l-inner .opt .script { font-size: 17px; }
+.l-inner .q { font-size: 26px; } .l-inner .prompt-text { font-size: 26px; }
+.l-inner .wt { font-size: 22px; } .l-inner .wt small { font-size: 14px; }
+.l-inner .en { font-size: 22px; } .l-inner .ex-line .script { font-size: 20px; }
+@media (max-height: 820px) { .l-inner figure.panel { zoom: .72; } .l-inner .scene-wrap { zoom: .7; } .l-inner { gap: 8px; } }
+@media (max-height: 680px) { .l-inner figure.panel { zoom: .55; } }
+.l-inner .prompt .script, .l-inner .prompt-text.script { font-size: 26px; } .l-inner .opt .script { font-size: 18px; }

@@ -8724,8 +8724,8 @@ function fitStage() {
     const fb = $('#l-foot'); if (fb && (fb.classList.contains('ok') || fb.classList.contains('bad'))) return;   // keep the size while the answer bar is showing
     inn.style.zoom = ''; const cs = getComputedStyle(st);
     const foot = $('#l-foot'), footH = foot && !foot.hidden ? foot.offsetHeight : 0;   // the answer bar's space is reserved up front, so nothing resizes when it appears
-    const avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - Math.max(0, 215 - footH), need = inn.offsetHeight;
-    if (need > avail + 2) inn.style.zoom = Math.max(0.6, avail / need).toFixed(3);
+    const avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - Math.max(0, 170 - footH), need = inn.offsetHeight;
+    if (need > avail + 2) inn.style.zoom = Math.max(0.9, avail / need).toFixed(3);
   });
 }
 { const wire = () => { const st = document.getElementById('l-stage'); if (!st) return setTimeout(wire, 500);
