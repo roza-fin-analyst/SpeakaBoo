@@ -4450,9 +4450,9 @@ function award(n) {
 /** Mascot + toasts for streak / level / goal moments */
 function celebrate(ev) {
   const p = P();
-  if (ev.leveled) { Mascot.set('cheer', `LEVEL ${ev.level}! I’m telling everyone.`); toast(`Level ${ev.level} reached`, 'Lv'); Sfx.level(); confetti(); }
-  else if (ev.streakUp && p.streak > 1) { Mascot.set('cheer', `${p.streak}-day streak! Look at you go.`); toast(`${p.streak}-day streak`, String(p.streak)); }
-  else if (ev.goal) { Mascot.set('cheer', 'Daily goal smashed!'); toast('Daily goal complete', 'XP'); }
+  if (ev.leveled) { Mascot.set('cheer', `Level ${ev.level}!`); toast(`Level ${ev.level} reached`, 'Lv'); Sfx.level(); confetti(); }
+  else if (ev.streakUp && p.streak > 1) { Mascot.set('cheer', `${p.streak}-day streak!`); toast(`${p.streak}-day streak`, String(p.streak)); }
+  else if (ev.goal) { Mascot.set('cheer', 'Daily goal done!'); toast('Daily goal complete', 'XP'); }
   renderChrome();
 }
 function checkAchievements() {
@@ -4625,10 +4625,11 @@ const Voice = {
       const guard = setTimeout(done, 2500 + String(text).length * 300);
       const make = useVoice => {
         const u = new SpeechSynthesisUtterance(text); u.lang = lang;
-        u.rate = Math.max(.5, Math.min(2, rate * (prof.rate || 1) * (e ? e.r : 1)));
-        u.pitch = Math.max(0, Math.min(2, (prof.pitch || 1) * (e ? e.p : 1)));
+        const plainEn = /^en/i.test(lang);   // English: keep the voice natural, no pitch or speed effects
+        u.rate = plainEn ? 1 : Math.max(.5, Math.min(2, rate * (prof.rate || 1) * (e ? e.r : 1)));
+        u.pitch = plainEn ? 1 : Math.max(0, Math.min(2, (prof.pitch || 1) * (e ? e.p : 1)));
         u.volume = Math.max(.1, Math.min(1, (prof.volume ?? 1) * (e ? e.v : 1)));
-        if (useVoice) { const v = this.find(lang, prof.pick || 0); if (v) u.voice = v; else this.warn(lang, `No ${({ ko: 'Korean', ar: 'Arabic', es: 'Spanish', fr: 'French', de: 'German', ja: 'Japanese', zh: 'Chinese' })[lang.slice(0, 2)] || lang} voice on this device. Install one in your phone’s language settings (Text-to-speech), or add a Gemini key in Me for studio voices.`); }
+        if (useVoice) { const v = this.find(lang, /^en/i.test(lang) ? 0 : (prof.pick || 0)); if (v) u.voice = v; else this.warn(lang, `No ${({ ko: 'Korean', ar: 'Arabic', es: 'Spanish', fr: 'French', de: 'German', ja: 'Japanese', zh: 'Chinese' })[lang.slice(0, 2)] || lang} voice on this device. Install one in your phone’s language settings (Text-to-speech), or add a Gemini key in Me for studio voices.`); }
         return u;
       };
       const say = useVoice => {
@@ -4758,13 +4759,13 @@ const Tutor = {
         : P().lang === 'es' ? { t: '¡Hola! ¿Qué tal tu día?', r: 'OH-lah! keh TAHL too DEE-ah?', en: 'Hi! How was your day?' }
         : { t: 'أهلا! كيف كان يومك؟', r: 'ahlan! kayfa kāna yawmuk?', en: 'Hi! How was your day?' };
       if (this.brain === 'offline') {
-        this.push({ who: 'tutor', mood: 'think', quip: `Free chat needs an AI brain. Open Me → Tutor brain to connect one, or pick a scene like “${this.topics()[0].title}”.` });
+        this.push({ who: 'tutor', mood: 'think', quip: `Pick a scene to practise, like “${this.topics()[0].title}”.` });
         this.suggest([]); return;
       }
     } else opener = fillSay(t.steps[0].say);
     const m = MASCOTS[P().mascot];
     this.push({ who: 'divider', text: t.title });
-    this.push({ who: 'tutor', mood: 'happy', quip: pick([`Scene: ${t.title}. I’ll start. Try to answer in ${course().name}!`, `${t.title}! ${m.name} is ready. Are you?`]), ...opener });
+    this.push({ who: 'tutor', mood: 'happy', quip: `Scene: ${t.title}. Answer in ${course().name}.`, ...opener });
     chat.turns.push({ role: 'assistant', content: `${opener.t} (${opener.r}) — ${opener.en}` });
     this.suggest(t.free ? [] : t.steps[0].chips.map(c => ({ t: fill(c.t, { name: P().name }), r: fill(c.r, { name: P().name }), en: fill(c.en, { name: P().name }) })));
     Mascot.set('happy', opener.en);
@@ -4860,7 +4861,7 @@ const Tutor = {
   rules() {
     const p = P(), c = course(), m = MASCOTS[p.mascot], t = this.topic();
     const known = learnedWords(p, c.code).slice(0, 40).map(w => w.t).join(', ') || 'none yet';
-    return `You are ${m.persona}
+    return `Tone: plain, short and friendly. No jokes, puns or long explanations.\nYou are ${m.persona}
 You are the tutor inside "Speakaboo", a free language app. The learner is ${p.name}, an adult beginner (A0–A1) learning ${c.name}.
 Current scene: ${t ? `${t.title} (${t.en})` : 'free chat'}. Words they already know: ${known}.
 ${t && t.steps ? `This is a LONG role-play. You play the other person in the scene (${SCENE_ROLE[t.id] || 'the other person'}${SCENE_NPC[t.id] ? `, a character named ${MASCOTS[SCENE_NPC[t.id]].name}: ${MASCOTS[SCENE_NPC[t.id]].tagline}` : ''}), while your jokes and corrections still come from you as the tutor. Follow this outline in order, one beat per turn, adapting naturally to what the learner says. Do not wrap up early; the scene ends only after the last beat.
@@ -4872,13 +4873,13 @@ How to tutor:
 - Always give romanization and an English translation of your line.
 - The learner replies by typing (${({ ko: 'Hangul or romanization', ar: 'Arabic script or transliteration', es: 'Spanish, accents optional', fr: 'French, accents optional', de: 'German, umlauts optional', ja: 'Japanese or romaji', zh: 'Chinese characters or pinyin' })[c.code]}) or by voice (speech-to-text that may mishear).
 - Judge their LAST message. "correct": a sensible, grammatical answer (ignore spacing and punctuation). "mistake": wrong grammar, spelling, word choice, meaning, or pronunciation. Romanization is allowed but gently nudge toward script. "none": they asked for help or wrote in English.
-- On a mistake: first one short witty joke about the mistake, in character (max 25 words, affectionate, PG, never about intelligence or looks). Then the corrected sentence and one plain-English line explaining why.
-- If the input was spoken and looks misheard, set "misheard" to a playful English rendering of how it sounded (e.g. "gamsa-hamster-nida?") and coach the correct sound in "why".
+- On a mistake: give the corrected sentence and one very short plain-English line explaining why. No jokes.
+- If the input was spoken and looks misheard, set "misheard" to a plain English spelling of how it sounded and coach the correct sound in "why".
 - If they ask for help or write English, answer kindly and give a sentence to try.
 - At most one new word per turn in new_words. Stay beginner-level.
 
 Reply with ONLY one JSON object, no other text:
-{"mood":"happy|giggle|shocked|cheer","verdict":"correct|mistake|none","quip":"short in-character English reaction","joke":"only on mistakes, else empty","misheard":"","correction":{"better":"","better_rom":"","why":""},"reply":{"text":"","rom":"","en":""},"suggestions":[{"text":"","rom":"","en":""}],"new_words":[{"t":"","r":"","en":""}]}
+{"mood":"happy|giggle|shocked|cheer","verdict":"correct|mistake|none","quip":"plain friendly English reaction, 8 words max, no jokes","joke":"","misheard":"","correction":{"better":"","better_rom":"","why":""},"reply":{"text":"","rom":"","en":""},"suggestions":[{"text":"","rom":"","en":""}],"new_words":[{"t":"","r":"","en":""}]}
 "suggestions": 2–3 short possible answers to YOUR new question, in ${c.name} script.`;
   },
 
@@ -5258,7 +5259,7 @@ const Buddy = {
   start() {
     const g = this.state(), mc = MASCOTS[P().mascot];
     Tutor.push({ who: 'divider', text: 'Say it in ' + course().name });
-    Tutor.push({ who: 'tutor', mood: 'cheer', quip: `Game on! I say it in English, you say it in ${course().name}. Speak with the mic or type. Ask me anything too, like “how do I say thank you?”` });
+    Tutor.push({ who: 'tutor', mood: 'cheer', quip: `I say it in English. You say it in ${course().name}. Use the mic or type.` });
     g.streak = 0;
     const next = this.pickNext(); if (next) this.ask(next);
   },
@@ -5313,7 +5314,7 @@ const Buddy = {
     if (qa) {
       const hit = this.lookup(text);
       if (hit) { Tutor.push({ who: 'tutor', mood: 'happy', quip: 'Easy! Here you go:', t: hit.t, r: hit.r, en: hit.en }); if (P().autoVoice) Voice.speak(hit.t); }
-      else Tutor.push({ who: 'tutor', mood: 'think', quip: Tutor.brain === 'offline' ? 'I only know what’s in your course while I’m offline. Connect an AI brain under Me → Tutor brain and I can answer anything.' : 'Hmm, I’m not sure. Try asking another way?' });
+      else Tutor.push({ who: 'tutor', mood: 'think', quip: Tutor.brain === 'offline' ? 'I can only help with your course words right now.' : 'Hmm, I’m not sure. Try asking another way?' });
       Tutor.push({ who: 'tutor', mood: 'happy', quip: 'Back to the game. Still waiting on:', challenge: it.en });
       return;
     }
@@ -5364,7 +5365,7 @@ const Buddy = {
   rules(qa) {
     const p = P(), c = course(), m = MASCOTS[p.mascot], g = this.state();
     const known = learnedWords(p, c.code).slice(0, 50).map(w => w.t).join(', ') || 'none yet';
-    return `You are ${m.persona}
+    return `Tone: plain, short and friendly. No jokes, puns or long explanations.\nYou are ${m.persona}
 You run a speaking game inside a language app. ${p.name} is an adult beginner learning ${c.name}. You give an English sentence; they say or type it in ${c.name}. They may also ask you any question about the language.
 Current English prompt: "${g.cur.en}". Reference answer: ${g.cur.t} (${g.cur.r}). Other natural answers are fine too.
 Words they know: ${known}. Their streak: ${g.streak}.
@@ -5374,7 +5375,7 @@ Judge the learner's message:
 - "mistake": wrong meaning, grammar or word.
 - "english": they just wrote English instead of answering.
 - "question": they asked you something; answer it in "answer" (short, friendly, with ${c.name} example + romanization).
-For correct: a short funny, warm, supportive reaction (max 20 words). For close/mistake: one affectionate witty joke about the SPECIFIC mistake (max 25 words, PG, never about intelligence or looks), then the corrected sentence and a one-line why. If it was spoken and sounds misheard, set "misheard" to a playful English rendering of how it sounded.
+For correct: a plain 3–6 word reaction. For close/mistake: the corrected sentence and a one-line why, no jokes. If it was spoken and sounds misheard, set "misheard" to a plain English spelling of how it sounded.
 Also give "next": a NEW English prompt for the next round, everyday and fun (sometimes silly), at their level, slightly harder if the streak is 3+, with its ${c.name} answer and romanization.
 Reply with ONLY JSON:
 {"verdict":"correct|close|mistake|english|question","line":"","misheard":"","better":"","better_rom":"","why":"","answer":{"text":"","t":"","r":"","en":""},"next":{"en":"","t":"","r":""}}`;
@@ -7364,7 +7365,7 @@ function enterApp(id) {
   applyLang(); Tutor.pickBrain();
   UI.tab = 'now'; BooMood.apply(); renderChrome(); showTab('now'); setTimeout(welcomeBack, 700);
   const m = MASCOTS[p.mascot];
-  Mascot.set('happy', todayXP(p) ? `Welcome back, ${p.name}! ${todayXP(p)} XP so far today.` : `Hi ${p.name}! I’m ${m.name}. Tap “Live it” to learn what to say in the next few hours.`);
+  Mascot.set('happy', todayXP(p) ? `Welcome back, ${p.name}! ${todayXP(p)} XP so far today.` : `Hi ${p.name}! Tap a phrase to hear it.`);
   if (!Access.state().ok) Paywall.show();
 }
 function applyLang() { document.documentElement.style.setProperty('--script', course().font); }
@@ -7799,7 +7800,7 @@ function skipSection(s) {
   const c = course();
   c.units.filter(u => u.s === s).forEach(u => { LS().path[u.id] = Math.max(unitProgress(P(), c.code, u.id), UNIT_LESSONS); });
   Store.save(); closeSheet(); checkAchievements(); renderLearn(); renderChrome();
-  toast(`Section ${s + 2} unlocked`, '→'); Mascot.set('cheer', 'Skipping ahead? Bold. I like it.');
+  toast(`Section ${s + 2} unlocked`, '→'); Mascot.set('cheer', 'Skipping ahead.');
   const first = c.units.find(u => u.s === s + 1);
   if (first) setTimeout(() => $(`#unit-${first.id}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 60);
 }
@@ -8274,7 +8275,7 @@ const RENDER = {
       </div>`;
     paintMascot($('#sp-boo', el), who, 'think', true);
     R.skipAllowed('Can’t speak now'); wireEcho(el, it.t, who);
-    if (!canMic) { setTimeout(() => Voice.speak(it.t, c.tts, .9, who), 250); $('#sp-self-ok', el).onclick = () => R.grade(true, { teach: 'Honor system accepted.' }); $('#sp-self-no', el).onclick = () => R.grade(true, { teach: 'Replay the slow version a few times.' }); return; }
+    if (!canMic) { setTimeout(() => Voice.speak(it.t, c.tts, .9, who), 250); $('#sp-self-ok', el).onclick = () => R.grade(true, {}); $('#sp-self-no', el).onclick = () => R.grade(true, { teach: 'Listen to the slow version again.' }); return; }
     let tries = 0, alive = true;
     const listen = async () => {
       const btn = $('#sp-mic', el), st = $('#sp-st span', el); if (!btn || R.locked) return;
@@ -8285,9 +8286,9 @@ const RENDER = {
         const r = pronScore(it.t, alts); Journal.log(it, r.pct);
         $('#sp-t', el).innerHTML = r.html; paintMascot($('#sp-boo', el), who, r.ok ? 'cheer' : 'pout', true);
         const meter = $('#sp-meter', el); meter.parentElement.classList.add('on'); meter.style.width = r.pct + '%'; meter.style.background = r.ok ? 'var(--jade)' : 'var(--coral)';
-        if (r.ok) { P().stats.spoken++; Quests.bump('speak'); R.grade(true, { teach: `${r.pct}% match. I heard “${r.best}”.` }); }
-        else if (tries >= 3) R.grade(true, { teach: `${r.pct}% after 3 tries. Red syllables need practice. No heart lost for pronunciation.`, noAuto: true });
-        else { st.textContent = `${fill(pick(mc.mishear), { heard: r.best, right: it.t, rom: it.r })} (${r.pct}% · try ${tries}/3) Tap the mic to try again.`; Sfx.wrong(); }
+        if (r.ok) { P().stats.spoken++; Quests.bump('speak'); R.grade(true, { teach: `${r.pct}% match` }); }
+        else if (tries >= 3) R.grade(true, { teach: `${r.pct}%. Practise the red parts.`, noAuto: true });
+        else { st.textContent = `${fill(pick(mc.mishear), { heard: r.best, right: it.t, rom: it.r })} ${r.pct}%. Tap the mic to try again.`; Sfx.wrong(); }
       } catch (code) { btn.classList.remove('on'); st.textContent = Mic.explain(code); if (Mic.blocked) { alive = false; RENDER.speak(step, el, R); } }
     };
     $('#sp-mic', el).onclick = listen;
@@ -8564,7 +8565,7 @@ function renderProfile() {
   $$('[data-art]', root).forEach(el => paintMascot(el, el.dataset.art, 'happy', false));
   $('#mic-test').onclick = async () => { const ok = await Mic.prepare(); toast(ok ? 'Microphone ready. You can answer by voice.' : Mic.explain('not-allowed')); renderProfile(); };
   $('#me-name').onchange = e => { const v = e.target.value.trim(); if (v) { p.name = v; Store.save(); renderChrome(); } };
-  $$('[data-me-m]', root).forEach(b => b.onclick = () => { p.mascot = b.dataset.meM; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', `${MASCOTS[p.mascot].name} reporting for duty!`); Sfx.pop(); Voice.speak(`Hi, I’m ${MASCOTS[p.mascot].name}! ${MASCOTS[p.mascot].tagline}. Let’s talk!`, 'en-US', 1, p.mascot); });
+  $$('[data-me-m]', root).forEach(b => b.onclick = () => { p.mascot = b.dataset.meM; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', `${MASCOTS[p.mascot].name} is your buddy now.`); Sfx.pop(); Voice.speak(`Hi, I’m ${MASCOTS[p.mascot].name}! ${MASCOTS[p.mascot].tagline}. Let’s talk!`, 'en-US', 1, p.mascot); });
   $('#me-theme').onchange = e => { Theme.set(e.target.value); Sfx.pop(); };
   $('#me-mylang').onchange = e => { p.myLang = e.target.value; Store.save(); toast(`Translations will appear in ${(MY_LANGS.find(x => x[0] === p.myLang) || [])[1] || 'English'}.`); };
   $('#me-goal').onchange = e => { p.dailyGoal = +e.target.value; Store.save(); renderChrome(); };
@@ -8636,7 +8637,7 @@ document.addEventListener('click', e => {
   const adv = t.closest('[data-adventure]'); if (adv) { Adventure.open(adv.dataset.adventure); return; }
   const hide = t.closest('[data-hide]'); if (hide) { hideTap(+hide.dataset.hide); return; }
   const dans = t.closest('[data-daily-ans]'); if (dans) { dailyAnswer(dans.dataset.dailyAns); return; }
-  const wear = t.closest('[data-wear]'); if (wear) { P().wear = wear.dataset.wear || null; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', 'How do I look?'); return; }
+  const wear = t.closest('[data-wear]'); if (wear) { P().wear = wear.dataset.wear || null; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', 'Looks good!'); return; }
   const feel = t.closest('[data-feel]'); if (feel) { startMood(feel.dataset.feel); return; }
   const star = t.closest('[data-star]'); if (star) { const on = Phrases.toggle(JSON.parse(star.dataset.star)); star.classList.toggle('on', on); if (UI.tab === 'practice' && $('#lesson').hidden) renderPractice(); return; }
   const stamp = t.closest('[data-stamp]'); if (stamp) { cultureSheet(stamp.dataset.stamp); return; }
@@ -8733,6 +8734,26 @@ function fitStage() {
     new MutationObserver(() => fitStage()).observe(document.getElementById('l-foot'), { attributes: true, attributeFilter: ['class', 'hidden'], subtree: true, childList: true });
     addEventListener('resize', fitStage); };
   wire(); }
+/* ---- Plain, short feedback everywhere (no jokes, no long explanations) ---- */
+Object.assign(BUDDY_LINES, {
+  perfect: ['Perfect!', 'Great!', 'Nice one!', 'Well said!'],
+  close: ['Almost! {fix}', 'Close. {fix}'],
+  missing: ['Almost. Add “{w}”.', 'You missed “{w}”.'],
+  extra: ['Remove “{x}”.', 'No need for “{x}”.'],
+  swap: ['Use “{w}” instead of “{x}”.', 'It’s “{w}”, not “{x}”.'],
+  off: ['Not quite. Try: “{en}”.', 'Try again: “{en}”.'],
+  english: ['Say it in {lang}.', 'Try it in {lang}.'],
+  roman: ['Right! Now try the {lang} script.', 'Correct. Try it in the {lang} script.'],
+  streak: ['{n} in a row!', '{n} correct in a row!'],
+  reveal: ['Say it after me:', 'Repeat after me:']
+});
+Object.values(MASCOTS).forEach(m => Object.assign(m, {
+  praise: ['Perfect!', 'Great!', 'Nice one!', 'Well said!'],
+  oops: ['Not quite. Try “{right}”.', 'Close. It’s “{right}”.'],
+  roman: ['Right! In the script: “{right}”.'],
+  mishear: ['I heard “{heard}”. Try “{right}” ({rom}).'],
+  help: ['Try: “{right}” ({rom}).']
+}));
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
