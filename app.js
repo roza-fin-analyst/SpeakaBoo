@@ -5134,7 +5134,7 @@ const Echo = {
   play(url = this.url) { return new Promise(res => { if (!url) return res(); const a = new Audio(url); a.onended = res; a.onerror = res; a.play().catch(res); }); }
 };
 /** Echo widget inside a card: record yourself, then hear native → you. */
-function echoHTML() { return Echo.ok() ? `<div class="echo"><button class="btn ghost sm" data-echo-rec>${ICON_REC} Record me</button><button class="btn ghost sm" data-echo-play hidden>▶ Native, then me</button></div>` : ''; }
+function echoHTML() { return false ? `<div class="echo"><button class="btn ghost sm" data-echo-rec>${ICON_REC} Record me</button><button class="btn ghost sm" data-echo-play hidden>▶ Native, then me</button></div>` : ''; }
 const ICON_REC = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="currentColor"/></svg>';
 function wireEcho(el, text, who) {
   const rec = el.querySelector('[data-echo-rec]'), play = el.querySelector('[data-echo-play]'); if (!rec) return;
@@ -6033,13 +6033,11 @@ const COMFORT = ['Aww, come here. Mistakes are how words stick.', 'Deep breath. 
 Object.assign(React, {
   /** The message under the headline: a daily mission when right, a kind fix when wrong. */
   message(ok, item, info, wrongRun) {
-    if (ok) { const d = item && DailyUse.line(item.t, item.en); if (d) return 'Use it today: ' + d; let w; do { w = pick(WARM_PRAISE); } while (w === this._lp); this._lp = w; return w; }
-    if (wrongRun >= 2) return pick(COMFORT) + ' ' + fill('It’s “{right}”.', info);
-    return fill(pick(WARM_OOPS), info);
+    return '';
   },
   headline(ok, combo, wrongRun) {
-    if (ok) return combo >= 10 ? 'Legendary!' : combo >= 8 ? 'Unstoppable!' : combo >= 5 ? 'Aww, look at you!' : combo >= 3 ? 'On a roll!' : pick(['Nice!', 'Yes!', 'You got it!', 'Correct!']);
-    return wrongRun >= 3 ? 'Hug break' : wrongRun === 2 ? 'Aww, it’s okay' : pick(['Not quite', 'Almost!', 'Oopsie!']);
+    if (ok) return combo >= 5 ? `${combo} in a row!` : 'Correct!';
+    return 'Not quite';
   },
   buzz(pattern) { try { navigator.vibrate && navigator.vibrate(pattern); } catch (e) { /* ignore */ } },
   /** Rain particles across the whole screen. */
@@ -7889,7 +7887,6 @@ const Runner = {
       if (show.en && show.en !== txt) d.push(`<small>${esc(show.en)}</small>`);
     }
     if (info.teach && !show) d.push(`<small>${esc(info.teach)}</small>`);
-    if (info.why) d.push(`<small>${esc(info.why)}</small>`);
     $('#l-fb-detail').innerHTML = d.join('');
     const mood = React.pick(ok, this.combo, this.wrongRun);
     React.play($('#l-fb-m'), p.mascot, mood); paintMascot($('#l-boo'), p.mascot, mood, true);
@@ -7908,9 +7905,9 @@ const Runner = {
   },
   halfway() {
     const el = document.createElement('div'); el.className = 'halfway';
-    el.innerHTML = `<div class="mascot" id="hw-m"></div><b>Halfway there!</b><small>${esc(pick(['You’re doing great.', 'Keep that energy!', 'Look at you go!']))}</small>`;
+    el.innerHTML = `<div class="mascot" id="hw-m"></div><b>Halfway there!</b>`;
     $('#lesson').append(el); React.play($('#hw-m'), P().mascot, 'star'); Sfx.level();
-    setTimeout(() => el.classList.add('out'), 2000); setTimeout(() => el.remove(), 2500);
+    setTimeout(() => el.classList.add('out'), 950); setTimeout(() => el.remove(), 1300);
   },
   comboFlash() {
     const el = document.createElement('div'); el.className = 'combo'; el.textContent = `${this.combo} in a row!`;
@@ -7920,7 +7917,7 @@ const Runner = {
     clearTimeout(this.advanceT);
     if (this.outOfHearts) return this.heartsOut();
     this.i++; if (this.i >= this.queue.length || (this.meta.speed && Date.now() > this.deadline)) return this.complete();
-    if (!this.halfDone && !this.meta.speed && this.queue.length >= 8 && this.i >= this.queue.length / 2) { this.halfDone = true; this.render(); this.halfway(); return; }
+    if (!this.halfDone && !this.meta.speed && this.queue.length >= 8 && this.i >= this.queue.length / 2) { this.halfDone = true; this.locked = true; $('#l-foot').hidden = true; this.halfway(); setTimeout(() => { if (!$('#lesson').hidden) this.render(); }, 1300); return; }
     this.render();
   },
   main() {
@@ -8724,14 +8721,15 @@ function fitStage() {
   cancelAnimationFrame(_fitQ);
   _fitQ = requestAnimationFrame(() => {
     const st = $('#l-stage'), inn = st && $('.l-inner', st); if (!inn || $('#lesson').hidden) return;
+    const fb = $('#l-foot'); if (fb && (fb.classList.contains('ok') || fb.classList.contains('bad'))) return;   // keep the size while the answer bar is showing
     inn.style.zoom = ''; const cs = getComputedStyle(st);
-    const avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom), need = inn.offsetHeight;
+    const foot = $('#l-foot'), footH = foot && !foot.hidden ? foot.offsetHeight : 0;   // the answer bar's space is reserved up front, so nothing resizes when it appears
+    const avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - Math.max(0, 215 - footH), need = inn.offsetHeight;
     if (need > avail + 2) inn.style.zoom = Math.max(0.6, avail / need).toFixed(3);
   });
 }
 { const wire = () => { const st = document.getElementById('l-stage'); if (!st) return setTimeout(wire, 500);
-    new MutationObserver(() => fitStage()).observe(st, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'hidden'] });
-    new MutationObserver(() => fitStage()).observe(document.getElementById('l-foot'), { attributes: true, attributeFilter: ['class', 'hidden'], subtree: true, childList: true });
+    new MutationObserver(() => fitStage()).observe(st, { childList: true, subtree: true });
     addEventListener('resize', fitStage); };
   wire(); }
 /* ---- Plain, short feedback everywhere (no jokes, no long explanations) ---- */

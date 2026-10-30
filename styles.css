@@ -1653,3 +1653,5 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 }
 @media (max-height: 700px) { .l-inner figure.panel { zoom: .56; } .prompt-row .mascot { width: 56px; height: 56px; } .answer-line { min-height: 40px; } }
 @media (max-height: 820px) { .listen-tools { flex-wrap: nowrap; gap: 6px; } .listen-tools .btn { padding-left: 10px; padding-right: 10px; } .sp2-rom { font-size: 18px; } .sp2 .speak-target { font-size: 19px !important; } .sp2-en { margin-top: 0; } }
+/* Answer bar: Boo sits inside the card so it never covers the answers */
+.l-foot.ok .fb .mascot, .l-foot.bad .fb .mascot { top: 10px !important; left: auto !important; right: 16px; width: 56px !important; height: 56px !important; }
