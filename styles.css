@@ -1639,3 +1639,17 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 .sp2-rom { font-size: 20px; } .sp2 .meter { display: none; } .sp2 .meter.on { display: block; }
 /* Real Talk feedback sits below the answers instead of floating over them */
 .rt-fb { position: static; margin-bottom: 16px; }
+.gp-load { display: inline-block; width: 90px; height: 1em; border-radius: 6px; vertical-align: middle; background: linear-gradient(90deg, var(--surface-2) 25%, var(--line) 50%, var(--surface-2) 75%); background-size: 200% 100%; animation: gpShim 1s linear infinite; }
+@keyframes gpShim { to { background-position: -200% 0; } }
+
+/* Short phone screens: tighten every exercise so it fits without scrolling */
+@media (max-height: 820px) {
+  .l-top { padding-top: 6px; padding-bottom: 6px; } .l-top .mascot { width: 40px; height: 40px; }
+  .l-stage { padding: 4px 14px 10px; } .l-inner { gap: 10px; }
+  .l-inner figure.panel { zoom: .66; } .l-inner .scene-wrap { zoom: .7; }
+  .teach .echo, .teach .ex-line:nth-of-type(n+2) { display: none; }
+  .sp2 { gap: 6px; } .sp2-boo { width: 96px; height: 96px; } .sp2-bubble { padding: 12px 14px; }
+  .l-inner .q { margin: 0; }
+}
+@media (max-height: 700px) { .l-inner figure.panel { zoom: .56; } .prompt-row .mascot { width: 56px; height: 56px; } .answer-line { min-height: 40px; } }
+@media (max-height: 820px) { .listen-tools { flex-wrap: nowrap; gap: 6px; } .listen-tools .btn { padding-left: 10px; padding-right: 10px; } .sp2-rom { font-size: 18px; } .sp2 .speak-target { font-size: 19px !important; } .sp2-en { margin-top: 0; } }

@@ -7203,7 +7203,7 @@ const Tr = {
   async get(text, to, from = 'en') {
     text = String(text || '').trim(); if (!text || to === from) return text;
     const key = from === 'en' ? `${to}|${text}` : `${from}>${to}|${text}`; if (this.cache[key]) return this.cache[key];
-    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 9000);
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 5000);
     try {
       const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${encodeURIComponent(from)}|${encodeURIComponent(to)}`, { signal: ctl.signal });
       const j = await r.json(), out = j && j.responseData && j.responseData.translatedText;
@@ -7841,6 +7841,7 @@ const Runner = {
     const stage = $('#l-stage'); stage.innerHTML = '<div class="l-inner"></div>'; stage.scrollTop = 0;
     paintMascot($('#l-boo'), P().mascot, 'happy', false);
     RENDER[step.kind](step, $('.l-inner', stage), this);
+    fitStage();
   },
   /** Show a single Continue button (teaching cards). */
   nextOnly(label = 'Continue') { const f = $('#l-foot'); f.hidden = false; const b = $('#l-main'); b.hidden = false; b.textContent = label; b.disabled = false; this.mode = 'next'; },
@@ -8552,6 +8553,7 @@ function renderProfile() {
       <p class="note">The key stays in this browser and is sent only to Google.</p>
     </div>
     <p class="note ver-line" id="ver-line" style="text-align:center">${Tester.on() ? '<b>Tester mode on</b> · ' : ''}Speakaboo version ${SPEAKABOO_VERSION}</p>
+    <p class="note" style="text-align:center"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a> · Pictures: Microsoft Fluent Emoji (MIT)</p>
     <div class="card settings"><h3>Data</h3>
       ${UI.meConfirm === 'reset' ? `<div class="p-row"><span class="note">Erase ${esc(p.name)}’s progress?</span><button class="btn danger sm" id="me-reset-yes">Erase</button><button class="btn ghost sm" data-me-cancel>Keep</button></div>` : `<button class="btn ghost sm" id="me-reset">Reset my progress</button>`}
       ${UI.meConfirm === 'delete' ? `<div class="p-row"><span class="note">Delete this learner?</span><button class="btn danger sm" id="me-del-yes">Delete</button><button class="btn ghost sm" data-me-cancel>Keep</button></div>` : `<button class="btn ghost sm" id="me-del">Delete this learner</button>`}
@@ -8715,7 +8717,30 @@ function splash() {
   setTimeout(hide, 2400);   // never block sign-in or slow networks
   return hide;
 }
+/** Phones: shrink an exercise a little so it fits the screen and never needs scrolling. */
+let _fitQ = 0;
+function fitStage() {
+  cancelAnimationFrame(_fitQ);
+  _fitQ = requestAnimationFrame(() => {
+    const st = $('#l-stage'), inn = st && $('.l-inner', st); if (!inn || $('#lesson').hidden) return;
+    inn.style.zoom = ''; const cs = getComputedStyle(st);
+    const avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom), need = inn.offsetHeight;
+    if (need > avail + 2) inn.style.zoom = Math.max(0.6, avail / need).toFixed(3);
+  });
+}
+{ const wire = () => { const st = document.getElementById('l-stage'); if (!st) return setTimeout(wire, 500);
+    new MutationObserver(() => fitStage()).observe(st, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'hidden'] });
+    new MutationObserver(() => fitStage()).observe(document.getElementById('l-foot'), { attributes: true, attributeFilter: ['class', 'hidden'], subtree: true, childList: true });
+    addEventListener('resize', fitStage); };
+  wire(); }
+/** Warm the flat pictures in idle time so the next exercise never waits for them. */
+function warmPics() {
+  const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
+  const next = () => { for (let n = 0; n < 6 && i < files.length; n++) { const im = new Image(); im.decoding = 'async'; im.src = 'pics/' + files[i++]; } if (i < files.length) setTimeout(next, 120); };
+  (window.requestIdleCallback || (f => setTimeout(f, 800)))(next);
+}
 function bootApp() {
+  warmPics();
   const hideSplash = splash();
   Store.load(); Voice.init();
   Account.boot(() => {
@@ -9605,7 +9630,7 @@ const Gloss = {
     const box = document.createElement('div'); box.id = 'gloss-pop'; box.className = 'gloss-pop';
     box.innerHTML = `<div class="gp-top"><span class="script" ${attrs(c)}>${esc(tok.replace(/[.,!?¿¡،؟…]/g, ''))}</span><button class="speaker sm" data-say="${esc(Gloss.norm(tok))}" aria-label="Play">${ICON.speaker}</button></div>
       <small class="gp-rom">${esc(span.dataset.r || (w && w.r) || '')}</small>
-      <b class="gp-en">${w ? esc(cleanEn(w.en)) + (Gloss.norm(w.t) !== Gloss.norm(tok) ? `<em> (from ${esc(w.t)})</em>` : '') : '<span id="gp-auto">…</span>'}</b>
+      <b class="gp-en">${w ? esc(cleanEn(w.en)) + (Gloss.norm(w.t) !== Gloss.norm(tok) ? `<em> (from ${esc(w.t)})</em>` : '') : '<span id="gp-auto" class="gp-load">&nbsp;</span>'}</b>
       <b class="gp-my muted" hidden></b>
       <button class="gp-ask" data-ask-word="${esc(tok)}" data-ask-sent="${esc(sent)}">${ICON.chat} Ask Boo about it</button>`;
     document.body.append(box);
@@ -9618,11 +9643,15 @@ const Gloss = {
     let en = w && cleanEn(w.en);
     if (!w) {   // a word the learner hasn't met yet: show a machine translation, marked as such
       const auto = $('#gp-auto', box);
-      Tr.get(Gloss.norm(tok), 'en', c.code).then(o => { en = o; if (auto) auto.textContent = o; if (to !== 'en' && my) { my.hidden = false; my.textContent = '…'; Tr.get(o, to).then(x => { my.textContent = x; }).catch(() => { my.textContent = ''; }); } }).catch(() => { const b = auto && auto.closest('.gp-en'); if (b) b.remove(); });
+      Tr.get(Gloss.norm(tok), 'en', c.code).then(o => { en = o; if (auto) { auto.textContent = o; auto.classList.remove('gp-load'); } if (to !== 'en' && my) { my.hidden = false; my.textContent = '…'; Tr.get(o, to).then(x => { my.textContent = x; }).catch(() => { my.textContent = ''; }); } }).catch(() => { const b = auto && auto.closest('.gp-en'); if (b) b.remove(); });
     }
     if (to !== 'en' && en && my) { my.hidden = false; my.textContent = '…'; Tr.get(en, to).then(out => { my.textContent = out; }).catch(() => { my.hidden = true; }); }
   }
 };
+document.addEventListener('pointerdown', e => {   // start the lookup the moment a word is touched
+  const gw = e.target.closest && e.target.closest('.gw'); if (!gw || Gloss.lookup(gw.textContent)) return;
+  const c = course(); if (c) Tr.get(Gloss.norm(gw.textContent), 'en', c.code).catch(() => {});
+});
 document.addEventListener('click', e => {
   const gw = e.target.closest && e.target.closest('.gw');
   if (gw) { e.stopPropagation(); e.preventDefault(); Gloss.pop(gw); return; }

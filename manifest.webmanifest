@@ -27,5 +27,10 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "id": "/SpeakaBoo/",
+  "lang": "en",
+  "categories": [
+    "education"
   ]
 }
