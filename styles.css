@@ -1690,3 +1690,7 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 .card-actions > .say-it svg { width: 18px; height: 18px; }
 .card-actions > .speaker.slow { width: 56px !important; height: 40px !important; min-height: 40px !important; }
 .card-actions > .star-btn { width: 40px !important; height: 40px !important; }
+/* Halfway popup: sits in the middle from the first frame, fades in and out */
+.halfway { position: fixed; inset: 0; margin: auto; width: max-content; height: max-content; transform: none; animation: hwIn .35s ease-out both; pointer-events: none; }
+.halfway.out { transform: none; opacity: 0; transition: opacity .3s; }
+@keyframes hwIn { from { opacity: 0; } to { opacity: 1; } }
