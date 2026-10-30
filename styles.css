@@ -1809,3 +1809,37 @@ body { background: linear-gradient(180deg, #DDEEFB 0, #EAF5EE 260px, var(--bg) 5
 @keyframes foxHello { 0%, 100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(2.5deg) translateY(-6px); } }
 @media (prefers-reduced-motion: reduce) { .ob-fox { animation: none; } }
 .ob { background: radial-gradient(circle at 50% 30%, #9ED4F2 0, #5FA8D8 36%, #2F7A8A 72%, #1E4E4A 100%); }
+
+/* ===== Jungle: greens, branches and falling leaves ===== */
+:root { --bg: #E9F4DC; --surface-2: #E0EED0; --line: #CBE0B4; --ink: #1F2D18; --ink-2: #52684A; }
+body { background: linear-gradient(180deg, #C9E6B0 0, #DFF0CD 280px, var(--bg) 560px) fixed; }
+.lesson, .rt, .call-screen { background: linear-gradient(180deg, #C9E6B0 0, #DFF0CD 260px, var(--bg) 520px); }
+.sky-dawn { background: linear-gradient(180deg, #F4C98A 0%, #CFE3A0 50%, #9BCB7C 100%); color: #3B2A12; }
+.sky-day { background: linear-gradient(180deg, #2F8F4E 0%, #62B96B 52%, #B7E08F 100%); color: #fff; text-shadow: 0 1px 8px rgb(0 60 20 / .35); }
+.sky-dusk { background: linear-gradient(180deg, #7A3E2A 0%, #D9803F 50%, #9BC273 100%); }
+.sky-night { background: linear-gradient(180deg, #072018 0%, #12392B 62%, #24593F 100%); }
+#splash { background: radial-gradient(circle at 50% 38%, #7FD08A 0, #2F9A55 38%, #17613A 70%, #0B3A22 100%); }
+.ob { background: radial-gradient(circle at 50% 30%, #7FD08A 0, #3FA85F 36%, #17613A 72%, #0B3A22 100%); }
+#leaf-fall { position: fixed; inset: 0; pointer-events: none; z-index: 3; overflow: hidden; }
+#leaf-fall i { position: absolute; top: -40px; background-size: contain; background-repeat: no-repeat; opacity: .8; animation: leafFall 16s linear infinite; will-change: transform; }
+@keyframes leafFall { 0% { transform: translate3d(0, -8vh, 0) rotate(0); } 20% { transform: translate3d(34px, 20vh, 0) rotate(80deg); } 45% { transform: translate3d(-26px, 46vh, 0) rotate(190deg); } 70% { transform: translate3d(30px, 74vh, 0) rotate(280deg); } 100% { transform: translate3d(-10px, 112vh, 0) rotate(380deg); } }
+@media (prefers-reduced-motion: reduce) { #leaf-fall { display: none; } }
+/* Journey: branches (sections) and leaves (scenes) */
+.season-head { position: relative; flex-direction: row; align-items: center; gap: 10px; margin: 30px 0 16px; padding: 11px 16px; border-radius: 16px; background: linear-gradient(180deg, #A5723F, #7A4E2A); color: #fff; box-shadow: 0 5px 0 #5A3A1E; }
+.season-head::before, .season-head::after { content: ""; position: absolute; width: 30px; height: 18px; background: #5DB36A; border-radius: 100% 0 100% 0; top: -9px; box-shadow: inset -3px -3px 0 rgb(0 0 0 / .14); }
+.season-head::before { left: 14px; transform: rotate(-24deg); } .season-head::after { right: 22px; transform: rotate(24deg) scaleX(-1); background: #FFC23D; }
+.season-tag { background: rgb(255 255 255 / .22) !important; color: #fff !important; }
+.season-head b { color: #fff; margin-top: 0; font-size: 20px; }
+.metro .ep::after { background: #4FA85A; opacity: .9; width: 6px; left: -24px; }
+.metro .ep::before { width: 24px; height: 24px; left: -33px; top: 18px; border: 0; border-radius: 0 100% 0 100%; background: #5DB36A; transform: rotate(-20deg); box-shadow: inset -3px -3px 0 rgb(0 0 0 / .14); }
+.metro .ep.now::before { background: #FFB52E; box-shadow: 0 0 0 6px rgb(255 181 46 / .3); }
+.metro .ep.locked::before, .metro .ep.mini.locked::before { background: #B9C9AE; }
+.ep-seg { height: 18px; border-radius: 70% 0 70% 0; }
+.ep-seg.done { background: #4FB05C; box-shadow: inset -2px -2px 0 rgb(0 0 0 / .14); }
+.ep-seg.open { background: #BFE3A5; }
+.ep-seg.current { border-radius: 40px 4px 40px 4px; background: linear-gradient(180deg, #FFC95E, #F29A3C); box-shadow: 0 6px 14px rgb(242 154 60 / .45); }
+.ep-seg.test { border-radius: 50%; background: #E4EED8; }
+.ep-seg.test.open, .ep-seg.test.current { background: #F29A3C; } .ep-seg.test.done { background: #FFB52E; }
+.journey-head { background: linear-gradient(135deg, #2F8F4E, #62B96B); box-shadow: 0 6px 0 #1F6A3A; }
+.jh-top { display: flex; align-items: center; gap: 12px; } .jh-pals { display: flex; flex: none; } .jh-pals .mascot { width: 48px; height: 48px; margin-right: -10px; filter: drop-shadow(0 3px 4px rgb(0 0 0 / .25)); }
+.jh-bar { background: rgb(255 255 255 / .3); } .jh-bar i { background: #FFD66B; }

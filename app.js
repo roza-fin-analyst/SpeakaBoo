@@ -3817,8 +3817,8 @@ const PIC_FILES = {"0️⃣": "0030-fe0f-20e3.svg", "1️⃣": "0031-fe0f-20e3.s
 function emojiArt(e) { const f = PIC_FILES[e]; if (!f) return ''; if (!ART[e]) ART[e] = () => `<image href="pics/${f}" x="4" y="4" width="92" height="92"/>`; return e; }
 /* =====================================================================
    SPEAKABOO — SEASONS 5 & 6: from "getting by" to "speaking your mind"
-   Season 5 "Real life": shopping & sizes, phone & messages.
-   Season 6 "Speak your mind": opinions, and telling a story in the past.
+   Branch 5 "Real life": shopping & sizes, phone & messages.
+   Branch 6 "Speak your mind": opinions, and telling a story in the past.
    ===================================================================== */
 for (const k of ['ko', 'ar', 'es']) EXTRA_SECTIONS[k].push(
   { title: 'Real life', blurb: 'Try things on, haggle, answer the phone, say you’re running late.' },
@@ -4238,6 +4238,17 @@ function animalArt(sp, c, d, o = {}) {
         `<path d="M60 77C44 77 26 77 10 83 16 102 36 112 60 112s44-10 50-29C94 77 76 77 60 77z" fill="url(#cr@@)"/>` +
         `<path d="M60 38l-7 11q7 4 14 0z" fill="url(#cr@@)"/><ellipse cx="60" cy="81" rx="6.2" ry="4.6" fill="${ink}"/><ellipse cx="58" cy="79.4" rx="2.4" ry="1.2" fill="#fff" opacity=".75"/>`;
       break; }
+    case 'monkey': body =
+      `<circle cx="22" cy="58" r="14" fill="${c}" stroke="${d}" stroke-width="3"/><circle cx="22" cy="58" r="7" fill="${o.cream || '#F6D9B8'}"/><circle cx="98" cy="58" r="14" fill="${c}" stroke="${d}" stroke-width="3"/><circle cx="98" cy="58" r="7" fill="${o.cream || '#F6D9B8'}"/>` +
+      head + `<path d="M30 64C30 48 46 46 54 56 58 52 62 52 66 56 74 46 90 48 90 64 90 84 76 100 60 100S30 84 30 64z" fill="${o.cream || '#F6D9B8'}"/><ellipse cx="55" cy="82" rx="1.8" ry="2.4" fill="${d}"/><ellipse cx="65" cy="82" rx="1.8" ry="2.4" fill="${d}"/>`; break;
+    case 'parrot': body =
+      `<path d="M52 30Q48 12 56 6M60 28Q62 8 70 4M68 30Q76 14 84 14" stroke="#E4572E" stroke-width="6" fill="none" stroke-linecap="round"/>` +
+      head + `<path d="M48 78Q60 68 72 78Q70 96 60 98Q50 96 48 78z" fill="#FFB52E" stroke="#D9822E" stroke-width="3" stroke-linejoin="round"/><path d="M52 84Q60 88 68 84" stroke="#D9822E" stroke-width="2.4" fill="none"/>`; break;
+    case 'toucan': body =
+      `<circle cx="60" cy="68" r="42" fill="${c}" stroke="${d}" stroke-width="3"/><ellipse cx="44" cy="82" rx="16" ry="12" fill="#FFF3C4"/><ellipse cx="76" cy="82" rx="16" ry="12" fill="#FFF3C4"/>` +
+      `<path d="M38 76Q62 66 92 78 104 88 92 98Q62 104 38 92z" fill="#FFB52E" stroke="#D9822E" stroke-width="3" stroke-linejoin="round"/><path d="M40 84Q66 88 96 84" stroke="#E4572E" stroke-width="3.4" fill="none"/>`; break;
+    case 'kid': body =
+      head + `<path d="M17 62C16 26 104 26 103 62 94 48 78 40 60 40S26 48 17 62z" fill="#3A2418"/><path d="M18 56Q60 44 102 56" stroke="#6BBE5A" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M92 50q16-14 22-2-12 10-22 2z" fill="#6BBE5A" stroke="#3E8E3E" stroke-width="2" stroke-linejoin="round"/><path d="M62 90q-2 0 -4 0" stroke="${d}" stroke-width="0"/>`; break;
     case 'fennec': body =
       `<path d="M16 60L14 4l34 34z" fill="${c}" stroke="${d}" stroke-width="3" stroke-linejoin="round"/><path d="M22 48l-1-30 16 18z" fill="${inner}"/>` +
       `<path d="M104 60L106 4 72 38z" fill="${c}" stroke="${d}" stroke-width="3" stroke-linejoin="round"/><path d="M98 48l1-30-16 18z" fill="${inner}"/>` +
@@ -4276,12 +4287,14 @@ function animalArt(sp, c, d, o = {}) {
     mandu: ['fox', '#F58A2B', '#B9500C', { cream: '#FFF3E3' }],
     tokki: ['bunny', '#FFE6D2', '#D9A06A'], horangi: ['tiger', '#FFC24A', '#C98A00'], byte: ['dog', '#E9D5B8', '#9A7B52'],
     gom: ['bear', '#B9835A', '#85573A', { inner: '#F2C9A0', cream: '#F6E3CF' }], nabi: ['cat', '#F3E6D6', '#B79A7A'], ori: ['duck', '#FFE066', '#D9AE00'],
-    bora: ['bunny', '#FFD9E0', '#D98AA3'], dubu: ['panda', '#FFFFFF', '#2B1D14'], hodu: ['bear', '#D8A878', '#8A5A2B', { inner: '#F2C9A0' }], haneul: ['cat', '#FFE9C9', '#D29A5A'],
-    jamal: ['dog', '#F2D49B', '#B58B2E'], saqr: ['frog', '#BFE3A8', '#5E9A52'], fanous: ['fennec', '#FFD3A8', '#D9822E'], tamra: ['bear', '#D9A58A', '#8B4A2B', { inner: '#F2C9A0' }],
-    churro: ['dog', '#F2C27E', '#B8742A'], oliva: ['frog', '#C9DD8E', '#6E8E2E'], axo: ['cat', '#FFC9D8', '#E8577A'], tuki: ['panda', '#FFFFFF', '#2B1D14']
+    bora: ['monkey', '#C98B5A', '#8A5A2B'], dubu: ['panda', '#FFFFFF', '#2B1D14'], hodu: ['bear', '#D8A878', '#8A5A2B', { inner: '#F2C9A0' }], haneul: ['parrot', '#7ED08A', '#3E9B54'],
+    jamal: ['dog', '#F2D49B', '#B58B2E'], saqr: ['parrot', '#E4572E', '#A83A18'], fanous: ['fennec', '#FFD3A8', '#D9822E'], tamra: ['monkey', '#D9A58A', '#8B4A2B'],
+    churro: ['dog', '#F2C27E', '#B8742A'], oliva: ['frog', '#C9DD8E', '#6E8E2E'], axo: ['frog', '#FFC9D8', '#E8577A'], tuki: ['toucan', '#2B2B33', '#15151B']
   };
   for (const [k, v] of Object.entries(FRIENDS)) MASCOT_ART[k] = animalArt(v[0], v[1], v[2], v[3] || {});
-  Object.assign(MASCOTS.mandu, { name: 'Kit', kind: 'fox', tagline: 'A clever fox who teaches languages',
+  MASCOT_ART.tavi = animalArt('kid', '#F2C9A0', '#B8845A');
+  MASCOTS.tavi = Object.assign({}, MASCOTS.mandu, { name: 'Tavi', kind: 'kid', tagline: 'A brave jungle explorer', persona: 'Tavi, a brave, cheerful jungle explorer kid who knows every trail. Short, plain and encouraging.' });
+  Object.assign(MASCOTS.mandu, { name: 'Kit', kind: 'fox', tagline: 'A clever fox who guides you through the jungle',
     persona: 'Kit, a clever, friendly fox who is a talented language teacher. Patient, encouraging, and always plain and short.' });
 }
 
@@ -5825,7 +5838,7 @@ const Tester = {
   toggleLocal() {
     if (Account.enabled()) { toast(Tester.on() ? 'Tester mode is on for your owner account' : 'Tester mode is only for the app owner', '🔒'); return; }
     const next = !Tester.on(); try { localStorage.setItem('speakaboo-tester', next ? '1' : '0'); } catch (e) { /* ignore */ }
-    toast(next ? 'Tester mode on: every episode is open' : 'Tester mode off', next ? '🔓' : '🔒');
+    toast(next ? 'Tester mode on: every chapter is open' : 'Tester mode off', next ? '🔓' : '🔒');
     renderLearn(); renderLetters(); renderProfile(); renderChrome();
   }
 };
@@ -5846,11 +5859,11 @@ const Access = {
 /* ---------- What the free trial includes (edit in config.js → trial) ---------- */
 const TRIAL = Object.assign({ seasons: 1, talkPerDay: 10, callBoo: false, drills: ['mix', 'listen', 'speak', 'letters', 'sentences', 'pictures', 'water', 'sleepy', 'chatty'] }, CFG.trial || {});
 const LOCK_REASON = {
-  season: `The free trial covers Season ${TRIAL.seasons === 1 ? '1' : '1–' + TRIAL.seasons}. Go Premium to unlock every season.`,
+  season: `The free trial covers Branch ${TRIAL.seasons === 1 ? '1' : '1–' + TRIAL.seasons}. Go Premium to unlock every season.`,
   talk: `That’s ${TRIAL.talkPerDay} Talk rounds today, the free-trial limit. Premium talks all day.`,
   call: 'Call Kit is a Premium feature: hands-free voice practice, as long as you like.',
   drill: 'This drill is part of Premium. The trial includes the basic drills.',
-  skip: 'Episodes open one by one as you finish them.'
+  skip: 'Chapters open one by one as you finish them.'
 };
 /** Is a feature allowed right now? trial = limited, premium/local = everything. */
 Access.allows = function (what, ctx) {
@@ -5871,7 +5884,7 @@ Access.need = function (what, ctx) { if (this.allows(what, ctx)) return true; Pa
 function trialBannerHTML() {
   const s = Access.state();
   if (s.mode !== 'trial') return '';
-  return `<button class="trial-pill" data-plans>${artSVG('gift')}<span><b>Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left</b><small>Season ${TRIAL.seasons === 1 ? '1' : '1–' + TRIAL.seasons} + ${TRIAL.talkPerDay} Talk rounds a day. See plans</small></span></button>`;
+  return `<button class="trial-pill" data-plans>${artSVG('gift')}<span><b>Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left</b><small>Branch ${TRIAL.seasons === 1 ? '1' : '1–' + TRIAL.seasons} + ${TRIAL.talkPerDay} Talk rounds a day. See plans</small></span></button>`;
 }
 
 /* ---------- Google Play Billing (inside the Play Store app) ---------- */
@@ -5993,7 +6006,7 @@ function perMonth(pr) { try { return new Intl.NumberFormat(undefined, { style: '
 function accountHTML() {
   if (!Account.enabled()) return '';
   const s = Access.state(), u = Account.user;
-  const status = s.mode === 'premium' ? `Premium · renews or ends on ${new Date(s.until).toLocaleDateString()}` : s.mode === 'trial' ? `Free trial · ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left · Season 1 and ${TRIAL.talkPerDay} Talk rounds a day` : 'Trial ended';
+  const status = s.mode === 'premium' ? `Premium · renews or ends on ${new Date(s.until).toLocaleDateString()}` : s.mode === 'trial' ? `Free trial · ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left · Branch 1 and ${TRIAL.talkPerDay} Talk rounds a day` : 'Trial ended';
   return `<div class="card account"><h3>Account</h3>
     <label class="row">Email<span class="note">${esc(u ? u.email : '')}${u && !u.emailVerified ? ' · not verified' : ''}</span></label>
     <label class="row">Plan<span class="note">${esc(status)}</span></label>
@@ -7113,7 +7126,7 @@ function renderNow() {
       <button class="sky-boo" data-sky-boo aria-label="Tap ${esc(mc.name)}"></button><div class="sky-bubble" id="sky-bubble" hidden></div>
       ${jungleSVG(sky)}
     </section>
-    ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Episode ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
+    ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Chapter ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
     <section class="moment card-lift">
       <div class="moment-head"><span class="chip-time">${DAYPARTS[part].name}</span><b>Your next few hours</b></div>
       ${ph.map((x, i) => `<div class="phrase" style="animation-delay:${i * 80}ms"><button class="ph-play" data-say="${esc(x.t)}" aria-label="Play">${ICON.speaker}</button>
@@ -7535,17 +7548,17 @@ function renderPath(track) {
   const cur = currentLesson(track);
   units.forEach(u => {
     if (u.s !== lastS) {
-      lastS = u.s; html += `<div class="season-head"><span class="season-tag">${track === 'letters' ? 'Letters' : `Season ${u.s + 1}`}</span><b>${esc(sections[u.s].title)}</b>${sections[u.s].blurb ? `<small>${esc(sections[u.s].blurb)}</small>` : ''}</div>`;
-      if (track === 'main' && Tester.on() && sections[u.s + 1] && !sectionDone(p, c.code, u.s)) html += `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Season ${u.s + 1} done and open Season ${u.s + 2}: ${esc(sections[u.s + 1].title)}.</small></div><button class="btn primary sm" data-skip-section="${u.s}">Skip</button></div>`;
+      lastS = u.s; html += `<div class="season-head"><span class="season-tag">${track === 'letters' ? 'Letters' : `Branch ${u.s + 1}`}</span><b>${esc(sections[u.s].title)}</b>${sections[u.s].blurb ? `<small>${esc(sections[u.s].blurb)}</small>` : ''}</div>`;
+      if (track === 'main' && Tester.on() && sections[u.s + 1] && !sectionDone(p, c.code, u.s)) html += `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Branch ${u.s + 1} done and open Branch ${u.s + 2}: ${esc(sections[u.s + 1].title)}.</small></div><button class="btn primary sm" data-skip-section="${u.s}">Skip</button></div>`;
     }
     const prog = unitProgress(p, c.code, u.id), open = unitUnlocked(u), num = units.filter(x => x.s === u.s).indexOf(u) + 1;
     const cc = courseCast(), castId = cc[(u.index + (track === 'letters' ? 1 : 0)) % cc.length];
     const doneN = Math.min(prog, UNIT_LESSONS), mastered = prog > UNIT_LESSONS;
-    if (!open) { html += `<section class="ep mini c${u.index % UNIT_COLORS} locked" id="unit-${u.id}"><div class="ep-icon" ${attrs(c)}>${esc(u.icon || num)}</div><div class="ep-title"><span class="eyebrow">Episode ${num}${Access.allows('season', u) ? '' : ' · ★ Premium'}</span><b>${esc(u.title)}</b></div><button class="guide-btn" data-guide="${u.id}" aria-label="Guide">${ICON.guide}</button><span class="ep-lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 10V8a5 5 0 0 1 10 0v2h1v11H6V10zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg></span></section>`; return; }
+    if (!open) { html += `<section class="ep mini c${u.index % UNIT_COLORS} locked" id="unit-${u.id}"><div class="ep-icon" ${attrs(c)}>${esc(u.icon || num)}</div><div class="ep-title"><span class="eyebrow">Chapter ${num}${Access.allows('season', u) ? '' : ' · ★ Premium'}</span><b>${esc(u.title)}</b></div><button class="guide-btn" data-guide="${u.id}" aria-label="Guide">${ICON.guide}</button><span class="ep-lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 10V8a5 5 0 0 1 10 0v2h1v11H6V10zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg></span></section>`; return; }
     html += `<section class="ep c${u.index % UNIT_COLORS} ${open ? '' : 'locked'} ${Access.allows('season', u) ? '' : 'premium'} ${cur && cur.u === u ? 'now' : ''}" id="unit-${u.id}">
       <div class="ep-boo" data-path-m="${castId}" data-mood="${open ? (cur && cur.u === u ? 'cheer' : 'happy') : 'peek'}" title="${esc(MASCOTS[castId].name)}"></div>
       <div class="ep-head"><div class="ep-icon" ${attrs(c)}>${esc(u.icon || num)}</div>
-        <div class="ep-title"><span class="eyebrow">Episode ${num}${mastered ? ' · Mastered' : ''}${Access.allows('season', u) ? '' : ' · <span class="crown-tag">★ Premium</span>'}</span><h2>${esc(u.title)}</h2>
+        <div class="ep-title"><span class="eyebrow">Chapter ${num}${mastered ? ' · Mastered' : ''}${Access.allows('season', u) ? '' : ' · <span class="crown-tag">★ Premium</span>'}</span><h2>${esc(u.title)}</h2>
           <small>${open ? `${doneN}/${UNIT_LESSONS} scenes · with ${esc(MASCOTS[castId].name)}` : `${esc(MASCOTS[castId].name)} is hiding until you get here`}</small></div>
         <button class="guide-btn" data-guide="${u.id}" aria-label="Guide">${ICON.guide}</button></div>
       <div class="ep-row segs">`;
@@ -7557,9 +7570,10 @@ function renderPath(track) {
     }
     html += `</div></section>`;
   });
-  html += `<p class="unit-end">${track === 'letters' ? 'That’s the whole alphabet season.' : 'New episodes are on the way. Meanwhile, Talk and Practice keep your streak alive.'}</p></div>`;
+  html += `<p class="unit-end">${track === 'letters' ? 'That’s the whole alphabet season.' : 'New chapters are on the way. Meanwhile, Talk and Practice keep your streak alive.'}</p></div>`;
   tab.innerHTML = html;
   $$('[data-path-m]', tab).forEach(el => paintMascot(el, el.dataset.pathM, el.dataset.mood, false));
+  $$('[data-jh]', tab).forEach(el => paintMascot(el, el.dataset.jh, 'happy', false));
   const li = $('[data-li-m]', tab); if (li) paintMascot(li, courseCast()[0], 'happy', false);
   const fm = $('[data-feel-m]', tab); if (fm) paintMascot(fm, p.mascot, 'happy', false);
   $$('[data-sb]', tab).forEach((el, k) => paintChar(el, el.dataset.sb, ['cheer', 'pout', 'happy'][k]));
@@ -7571,7 +7585,7 @@ function renderPath(track) {
 /* ---------- Kit stage: the friendly top of the home screen ---------- */
 function journeyHeadHTML() {
   const c = course(), p = P(), done = c.units.filter(u => unitProgress(p, c.code, u.id) >= UNIT_LESSONS).length;
-  return `<div class="journey-head"><div><small>Your journey in ${esc(c.name)}</small><b>${done} of ${c.units.length} stations</b></div><div class="jh-bar"><i style="width:${done / c.units.length * 100}%"></i></div></div>`;
+  return `<div class="journey-head"><div class="jh-top"><span class="jh-pals"><span class="mascot" data-jh="mandu"></span><span class="mascot" data-jh="tavi"></span></span><div><small>Your jungle trail · ${esc(c.name)}</small><b>${done} of ${c.units.length} chapters</b></div></div><div class="jh-bar"><i style="width:${done / c.units.length * 100}%"></i></div></div>`;
 }
 function storyBannerHTML() {
   const st = ADV_STORIES[course().code]; if (!st) return '';
@@ -8115,7 +8129,7 @@ const RENDER = {
     const c = course(), u = step.u, cc = courseCast(), who = cc[(u.index || 0) % cc.length] || P().mascot;
     const W = u.words || [], items = u.letters && step.level < 3 ? u.letters.slice(0, 6).map(l => ({ t: l.g, r: l.r })) : (step.level === 1 ? W.slice(Math.ceil(W.length / 2)) : W).slice(0, 4);
     el.innerHTML = `<div class="intro-card"><div class="intro-boo"><div class="mascot" id="in-m"></div><div class="intro-bubble"><b>${esc(MASCOTS[who].name)}</b><span>${esc(pick(['Ready? This one’s fun!', 'Let’s learn something cool!', 'I’ll be right here cheering.', 'Peekaboo! Shall we start?']))}</span></div></div>
-      <span class="badge-new">Episode ${(u.index || 0) + 1} · Scene ${step.level + 1}</span><h2>${esc(u.title)}</h2><p class="muted" style="margin:0">${esc(lessonDesc(u, step.level))}</p>
+      <span class="badge-new">Chapter ${(u.index || 0) + 1} · Scene ${step.level + 1}</span><h2>${esc(u.title)}</h2><p class="muted" style="margin:0">${esc(lessonDesc(u, step.level))}</p>
       ${items.length ? `<div class="intro-words">${items.map((w, k) => `<button class="iw" style="animation-delay:${120 + k * 90}ms" data-say="${esc(w.t)}">${w.pic ? artSVG(w.pic) : ''}<span class="script" ${attrs(c)}>${esc(w.t)}</span><small>${esc(w.r || '')}</small></button>`).join('')}</div>` : ''}</div>`;
     React.play($('#in-m', el), who, 'cheer');
     R.nextOnly('Let’s go!');
@@ -8621,7 +8635,7 @@ function renderProfile() {
       <label class="row">Tutor reads lines aloud<input type="checkbox" class="toggle" id="me-voice" ${p.autoVoice ? 'checked' : ''}></label>
       <label class="row">Show English in chat<input type="checkbox" class="toggle" id="me-en" ${p.showEnglish ? 'checked' : ''}></label>
     </div>
-    ${!isLatinLang(c.code) ? `<div class="card settings"><h3>Writing</h3><p class="note">GabBoo starts by ear: pronunciation first, ${esc(c.name)} script as a sneak peek. After Season 1 the script takes the lead.</p>
+    ${!isLatinLang(c.code) ? `<div class="card settings"><h3>Writing</h3><p class="note">GabBoo starts by ear: pronunciation first, ${esc(c.name)} script as a sneak peek. After Branch 1 the script takes the lead.</p>
       <label class="row">Show<select id="script-mode">${[['auto', 'Automatic (recommended)'], ['sound', 'Sounds first'], ['script', 'Script first']].map(([v, l]) => `<option value="${v}" ${(p.scriptMode || 'auto') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>` : ''}
     <div class="card settings" id="ai-panel"><h3>Chat tutor brain</h3>
       <p class="note">Now using: <b>${esc(Tutor.label())}</b>. Claude works when GabBoo is opened inside claude.ai. Anywhere else, paste a free Gemini key from Google AI Studio. Offline scenes always work.</p>
@@ -9035,38 +9049,58 @@ document.addEventListener('click', e => { if (e.target.closest && e.target.close
 /* ---- Nature theme (like the fox picture): misty mountains, a lake, trees, a rock to sit on ---- */
 function jungleSVG(sky) {
   const P = {
-    dawn: { m1: '#E6D2CC', m2: '#CDB8BA', hill: '#A5CC9C', t1: '#6BAE68', t2: '#4A8F55', t3: '#2F6F43', lake: '#F4CBAA', lake2: '#FFE8CF', rock: '#A09A92', rock2: '#C4BFB6', trunk: '#6B4A2B', sunl: '#FFE6B0' },
-    day: { m1: '#CFE0EE', m2: '#A9C3D8', hill: '#8FCB8F', t1: '#58AA5E', t2: '#3A8D4A', t3: '#256E3A', lake: '#7FBDE2', lake2: '#C4E4F6', rock: '#939A94', rock2: '#BCC1BB', trunk: '#6B4A2B', sunl: '#FFF6C4' },
-    dusk: { m1: '#E0B3A8', m2: '#BD909A', hill: '#92B672', t1: '#5E8A4A', t2: '#41703D', t3: '#2C5430', lake: '#E69F6E', lake2: '#F8D0A0', rock: '#847B74', rock2: '#AAA096', trunk: '#5A3A22', sunl: '#FFC48A' },
-    night: { m1: '#3A5784', m2: '#2B456F', hill: '#21503F', t1: '#1B4033', t2: '#14332A', t3: '#0E2620', lake: '#1F4470', lake2: '#3C6A9A', rock: '#4D5864', rock2: '#6A7886', trunk: '#2B2118', sunl: '#9FC8FF' }
+    dawn: { far: '#C8E2B0', mid: '#9ACB7E', t1: '#6DB567', t2: '#4A9457', t3: '#2F7045', water: '#F4CBAA', water2: '#FFE8CF', rock: '#A09A92', rock2: '#C4BFB6', trunk: '#6B4A2B', sunl: '#FFE6B0' },
+    day: { far: '#A9DDA0', mid: '#6DC271', t1: '#4FB05C', t2: '#2F8F4A', t3: '#1F6E3A', water: '#7FC6D8', water2: '#C4EAF0', rock: '#8F9A8E', rock2: '#B7C0B4', trunk: '#6B4A2B', sunl: '#FFF6C4' },
+    dusk: { far: '#C9B873', mid: '#93A94E', t1: '#5E8A4A', t2: '#41703D', t3: '#2C5430', water: '#E69F6E', water2: '#F8D0A0', rock: '#847B74', rock2: '#AAA096', trunk: '#5A3A22', sunl: '#FFC48A' },
+    night: { far: '#2E6350', mid: '#21503F', t1: '#1B4033', t2: '#14332A', t3: '#0E2620', water: '#1F4470', water2: '#3C6A9A', rock: '#4D5864', rock2: '#6A7886', trunk: '#2B2118', sunl: '#9FC8FF' }
   }[sky] || {};
   const blob = (x, y, r, c) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
   const canopy = (x, base, h, r) => `<path d="M${x} ${base}V${base - h}" stroke="${P.trunk}" stroke-width="6" stroke-linecap="round"/>${blob(x, base - h, r, P.t2)}${blob(x - r * .62, base - h + r * .34, r * .74, P.t1)}${blob(x + r * .64, base - h + r * .3, r * .78, P.t1)}${blob(x - r * .2, base - h - r * .34, r * .62, P.t3)}<ellipse cx="${x - r * .25}" cy="${base - h - r * .55}" rx="${r * .5}" ry="${r * .22}" fill="#fff" opacity=".18"/>`;
   const frond = (x, y, rot, sc, c) => `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${sc})"><path d="M0 0C10-26 40-30 62 0 40 26 10 26 0 0z" fill="${c}"/><path d="M2 0H58" stroke="#000" stroke-opacity=".2" stroke-width="1.8"/><path d="M6-9C20-18 36-18 50-6" stroke="#fff" stroke-opacity=".28" stroke-width="3" fill="none" stroke-linecap="round"/></g>`;
   const vine = (x, len, flip) => `<path d="M${x} 0q${flip ? -7 : 7} ${len * .3} 0 ${len * .55}t0 ${len * .45}" fill="none" stroke="${P.t2}" stroke-width="3" stroke-linecap="round"/>${frond(x, len * .45, flip ? 150 : 30, .34, P.t1)}${frond(x, len * .85, flip ? 30 : 150, .3, P.t1)}`;
-  const stars = sky === 'night' ? [[90, 14], [230, 10], [330, 22], [44, 36]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.4" fill="#fff"/>`).join('') + `<circle cx="316" cy="26" r="9" fill="#FFF3C8"/><circle cx="320" cy="23" r="9" fill="#14264A" opacity=".0"/>` : '';
-  const rays = sky === 'night' ? '' : `<path d="M120 0L170 112H96z M210 0L280 112H190z" fill="${P.sunl}" opacity=".28"/>`;
-  const bokeh = [[60, 30, 6], [140, 52, 4], [250, 34, 7], [330, 60, 5], [190, 22, 3]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" opacity=".22"/>`).join('');
+  const flower = (x, y, c) => `<circle cx="${x}" cy="${y}" r="4" fill="${c}"/><circle cx="${x}" cy="${y}" r="1.6" fill="#FFE066"/>`;
+  const flies = sky === 'night' ? [[60, 70], [150, 50], [250, 80], [330, 60], [200, 100]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3" fill="#FFF3A0"/><circle cx="${x}" cy="${y}" r="7" fill="#FFF3A0" opacity=".25"/>`).join('') : '';
+  const rays = sky === 'night' ? '' : `<path d="M110 0L160 112H86z M200 0L270 112H180z M300 0L360 112H280z" fill="${P.sunl}" opacity=".3"/>`;
   return uniqIds(`<svg class="skyline jungle" viewBox="0 0 400 130" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs>
-      <linearGradient id="hz@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="${sky === 'night' ? .12 : .5}"/></linearGradient>
-      <linearGradient id="mt@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.m1}"/><stop offset="1" stop-color="${P.m2}"/></linearGradient>
+      <linearGradient id="hz@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="${sky === 'night' ? .1 : .45}"/></linearGradient>
       <linearGradient id="rk@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.rock2}"/><stop offset="1" stop-color="${P.rock}"/></linearGradient></defs>
-    ${stars}${rays}${bokeh}
-    <path d="M-10 94C20 38 60 12 98 20c34 8 56 40 80 74z" fill="url(#mt@@)"/><path d="M196 96C238 36 276 4 320 10c40 6 62 52 100 86z" fill="url(#mt@@)"/>
-    <rect x="-10" y="60" width="420" height="40" fill="url(#hz@@)"/>
-    <path d="M-10 98C40 88 90 92 140 98s120 6 150 0 90-6 130 0v32H-10z" fill="${P.hill}"/>
-    ${canopy(46, 112, 34, 17)}${canopy(120, 112, 26, 15)}${canopy(176, 112, 38, 16)}${canopy(224, 112, 24, 13)}
-    <path d="M0 108C60 100 120 104 190 106s150-4 210 0v24H0z" fill="${P.lake}"/><path d="M26 114h64M120 118h56M210 112h80" stroke="${P.lake2}" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+    ${rays}
+    <path d="M-10 70Q20 38 52 60T114 56T178 50T240 58T304 48T366 56T412 46V130H-10z" fill="${P.far}"/>
+    <rect x="-10" y="40" width="420" height="50" fill="url(#hz@@)"/>
+    <path d="M-10 84Q30 56 70 76T150 70T230 78T310 66T410 76V130H-10z" fill="${P.mid}"/>
+    ${canopy(34, 112, 52, 20)}${canopy(112, 112, 38, 17)}${canopy(166, 112, 62, 22)}${canopy(226, 112, 36, 15)}${canopy(262, 112, 56, 19)}
+    <path d="M0 110C60 102 120 106 190 108s150-4 210 0v22H0z" fill="${P.water}"/><path d="M26 116h64M120 120h56M210 114h80" stroke="${P.water2}" stroke-width="3" stroke-linecap="round" opacity=".8"/>
     <path d="M232 130C238 108 262 99 296 99c34 0 72 6 108 14v17z" fill="url(#rk@@)"/><path d="M256 110C266 101 292 99 320 101c26 2 50 6 76 12" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
-    <rect x="-6" y="0" width="20" height="104" rx="8" fill="${P.trunk}"/><path d="M-6 8C30 -6 70 4 96 -2" stroke="${P.trunk}" stroke-width="9" fill="none" stroke-linecap="round"/>
-    ${vine(40, 78, false)}${vine(76, 50, true)}${blob(28, 6, 14, P.t2)}${blob(58, 2, 12, P.t1)}${blob(88, 0, 10, P.t2)}
-    ${vine(374, 70, true)}${vine(348, 46, false)}<rect x="392" y="0" width="16" height="96" rx="8" fill="${P.trunk}"/>
-    ${frond(4, 118, -48, 1, P.t2)}${frond(0, 104, -78, .9, P.t1)}${frond(404, 120, 228, 1, P.t2)}${frond(400, 106, 258, .9, P.t1)}${frond(170, 130, -24, .75, P.t1)}${frond(236, 131, -156, .65, P.t2)}</svg>`);
+    <rect x="-6" y="0" width="22" height="108" rx="8" fill="${P.trunk}"/><path d="M-6 10C30 -6 70 6 100 -2" stroke="${P.trunk}" stroke-width="9" fill="none" stroke-linecap="round"/>
+    ${vine(40, 82, false)}${vine(76, 52, true)}${blob(26, 6, 15, P.t2)}${blob(58, 2, 13, P.t1)}${blob(90, 0, 11, P.t2)}${flower(46, 70, '#FF7A9A')}${flower(72, 46, '#FFD66B')}
+    ${vine(374, 74, true)}${vine(346, 48, false)}<rect x="392" y="0" width="16" height="96" rx="8" fill="${P.trunk}"/>${flower(366, 60, '#FF7A9A')}
+    ${frond(4, 118, -48, 1, P.t2)}${frond(0, 104, -78, .9, P.t1)}${frond(404, 120, 228, 1, P.t2)}${frond(400, 106, 258, .9, P.t1)}${frond(170, 130, -24, .75, P.t1)}${frond(236, 131, -156, .65, P.t2)}${flies}</svg>`);
 }
+/* ---- Falling leaves: a few drift down the screen all the time ---- */
+function fallingLeaves() {
+  if (document.getElementById('leaf-fall')) return;
+  const cols = [['#5DB36A', '#2F8F4A'], ['#7CCB7A', '#3E9B54'], ['#F29A3C', '#C26A12'], ['#FFC23D', '#D99A00'], ['#4FA85A', '#2A7A3E']];
+  const el = document.createElement('div'); el.id = 'leaf-fall'; el.setAttribute('aria-hidden', 'true');
+  for (let i = 0; i < 11; i++) {
+    const [a, b] = cols[i % cols.length], sz = 16 + (i * 7) % 16, svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M4 36C4 14 18 4 36 4 36 24 24 36 4 36z" fill="${a}" stroke="${b}" stroke-width="2" stroke-linejoin="round"/><path d="M8 32C16 22 24 14 32 8" stroke="${b}" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
+    const i2 = document.createElement('i');
+    i2.style.cssText = `left:${(i * 9 + (i % 3) * 5) % 96}%;width:${sz}px;height:${sz}px;background-image:url("data:image/svg+xml,${encodeURIComponent(svg)}");animation-duration:${12 + (i * 5) % 11}s;animation-delay:${-(i * 3.1) % 14}s`;
+    el.append(i2);
+  }
+  document.body.append(el);
+}
+fallingLeaves();
 function jungleBackdrop() {
   if (document.getElementById('jungle-bg')) return;
+  const L = (x, y, sc, rot, c) => `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${sc})"><path d="M0 0C12-22 40-22 54 0 40 22 12 22 0 0z" fill="${c}"/><path d="M3 0H50" stroke="#fff" stroke-opacity=".35" stroke-width="1.6"/></g>`;
   const el = document.createElement('div'); el.id = 'jungle-bg'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = `<svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMax slice"><g opacity=".55"><path d="M-10 100C30 52 70 34 110 44c30 8 50 34 70 56z" fill="#C3D7E6"/><path d="M170 100C214 48 252 28 296 36c40 8 66 40 110 64z" fill="#B3CCDD"/><path d="M-10 112C60 98 120 104 200 110s140 2 210-4v34H-10z" fill="#A5D3A0"/><circle cx="34" cy="108" r="14" fill="#6FB56F"/><circle cx="52" cy="112" r="10" fill="#58A25F"/><circle cx="360" cy="106" r="15" fill="#6FB56F"/><circle cx="342" cy="112" r="10" fill="#58A25F"/></g></svg>`;
+  el.innerHTML = `<svg class="jb-top" viewBox="0 0 400 130" preserveAspectRatio="xMidYMin slice"><g opacity=".7">
+      <path d="M18 0q14 34 0 66t0 54" fill="none" stroke="#4FA85A" stroke-width="3.4"/>${L(18, 30, .95, 40, '#6FC079')}${L(18, 62, .85, 140, '#4FA85A')}${L(18, 96, .75, 40, '#6FC079')}
+      <path d="M52 0q-10 26 0 44t0 30" fill="none" stroke="#4FA85A" stroke-width="3"/>${L(52, 24, .7, 140, '#85D08A')}${L(52, 52, .65, 40, '#4FA85A')}
+      <path d="M382 0q-14 34 0 58t0 46" fill="none" stroke="#4FA85A" stroke-width="3.4"/>${L(382, 26, .95, 140, '#6FC079')}${L(382, 58, .85, 40, '#4FA85A')}${L(382, 88, .75, 140, '#6FC079')}
+      <path d="M348 0q10 26 0 40t0 26" fill="none" stroke="#4FA85A" stroke-width="3"/>${L(348, 22, .7, 40, '#85D08A')}${L(348, 46, .65, 140, '#4FA85A')}
+      <circle cx="30" cy="58" r="4.5" fill="#FF7A9A"/><circle cx="366" cy="44" r="4.5" fill="#FFC23D"/></g></svg>
+    <svg class="jb-bottom" viewBox="0 0 400 120" preserveAspectRatio="xMidYMax slice"><g opacity=".75">${L(8, 118, 1.5, -48, '#4FA85A')}${L(30, 118, 1.3, -78, '#6FC079')}${L(52, 120, 1.1, -108, '#3E9B54')}${L(392, 118, 1.5, 228, '#4FA85A')}${L(370, 118, 1.3, 258, '#6FC079')}${L(348, 120, 1.1, 288, '#3E9B54')}${L(90, 122, .9, -30, '#85D08A')}${L(310, 122, .9, 210, '#85D08A')}<circle cx="44" cy="96" r="5" fill="#FF7A9A"/><circle cx="356" cy="92" r="5" fill="#FFC23D"/></g></svg>`;
   document.body.prepend(el);
 }
 jungleBackdrop();
@@ -9229,14 +9263,14 @@ Object.assign(SCENE_CTX.ko, {
   '머리': ['hospital', 'doctor', 'You point at your head.'], '배': ['hospital', 'doctor', 'Too much spicy food last night.'], '목': ['hospital', 'doctor', 'It hurts to swallow.'],
   '아파요': ['hospital', 'doctor', 'Dr. Hiro asks what’s wrong.'], '감기': ['hospital', 'doctor', 'Sneezing and a runny nose.'], '열': ['hospital', 'doctor', 'The thermometer says 38.5°C.', 'them'],
   '약': ['hospital', 'doctor', 'Dr. Hiro hands you a small paper bag.', 'them'], '병원': ['street', 'friend', 'You look pale. Leo is worried.'], '의사': ['hospital', 'local', 'Someone in a white coat walks in.'], '푹 쉬세요': ['hospital', 'doctor', 'Dr. Hiro says goodbye.', 'them'],
-  // Season 5: shopping & phone
+  // Branch 5: shopping & phone
   '입어 봐도 돼요?': ['shop', 'clerk', 'You found a jacket you love.'], '커요': ['shop', 'clerk', 'You try it on. You could fit two of you inside.'], '작아요': ['shop', 'clerk', 'The zip won’t close.'],
   '사이즈': ['shop', 'clerk', 'The clerk asks which one you wear.', 'them'], '다른 색': ['shop', 'clerk', 'You like it, but not in orange.'], '비싸요': ['shop', 'clerk', 'The tag says 300,000 won.'],
   '깎아 주세요': ['shop', 'clerk', 'A street market stall. You smile sweetly.'], '할인': ['shop', 'clerk', 'Big red “50%” signs everywhere.'], '교환': ['shop', 'clerk', 'Wrong size. You’re back with the bag.'], '영수증': ['shop', 'clerk', 'The clerk asks for proof you bought it.', 'them'],
   '여보세요': ['phone', 'friend', 'Your phone rings. Leo’s name on the screen.'], '누구세요?': ['phone', 'local', 'An unknown number calls you.'], '잠깐만요': ['phone', 'clerk', 'Sophia needs a second to check.', 'them'],
   '바빠요': ['office', 'coworker', 'You’re drowning in work when the phone rings.'], '나중에': ['phone', 'friend', 'You can’t talk right now.'], '전화할게요': ['phone', 'friend', 'You promise to ring Leo back.'],
   '문자': ['phone', 'friend', 'Leo’s phone buzzes with your words.'], '늦어요': ['station', 'friend', 'Your train is stuck.'], '배터리': ['phone', 'friend', 'Your screen shows 1%.'], '도착했어요': ['cafe', 'friend', 'You walk in and wave at Leo.'],
-  // Season 6: opinions & stories
+  // Branch 6: opinions & stories
   '생각해요': ['cafe', 'friend', 'Leo asks your opinion about his plan.'], '맞아요': ['cafe', 'friend', 'Leo says kimchi makes everything better.'], '저도요': ['cafe', 'friend', 'Leo says he’s hungry. Same here!'],
   '글쎄요': ['office', 'coworker', 'A tricky question. You need a second.'], '솔직히': ['cafe', 'friend', 'Leo asks if you liked his cooking.'], '아마': ['street', 'friend', 'Grey clouds are rolling in.'],
   '별로예요': ['cafe', 'friend', 'Leo asks how the movie was. Meh.'], '최고예요': ['cafe', 'friend', 'The best fried chicken of your life.'], '잘 모르겠어요': ['street', 'local', 'A stranger asks you for directions.'], '왜냐하면': ['cafe', 'friend', 'Leo asks why you’re learning Korean.'],
@@ -9268,7 +9302,7 @@ Object.assign(SCENE_CTX.ar, {
   'رأسي': ['hospital', 'doctor', 'You point at your head.'], 'بطني': ['hospital', 'doctor', 'Too much koshari last night.'], 'يؤلمني': ['hospital', 'doctor', 'Dr. Hiro asks what’s wrong.'], 'زكام': ['hospital', 'doctor', 'Sneezing and a runny nose.'],
   'حمى': ['hospital', 'doctor', 'The thermometer says 38.5°C.', 'them'], 'دواء': ['hospital', 'doctor', 'Dr. Hiro hands you a small box.', 'them'], 'الطبيب': ['hospital', 'local', 'Someone in a white coat walks in.'],
   'مستشفى': ['street', 'friend', 'You look pale. Leo is worried.'], 'مريض': ['home', 'friend', 'You can’t come to the party.'], 'سلامتك': ['home', 'friend', 'Leo visits you in bed.', 'them'],
-  // Season 5–6
+  // Branch 5–6
   'أجرّب': ['shop', 'clerk', 'You found a jacket you love.'], 'مقاس': ['shop', 'clerk', 'The clerk asks which one you wear.', 'them'], 'كبير': ['shop', 'clerk', 'You could fit two of you inside.'],
   'صغير': ['shop', 'clerk', 'The zip won’t close.'], 'أصغر': ['shop', 'clerk', 'This one is too big. You need…'], 'لون آخر': ['shop', 'clerk', 'You like it, but not in orange.'], 'خصم': ['shop', 'clerk', 'Big red “50%” signs everywhere.'],
   'أرخص': ['shop', 'clerk', 'Too pricey. You ask for something…'], 'أستبدل': ['shop', 'clerk', 'Wrong size. You’re back with the bag.'], 'إيصال': ['shop', 'clerk', 'The clerk asks for proof you bought it.', 'them'],
@@ -9309,7 +9343,7 @@ Object.assign(SCENE_CTX.es, {
   'vuelvo': ['station', 'coworker', 'Heading home after work.'], 'ceno': ['home', 'elder', 'Evening meal time (late, in Spain!).'], 'me acuesto': ['home', 'elder', 'It’s midnight. Bedtime.'], 'normalmente': ['cafe', 'friend', 'Leo asks what time you usually wake up.'], 'primero': ['home', 'elder', 'Grandpa Hiro asks about your morning.'], 'después': ['home', 'elder', 'Coffee, and after that…'],
   'la cabeza': ['hospital', 'doctor', 'You point at your head.'], 'el estómago': ['hospital', 'doctor', 'Too many tacos last night.'], 'me duele': ['hospital', 'doctor', 'Dr. Hiro asks what’s wrong.'], 'la fiebre': ['hospital', 'doctor', 'The thermometer says 38.5°C.', 'them'],
   'resfriado': ['hospital', 'doctor', 'Sneezing and a runny nose.'], 'la medicina': ['hospital', 'doctor', 'Dr. Hiro hands you a small box.', 'them'], 'el médico': ['street', 'friend', 'You look pale. Who should you see?'], 'el hospital': ['street', 'friend', 'You look very pale. Leo is worried.'], 'enfermo': ['home', 'friend', 'You can’t come to the party.'], 'necesito': ['shop', 'clerk', 'You must have water. Now.'],
-  // Season 5–6
+  // Branch 5–6
   '¿me lo puedo probar?': ['shop', 'clerk', 'You found a jacket you love.'], 'la talla': ['shop', 'clerk', 'The clerk asks which one you wear.', 'them'], 'me queda grande': ['shop', 'clerk', 'You could fit two of you inside.'],
   'pequeño': ['shop', 'clerk', 'The zip won’t close.'], 'otro color': ['shop', 'clerk', 'You like it, but not in orange.'], 'caro': ['shop', 'clerk', 'The tag says 300 euros.'], 'barato': ['shop', 'clerk', 'Only 5 euros! What a deal.'],
   'el descuento': ['shop', 'clerk', 'Big red “50%” signs everywhere.'], 'cambiar': ['shop', 'clerk', 'Wrong size. You’re back with the bag.'], 'el recibo': ['shop', 'clerk', 'The clerk asks for proof you bought it.', 'them'],
@@ -9437,7 +9471,7 @@ Object.assign(RENDER, {
     const set = (step.level === 1 ? W.slice(Math.ceil(W.length / 2)) : W.slice(0, Math.ceil(W.length / 2))).slice(0, 6);
     const lead = set.find(ctxOf);
     if (u.letters || !lead) return _introOrig(step, el, R);
-    el.innerHTML = `<div class="intro-card v2"><span class="badge-new">Episode ${(u.index || 0) + 1} · Scene ${step.level + 1}</span><h2>${esc(u.title)}</h2>
+    el.innerHTML = `<div class="intro-card v2"><span class="badge-new">Chapter ${(u.index || 0) + 1} · Scene ${step.level + 1}</span><h2>${esc(u.title)}</h2>
       ${panelHTML(lead, 'blank')}
       <p class="intro-hook">By the end of this scene you’ll know exactly what to say here, and in ${Math.max(2, set.filter(ctxOf).length)} other moments.</p>
       <div class="intro-chips">${set.map((w, k) => `<button class="ichip" data-say="${esc(w.t)}" style="animation-delay:${200 + k * 70}ms"><span class="script" ${attrs(c)}>${esc(w.t)}</span>${!isLatinLang(c.code) ? `<small>${esc(w.r)}</small>` : ''}</button>`).join('')}</div></div>`;
@@ -9565,7 +9599,7 @@ buildLesson = function (u, level) {
 /* =====================================================================
    SOUNDS FIRST, LETTERS LATER
    Korean and Arabic start by ear: pronunciation big, the real script
-   small underneath as a sneak peek. After Season 1 the script takes over
+   small underneath as a sneak peek. After Branch 1 the script takes over
    and the Letters track opens with a little ceremony.
    ===================================================================== */
 function lettersOpen(p = P(), code = course().code) {
@@ -9584,7 +9618,7 @@ function lettersLockedSheet() {
   const c = course();
   openSheet(`<div class="sheet-head"><h2>Letters come a bit later</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
     <div class="ll-sheet"><div class="mascot" id="ll-m"></div><p>Babies speak before they read. We do the same: you learn real phrases <b>by ear</b> first, then the ${c.code === 'ko' ? 'Hangeul' : 'Arabic'} letters feel easy, because you already know the words they spell.</p>
-    <p class="note">The letters open when you finish Season 1. Curious already?</p>
+    <p class="note">The letters open when you finish Branch 1. Curious already?</p>
     <div class="stack"><button class="btn primary" data-close>Keep learning by ear</button><button class="btn ghost" data-letters-early>Show me the letters now</button></div></div>`);
   paintMascot($('#ll-m'), P().mascot, 'giggle', true);
 }
@@ -10384,13 +10418,13 @@ buildPractice = function (kind) {
    · Without them: the account lives on this device (password hashed),
      so the full sign-up → trial → plans flow already works.
    Access:
-     trial   (7 days from sign-up) → all of Season 1, every game, Call Kit, 10 Talk rounds/day
-     free    (after the trial)     → 2 sample episodes, Live it, 1 round a day of each game, 3 Talk rounds/day
+     trial   (7 days from sign-up) → all of Branch 1, every game, Call Kit, 10 Talk rounds/day
+     free    (after the trial)     → 2 sample chapters, Live it, 1 round a day of each game, 3 Talk rounds/day
      premium / owner               → everything
    ===================================================================== */
 const QA = /[?&]qa=sb7731\b/.test(location.search) && !Account.enabled();
 const TRIAL_DAYS = CFG.trialDays || 7;
-const FREE = { episodes: 2, talkPerDay: 3, gamesPerDay: 1 };
+const FREE = { chapters: 2, talkPerDay: 3, gamesPerDay: 1 };
 Object.assign(TRIAL, { callBoo: true });
 const WHY_SB = [
   ['speak', 'You speak from minute one', 'Most apps have you tap tiles and match pairs. In GabBoo you answer out loud and Kit listens, scores and reacts.'],
@@ -10473,7 +10507,7 @@ Access.state = function () {
 };
 Access.check = function () { if (P() && !$('#app').hidden && UI.tab === 'learn') renderLearn(); };
 Object.assign(LOCK_REASON, {
-  season: 'This episode is part of Premium. Your free plan includes the first 2 episodes.',
+  season: 'This chapter is part of Premium. Your free plan includes the first 2 chapters.',
   talk: 'That’s today’s free Talk rounds. Premium talks all day.',
   call: 'Call Kit is part of Premium: hands-free voice practice, as long as you like.',
   drill: 'This drill is part of Premium.',
@@ -10491,7 +10525,7 @@ Access.allows = function (what, ctx) {
     return true;
   }
   // free plan (trial over)
-  if (what === 'season') return !ctx || (ctx.track === 'letters' ? (ctx.index || 0) < 1 : (ctx.s || 0) === 0 && (ctx.index || 0) < FREE.episodes);
+  if (what === 'season') return !ctx || (ctx.track === 'letters' ? (ctx.index || 0) < 1 : (ctx.s || 0) === 0 && (ctx.index || 0) < FREE.chapters);
   if (what === 'drill') return ['mix', 'listen', 'water', 'mistakes'].includes(ctx);
   if (what === 'call') return false;
   if (what === 'talk') { if (!p) return true; if (!p.talkDay || p.talkDay.day !== t) p.talkDay = { day: t, n: 0 }; return p.talkDay.n < FREE.talkPerDay; }
@@ -10506,8 +10540,8 @@ for (const [obj, key] of [[RealTalk, 'realtalk'], [Adventure, 'story'], [ToneLab
 }
 trialBannerHTML = function () {
   const s = Access.state();
-  if (s.mode === 'trial') return `<button class="trial-pill" data-plans>${artSVG('gift')}<span><b>Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left</b><small>All of Season 1, every game and Call Kit. See plans</small></span></button>`;
-  if (s.mode === 'free') return `<button class="trial-pill free" data-plans>${artSVG('gift')}<span><b>Free plan</b><small>2 sample episodes + a daily round of each game. Unlock everything</small></span></button>`;
+  if (s.mode === 'trial') return `<button class="trial-pill" data-plans>${artSVG('gift')}<span><b>Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left</b><small>All of Branch 1, every game and Call Kit. See plans</small></span></button>`;
+  if (s.mode === 'free') return `<button class="trial-pill free" data-plans>${artSVG('gift')}<span><b>Free plan</b><small>2 sample chapters + a daily round of each game. Unlock everything</small></span></button>`;
   return '';
 };
 /* Show the plan pill on Today too */
@@ -10631,7 +10665,7 @@ Paywall.show = async function (soft, reason) {
     const pr = Billing.prices[x.id];
     return `<button class="plan ${x.best ? 'best' : ''}" data-sub="${esc(x.id)}">${x.best ? '<span class="plan-tag">Best value</span>' : ''}<b>${esc(x.name)}</b><span class="plan-price">${pr ? esc(pr.label) : esc(x.price || '')}</span><small>per ${esc(x.period)}${x.note ? ` · ${esc(x.note)}` : ''}</small></button>`;
   }).join('');
-  const rows = [['Season 1 episodes', '2 samples', 'All', 'All 6 seasons'], ['Languages', '1', '1', 'Korean, Arabic & Spanish'], ['Talk with Kit', '3 a day', '10 a day', 'Unlimited'], ['Call Kit (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
+  const rows = [['Branch 1 chapters', '2 samples', 'All', 'All 6 seasons'], ['Languages', '1', '1', 'Korean, Arabic & Spanish'], ['Talk with Kit', '3 a day', '10 a day', 'Unlimited'], ['Call Kit (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
   el.innerHTML = `<div class="pw-card">${soft ? `<button class="icon-btn pw-x" data-pw-close aria-label="Close">${ICON.x}</button>` : ''}
     <div class="mascot pw-boo" id="pw-m"></div>
     <h2>${s.mode === 'free' ? 'Your free week is over. Kit isn’t!' : s.mode === 'trial' ? `Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left` : 'GabBoo Premium'}</h2>
