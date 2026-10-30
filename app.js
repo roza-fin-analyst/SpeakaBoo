@@ -4213,11 +4213,11 @@ function animalArt(sp, c, d, o = {}) {
   let body = '';
   switch (sp) {
     case 'fox': body =
-      `<path d="M20 56L24 10l34 24z" fill="${c}" stroke="${d}" stroke-width="3" stroke-linejoin="round"/><path d="M28 46l3-24 16 12z" fill="#7A3410"/>` +
-      `<path d="M100 56L96 10 62 34z" fill="${c}" stroke="${d}" stroke-width="3" stroke-linejoin="round"/><path d="M92 46l-3-24-16 12z" fill="#7A3410"/>` +
-      `<path d="M60 110C26 110 12 88 12 68 12 48 28 36 60 36s48 12 48 32c0 20-14 42-48 42z" fill="${c}" stroke="${d}" stroke-width="3" stroke-linejoin="round"/>` +
-      `<path d="M13 72C28 74 42 86 60 104 38 108 20 98 13 72zM107 72C92 74 78 86 60 104 82 108 100 98 107 72z" fill="${cream}"/>` +
-      `<path d="M60 38l-8 14h16z" fill="${cream}"/>` + nose('#3A2418'); break;
+      `<path d="M16 60Q10 14 30 11Q46 12 58 36z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/><path d="M24 46Q22 22 31 21Q40 22 46 36z" fill="#FFB9A0"/>` +
+      `<path d="M104 60Q110 14 90 11Q74 12 62 36z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/><path d="M96 46Q98 22 89 21Q80 22 74 36z" fill="#FFB9A0"/>` +
+      `<path d="M60 112C28 112 8 92 8 70 8 48 28 36 60 36s52 12 52 34c0 22-20 42-52 42z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/>` +
+      `<path d="M10 76Q22 74 28 84 22 86 26 92 36 92 40 100 50 102 60 108 70 102 80 100 84 92 94 92 98 86 92 84 98 74 110 76Q60 96 10 76z" fill="${cream}"/>` +
+      `<path d="M60 38l-7 11q7 4 14 0z" fill="${cream}"/><path d="M56 78q4 3.4 8 0q-1 4-4 4t-4-4z" fill="#3A2418"/>`; break;
     case 'fennec': body =
       `<path d="M16 60L14 4l34 34z" fill="${c}" stroke="${d}" stroke-width="3" stroke-linejoin="round"/><path d="M22 48l-1-30 16 18z" fill="${inner}"/>` +
       `<path d="M104 60L106 4 72 38z" fill="${c}" stroke="${d}" stroke-width="3" stroke-linejoin="round"/><path d="M98 48l1-30-16 18z" fill="${inner}"/>` +
@@ -4249,7 +4249,7 @@ function animalArt(sp, c, d, o = {}) {
     case 'duck': default: body =
       `<path d="M60 24q6-10 12-4-8 0-10 8z" fill="${c}" stroke="${d}" stroke-width="2"/>` + head + `<ellipse cx="60" cy="80" rx="15" ry="7" fill="#FF9A3D" stroke="#E07A1F" stroke-width="2"/><path d="M47 80h26" stroke="#E07A1F" stroke-width="2" stroke-linecap="round"/>`; break;
   }
-  return { ink: '#2B1D14', cheek: '#FFAA8A', ey: sp === 'frog' ? 64 : 62, my: sp === 'duck' ? 92 : 87, sp: 16, c, d, body };
+  return { ink: '#2B1D14', cheek: '#FF9A8A', ey: sp === 'fox' ? 66 : sp === 'frog' ? 64 : 62, my: sp === 'duck' ? 92 : sp === 'fox' ? 91 : 87, sp: sp === 'fox' ? 20 : 16, er: sp === 'fox' ? 1.28 : 1, c, d, body };
 }
 {
   const FRIENDS = {
@@ -4270,7 +4270,8 @@ function mascotFace(mood, a) {
   const cheeks = `<ellipse cx="${L - 9}" cy="${ey + 11}" rx="7.5" ry="4.6" fill="${cheek}" opacity=".7"/><ellipse cx="${R + 9}" cy="${ey + 11}" rx="7.5" ry="4.6" fill="${cheek}" opacity=".7"/><circle cx="${L - 11}" cy="${ey + 9.5}" r="1.4" fill="#fff" opacity=".8"/><circle cx="${R + 7}" cy="${ey + 9.5}" r="1.4" fill="#fff" opacity=".8"/>`;
   const hi = eyeBg === '#fff' ? '#fff' : eyeBg;
   /* Big shiny eyes (two catchlights) inside a blink group */
-  const dotEye = (x, dy = 0) => `<g class="eye"><ellipse cx="${x}" cy="${ey + dy}" rx="7.4" ry="9" fill="${ink}"/><circle cx="${x + 2.4}" cy="${ey + dy - 3.2}" r="3" fill="${hi}"/><circle cx="${x - 1.8}" cy="${ey + dy + 2.6}" r="1.1" fill="${hi}" opacity=".85"/></g>`;
+  const er = a.er || 1;
+  const dotEye = (x, dy = 0) => `<g class="eye"><ellipse cx="${x}" cy="${ey + dy}" rx="${7.4 * er}" ry="${9 * er}" fill="${ink}"/><circle cx="${x + 2.4 * er}" cy="${ey + dy - 3.2 * er}" r="${3 * er}" fill="${hi}"/><circle cx="${x - 1.8 * er}" cy="${ey + dy + 2.6 * er}" r="${1.2 * er}" fill="${hi}" opacity=".9"/><circle cx="${x + 3.6 * er}" cy="${ey + dy + 3.4 * er}" r="${.8 * er}" fill="${hi}" opacity=".7"/></g>`;
   const arcEye = x => `<path d="M${x - 5} ${ey + 1}q5-7 10 0" fill="none" stroke="${ink}" stroke-width="3.2" stroke-linecap="round"/>`;
   const stroke = `stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"`;
   const tongue = y => `<ellipse cx="60" cy="${y}" rx="4.5" ry="2.6" fill="#FF7A9A"/>`;
@@ -8746,18 +8747,19 @@ document.addEventListener('visibilitychange', () => {
 addEventListener('pageshow', e => { if (e.persisted) goHome(); });
 
 /* Kit hugging a little multi-language dictionary: used by the opening screen and app icons. */
-function booBookSVG(mood = 'happy') {   // the fox teacher holding the language book
-  const A = MASCOT_ART.mandu, ink = '#2B1D14';
-  const body = A.body.replace(/<ellipse class="arm-[lr]"[^>]*\/>/g, '');
-  const book = `<g transform="translate(12 37) scale(.78) rotate(-7 60 90)">
-    <rect x="37" y="77" width="50" height="33" rx="5" fill="#FFF2E1" stroke="${ink}" stroke-width="3.4"/>
-    <rect x="33" y="73" width="50" height="33" rx="5" fill="#FF6B6B" stroke="${ink}" stroke-width="3.4"/>
-    <path d="M41 73v33" stroke="${ink}" stroke-width="2.8"/>
+function booBookSVG(mood = 'happy') {   // Kit the fox, sitting, holding the language book
+  const A = MASCOT_ART.mandu, ink = '#2B1D14', c = A.c, d = A.d;
+  const tail = `<path d="M88 112C130 118 142 76 118 50 124 78 112 98 84 100z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/><path d="M118 50C128 62 130 78 124 90 118 82 114 70 118 50z" fill="#FFF3E3"/>`;
+  const torso = `<path d="M30 104C26 124 38 134 60 134S94 124 90 104z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/><path d="M44 112q16 14 32 0 -2 14 -16 14t-16-14z" fill="#FFF3E3"/>`;
+  const book = `<g transform="translate(11 44) scale(.74) rotate(-7 60 90)">
+    <rect x="37" y="77" width="50" height="33" rx="5" fill="#FFF2E1" stroke="${ink}" stroke-width="3.6"/>
+    <rect x="33" y="73" width="50" height="33" rx="5" fill="#FF6B6B" stroke="${ink}" stroke-width="3.6"/>
+    <path d="M41 73v33" stroke="${ink}" stroke-width="3"/>
     <rect x="47" y="79" width="31" height="21" rx="4" fill="#FFF2E1"/>
     <text x="62.5" y="94" text-anchor="middle" font-size="10" font-weight="900" fill="${ink}" font-family="'Noto Sans KR','Noto Sans Arabic','Nunito',system-ui,sans-serif">A 가 ع</text></g>
-    <ellipse cx="35" cy="108" rx="7" ry="6" fill="#FFF3E3" stroke="${ink}" stroke-width="3"/>
-    <ellipse cx="80" cy="105" rx="7" ry="6" fill="#FFF3E3" stroke="${ink}" stroke-width="3"/>`;
-  return `<svg viewBox="-4 -4 128 134" width="100%" height="100%">${body}${mascotFace(mood, A)}${book}</svg>`;
+    <ellipse cx="34" cy="116" rx="7.5" ry="6.5" fill="${c}" stroke="${d}" stroke-width="3"/>
+    <ellipse cx="78" cy="113" rx="7.5" ry="6.5" fill="${c}" stroke="${d}" stroke-width="3"/>`;
+  return `<svg viewBox="-4 -4 146 150" width="100%" height="100%">${tail}${torso}${A.body}${mascotFace(mood, A)}${book}</svg>`;
 }
 function splash() {
   const el = document.createElement('div'); el.id = 'splash'; el.setAttribute('aria-hidden', 'true');
