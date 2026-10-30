@@ -1664,3 +1664,8 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 @media (max-height: 820px) { .l-inner figure.panel { zoom: .72; } .l-inner .scene-wrap { zoom: .7; } .l-inner { gap: 8px; } }
 @media (max-height: 680px) { .l-inner figure.panel { zoom: .55; } }
 .l-inner .prompt .script, .l-inner .prompt-text.script { font-size: 26px; } .l-inner .opt .script { font-size: 18px; }
+/* Smaller mic on the speaking screen */
+.mic-pill { width: 64px; height: 64px; border-radius: 50%; box-shadow: 0 4px 0 var(--berry-deep); }
+.mic-pill svg { width: 26px; height: 26px; }
+.mic-pill.on { width: 120px; border-radius: 32px; }
+.sp2-boo { width: 120px; height: 120px; }
