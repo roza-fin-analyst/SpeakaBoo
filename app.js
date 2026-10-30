@@ -7457,7 +7457,7 @@ function showProfiles() { Store.data.active = null; Store.save(); UI.manage = fa
 /* =====================================================================
    APP SHELL & NAVIGATION
    ===================================================================== */
-const TABS = [['now', 'Today', 'sunI'], ['learn', 'Journey', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Scenes', 'chat'], ['practice', 'Practice', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
+const TABS = [['now', 'Today', 'sunI'], ['learn', 'Journey', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Challenges', 'chat'], ['practice', 'Practice', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
 const NAV_HIDDEN = ['letters', 'quests'];
 
 function enterApp(id) {
@@ -7654,7 +7654,7 @@ function heroHTML() {
     <div class="stage-actions v5">
       ${cur ? `<button class="stage-go" data-go="${cur.u.id}:${cur.i}:lesson"><span><b>Continue</b><small>${esc(cur.u.title)} · scene ${cur.i + 1}</small></span>${ICON.play5}</button>`
         : `<button class="stage-go" data-practice="mix"><span><b>Practice</b><small>Keep your words fresh</small></span>${ICON.play5}</button>`}
-      <div class="stage-mini"><button class="mini-btn" data-tab="chat">${ICON.mic}<span>Scenes</span></button><button class="mini-btn rt-btn" data-realtalk><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H9l-4 3v-3.2A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z" fill="currentColor"/><path d="M20 9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2l-3-2h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Real Talk</span></button><button class="mini-btn call" data-call><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>Call</span></button></div>
+      <div class="stage-mini"><button class="mini-btn" data-tab="chat">${ICON.mic}<span>Challenges</span></button><button class="mini-btn rt-btn" data-realtalk><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H9l-4 3v-3.2A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z" fill="currentColor"/><path d="M20 9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2l-3-2h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Real Talk</span></button><button class="mini-btn call" data-call><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>Call</span></button></div>
     </div></div>`;
 }
 let _peekBusy = false;
@@ -8992,7 +8992,7 @@ function renderTalk() {
   const root = $('#tab-chat'); if (!root) return;
   const c = course(), T = Talk, cur = T.cur;
   if (!cur) {
-    root.innerHTML = `<div class="tk"><h1 class="tk-h">Scenes</h1><p class="tk-sub">Real situations you will face. Kit plays the other person.</p>
+    root.innerHTML = `<div class="tk"><h1 class="tk-h">Challenges</h1><p class="tk-sub">Real situations you will face. Kit plays the other person.</p>
       <div class="tk-list">${T.scenes().map(t => `<button class="tk-card" data-tk-open="${t.id}"><span class="mascot" data-tk-m="${T.who(t)}"></span><span class="tk-ct"><b>${esc(t.title)}</b><small>${esc(t.en)}</small></span><span class="tk-go">›</span></button>`).join('')}</div>
       <h2 class="tk-h2">More with characters</h2>
       <div class="tk-list"><button class="tk-card" data-realtalk><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Real Talk</b><small>Slang, tone and idioms</small></span><span class="tk-go">›</span></button>
@@ -9192,6 +9192,39 @@ const kitPose = (pose, cls = '') => `<img class="kit-pose ${cls}" src="kit/${pos
     document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-play]')) { const cur = currentLesson('main'); if (cur) startLesson(cur.u.id, cur.i, 'lesson'); else startPractice('mix'); } });
   };
   document.addEventListener('click', e => { const l = e.target.closest && e.target.closest('[data-locked]'); if (l) { toast('Finish the chapter before it first'); Sfx.wrong && Sfx.wrong(); } });
+}
+/* ---- Game-style chrome (follows the design picture): wooden stats bar, corner buttons, carved bottom bar ---- */
+const GI = {
+  book: `<svg viewBox="0 0 48 40" aria-hidden="true"><path d="M4 8Q14 3 24 9 34 3 44 8V34Q34 29 24 35 14 29 4 34z" fill="#F6E7C1" stroke="#7A4E1E" stroke-width="2.6" stroke-linejoin="round"/><path d="M24 9V35" stroke="#7A4E1E" stroke-width="2.4"/><path d="M9 14Q15 12 20 15M9 20Q15 18 20 21M28 15Q33 12 39 14M28 21Q33 18 39 20" stroke="#B58B52" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M4 34Q14 29 24 35 34 29 44 34V38Q34 33 24 39 14 33 4 38z" fill="#A5472E" stroke="#7A4E1E" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  swords: `<svg viewBox="0 0 48 44" aria-hidden="true"><g stroke="#4A4F5A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M10 6l22 22-4 4L6 10z" fill="#DADFE8"/><path d="M38 6L16 28l4 4 22-22z" fill="#C7CED9"/><path d="M26 34l8 8M22 34l-8 8" stroke="#7A4E1E" stroke-width="4"/><path d="M26 28l8 8-3 3-8-8zM22 28l-8 8 3 3 8-8z" fill="#C9962E" stroke="#7A4E1E"/></g></svg>`,
+  chest: `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M6 20Q6 8 24 8t18 12v20H6z" fill="#B7793A" stroke="#5A3A1E" stroke-width="2.6" stroke-linejoin="round"/><path d="M6 20h36" stroke="#5A3A1E" stroke-width="2.6"/><path d="M6 20Q6 8 24 8t18 12z" fill="#CF9150"/><rect x="19" y="18" width="10" height="12" rx="3" fill="#F2C94C" stroke="#8A6A12" stroke-width="2"/><circle cx="24" cy="24" r="2" fill="#5A3A1E"/><path d="M12 10v30M36 10v30" stroke="#8A5A28" stroke-width="2"/></svg>`,
+  map: `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M5 12l12-4 14 4 12-4v26l-12 4-14-4-12 4z" fill="#EAD9A8" stroke="#7A4E1E" stroke-width="2.4" stroke-linejoin="round"/><path d="M17 8v26M31 12v26" stroke="#B58B52" stroke-width="2"/><path d="M36 6a6 6 0 0 1 6 6c0 5-6 10-6 10s-6-5-6-10a6 6 0 0 1 6-6z" fill="#E4472E" stroke="#8A1F12" stroke-width="2"/><circle cx="36" cy="12" r="2.2" fill="#fff"/></svg>`
+};
+const PLAY_SWIRL = `<svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" fill="#1F8F4E" stroke="#C9962E" stroke-width="4"/><path d="M30 12a18 18 0 1 0 18 18c0-10-7-14-13-14s-10 4-10 9 4 7 7 7 6-2 6-5" fill="none" stroke="#F2C94C" stroke-width="5" stroke-linecap="round"/></svg>`;
+function gameChrome() {
+  const p = P(); if (!p || $('#app').hidden) return;
+  const h = Hearts.left(p), tx = todayXP(p), goal = p.dailyGoal || 50, pct = Math.min(100, Math.round(tx / goal * 100)), c = course();
+  const tb = $('#topbar');
+  if (tb) tb.innerHTML = `<div class="wbar">
+      <button class="wb wb-gem" data-sheet="gems" aria-label="${p.gems} leaves">${ICON_BANANA}<b>${p.gems}</b></button>
+      <button class="wb wb-lvl" data-sheet="streak" aria-label="Level ${levelFor(p.xp)}"><span class="wb-ring">${ICON_LEAFY}</span><svg class="wb-star" viewBox="0 0 24 24"><path d="M12 2l3 7 7 .7-5.3 4.8 1.6 7.2L12 18l-6.3 3.7 1.6-7.2L2 9.7 9 9z" fill="#FFC23D" stroke="#B8760B" stroke-width="1.6" stroke-linejoin="round"/></svg><b>LVL ${levelFor(p.xp)}</b></button>
+      <button class="wb wb-xp" data-sheet="streak" aria-label="Daily goal">${ICON_LEAFY}<span class="wb-track"><i style="width:${pct}%"></i><em>${tx}/${goal}</em></span></button>
+      <button class="wb wb-heart" data-sheet="hearts" aria-label="${h} hearts">${ICON.heart}<b>${h}</b></button></div>
+    <div class="wcorner"><button class="wc" data-tab="now" aria-label="Today">${GI.map}<small>MAP</small></button>
+      <button class="lang-chip" data-sheet="lang" aria-label="Change language"><span class="flag script" ${attrs(c)} style="font-family:${c.font}">${c.flag}</span>${c.name}</button>
+      <button class="wc" data-tab="practice" aria-label="Practice">${GI.chest}<small>PRACTICE</small></button></div>`;
+  const bn = $('#bnav');
+  if (bn) bn.innerHTML = `<button class="bn" data-tab="learn">${GI.book}<span>CHAPTERS</span></button>
+    <button class="bn" data-tab="chat">${GI.swords}<span>CHALLENGES</span></button>
+    <button class="bn-play" data-play aria-label="Play">${PLAY_SWIRL}<span><b>PLAY</b><small>START LESSON</small></span></button>
+    <button class="bn" data-tab="profile"><img class="bn-kit" src="kit/head.webp" alt=""><span>PROFILE</span></button>
+    <button class="bn" data-tab="quests">${GI.chest}<span>SHOP</span></button>`;
+  markNav(UI.tab);
+}
+function markNav(t) { $$('#bnav .bn').forEach(b => { if (b.dataset.tab === t || (t === 'letters' && b.dataset.tab === 'learn')) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); }
+{
+  const _rc = renderChrome; renderChrome = function () { _rc.apply(this, arguments); gameChrome(); };
+  const _st2 = showTab; showTab = function (t, ...r) { const out = _st2.call(this, t, ...r); markNav(t); return out; };
 }
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
