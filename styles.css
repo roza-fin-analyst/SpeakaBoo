@@ -2015,3 +2015,10 @@ body[data-tab="learn"] .tmap { margin-bottom: 150px; }
 .victory .review-card { width: 100%; margin-top: 14px; }
 #l-main { border: 4px solid #C9962E; background: radial-gradient(circle at 50% 10%, #4FC77D, #1F8F4E 75%) !important; color: #FFE9A8 !important; letter-spacing: .05em; text-shadow: 0 2px 0 rgb(0 0 0 / .4); box-shadow: 0 5px 0 #7A4E1E, 0 0 18px rgb(100 240 140 / .5) !important; border-radius: 20px; }
 .vkit { top: 292px; right: -10px; height: 150px; }
+/* Kit is the character-sheet fox everywhere */
+.kit-m { display: block; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 5px rgb(0 40 20 / .3)); -webkit-user-drag: none; user-select: none; }
+.trail-boo { width: 44px; height: 40px; } .trail-flag { display: none; }
+#l-fb-m .kit-pose.fb { display: none; }
+.l-foot .fb .mascot { overflow: visible; }
+.sp-boo { width: 150px; height: 190px; } .sp-boo .kit-pose { width: 100%; height: 100%; object-fit: contain; }
+.ob-fox, .tkit { }

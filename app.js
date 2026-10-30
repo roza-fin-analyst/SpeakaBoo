@@ -4280,7 +4280,8 @@ function animalArt(sp, c, d, o = {}) {
     case 'duck': default: body =
       `<path d="M60 24q6-10 12-4-8 0-10 8z" fill="${c}" stroke="${d}" stroke-width="2"/>` + head + `<ellipse cx="60" cy="80" rx="15" ry="7" fill="#FF9A3D" stroke="#E07A1F" stroke-width="2"/><path d="M47 80h26" stroke="#E07A1F" stroke-width="2" stroke-linecap="round"/>`; break;
   }
-  return { ink: '#2B1D14', cheek: '#FF9A8A', ey: sp === 'fox' ? 66 : sp === 'frog' ? 64 : 62, my: sp === 'duck' ? 92 : sp === 'fox' ? 91 : 87, sp: sp === 'fox' ? 20 : 16, er: sp === 'fox' ? 1.28 : 1, iris: sp === 'fox', c, d, body, under, after: sp === 'fox' && o.glasses !== false ? FOX_GLASSES + FOX_CLASP : '' };
+  if (sp !== 'fox') body += `<ellipse cx="46" cy="46" rx="24" ry="11" fill="#fff" opacity=".24" transform="rotate(-14 46 46)"/><path d="M18 80Q60 116 102 80Q96 108 60 110Q24 108 18 80z" fill="#000" opacity=".09"/>`;
+  return { ink: '#2B1D14', cheek: '#FF9A8A', ey: sp === 'fox' ? 66 : sp === 'frog' ? 64 : 62, my: sp === 'duck' ? 92 : sp === 'fox' ? 91 : 87, sp: sp === 'fox' ? 20 : 16, er: sp === 'fox' ? 1.28 : 1.22, iris: sp === 'fox', c, d, body, under, after: sp === 'fox' && o.glasses !== false ? FOX_GLASSES + FOX_CLASP : '' };
 }
 {
   const FRIENDS = {
@@ -4358,7 +4359,10 @@ function mascotFace(mood, a) {
 }
 let _svgUid = 0;
 const uniqIds = svg => svg.replace(/@@/g, 'u' + (++_svgUid));
-function mascotSVG(kind = 'mandu', mood = 'happy') {
+const KIT_POSE = { happy: 'welcome', peek: 'welcome', giggle: 'welcome', cheer: 'cheer', star: 'cheer', love: 'cheer', laugh: 'cheer', proud: 'thumbs', think: 'think', oops: 'ponder', pout: 'ponder', sad: 'ponder', cry: 'ponder', dizzy: 'ponder', shocked: 'ponder', sleep: 'cross', boo: 'cheer' };
+const kitMascot = (mood, small) => `<img class="kit-m" src="kit/${small ? 'head' : (KIT_POSE[mood] || 'welcome')}.webp" alt="Kit the fox" draggable="false">`;
+function mascotSVG(kind = 'mandu', mood = 'happy', small = true) {
+  if (kind === 'mandu') return kitMascot(mood, small);
   const a = MASCOT_ART[kind] || MASCOT_ART.mandu, wear = typeof wearOverlay === 'function' ? wearOverlay(kind) : '';
   const vb = a.under ? '-4 -4 146 154' : wear ? '-7 -14 134 134' : '0 0 120 120';
   return uniqIds(`<svg viewBox="${vb}" role="img" aria-label="${esc((MASCOTS[kind] || MASCOTS.mandu).name)}, ${mood}">${a.under ? '' : '<ellipse cx="60" cy="110" rx="34" ry="5" fill="#33223F" opacity=".1"/>'}${a.under || ''}${a.body}${mascotFace(mood, a)}${a.after || ''}${wear}</svg>`);
@@ -4368,7 +4372,8 @@ function paintMascot(el, kind, mood = 'happy', animate = true) {
   if (!el) return;
   [...el.classList].filter(c => c.startsWith('m-')).forEach(c => el.classList.remove(c));
   el.classList.add('mascot'); if (animate) el.classList.add('m-' + mood);
-  el.innerHTML = mascotSVG(kind, mood);
+  const w = el.clientWidth || el.getBoundingClientRect().width || 0;
+  el.innerHTML = mascotSVG(kind, mood, !!w && w < 90);
 }
 
 /* ---------- 4. Storage & profiles (localStorage, try/catch everywhere) ---------- */
@@ -7538,7 +7543,7 @@ function lessonDesc(u, i) {
 /* ---- The trail map: chapters are stepping stones on a winding jungle path ---- */
 function trailMapHTML(units, sections, cur, p, c) {
   const PITCH = 190, SIGN = 84, TOP = 40, pts = [], nodes = [], decor = [];
-  let y = TOP, lastS = -1, k = 0, tester = '';
+  let y = TOP, lastS = -1, k = 0, tester = '', kitY = -999, kitSide = '';
   const cc = courseCast();
   units.forEach(u => {
     if (u.s !== lastS) {
@@ -7558,6 +7563,7 @@ function trailMapHTML(units, sections, cur, p, c) {
     nodes.push(`<div class="tnode" style="top:${y}px;left:${x}%">
       <button class="tn ${state}" ${act} aria-label="Chapter ${num}: ${esc(u.title)}"><span class="tn-in" ${attrs(c)}>${state === 'locked' ? '' : esc(u.icon || num)}</span>${state === 'locked' ? '<svg class="tn-lock" viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><rect x="5" y="11" width="14" height="10" rx="3" fill="#fff"/></svg>' : ''}${done ? '<svg class="tn-done" viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>' : ''}</button>
       <div class="tplaque ${state}"><small>Chapter ${num}${mastered ? ' · Mastered' : ''}</small><b>${esc(u.title)}</b><span class="tleaves">${Array.from({ length: UNIT_LESSONS }, (_, i) => `<i class="${prog > i ? 'on' : ''}"></i>`).join('')}</span></div></div>`);
+    if (isCur) { kitY = y; kitSide = x > 50 ? 'l' : 'r'; }
     if (isCur) nodes.push(`<img class="tkit ${x > 50 ? 'l' : 'r'}" style="top:${y - 36}px" src="kit/thumbs.webp" alt="" draggable="false">`);
     if (k % 3 === 2) decor.push({ y: y + 40, side: x > 50 ? 'l' : 'r', kind: k % 2 ? 'pillar' : 'palm' });
     if (k % 4 === 1) decor.push({ y: y + 100, side: x > 50 ? 'r' : 'l', kind: 'bush', id: castId });
@@ -7568,7 +7574,7 @@ function trailMapHTML(units, sections, cur, p, c) {
   let d = '';
   pts.forEach((pt, i) => { if (!i) d = `M${pt[0]} ${pt[1] - 60}L${pt[0]} ${pt[1]}`; else { const q = pts[i - 1], my = (q[1] + pt[1]) / 2; d += `C${q[0]} ${my} ${pt[0]} ${my} ${pt[0]} ${pt[1]}`; } });
   if (pts.length) d += `L${pts[pts.length - 1][0]} ${H}`;
-  const pic = decor.map(o => `<div class="tdecor ${o.kind} ${o.side}" style="top:${o.y}px">${
+  const pic = decor.filter(o => !(o.side === kitSide && Math.abs(o.y - kitY) < 260)).map(o => `<div class="tdecor ${o.kind} ${o.side}" style="top:${o.y}px">${
     o.kind === 'pillar' ? '<svg viewBox="0 0 50 130"><rect x="8" y="14" width="34" height="104" rx="6" fill="#B9B6A6" stroke="#8A8676" stroke-width="3"/><rect x="2" y="6" width="46" height="14" rx="5" fill="#CFCCBC" stroke="#8A8676" stroke-width="3"/><rect x="2" y="114" width="46" height="14" rx="5" fill="#CFCCBC" stroke="#8A8676" stroke-width="3"/><path d="M12 30h26M12 52h26M12 74h26" stroke="#8A8676" stroke-width="2"/><path d="M8 20q10 18 4 40 6 8 0 18" fill="#5DB36A" opacity=".85"/></svg>'
     : o.kind === 'palm' ? '<svg viewBox="0 0 80 120"><path d="M40 118Q36 70 42 36" stroke="#8A5E36" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#3E9B54" stroke="#2A7A3E" stroke-width="2"><path d="M42 36C20 22 6 30 2 44 20 38 32 40 42 36z"/><path d="M42 36C64 22 78 30 78 44 60 38 50 40 42 36z"/><path d="M42 36C28 12 36 4 46 2 46 18 44 28 42 36z"/><path d="M42 36C30 30 14 14 8 14 20 24 30 34 42 36z"/></g></svg>'
     : o.kind === 'bush' ? `<span class="mascot" data-tm="${o.id}"></span><svg class="bush" viewBox="0 0 90 40"><path d="M0 40C0 18 20 10 44 14 70 8 90 20 90 40z" fill="#3E9B54"/><path d="M10 40C14 28 28 24 40 28" stroke="#5DB36A" stroke-width="3" fill="none"/></svg>`
@@ -8852,10 +8858,10 @@ function booBookSVG(mood = 'happy') {   // Kit the fox teacher: glasses, little 
 }
 function splash() {
   const el = document.createElement('div'); el.id = 'splash'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${booBookSVG('boo')}</div><div class="sp-bubble">Boo!</div><div class="sp-word">GabBoo</div><div class="sp-tag">Peek. Speak. Repeat.</div>`;
+  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${kitPose('cheer')}</div><div class="sp-bubble">Boo!</div><div class="sp-word">GabBoo</div><div class="sp-tag">Peek. Speak. Repeat.</div>`;
   document.body.append(el);
   // Kit swoops in from the corner holding the book (a friendly scare), gives a peeky smile, then settles in the middle.
-  const face = m => { const b = $('.sp-boo', el); if (b) b.innerHTML = booBookSVG(m); };
+  const face = m => { const b = $('.sp-boo', el); if (b) b.innerHTML = kitPose(m === 'giggle' ? 'welcome' : m === 'happy' ? 'thumbs' : 'cheer'); };
   setTimeout(() => face('giggle'), 1050); setTimeout(() => face('happy'), 1800);
   const t0 = Date.now(); let gone = false;
   const hide = () => { if (gone) return; gone = true; setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 600); }, Math.max(0, 3000 - (Date.now() - t0))); };
@@ -9048,13 +9054,10 @@ const Share = {
     const g = cv.getContext('2d'), bg = g.createRadialGradient(W / 2, 420, 60, W / 2, 520, 1100);
     bg.addColorStop(0, '#F08A3E'); bg.addColorStop(.5, '#B4510F'); bg.addColorStop(1, '#2B1D14'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
     const font = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', center = (t, y, size, wt = 800, col = '#fff') => { g.font = `${wt} ${size}px ${font}`; g.fillStyle = col; g.textAlign = 'center'; g.fillText(t, W / 2, y); };
-    const holder = document.createElement('div'); holder.innerHTML = booBookSVG('happy');   // the HTML parser tidies the markup so it can be drawn as a picture
-    const el = holder.firstElementChild; el.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); el.setAttribute('width', '520'); el.setAttribute('height', '520');
-    const svg = new XMLSerializer().serializeToString(el);
     return new Promise(res => {
       const img = new Image();
       img.onload = () => {
-        g.drawImage(img, W / 2 - 260, 90, 520, 520);
+        g.drawImage(img, W / 2 - img.width * 520 / img.height / 2, 90, img.width * 520 / img.height, 520);
         center(p.name, 720, 84); center(`is learning ${c.name}`, 800, 48, 600, '#FFD9B8');
         const stats = [[liveStreak(p), 'day streak'], [levelFor(p.xp), 'level'], [learnedWords(p, c.code).length, 'words']];
         stats.forEach(([v, l], i) => { const x = 210 + i * 330; g.fillStyle = 'rgba(255,255,255,.12)'; g.beginPath(); g.roundRect ? g.roundRect(x - 140, 880, 280, 220, 36) : g.rect(x - 140, 880, 280, 220); g.fill(); g.textAlign = 'center'; g.font = `800 100px ${font}`; g.fillStyle = '#fff'; g.fillText(String(v), x, 1010); g.font = `600 36px ${font}`; g.fillStyle = '#FFD9B8'; g.fillText(l, x, 1070); });
@@ -9062,7 +9065,7 @@ const Share = {
         cv.toBlob(b => res(b), 'image/png');
       };
       img.onerror = () => res(null);
-      img.src = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+      img.src = 'kit/welcome.webp';
     });
   },
   async progress() {
