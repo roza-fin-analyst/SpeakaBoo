@@ -4242,11 +4242,11 @@ function mascotFace(mood, a) {
       `<circle cx="${R}" cy="${ey}" r="7.5" fill="${eyeBg}" stroke="${ink}" stroke-width="2.4"/><circle cx="${R}" cy="${ey}" r="3.2" fill="${ink}"/>` +
       `<path d="M${L - 7} ${ey - 12}l11-3M${R + 7} ${ey - 12}l-11-3" ${stroke}/>` +
       `<ellipse cx="60" cy="${my + 2}" rx="5.5" ry="7" fill="${ink}"/>` + drop(R + 17, ey - 14);
-    case 'boo': return cheeks +   // the naughty "BOO!" face: slanted brows, sideways glance, big sly grin with little fangs
-      `<circle cx="${L}" cy="${ey}" r="7.8" fill="${eyeBg}" stroke="${ink}" stroke-width="2.4"/><circle cx="${L + 2.6}" cy="${ey - 1.6}" r="3.6" fill="${ink}"/><circle cx="${L + 3.6}" cy="${ey - 2.8}" r="1.1" fill="${hi}"/>` +
-      `<circle cx="${R}" cy="${ey}" r="7.8" fill="${eyeBg}" stroke="${ink}" stroke-width="2.4"/><circle cx="${R + 2.6}" cy="${ey - 1.6}" r="3.6" fill="${ink}"/><circle cx="${R + 3.6}" cy="${ey - 2.8}" r="1.1" fill="${hi}"/>` +
-      `<path d="M${L - 9} ${ey - 15}l15 7M${R + 9} ${ey - 15}l-15 7" ${stroke} stroke-width="3.6"/>` +
-      `<path d="M42 ${my - 7}q18 8 36 0q-3 24 -18 24q-15 0 -18 -24z" fill="${ink}"/><path d="M46 ${my - 5}l4 8l4 -6M74 ${my - 5}l-4 8l-4 -6" fill="#fff"/>` + tongue(my + 11);
+    case 'boo': return cheeks +   // the naughty "Boo!" face: one raised brow, sideways glance, cheeky lopsided grin with the tongue out
+      `<ellipse cx="${L + 2}" cy="${ey}" rx="7.4" ry="9" fill="${ink}"/><circle cx="${L + 4.6}" cy="${ey - 3.4}" r="3" fill="${hi}"/><circle cx="${L + .2}" cy="${ey + 2.4}" r="1.1" fill="${hi}" opacity=".85"/>` +
+      `<ellipse cx="${R + 2}" cy="${ey}" rx="7.4" ry="9" fill="${ink}"/><circle cx="${R + 4.6}" cy="${ey - 3.4}" r="3" fill="${hi}"/><circle cx="${R + .2}" cy="${ey + 2.4}" r="1.1" fill="${hi}" opacity=".85"/>` +
+      `<path d="M${L - 7} ${ey - 11}q7 -3 14 1" ${stroke} stroke-width="3.2"/><path d="M${R - 8} ${ey - 15}q8 -7 16 -1" ${stroke} stroke-width="3.2"/>` +
+      `<path d="M47 ${my - 3}q13 3 26 -5q-3 17 -14 17q-10 0 -12 -12z" fill="${ink}"/><path d="M60 ${my + 6}q3 10 11 5q2 -5 -3 -9z" fill="#FF7A9A"/>`;
     case 'cheer': return cheeks +
       `<path d="M${L - 5} ${ey - 4}l8 4-8 4M${R + 5} ${ey - 4}l-8 4 8 4" ${stroke} stroke-linejoin="round"/>` +
       `<path d="M49 ${my - 3}q11 18 22 0z" fill="${ink}"/>` + tongue(my + 6) +
