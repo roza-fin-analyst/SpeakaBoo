@@ -1918,3 +1918,50 @@ body { background: #A9D898; }
 
 /* sky hero keeps its scenery; headings stay readable */
 .sky { border: 3px solid rgb(255 255 255 / .35); }
+
+/* ===== Closer to the design picture ===== */
+/* currencies as dark wooden pills */
+.stat { background: var(--wood-bg); border: 2.5px solid #3A2414; box-shadow: 0 3px 0 #2E1B0E, inset 0 2px 0 rgb(255 255 255 / .18); color: var(--cream-ink); }
+.stat .num { color: #fff; text-shadow: 0 1px 0 rgb(0 0 0 / .4); }
+.stat.hearts svg { color: #FF6B7A; filter: drop-shadow(0 1px 0 rgb(0 0 0 / .4)); }
+/* chapter cards leave room for the stone path on the right */
+@media (max-width: 899px) { .metro .ep, .metro .ep.mini { width: 79%; } }
+/* scenes as real leaves */
+.ep-seg { height: 26px; border-radius: 0; background: transparent no-repeat center / contain; box-shadow: none !important; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 28'><path d='M3 24C3 8 14 2 37 3 36 18 24 26 3 24z' fill='%23908E82' stroke='%2370695E' stroke-width='2' stroke-linejoin='round'/><path d='M6 22C14 15 24 9 33 6' stroke='%2370695E' stroke-width='2' fill='none' stroke-linecap='round'/></svg>"); }
+.ep-seg.done { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 28'><path d='M3 24C3 8 14 2 37 3 36 18 24 26 3 24z' fill='%234FB05C' stroke='%232F8F4A' stroke-width='2' stroke-linejoin='round'/><path d='M6 22C14 15 24 9 33 6' stroke='%232F8F4A' stroke-width='2' fill='none' stroke-linecap='round'/><path d='M8 14C14 10 20 8 26 7' stroke='%23fff' stroke-opacity='.5' stroke-width='2' fill='none' stroke-linecap='round'/></svg>"); background-color: transparent; }
+.ep-seg.open { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 28'><path d='M3 24C3 8 14 2 37 3 36 18 24 26 3 24z' fill='%23B7E3A5' stroke='%2378B66A' stroke-width='2' stroke-linejoin='round'/><path d='M6 22C14 15 24 9 33 6' stroke='%2378B66A' stroke-width='2' fill='none' stroke-linecap='round'/></svg>"); opacity: 1; background-color: transparent; }
+.ep-seg.current { flex: 2.6; height: 34px; background: linear-gradient(180deg, #FFD26E, #F29A3C); border-radius: 40px 6px 40px 6px; box-shadow: 0 0 14px rgb(255 190 70 / .8) !important; }
+.ep-seg.test { background: transparent; border-radius: 0; width: 38px; height: 34px; color: #D99A00; }
+.ep-seg.test svg { width: 30px; height: 30px; }
+.ep-seg.test.done { color: #FFB52E; filter: drop-shadow(0 0 6px rgb(255 190 70 / .8)); }
+/* locked chapters hang on a sign post */
+.ep.locked::before, .ep.mini.locked::before { content: none; }
+.ep.locked { overflow: visible; margin-bottom: 18px; }
+.ep.locked::after { content: ""; position: absolute; left: 44%; bottom: -16px; width: 22px; height: 18px; background: var(--wood-bg); border: 2px solid #3A2414; border-top: 0; border-radius: 0 0 4px 4px; z-index: -1; }
+/* headings that sit straight on the jungle */
+.tk-h, .tk-h2, .tk-sub, .tk-end .tk-sub { color: #FFF3D6; text-shadow: 0 2px 6px rgb(10 40 20 / .7); }
+/* Kit peeking from the leaves (Journey only) */
+#kit-peek { display: none; position: fixed; right: 4px; bottom: calc(82px + env(safe-area-inset-bottom, 0px)); width: 150px; height: 108px; pointer-events: none; z-index: 2; }
+body[data-tab="learn"] #kit-peek { display: block; }
+#kit-peek img { position: absolute; right: 22px; bottom: 16px; width: 112px; filter: drop-shadow(0 6px 8px rgb(0 0 0 / .35)); animation: peekBob 3.6s ease-in-out infinite; }
+#kit-peek svg { position: absolute; right: 0; bottom: 0; width: 160px; height: 90px; }
+@keyframes peekBob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-5px) rotate(2deg); } }
+.ep-seg.test, .ep-seg.test.open, .ep-seg.test.current, .ep-seg.test.done { background: transparent !important; box-shadow: none !important; }
+.ep-seg.test.open, .ep-seg.test.current { color: #D99A00; }
+.stat.streak.cold svg { opacity: .85; filter: none; }
+/* Kit artwork */
+.kit-pose { display: block; max-width: 100%; height: auto; filter: drop-shadow(0 8px 10px rgb(0 40 20 / .3)); user-select: none; -webkit-user-drag: none; }
+.ob-fox-img { position: relative; width: min(60vw, 230px); aspect-ratio: auto; animation: foxHello 3.6s ease-in-out infinite; }
+.ob-fox-img .kit-pose { width: 100%; }
+.ob-fox-img.talk .kit-pose { transform: scale(1.02) rotate(-1deg); transition: transform .2s; }
+.ob-book { position: absolute; left: 50%; bottom: 20%; width: 46%; transform: translateX(-50%); filter: drop-shadow(0 3px 3px rgb(0 0 0 / .3)); }
+.l-foot .fb .mascot .kit-pose.fb { height: 100px; width: auto; max-width: none; position: absolute; right: 0; bottom: 0; }
+/* welcome: book held between Kit's open hands (not over his face) */
+.ob-fox-img .ob-book { position: absolute; left: 50%; top: 47%; bottom: auto; width: 40%; height: auto; transform: translateX(-50%); }
+/* Today: the greeting is a wooden sign, Kit peeks out of the leaves (as in the design picture) */
+.sky { background: var(--wood-bg) !important; color: var(--cream-ink) !important; text-shadow: none !important; min-height: 0; padding: 24px 18px 18px; border: 3px solid #3A2414; border-radius: 22px; box-shadow: 0 6px 0 #2E1B0E, 0 16px 24px rgb(20 40 20 / .3), inset 0 2px 0 rgb(255 255 255 / .18); margin-top: 14px; overflow: visible; }
+.sky::before { content: ""; position: absolute; left: 10px; right: 10px; top: -16px; height: 30px; background: radial-gradient(ellipse 22px 11px at 12% 70%, #5DB36A 99%, transparent), radial-gradient(ellipse 22px 11px at 24% 40%, #3E9B54 99%, transparent), radial-gradient(ellipse 22px 11px at 80% 45%, #3E9B54 99%, transparent), radial-gradient(ellipse 22px 11px at 92% 70%, #6FC079 99%, transparent); pointer-events: none; z-index: 2; }
+.sky .skyline, .sky .sky-boo, .sky .sky-bubble, .sky .cloud, .sky .stars, .sky .sun, .sky .moon { display: none !important; }
+.sky-hi { color: #fff; } .sky-sub { color: #F1DDB4; max-width: 100%; }
+.sky-clock, .sky .chip, .sky-top > span { color: #F1DDB4; background: rgb(255 255 255 / .12); }
+body[data-tab="now"] #kit-peek, body[data-tab="chat"] #kit-peek, body[data-tab="practice"] #kit-peek { display: block; }

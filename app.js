@@ -7992,6 +7992,7 @@ const Runner = {
     const mood = React.pick(ok, this.combo, this.wrongRun);
     React.play($('#l-fb-m'), p.mascot, mood); paintMascot($('#l-boo'), p.mascot, mood, true);
     $('#l-fb-m').classList.toggle('r-no', !ok); $('#l-fb-m').classList.toggle('r-yay', ok);
+    if (P().mascot === 'mandu') $('#l-fb-m').innerHTML = kitPose(ok ? 'cheer' : 'ponder', 'fb');
     React.flash(ok);
     setTimeout(() => React.burst($('#l-fb-m'), ok ? (this.combo >= 3 ? 'stars' : 'hearts') : (this.wrongRun >= 2 ? 'clouds' : 'tears'), ok ? 10 : 6), 60);
     if (!ok && this.wrongRun >= 2) setTimeout(() => { if (this.locked) { React.play($('#l-fb-m'), p.mascot, 'love'); React.burst($('#l-fb-m'), 'hearts', 5); } }, 1100);
@@ -9118,6 +9119,20 @@ function jungleBackdrop() {
 }
 jungleBackdrop();
 
+/* Kit peeks out of the leaves at the bottom of the Journey (like the design picture) */
+{
+  const mk = () => {
+    if (document.getElementById('kit-peek')) return;
+    const el = document.createElement('div'); el.id = 'kit-peek'; el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = `<img src="kit/head.webp" alt="" draggable="false"><svg viewBox="0 0 160 90" preserveAspectRatio="xMaxYMax meet"><g><path d="M160 90C140 40 90 30 40 52 60 64 70 74 64 90z" fill="#2F8F4A"/><path d="M160 90C150 56 120 44 84 50" stroke="#1F6A3A" stroke-width="3" fill="none"/><path d="M160 90C130 70 100 70 80 90z" fill="#3E9B54"/><path d="M110 90C112 70 128 58 150 56 150 74 138 86 110 90z" fill="#5DB36A"/></g></svg>`;
+    document.body.append(el);
+  };
+  mk(); document.body.dataset.tab = 'now';
+  const _st = showTab;
+  showTab = function (t, ...r) { document.body.dataset.tab = t; return _st.call(this, t, ...r); };
+}
+/* Kit as artwork (poses cut from the character sheet): welcome, cheer, think, ponder... */
+const kitPose = (pose, cls = '') => `<img class="kit-pose ${cls}" src="kit/${pose}.webp" alt="" draggable="false">`;
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
@@ -10714,7 +10729,7 @@ const Onboard2 = {
     const S = [
       () => `<div class="ob-s s-hide"><h1>Psst… Kit is hiding.</h1><p>Can you find him?</p>
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}</button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
-      () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Hi! I’m Kit.</b><span>I’ll help you speak a new language. Look at the book, then say it out loud with me.</span></div><div class="ob-fox" id="ob-fox">${booBookSVG('happy')}</div><button class="btn primary big" data-ob-next>Let’s start</button></div>`,
+      () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Hi! I’m Kit.</b><span>I’ll help you speak a new language. Look at the book, then say it out loud with me.</span></div><div class="ob-fox ob-fox-img" id="ob-fox">${kitPose('welcome')}<svg class="ob-book" viewBox="0 0 60 44" aria-hidden="true"><g transform="rotate(-6 30 24)"><rect x="8" y="12" width="44" height="28" rx="4" fill="#FFF2E1" stroke="#2B1D14" stroke-width="2.6"/><rect x="5" y="8" width="44" height="28" rx="4" fill="#E4572E" stroke="#2B1D14" stroke-width="2.6"/><path d="M12 8v28" stroke="#2B1D14" stroke-width="2"/><rect x="16" y="13" width="28" height="18" rx="3" fill="#FFF2E1"/><text x="30" y="26" text-anchor="middle" font-size="9" font-weight="900" fill="#2B1D14" font-family="Nunito,system-ui,sans-serif">A 가 ع</text></g></svg></div><button class="btn primary big" data-ob-next>Let’s start</button></div>`,
       () => `<div class="ob-s"><h1>Not another tap-the-tiles app</h1><p>Here’s what you’ll do differently with GabBoo:</p>${whyHTML(false)}<button class="btn primary big" data-ob-next>Sounds good!</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
         <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
@@ -10758,7 +10773,7 @@ const Onboard2 = {
         else { b.classList.add('nope'); b.disabled = true; $('#ob-hint').textContent = pick(['Not here! Try another…', 'Nope, nobody here!', 'Hmm, keep looking!']); Sfx.wrong(); }
       });
     }
-    if (this.step === 1) { const f = $('#ob-fox', el); let n = 0; const t = setInterval(() => { if (!f || !f.isConnected) return clearInterval(t); f.innerHTML = booBookSVG(n++ % 2 ? 'cheer' : 'happy'); if (n > 14) { clearInterval(t); f.innerHTML = booBookSVG('happy'); } }, 210); }
+    if (this.step === 1) { const f = $('#ob-fox', el); let n = 0; const t = setInterval(() => { if (!f || !f.isConnected) return clearInterval(t); n++; f.classList.toggle('talk', n % 2 === 1); if (n > 14) { clearInterval(t); f.classList.remove('talk'); } }, 210); }
     if (false) setTimeout(() => Voice.speak('Hi! I’m Kit. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
     if (this.step === 3) $$('[data-city]', el).forEach(b => b.onclick = () => { d.lang = b.dataset.city; $$('[data-city]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).textContent = `Let’s go to ${CITY[d.lang].city}`; Voice.speak(Onboard.GREET[d.lang][0], COURSES[d.lang].tts, .9, d.mascot, 'happy'); });
     if (this.step === 4) $$('[data-why]', el).forEach(b => b.onclick = () => { d.why = b.dataset.why; $$('[data-why]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).disabled = false; Sfx.tap(); });
