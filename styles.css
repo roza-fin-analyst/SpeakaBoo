@@ -1681,3 +1681,12 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 .listen-tools { flex-wrap: wrap !important; }
 .listen-tools .say-res { flex: 0 0 100%; text-align: center; font-weight: 700; } .listen-tools .say-res:empty { display: none; }
 .card-actions > .star-btn { min-width: 48px; width: 48px; padding: 0; border-radius: 50%; }
+/* New-word card actions: small and tidy */
+.card-actions { gap: 10px; align-items: center; }
+.card-actions > * { height: 40px; min-height: 40px; min-width: 0; }
+.card-actions > .star-btn { width: 40px; min-width: 40px; padding: 0; border-radius: 50%; }
+.card-actions > .speaker.slow { width: 56px; border-radius: 14px; }
+.card-actions > .say-it { min-height: 40px; padding: 0 16px; border-radius: 14px; font-size: 15px; }
+.card-actions > .say-it svg { width: 18px; height: 18px; }
+.card-actions > .speaker.slow { width: 56px !important; height: 40px !important; min-height: 40px !important; }
+.card-actions > .star-btn { width: 40px !important; height: 40px !important; }
