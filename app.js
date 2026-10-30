@@ -7353,7 +7353,7 @@ function showProfiles() { Store.data.active = null; Store.save(); UI.manage = fa
 /* =====================================================================
    APP SHELL & NAVIGATION
    ===================================================================== */
-const TABS = [['now', 'Today', 'sunI'], ['learn', 'Journey', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Talk', 'chat'], ['practice', 'Pocket', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
+const TABS = [['now', 'Today', 'sunI'], ['learn', 'Journey', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Scenes', 'chat'], ['practice', 'Pocket', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
 const NAV_HIDDEN = ['letters', 'quests'];
 
 function enterApp(id) {
@@ -7505,7 +7505,7 @@ function heroHTML() {
     <div class="stage-actions v5">
       ${cur ? `<button class="stage-go" data-go="${cur.u.id}:${cur.i}:lesson"><span><b>Continue</b><small>${esc(cur.u.title)} · scene ${cur.i + 1}</small></span>${ICON.play5}</button>`
         : `<button class="stage-go" data-practice="mix"><span><b>Practice</b><small>Keep your words fresh</small></span>${ICON.play5}</button>`}
-      <div class="stage-mini"><button class="mini-btn" data-tab="chat">${ICON.mic}<span>Talk</span></button><button class="mini-btn rt-btn" data-realtalk><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H9l-4 3v-3.2A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z" fill="currentColor"/><path d="M20 9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2l-3-2h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Real Talk</span></button><button class="mini-btn call" data-call><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>Call</span></button></div>
+      <div class="stage-mini"><button class="mini-btn" data-tab="chat">${ICON.mic}<span>Scenes</span></button><button class="mini-btn rt-btn" data-realtalk><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H9l-4 3v-3.2A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z" fill="currentColor"/><path d="M20 9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2l-3-2h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Real Talk</span></button><button class="mini-btn call" data-call><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>Call</span></button></div>
     </div></div>`;
 }
 let _peekBusy = false;
@@ -8790,6 +8790,92 @@ function reportHref(t, r, en) {
   };
   addEventListener('online', note); addEventListener('offline', note); setTimeout(note, 1500);
 }
+/* =====================================================================
+   TALK: pick a real-life scene; Boo plays the other person.
+   Hear the line, choose a reply, say it out loud. Works offline.
+   ===================================================================== */
+const Talk = {
+  cur: null,
+  scenes() { return course().chat.topics.filter(t => t.steps && t.steps.length); },
+  who(t) { return SCENE_NPC[t.id] || (typeof courseCast === 'function' ? courseCast()[0] : null) || P().mascot; },
+  open(id) {
+    if (!Access.need('talk')) return;
+    const t = this.scenes().find(x => x.id === id); if (!t) return;
+    if (Access.countTalk) Access.countTalk();
+    this.cur = { t, i: 0, good: 0, tries: 0, sel: 0, ok: false, done: false };
+    renderTalk(); this.hear();
+  },
+  line() { const st = this.cur.t.steps[this.cur.i]; return { say: fillSay(st.say), chips: (st.chips || []).slice(0, 3).map(fillSay), st }; },
+  hear() { if (!this.cur || this.cur.done) return; const c = course(), L = this.line(); setTimeout(() => Voice.speak(L.say.t, c.tts, .9, this.who(this.cur.t)), 350); },
+  next() {
+    const cur = this.cur; cur.i++; cur.tries = 0; cur.sel = 0; cur.ok = false;
+    if (cur.i >= cur.t.steps.length) {
+      const xp = 5 + cur.good * 3, p = P(); award(xp); p.stats.spoken = (p.stats.spoken || 0) + cur.good; Quests.bump('speak'); Store.save();
+      cur.done = true; cur.xp = xp; Sfx.complete && Sfx.complete(); if (cur.good >= Math.ceil(cur.t.steps.length / 2)) confetti();
+      return renderTalk();
+    }
+    renderTalk(); this.hear();
+  },
+  win() {
+    const cur = this.cur; cur.ok = true; cur.good++; Sfx.correct(); paintMascot($('#tk-boo'), this.who(cur.t), 'cheer', true);
+    $('#tk-st').textContent = 'Great!'; $('#tk-mic')?.classList.remove('on'); $('#tk-act').innerHTML = `<button class="btn primary big" id="tk-next">${cur.i + 1 >= cur.t.steps.length ? 'Finish' : 'Next'}</button>`;
+    $('#tk-next').onclick = () => this.next();
+  },
+  async say() {
+    const cur = this.cur, c = course(), btn = $('#tk-mic'), st = $('#tk-st'); if (!btn || cur.ok) return;
+    if (Mic.active) { Mic.stop(); return; }
+    const L = this.line(), pick = L.chips[cur.sel] || L.chips[0]; if (!pick) return;
+    btn.classList.add('on'); st.textContent = 'Listening…';
+    try {
+      const alts = await listenOnce(c.stt, { target: pick.t, onInterim: t => { st.textContent = t + '…'; } }); btn.classList.remove('on'); cur.tries++;
+      const best = L.chips.map(ch => pronScore(ch.t, alts || [])).sort((a, b) => b.pct - a.pct)[0] || { pct: 0, ok: false };
+      if (best.ok || best.pct >= 60) return this.win();
+      Sfx.wrong(); paintMascot($('#tk-boo'), this.who(cur.t), 'think', true);
+      st.textContent = `${best.pct}%. Tap the mic to try again.`;
+      if (cur.tries >= 2) $('#tk-act').innerHTML = `<button class="btn ghost" id="tk-next">Next</button>`, ($('#tk-next').onclick = () => this.next());
+    } catch (code) { btn.classList.remove('on'); st.textContent = Mic.explain ? Mic.explain(code) : 'Microphone unavailable.'; }
+  }
+};
+function renderTalk() {
+  const root = $('#tab-chat'); if (!root) return;
+  const c = course(), T = Talk, cur = T.cur;
+  if (!cur) {
+    root.innerHTML = `<div class="tk"><h1 class="tk-h">Scenes</h1><p class="tk-sub">Real situations you will face. Boo plays the other person.</p>
+      <div class="tk-list">${T.scenes().map(t => `<button class="tk-card" data-tk-open="${t.id}"><span class="mascot" data-tk-m="${T.who(t)}"></span><span class="tk-ct"><b>${esc(t.title)}</b><small>${esc(t.en)}</small></span><span class="tk-go">›</span></button>`).join('')}</div></div>`;
+    $$('[data-tk-m]', root).forEach(m => paintMascot(m, m.dataset.tkM, 'happy', false));
+    return;
+  }
+  if (cur.done) {
+    const n = cur.t.steps.length;
+    root.innerHTML = `<div class="tk tk-end"><div class="mascot tk-boo" id="tk-boo"></div><h1 class="tk-h">${esc(cur.t.title)}</h1><p class="tk-sub">${cur.good} of ${n} lines said · +${cur.xp} XP</p>
+      <div class="stack"><button class="btn primary big" id="tk-again">Again</button><button class="btn ghost big" id="tk-more">Another scene</button></div></div>`;
+    paintMascot($('#tk-boo'), T.who(cur.t), cur.good >= n / 2 ? 'cheer' : 'happy', true);
+    $('#tk-again').onclick = () => T.open(cur.t.id); $('#tk-more').onclick = () => { T.cur = null; renderTalk(); };
+    return;
+  }
+  const L = T.line(), n = cur.t.steps.length, who = T.who(cur.t), rom = L.say.r && L.say.r !== L.say.t ? L.say.r : '';
+  root.innerHTML = `<div class="tk">
+    <div class="tk-top"><button class="icon-btn" id="tk-back" aria-label="Back">${ICON.x}</button><div class="tk-bar"><i style="width:${Math.round(cur.i / n * 100)}%"></i></div><span class="tk-n">${cur.i + 1}/${n}</span></div>
+    <div class="tk-npc"><div class="mascot tk-boo" id="tk-boo"></div>
+      <div class="tk-line"><small class="tk-who">${esc(MASCOTS[who] ? MASCOTS[who].name : '')}</small>
+        <div class="script tk-t" ${attrs(c)}>${esc(L.say.t)}</div>${rom ? `<div class="tk-r">${esc(rom)}</div>` : ''}<div class="tk-en">${esc(L.say.en)}</div>
+        <div class="tk-btns"><button class="speaker sm" data-say="${esc(L.say.t)}" data-who="${who}" aria-label="Play">${ICON.speaker}</button><button class="speaker sm slow" data-say="${esc(L.say.t)}" data-who="${who}" data-rate=".55" aria-label="Play slowly">${ICON.turtle}</button></div></div></div>
+    <div class="tk-chips">${L.chips.map((ch, k) => `<button class="tk-chip" data-tk-chip="${k}" aria-pressed="${k === cur.sel}"><span class="script" ${attrs(c)}>${esc(ch.t)}</span><small>${ch.r && ch.r !== ch.t ? esc(ch.r) + ' · ' : ''}${esc(ch.en)}</small></button>`).join('')}</div>
+    <div class="tk-act" id="tk-act">${Mic.SR && !Mic.blocked ? `<button class="mic-pill" id="tk-mic" aria-label="Say it">${ICON.mic}<span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></button>` : `<button class="btn primary big" id="tk-said">I said it</button>`}</div>
+    <p class="tk-st" id="tk-st">${Mic.SR && !Mic.blocked ? 'Tap the mic and say your reply' : 'Say your reply out loud'}</p>
+    <button class="link-btn" id="tk-skip">Skip</button></div>`;
+  paintMascot($('#tk-boo'), who, 'happy', true);
+  $$('[data-tk-chip]', root).forEach(b => b.onclick = () => { cur.sel = +b.dataset.tkChip; $$('[data-tk-chip]', root).forEach(x => x.setAttribute('aria-pressed', x === b)); const ch = L.chips[cur.sel]; if (ch) Voice.speak(ch.t, c.tts, .9, P().mascot); });
+  $('#tk-back').onclick = () => { Voice.stop(); Mic.stop(); T.cur = null; renderTalk(); };
+  $('#tk-skip').onclick = () => { Voice.stop(); Mic.stop(); T.next(); };
+  $('#tk-mic') && ($('#tk-mic').onclick = () => T.say());
+  $('#tk-said') && ($('#tk-said').onclick = () => T.win());
+}
+document.addEventListener('click', e => { const o = e.target.closest && e.target.closest('[data-tk-open]'); if (o) Talk.open(o.dataset.tkOpen); });
+renderChat = renderTalk;
+/* English is never spoken aloud: device English voices sound robotic, and every English line is on screen. */
+{ const _play = Voice.play.bind(Voice); Voice.play = function (text, lang, ...rest) { if (/^en/i.test(lang || '')) return Promise.resolve(); return _play(text, lang, ...rest); }; }
+
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
