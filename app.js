@@ -8553,6 +8553,7 @@ function renderProfile() {
       <p class="note">The key stays in this browser and is sent only to Google.</p>
     </div>
     <p class="note ver-line" id="ver-line" style="text-align:center">${Tester.on() ? '<b>Tester mode on</b> · ' : ''}Speakaboo version ${SPEAKABOO_VERSION}</p>
+    <p class="note" style="text-align:center"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a> · Pictures: Microsoft Fluent Emoji (MIT)</p>
     <div class="card settings"><h3>Data</h3>
       ${UI.meConfirm === 'reset' ? `<div class="p-row"><span class="note">Erase ${esc(p.name)}’s progress?</span><button class="btn danger sm" id="me-reset-yes">Erase</button><button class="btn ghost sm" data-me-cancel>Keep</button></div>` : `<button class="btn ghost sm" id="me-reset">Reset my progress</button>`}
       ${UI.meConfirm === 'delete' ? `<div class="p-row"><span class="note">Delete this learner?</span><button class="btn danger sm" id="me-del-yes">Delete</button><button class="btn ghost sm" data-me-cancel>Keep</button></div>` : `<button class="btn ghost sm" id="me-del">Delete this learner</button>`}
