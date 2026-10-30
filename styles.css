@@ -1694,3 +1694,12 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 .halfway { position: fixed; inset: 0; margin: auto; width: max-content; height: max-content; transform: none; animation: hwIn .35s ease-out both; pointer-events: none; }
 .halfway.out { transform: none; opacity: 0; transition: opacity .3s; }
 @keyframes hwIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Me tab: simple collapsed list */
+.me-list { display: flex; flex-direction: column; gap: 8px; }
+.me-group { background: var(--surface); border: 2px solid var(--line); border-radius: 18px; overflow: hidden; }
+.me-group > summary { list-style: none; cursor: pointer; padding: 16px 18px; font: 600 18px var(--font-display); color: var(--ink); display: flex; justify-content: space-between; align-items: center; }
+.me-group > summary::-webkit-details-marker { display: none; }
+.me-group > summary::after { content: "›"; font-size: 26px; color: var(--ink-2); transition: transform .2s; }
+.me-group[open] > summary::after { transform: rotate(90deg); }
+.me-body { padding: 0 18px 18px; display: flex; flex-direction: column; gap: 12px; }

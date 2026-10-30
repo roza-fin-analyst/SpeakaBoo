@@ -8752,6 +8752,28 @@ Object.values(MASCOTS).forEach(m => Object.assign(m, {
   mishear: ['I heard “{heard}”. Try “{right}” ({rom}).'],
   help: ['Try: “{right}” ({rom}).']
 }));
+/* Me tab: a short list of collapsed settings instead of one very long page */
+{
+  const _renderProfile = renderProfile;
+  renderProfile = function () {
+    _renderProfile();
+    const root = $('#tab-profile'), stack = root && root.querySelector('.stack'); if (!stack) return;
+    root.querySelectorAll('.why-card').forEach(x => x.remove());
+    if (!Tester.on()) { const h = $('#me-hearts'); if (h) h.closest('label').remove(); }
+    const order = ['Preferences', 'Profile', 'Account', 'Microphone & app', 'Writing', 'Boo’s wardrobe', 'Chat tutor brain', 'Data'];
+    const label = { 'Chat tutor brain': 'AI tutor (advanced)' };
+    const list = document.createElement('div'); list.className = 'me-list';
+    const cards = [...stack.children].filter(x => x.classList.contains('card') && x.querySelector('h3'));
+    cards.sort((a, b) => { const f = n => { const t = a === n ? a : b; return 0; }; const ix = el => { const t = el.querySelector('h3').textContent.replace(/\s*\d+\/\d+$/, '').trim(); const i = order.findIndex(o => t.startsWith(o)); return i < 0 ? 99 : i; }; return ix(a) - ix(b); });
+    cards.forEach(card => {
+      const h = card.querySelector('h3'), t = h.textContent.replace(/\s*\d+\/\d+$/, '').trim();
+      const d = document.createElement('details'); d.className = 'me-group'; if (card.id) d.id = card.id;
+      const sm = document.createElement('summary'); sm.textContent = label[t] || t; h.remove();
+      card.classList.remove('card'); card.classList.add('me-body'); d.append(sm, card); list.append(d);
+    });
+    const ver = stack.querySelector('#ver-line'); stack.insertBefore(list, ver || null);
+  };
+}
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
