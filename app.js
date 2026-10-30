@@ -5091,7 +5091,7 @@ function gardenHTML() {
 /* ---------- Mood check ---------- */
 const MOODS = [
   { id: 'sleepy', art: 'tired', t: 'Sleepy', d: 'Just listen. 2 min.' },
-  { id: 'chatty', art: 'speak', t: 'Chatty', d: 'Talk out loud.' },
+  { id: 'chatty', art: 'speak', t: 'Chatty', d: 'Say words aloud.' },
   { id: 'focused', art: 'study', t: 'Focused', d: 'Next lesson on your path.' }
 ];
 function moodHTML() {
@@ -7353,7 +7353,7 @@ function showProfiles() { Store.data.active = null; Store.save(); UI.manage = fa
 /* =====================================================================
    APP SHELL & NAVIGATION
    ===================================================================== */
-const TABS = [['now', 'Today', 'sunI'], ['learn', 'Journey', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Scenes', 'chat'], ['practice', 'Pocket', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
+const TABS = [['now', 'Today', 'sunI'], ['learn', 'Journey', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Scenes', 'chat'], ['practice', 'Practice', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
 const NAV_HIDDEN = ['letters', 'quests'];
 
 function enterApp(id) {
@@ -8841,14 +8841,17 @@ function renderTalk() {
   const c = course(), T = Talk, cur = T.cur;
   if (!cur) {
     root.innerHTML = `<div class="tk"><h1 class="tk-h">Scenes</h1><p class="tk-sub">Real situations you will face. Boo plays the other person.</p>
-      <div class="tk-list">${T.scenes().map(t => `<button class="tk-card" data-tk-open="${t.id}"><span class="mascot" data-tk-m="${T.who(t)}"></span><span class="tk-ct"><b>${esc(t.title)}</b><small>${esc(t.en)}</small></span><span class="tk-go">›</span></button>`).join('')}</div></div>`;
+      <div class="tk-list">${T.scenes().map(t => `<button class="tk-card" data-tk-open="${t.id}"><span class="mascot" data-tk-m="${T.who(t)}"></span><span class="tk-ct"><b>${esc(t.title)}</b><small>${esc(t.en)}</small></span><span class="tk-go">›</span></button>`).join('')}</div>
+      <h2 class="tk-h2">More with characters</h2>
+      <div class="tk-list"><button class="tk-card" data-realtalk><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Real Talk</b><small>Slang, tone and idioms</small></span><span class="tk-go">›</span></button>
+        <button class="tk-card" data-adventure="STORY_ADVENTURE"><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Story</b><small>Choose what to say next</small></span><span class="tk-go">›</span></button></div></div>`;
     $$('[data-tk-m]', root).forEach(m => paintMascot(m, m.dataset.tkM, 'happy', false));
     return;
   }
   if (cur.done) {
     const n = cur.t.steps.length;
     root.innerHTML = `<div class="tk tk-end"><div class="mascot tk-boo" id="tk-boo"></div><h1 class="tk-h">${esc(cur.t.title)}</h1><p class="tk-sub">${cur.good} of ${n} lines said · +${cur.xp} XP</p>
-      <div class="stack"><button class="btn primary big" id="tk-again">Again</button><button class="btn ghost big" id="tk-more">Another scene</button></div></div>`;
+      <div class="stack"><button class="btn primary big" id="tk-again">Again</button><button class="btn ghost big" id="tk-more">Another scene</button><button class="link-btn" data-share>Share my progress</button></div></div>`;
     paintMascot($('#tk-boo'), T.who(cur.t), cur.good >= n / 2 ? 'cheer' : 'happy', true);
     $('#tk-again').onclick = () => T.open(cur.t.id); $('#tk-more').onclick = () => { T.cur = null; renderTalk(); };
     return;
@@ -8876,6 +8879,64 @@ renderChat = renderTalk;
 /* English is never spoken aloud: device English voices sound robotic, and every English line is on screen. */
 { const _play = Voice.play.bind(Voice); Voice.play = function (text, lang, ...rest) { if (/^en/i.test(lang || '')) return Promise.resolve(); return _play(text, lang, ...rest); }; }
 
+/* One home for each thing: Today = phrases + Continue, Journey = course, Scenes = role-play, Pocket = practice (no repeats). */
+{
+  const _now = renderNow, _prac = renderPractice;
+  renderNow = function () { _now(); const t = $('#tab-now'); t && t.querySelectorAll('.hood').forEach(x => x.remove()); };
+  renderPractice = function () {
+    _prac(); const t = $('#tab-practice'); if (!t) return;
+    const drop = ['.rt-promo', '.adv-promo', '[data-tone]', '[data-adventure="LETTER_EXPLORER"]', '[data-practice="letters"]', '[data-practice="story"]', '[data-practice="soundlab"]', '[data-practice="catch"]', '[data-practice="roleplay"]'];
+    drop.forEach(sel => t.querySelectorAll(sel).forEach(x => x.remove()));
+  };
+}
+/* =====================================================================
+   SHARE: send your progress to a friend (picture + message). Works everywhere.
+   ===================================================================== */
+const Share = {
+  text() {
+    const p = P(), c = course(), w = learnedWords(p, c.code).length;
+    return `I’m learning ${c.name} on Speakaboo: ${liveStreak(p)}-day streak, level ${levelFor(p.xp)}, ${w} words. Join me!`;
+  },
+  card() {
+    const p = P(), c = course(), W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const g = cv.getContext('2d'), bg = g.createRadialGradient(W / 2, 420, 60, W / 2, 520, 1100);
+    bg.addColorStop(0, '#4B50D6'); bg.addColorStop(.5, '#2F3394'); bg.addColorStop(1, '#1C1B2E'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    const font = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', center = (t, y, size, wt = 800, col = '#fff') => { g.font = `${wt} ${size}px ${font}`; g.fillStyle = col; g.textAlign = 'center'; g.fillText(t, W / 2, y); };
+    const holder = document.createElement('div'); holder.innerHTML = booBookSVG('happy');   // the HTML parser tidies the markup so it can be drawn as a picture
+    const el = holder.firstElementChild; el.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); el.setAttribute('width', '520'); el.setAttribute('height', '520');
+    const svg = new XMLSerializer().serializeToString(el);
+    return new Promise(res => {
+      const img = new Image();
+      img.onload = () => {
+        g.drawImage(img, W / 2 - 260, 90, 520, 520);
+        center(p.name, 720, 84); center(`is learning ${c.name}`, 800, 48, 600, '#C9CCFF');
+        const stats = [[liveStreak(p), 'day streak'], [levelFor(p.xp), 'level'], [learnedWords(p, c.code).length, 'words']];
+        stats.forEach(([v, l], i) => { const x = 210 + i * 330; g.fillStyle = 'rgba(255,255,255,.12)'; g.beginPath(); g.roundRect ? g.roundRect(x - 140, 880, 280, 220, 36) : g.rect(x - 140, 880, 280, 220); g.fill(); g.textAlign = 'center'; g.font = `800 100px ${font}`; g.fillStyle = '#fff'; g.fillText(String(v), x, 1010); g.font = `600 36px ${font}`; g.fillStyle = '#C9CCFF'; g.fillText(l, x, 1070); });
+        center('Speakaboo', 1230, 64); center('Talk your way to fluent', 1290, 36, 600, '#C9CCFF');
+        cv.toBlob(b => res(b), 'image/png');
+      };
+      img.onerror = () => res(null);
+      img.src = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+    });
+  },
+  async progress() {
+    const text = this.text(), url = APP_URL || location.href;
+    try {
+      const blob = await this.card();
+      if (blob && navigator.canShare) { const f = new File([blob], 'speakaboo.png', { type: 'image/png' }); if (navigator.canShare({ files: [f] })) { await navigator.share({ files: [f], text: `${text} ${url}` }); return; } }
+      if (navigator.share) { await navigator.share({ text, url }); return; }
+    } catch (e) { if (e && e.name === 'AbortError') return; }
+    try { await navigator.clipboard.writeText(`${text} ${url}`); toast('Copied. Paste it to a friend.'); } catch (e) { toast(`${text} ${url}`); }
+  }
+};
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-share]')) Share.progress(); });
+{
+  const _rp2 = renderProfile;
+  renderProfile = function () {
+    _rp2(); const b = document.querySelector('#tab-profile [data-switch]');
+    if (b && !document.querySelector('#tab-profile [data-share]')) b.insertAdjacentHTML('beforebegin', '<button class="btn primary sm" data-share>Share my progress</button>');
+  };
+}
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;

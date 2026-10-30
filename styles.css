@@ -1740,3 +1740,4 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 .tk-line { padding: 10px 14px; } .tk-btns { margin-top: 6px; }
 .tk-chip { padding: 8px 14px; } .tk-chip .script { font-size: 20px; } .tk-chip small { font-size: 14px; }
 .tk-end .tk-boo { width: 140px; height: 140px; }
+.tk-h2 { font: 600 20px var(--font-display); margin: 12px 0 0; }
