@@ -1684,7 +1684,7 @@ for (const [k, o] of Object.entries(BOO_LOOK)) BOO_ART[k] = { ink: o.ink || '#2A
 const ROMAN = ['That’s romanization! Sweet. In the real script it’s “{right}”.'];
 Object.assign(MASCOTS, {
   mandu: { name: 'Boo', kind: 'boo', tagline: 'The original. Cheeky, loud, loves a surprise',
-    persona: 'Boo, the original Speakaboo: a classic little white ghost, marshmallow-soft little Boo who loves popping out with "Peekaboo!", teases affectionately, and celebrates loudly.',
+    persona: 'Boo, the original GabBoo: a classic little white ghost, marshmallow-soft little Boo who loves popping out with "Peekaboo!", teases affectionately, and celebrates loudly.',
     praise: ['PEEKABOO! That was perfect!', 'Nailed it. I’m doing my happy wobble.', 'Correct! I’d high-five you, but my arms are tiny.', 'Boo-tiful answer. Yes, I went there.'],
     oops: ['“{you}”? I covered my eyes for that one. It’s “{right}”.', 'Boo! Wrong-ish. The real answer is “{right}”.', 'Aww, “{you}”. Cute. Wrong. Cute though. It’s “{right}”.'],
     roman: ROMAN, mishear: ['I heard “{heard}”… which is a fun noise, but not a word. Try “{right}” ({rom}).'],
@@ -1980,7 +1980,7 @@ const ABSTRACT_ART = new Set(['yes', 'no', 'ok', 'question', 'pointdown', 'me', 
    Section 3 for every language: time & plans, getting around, weather &
    feelings — with longer, real-life sentences.
    Each section ends in a short illustrated story (read + listen + questions).
-   Every main unit also has a culture card that goes into your Speakaboo Passport.
+   Every main unit also has a culture card that goes into your GabBoo Passport.
    ===================================================================== */
 
 /* ------------------------------ KOREAN ------------------------------ */
@@ -2292,7 +2292,7 @@ const STORIES = {
     qs: [['What is the weather like?', ['Rainy and cold', 'Hot and sunny', 'Windy'], 'Rainy and cold'], ['Where are they going?', ['To the museum', 'To the beach', 'To a café'], 'To the museum'], ['At what time?', ['At four', 'At two', 'At nine'], 'At four']] }
 };
 
-/* ------------------------------ CULTURE CARDS (Speakaboo Passport) ------------------------------ */
+/* ------------------------------ CULTURE CARDS (GabBoo Passport) ------------------------------ */
 const CULTURE = {
   'ko-u8': ['Bowing', 'A small nod works with friends; a deeper bow shows respect to elders and in formal moments. Say 안녕하세요 while you do it.'],
   'ko-u9': ['Age comes first', 'Koreans often ask your age early. It decides who speaks politely to whom, and who pays for dinner.'],
@@ -4242,6 +4242,11 @@ function mascotFace(mood, a) {
       `<circle cx="${R}" cy="${ey}" r="7.5" fill="${eyeBg}" stroke="${ink}" stroke-width="2.4"/><circle cx="${R}" cy="${ey}" r="3.2" fill="${ink}"/>` +
       `<path d="M${L - 7} ${ey - 12}l11-3M${R + 7} ${ey - 12}l-11-3" ${stroke}/>` +
       `<ellipse cx="60" cy="${my + 2}" rx="5.5" ry="7" fill="${ink}"/>` + drop(R + 17, ey - 14);
+    case 'boo': return cheeks +   // the naughty "Boo!" face: one raised brow, sideways glance, cheeky lopsided grin with the tongue out
+      `<ellipse cx="${L + 2}" cy="${ey}" rx="7.4" ry="9" fill="${ink}"/><circle cx="${L + 4.6}" cy="${ey - 3.4}" r="3" fill="${hi}"/><circle cx="${L + .2}" cy="${ey + 2.4}" r="1.1" fill="${hi}" opacity=".85"/>` +
+      `<ellipse cx="${R + 2}" cy="${ey}" rx="7.4" ry="9" fill="${ink}"/><circle cx="${R + 4.6}" cy="${ey - 3.4}" r="3" fill="${hi}"/><circle cx="${R + .2}" cy="${ey + 2.4}" r="1.1" fill="${hi}" opacity=".85"/>` +
+      `<path d="M${L - 7} ${ey - 11}q7 -3 14 1" ${stroke} stroke-width="3.2"/><path d="M${R - 8} ${ey - 15}q8 -7 16 -1" ${stroke} stroke-width="3.2"/>` +
+      `<path d="M47 ${my - 3}q13 3 26 -5q-3 17 -14 17q-10 0 -12 -12z" fill="${ink}"/><path d="M60 ${my + 6}q3 10 11 5q2 -5 -3 -9z" fill="#FF7A9A"/>`;
     case 'cheer': return cheeks +
       `<path d="M${L - 5} ${ey - 4}l8 4-8 4M${R + 5} ${ey - 4}l-8 4 8 4" ${stroke} stroke-linejoin="round"/>` +
       `<path d="M49 ${my - 3}q11 18 22 0z" fill="${ink}"/>` + tongue(my + 6) +
@@ -4384,7 +4389,7 @@ function applyFreezes(p = P()) {
   }
 }
 
-const HEART_MS = 30 * 60 * 1000, MAX_HEARTS = 5;
+const HEART_MS = 15 * 60 * 1000, MAX_HEARTS = 5;
 const Hearts = {
   sync(p = P()) {
     if (p.hearts >= MAX_HEARTS) { p.heartAt = Date.now(); return p.hearts; }
@@ -4392,8 +4397,8 @@ const Hearts = {
     if (gained > 0) { p.hearts = Math.min(MAX_HEARTS, p.hearts + gained); p.heartAt += gained * HEART_MS; }
     return p.hearts;
   },
-  left(p = P()) { return p.unlimitedHearts ? Infinity : this.sync(p); },
-  lose(p = P()) { if (p.unlimitedHearts) return; this.sync(p); if (p.hearts === MAX_HEARTS) p.heartAt = Date.now(); p.hearts = Math.max(0, p.hearts - 1); Store.save(); },
+  left(p = P()) { return this.sync(p); },
+  lose(p = P()) { if (Tester.on()) return; this.sync(p); if (p.hearts === MAX_HEARTS) p.heartAt = Date.now(); p.hearts = Math.max(0, p.hearts - 1); Store.save(); },
   gain(n = 1, p = P()) { this.sync(p); p.hearts = Math.min(MAX_HEARTS, p.hearts + n); Store.save(); },
   nextIn(p = P()) { return Math.max(0, HEART_MS - (Date.now() - p.heartAt)); }
 };
@@ -4862,7 +4867,7 @@ const Tutor = {
     const p = P(), c = course(), m = MASCOTS[p.mascot], t = this.topic();
     const known = learnedWords(p, c.code).slice(0, 40).map(w => w.t).join(', ') || 'none yet';
     return `Tone: plain, short and friendly. No jokes, puns or long explanations.\nYou are ${m.persona}
-You are the tutor inside "Speakaboo", a free language app. The learner is ${p.name}, an adult beginner (A0–A1) learning ${c.name}.
+You are the tutor inside "GabBoo", a free language app. The learner is ${p.name}, an adult beginner (A0–A1) learning ${c.name}.
 Current scene: ${t ? `${t.title} (${t.en})` : 'free chat'}. Words they already know: ${known}.
 ${t && t.steps ? `This is a LONG role-play. You play the other person in the scene (${SCENE_ROLE[t.id] || 'the other person'}${SCENE_NPC[t.id] ? `, a character named ${MASCOTS[SCENE_NPC[t.id]].name}: ${MASCOTS[SCENE_NPC[t.id]].tagline}` : ''}), while your jokes and corrections still come from you as the tutor. Follow this outline in order, one beat per turn, adapting naturally to what the learner says. Do not wrap up early; the scene ends only after the last beat.
 ${t.steps.map((s, i) => `${i + 1}. ${fillSay(s.say).en}`).join('\n')}
@@ -5037,7 +5042,7 @@ function bridgeFor(en, code = P().lang) {
 }
 function bridgeHTML(en) {
   const b = bridgeFor(en); if (!b.length) return '';
-  return `<div class="bridge-row" title="The same word in your other Speakaboo languages"><span class="bridge-tag">${artSVG('bridge', 'art bridge-ic')}Bridge</span>${b.map(w => {
+  return `<div class="bridge-row" title="The same word in your other GabBoo languages"><span class="bridge-tag">${artSVG('bridge', 'art bridge-ic')}Bridge</span>${b.map(w => {
     const c = COURSES[w.code]; return `<button class="bridge-chip" data-say="${esc(w.t)}" data-tts="${c.tts}"><span class="fl">${esc(c.flag || '')}</span><span ${attrsOf(c)}>${esc(w.t)}</span><small>${esc(w.r)}</small></button>`;
   }).join('')}</div>`;
 }
@@ -5806,7 +5811,7 @@ const Billing = {
   },
   async buy(sku) {
     const s = await this.service();
-    if (!s) { toast('Subscriptions work in the Speakaboo app from Google Play.'); return false; }
+    if (!s) { toast('Subscriptions work in the GabBoo app from Google Play.'); return false; }
     const req = new PaymentRequest([{ supportedMethods: PLAY, data: { sku } }], { total: { label: 'Total', amount: { currency: 'USD', value: '0' } } });
     let res;
     try { res = await req.show(); } catch (e) { return false; }   // cancelled
@@ -5825,7 +5830,7 @@ const Billing = {
   },
   async restore(quiet) {
     const s = await this.service();
-    if (!s) { if (!quiet) toast('Open Speakaboo from Google Play to restore a subscription.'); return; }
+    if (!s) { if (!quiet) toast('Open GabBoo from Google Play to restore a subscription.'); return; }
     try {
       const list = await s.listPurchases(); let ok = false;
       for (const p of list) { try { const r = await this.verify(p.purchaseToken, p.itemId); if (r.premiumUntil > Date.now()) ok = true; } catch (e) { /* next */ } }
@@ -5842,11 +5847,11 @@ function authScreen(mode, msg = '') {
   if (!el) { el = document.createElement('div'); el.id = 'auth'; el.className = 'auth'; document.body.append(el); }
   el.hidden = false; $('#app').hidden = true; $('#profiles').hidden = true;
   const boo = `<div class="auth-boo mascot" id="auth-m"></div>`;
-  if (mode === 'loading') { el.innerHTML = `<div class="auth-card">${boo}<h1>Speakaboo</h1><p class="note">Peeking at your account…</p></div>`; paintMascot($('#auth-m'), 'mandu', 'peek', true); return; }
-  if (mode === 'offline') { el.innerHTML = `<div class="auth-card">${boo}<h1>No connection</h1><p class="note">Speakaboo needs the internet the first time you sign in. Check your connection and try again.</p><button class="btn primary" onclick="location.reload()">Try again</button></div>`; paintMascot($('#auth-m'), 'mandu', 'sad', true); return; }
+  if (mode === 'loading') { el.innerHTML = `<div class="auth-card">${boo}<h1>GabBoo</h1><p class="note">Peeking at your account…</p></div>`; paintMascot($('#auth-m'), 'mandu', 'peek', true); return; }
+  if (mode === 'offline') { el.innerHTML = `<div class="auth-card">${boo}<h1>No connection</h1><p class="note">GabBoo needs the internet the first time you sign in. Check your connection and try again.</p><button class="btn primary" onclick="location.reload()">Try again</button></div>`; paintMascot($('#auth-m'), 'mandu', 'sad', true); return; }
   const titles = { signup: ['Create your account', `Start your ${CFG.trialDays || 7}-day free trial. No payment needed now.`, 'Create account'], signin: ['Welcome back!', 'Sign in to pick up where you left off.', 'Sign in'], reset: ['Forgot your password?', 'We’ll email you a link to choose a new one.', 'Send reset link'] };
   const [h, sub, cta] = titles[mode];
-  el.innerHTML = `<div class="auth-card">${boo}<div class="auth-brand">${BRAND_SVG}<b>Speakaboo</b></div><h1>${h}</h1><p class="note">${sub}</p>
+  el.innerHTML = `<div class="auth-card">${boo}<div class="auth-brand">${BRAND_SVG}<b>GabBoo</b></div><h1>${h}</h1><p class="note">${sub}</p>
     <form id="auth-form" class="stack" autocomplete="on">
       <label class="field"><span>Email</span><input class="input" id="au-email" type="email" autocomplete="email" required inputmode="email"></label>
       ${mode !== 'reset' ? `<label class="field"><span>Password</span><input class="input" id="au-pw" type="password" autocomplete="${mode === 'signup' ? 'new-password' : 'current-password'}" minlength="6" required></label>` : ''}
@@ -5855,7 +5860,7 @@ function authScreen(mode, msg = '') {
     </form>
     <div class="auth-links">${mode === 'signup' ? '<button class="link" data-auth="signin">I already have an account</button>' : '<button class="link" data-auth="signup">Create a new account</button>'}
       ${mode === 'signin' ? '<button class="link" data-auth="reset">Forgot password?</button>' : mode === 'reset' ? '<button class="link" data-auth="signin">Back to sign in</button>' : ''}</div>
-    ${mode === 'signup' ? `<p class="auth-fine">By creating an account you agree to the <a href="terms.html" target="_blank" rel="noopener">Terms</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy policy</a>. After the free trial, Speakaboo needs a monthly or yearly subscription through Google Play. You can cancel any time in Google Play.</p>` : ''}</div>`;
+    ${mode === 'signup' ? `<p class="auth-fine">By creating an account you agree to the <a href="terms.html" target="_blank" rel="noopener">Terms</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy policy</a>. After the free trial, GabBoo needs a monthly or yearly subscription through Google Play. You can cancel any time in Google Play.</p>` : ''}</div>`;
   paintMascot($('#auth-m'), 'mandu', mode === 'signup' ? 'cheer' : 'happy', true);
   $$('[data-auth]', el).forEach(b => b.onclick = () => authScreen(b.dataset.auth));
   $('#auth-form').onsubmit = async e => {
@@ -5885,12 +5890,12 @@ const Paywall = {
     }).join('');
     el.innerHTML = `<div class="pw-card">${soft ? '<button class="icon-btn pw-x" data-pw-close aria-label="Close">' + ICON.x + '</button>' : ''}
       <div class="mascot pw-boo" id="pw-m"></div>
-      <h2>${s.mode === 'expired' ? `Your free week is over, but ${esc(name)} isn’t!` : 'Speakaboo Premium'}</h2>
+      <h2>${s.mode === 'expired' ? `Your free week is over, but ${esc(name)} isn’t!` : 'GabBoo Premium'}</h2>
       ${reason ? `<p class="pw-reason">${esc(reason)}</p>` : ''}
       <p class="note">Keep talking with ${esc(name)}: every season and language, unlimited Talk and Call Boo, all drills, daily Peekaboo and your progress saved in the cloud.</p>
       <ul class="pw-list"><li>All seasons in Korean, Arabic and Spanish</li><li>Unlimited Talk buddy and Call Boo</li><li>Every practice drill, story and outfit</li><li>Cancel any time in Google Play</li></ul>
       <div class="plans">${plans}</div>
-      ${inPlay ? '' : `<p class="pw-note">Subscriptions are bought in the Speakaboo app from Google Play.${CFG.playStoreUrl ? ` <a href="${esc(CFG.playStoreUrl)}" target="_blank" rel="noopener">Get it on Google Play</a>` : ''}</p>`}
+      ${inPlay ? '' : `<p class="pw-note">Subscriptions are bought in the GabBoo app from Google Play.${CFG.playStoreUrl ? ` <a href="${esc(CFG.playStoreUrl)}" target="_blank" rel="noopener">Get it on Google Play</a>` : ''}</p>`}
       <div class="pw-links"><button class="link" data-restore>Restore purchase</button><a class="link" href="https://play.google.com/store/account/subscriptions" target="_blank" rel="noopener">Manage in Google Play</a><button class="link" data-signout>Sign out</button></div>
       <p class="auth-fine">Payment is charged to your Google Play account. The subscription renews automatically unless cancelled at least 24 hours before the end of the period. <a href="terms.html" target="_blank" rel="noopener">Terms</a> · <a href="privacy.html" target="_blank" rel="noopener">Privacy</a></p></div>`;
     paintMascot($('#pw-m'), p ? p.mascot : 'mandu', s.mode === 'expired' ? 'sad' : 'cheer', true);
@@ -5914,7 +5919,7 @@ function accountHTML() {
 }
 function deleteAccountSheet() {
   openSheet(`<div class="sheet-head"><h2>Delete your account?</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
-    <p>This permanently deletes your Speakaboo account and all saved progress. It can’t be undone.</p>
+    <p>This permanently deletes your GabBoo account and all saved progress. It can’t be undone.</p>
     <p class="note"><b>Deleting your account does not cancel a Google Play subscription.</b> Cancel it first in Google Play → Payments & subscriptions.</p>
     <div class="stack"><button class="btn danger" id="del-yes">Delete my account</button><button class="btn ghost" data-close>Keep my account</button></div>`);
   $('#del-yes').onclick = async () => { closeSheet(); try { await Account.deleteAccount(); } catch (e) { toast('Couldn’t delete right now. Try again.'); } };
@@ -6263,7 +6268,7 @@ const RT_ROUNDS = 6, RT_SPEED_SECS = 10;
 /** The brief the AI follows (the product spec, plus language specifics). */
 function rtRules() {
   const c = course();
-  return `You are the Real Talk game engine inside Speakaboo, a language app. Language being learned: ${c.name}. The learner is a beginner to intermediate English speaker.
+  return `You are the Real Talk game engine inside GabBoo, a language app. Language being learned: ${c.name}. The learner is a beginner to intermediate English speaker.
 Provide interactive micro-challenges that feel like a mobile game, not a textbook. Never do plain "translate this sentence".
 PRINCIPLES: Bite-sized only (under 15-30 seconds to read and answer). Native and colloquial: real spoken, localized expressions, slang, idioms and tone; not stiff classroom grammar. Focus on pragmatics (how people actually talk) over syntax.
 GAME MODES: MICRO_ROLEPLAY (max 2 sentences; a situation where textbook language fails), TONE_SLIDER (target tone [Formal], [Casual Native] or [Street Slang]; judge only whether the tone is hit), SOCIAL_STAKES (grammatically fine but tone-deaf or robotic answers make the character confused or offended and drop the meter), SPEED_ROUND (an obscure or very local expression; give a fast funny origin story in feedback.explanation).
@@ -6653,7 +6658,7 @@ function charSpeak(text, ce) {
 /* ---------- AI: same JSON, live ---------- */
 function advRules(mode) {
   const c = course();
-  return `You are the Story Adventure and Letter Explorer engine inside Speakaboo, a language app. Language being learned: ${c.name}${c.code === 'ar' ? ' (use Egyptian Arabic for dialogue)' : ''}. Learner: beginner, English speaker.
+  return `You are the Story Adventure and Letter Explorer engine inside GabBoo, a language app. Language being learned: ${c.name}${c.code === 'ar' ? ' (use Egyptian Arabic for dialogue)' : ''}. Learner: beginner, English speaker.
 Focus on natural expressions, alphabet intuition and rich character dynamics.
 DUAL-LANGUAGE PHONETICS: for every phrase give the ${c.name} script AND an English phonetic/literal guide in the form "[pho-ne-tic] - meaning".
 VOICE & EMOTION: tag every line with a character and TTS data. Characters: "Leo (Energetic Teen)" voice_leo_04, fast-talking, heavy slang, speed 1.15; "Sophia (Sarcastic Barista)" voice_sophia_02, slow, dry, sarcastic native idioms, speed 1.0; "Grandpa Hiro (Wise/Calm)" voice_hiro_01, calm and warm, speed 0.85.
@@ -7033,7 +7038,7 @@ function renderNow() {
       : `<div><small>Real-life mission</small><b>Tap “Live it” to get today’s phrase to use for real.</b></div>`}</section>
     ${readyToReadHTML()}
     ${placesHTML()}
-    ${showInstall ? `<div class="install-banner">${ICON.download}<p>Add Speakaboo to your home screen</p><button class="btn primary sm" data-install>Install</button><button class="icon-btn" data-hide-install aria-label="Dismiss">${ICON.x}</button></div>` : ''}
+    ${showInstall ? `<div class="install-banner">${ICON.download}<p>Add GabBoo to your home screen</p><button class="btn primary sm" data-install>Install</button><button class="icon-btn" data-hide-install aria-label="Dismiss">${ICON.x}</button></div>` : ''}
   </div>`;
   const hb = $('[data-sky-boo]', tab); if (hb) paintMascot(hb, p.mascot, part === 'night' ? 'sleep' : st.face || 'happy', true);
   const rr = $('[data-rr-m]', tab); if (rr) paintMascot(rr, p.mascot, 'love', true);
@@ -7285,7 +7290,7 @@ function renderProfiles() {
   const list = d.order.map(id => d.profiles[id]).filter(Boolean);
   const creating = UI.creating || !list.length;
   root.innerHTML = `<div class="profiles-in">
-    <div class="p-row"><div class="p-brand">${BRAND_SVG}Speakaboo <small>peek · speak · repeat</small></div>
+    <div class="p-row"><div class="p-brand">${BRAND_SVG}GabBoo <small>Peek. Speak. Repeat.</small></div>
       ${list.length && !creating ? `<button class="btn ghost sm" id="p-manage">${UI.manage ? 'Done' : 'Manage learners'}</button>` : ''}</div>
     ${creating ? createFormHTML(!list.length) : `
       <h1>Who’s learning today?</h1>
@@ -7386,7 +7391,7 @@ function langChipHTML() {
 function renderChrome() {
   const p = P(); if (!p || $('#app').hidden) return;
   const navBtns = cls => TABS.filter(([id]) => !NAV_HIDDEN.includes(id)).map(([id, label, ic]) => `<button class="${cls}" data-tab="${id}" ${(UI.tab === 'letters' ? 'learn' : UI.tab) === id ? 'aria-current="page"' : ''}>${ICON[ic]}<span>${label}</span></button>`).join('');
-  $('#rail').innerHTML = `<div class="logo">${BRAND_SVG}<span>Speakaboo<small>peek · speak · repeat</small></span></div>${navBtns('nav-i')}
+  $('#rail').innerHTML = `<div class="logo">${BRAND_SVG}<span>GabBoo<small>Peek. Speak. Repeat.</small></span></div>${navBtns('nav-i')}
     <button class="who-btn" data-switch><div class="mascot" data-art="${p.mascot}"></div><span><b>${esc(p.name)}</b><small>Switch learner</small></span></button>`;
   $('#topbar').innerHTML = `${langChipHTML()}<span class="spacer"></span>${statsHTML(p)}`;
   $('#bnav').innerHTML = navBtns('');
@@ -7442,7 +7447,7 @@ function renderPath(track) {
   const c = course(), p = P(), tab = $(track === 'letters' ? '#tab-letters' : '#tab-learn');
   const units = unitList(c, track), sections = track === 'letters' ? c.letterSections : c.sections;
   const showInstall = track === 'main' && !IS_STANDALONE && !IN_ARTIFACT && !p.hideInstall && innerWidth < 900;
-  let html = `<div class="pad metro">${false && showInstall ? `<div class="install-banner">${ICON.download}<p>Add Speakaboo to your home screen</p><button class="btn primary sm" data-install>Install</button><button class="icon-btn" data-hide-install aria-label="Dismiss">${ICON.x}</button></div>` : ''}`;
+  let html = `<div class="pad metro">${false && showInstall ? `<div class="install-banner">${ICON.download}<p>Add GabBoo to your home screen</p><button class="btn primary sm" data-install>Install</button><button class="icon-btn" data-hide-install aria-label="Dismiss">${ICON.x}</button></div>` : ''}`;
   if (track === 'letters') html += `<div class="skip-card letters-intro"><div class="mascot" data-li-m></div><div><b>${({ ko: 'Learn to read Hangeul', ar: 'Learn the Arabic script', es: 'Master Spanish sounds' })[c.code]} (optional)</b><small>Do these whenever you like. The main course shows ${c.code === 'es' ? 'pronunciation hints' : 'romanization'} everywhere, so you never have to finish this first.</small><button class="btn primary sm" data-adventure="LETTER_EXPLORER" style="margin-top:8px">Play Letter Explorer</button></div></div>`;
   if (track === 'main') html += trialBannerHTML() + journeyHeadHTML();
   if (c.letterUnits.length) html += `<div class="seg track-seg" role="tablist"><button role="tab" data-tab="learn" class="${track === 'main' ? 'on' : ''}">Course</button>${lettersOpen() ? `<button role="tab" data-tab="letters" class="${track === 'letters' ? 'on' : ''}">${c.code === 'ko' ? 'Hangeul' : c.code === 'ar' ? 'Alphabet' : 'Sounds'}</button>` : `<button role="tab" class="locked" data-letters-locked>${ICON.lock || ''}${c.code === 'ko' ? 'Hangeul' : 'Alphabet'}</button>`}</div>`;
@@ -7821,7 +7826,7 @@ function startPractice(kind) {
    ===================================================================== */
 const Runner = {
   open(meta, steps) {
-    Object.assign(this, { meta, queue: steps, i: 0, graded: 0, correct: 0, combo: 0, maxCombo: 0, wrongRun: 0, halfDone: false, missedItems: [], missed: new Set(), finished: false, mode: 'wait', select: null, outOfHearts: false, advanceT: null });
+    Object.assign(this, { meta, queue: steps, forgave: false, freeMiss: false, i: 0, graded: 0, correct: 0, combo: 0, maxCombo: 0, wrongRun: 0, halfDone: false, missedItems: [], missed: new Set(), finished: false, mode: 'wait', select: null, outOfHearts: false, advanceT: null });
     React.comboChip(0); DailyUse.seen.clear();
     $('#lesson').hidden = false; clearInterval(this.tick); this.deadline = meta.speed ? Date.now() + 60000 : 0;
     if (meta.speed) this.tick = setInterval(() => { this.drawHearts(); if (Date.now() > this.deadline && !this.finished && !this.locked) this.complete(); }, 250);
@@ -7871,7 +7876,7 @@ const Runner = {
       if (step.srsId && VOCAB_INDEX[step.srsId] && !this.missedItems.some(x => x.id === step.srsId)) this.missedItems.push({ id: step.srsId, ...VOCAB_INDEX[step.srsId] });
       else if (step.s && !this.missedItems.some(x => x.t === step.s.t)) this.missedItems.push({ t: step.s.t, r: step.s.r, en: step.s.en });
       if (!step.retry && step.kind !== 'speak' && step.kind !== 'match' && !this.meta.speed) this.queue.push({ ...step, retry: true });
-      if (!this.practiceMode()) { Hearts.lose(); this.drawHearts(); if (Hearts.left() <= 0) this.outOfHearts = true; }
+      if (!this.practiceMode()) { if (!this.forgave) { this.forgave = true; this.freeMiss = true; } else { Hearts.lose(); this.drawHearts(); if (Hearts.left() <= 0) this.outOfHearts = true; } }
     }
     const item = (info.show && typeof info.show === 'object' && info.show.t) ? info.show : step.w || (step.srsId && VOCAB_INDEX[step.srsId]) || step.item || (step.s && step.s.en && [...step.s.t].length <= 14 ? step.s : null);
     const title = React.message(ok, item, { you: info.you || '…', right: typeof info.show === 'string' ? info.show : (info.show?.t || step.answer || '…') }, this.wrongRun);
@@ -7879,7 +7884,7 @@ const Runner = {
     React.comboChip(this.combo);
     const foot = $('#l-foot'); foot.hidden = false; foot.className = 'l-foot ' + (ok ? 'ok' : 'bad');
     $('#l-fb').hidden = false; $('#l-fb-title').textContent = React.headline(ok, this.combo, this.wrongRun);
-    $('#l-fb-msg').textContent = title;
+    $('#l-fb-msg').textContent = this.freeMiss ? 'Free miss: no heart lost.' : title; this.freeMiss = false;
     const show = info.show, d = [];
     if (show) {
       const c = course(), txt = typeof show === 'string' ? show : show.t;
@@ -7929,12 +7934,12 @@ const Runner = {
     const m = $('#modal'), p = P(); m.hidden = false;
     const mins = Math.ceil(Hearts.nextIn() / 60000);
     m.innerHTML = `<div class="panel"><div class="mascot" id="ho-m"></div><h3>You ran out of hearts</h3>
-      <p>Next heart in ${mins} min. Practice earns a heart back, or refill now.</p>
-      <button class="btn primary" id="ho-practice">Practice to earn a heart</button>
+      <p>Say a few phrases out loud to earn one back. Or wait ${mins} min for a free one.</p>
+      <button class="btn primary" id="ho-practice">Say it to earn a heart</button>
       <button class="btn gold" id="ho-refill" ${p.gems >= 100 ? '' : 'disabled'}>Refill hearts · 100 gems</button>
       <button class="btn ghost" id="ho-quit">Quit lesson</button></div>`;
     paintMascot($('#ho-m'), p.mascot, 'shocked');
-    $('#ho-practice').onclick = () => { m.hidden = true; this.close(); startPractice('mix'); };
+    $('#ho-practice').onclick = () => { m.hidden = true; this.close(); startPractice('speak'); };
     $('#ho-refill').onclick = () => { p.gems -= 100; Hearts.gain(MAX_HEARTS); this.outOfHearts = false; m.hidden = true; this.drawHearts(); renderChrome(); this.next(); };
     $('#ho-quit').onclick = () => this.close();
   },
@@ -8490,7 +8495,7 @@ function renderQuests() {
     <div class="card"><h3>Shop <span class="price num">${ICON.gem}${p.gems}</span></h3>
       <div class="shop-item"><div class="ic">${ICON.snow}</div><div><b>Streak freeze</b><p>Protects your streak for one missed day. You have ${p.freezes} of 2.</p></div>
         <button class="btn gold sm" data-buy="freeze" ${p.gems >= 100 && p.freezes < 2 ? '' : 'disabled'}><span class="price">${ICON.gem}100</span></button></div>
-      <div class="shop-item"><div class="ic" style="background:var(--coral-soft);color:var(--coral)">${ICON.heart}</div><div><b>Refill hearts</b><p>${Hearts.left() === Infinity ? 'You have unlimited hearts on.' : `You have ${Hearts.left()} of ${MAX_HEARTS}.`}</p></div>
+      <div class="shop-item"><div class="ic" style="background:var(--coral-soft);color:var(--coral)">${ICON.heart}</div><div><b>Refill hearts</b><p>You have ${Hearts.left()} of ${MAX_HEARTS}.</p></div>
         <button class="btn gold sm" data-buy="hearts" ${p.gems >= 100 && Hearts.left() < MAX_HEARTS ? '' : 'disabled'}><span class="price">${ICON.gem}100</span></button></div>
       <p class="note">Everything is free: gems come from lessons, quests and unit tests, never from money.</p></div>
     <div class="card"><h3>Achievements <span class="muted num" style="font:700 14px var(--font-body)">${ACHIEVEMENTS.filter(a => p.achievements[a.id]).length}/${ACHIEVEMENTS.length}</span></h3>
@@ -8524,7 +8529,7 @@ function renderProfile() {
     ${wardrobeHTML()}
     <div class="card settings"><h3>Microphone & app</h3>
       <label class="row">Microphone<span style="display:flex;gap:8px;align-items:center"><span class="note">${micState}</span><button class="btn ghost sm" id="mic-test" ${Mic.SR && !Mic.blocked ? '' : 'disabled'}>${p.micReady ? 'Test' : 'Allow'}</button></span></label>
-      ${IN_ARTIFACT ? `<p class="note">You’re viewing Speakaboo inside claude.ai, where the microphone is always blocked.${APP_URL ? ` For voice, open <b style="user-select:all">${esc(APP_URL)}</b> and add it to your home screen.` : ''}</p>` : ''}
+      ${IN_ARTIFACT ? `<p class="note">You’re viewing GabBoo inside claude.ai, where the microphone is always blocked.${APP_URL ? ` For voice, open <b style="user-select:all">${esc(APP_URL)}</b> and add it to your home screen.` : ''}</p>` : ''}
     </div>
     <div class="card settings"><h3>Profile</h3>
       <label class="field"><span>Name</span><input class="input" id="me-name" maxlength="20" value="${esc(p.name)}"></label>
@@ -8537,21 +8542,20 @@ function renderProfile() {
       <label class="row">Sound effects<input type="checkbox" class="toggle" id="me-sound" ${p.sound ? 'checked' : ''}></label>
       <label class="row">Tutor reads lines aloud<input type="checkbox" class="toggle" id="me-voice" ${p.autoVoice ? 'checked' : ''}></label>
       <label class="row">Show English in chat<input type="checkbox" class="toggle" id="me-en" ${p.showEnglish ? 'checked' : ''}></label>
-      <label class="row">Unlimited hearts<input type="checkbox" class="toggle" id="me-hearts" ${p.unlimitedHearts ? 'checked' : ''}></label>
     </div>
-    ${!isLatinLang(c.code) ? `<div class="card settings"><h3>Writing</h3><p class="note">Speakaboo starts by ear: pronunciation first, ${esc(c.name)} script as a sneak peek. After Season 1 the script takes the lead.</p>
+    ${!isLatinLang(c.code) ? `<div class="card settings"><h3>Writing</h3><p class="note">GabBoo starts by ear: pronunciation first, ${esc(c.name)} script as a sneak peek. After Season 1 the script takes the lead.</p>
       <label class="row">Show<select id="script-mode">${[['auto', 'Automatic (recommended)'], ['sound', 'Sounds first'], ['script', 'Script first']].map(([v, l]) => `<option value="${v}" ${(p.scriptMode || 'auto') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>` : ''}
     <div class="card settings" id="ai-panel"><h3>Chat tutor brain</h3>
-      <p class="note">Now using: <b>${esc(Tutor.label())}</b>. Claude works when Speakaboo is opened inside claude.ai. Anywhere else, paste a free Gemini key from Google AI Studio. Offline scenes always work.</p>
+      <p class="note">Now using: <b>${esc(Tutor.label())}</b>. Claude works when GabBoo is opened inside claude.ai. Anywhere else, paste a free Gemini key from Google AI Studio. Offline scenes always work.</p>
       <label class="row">Brain<select id="ai-provider">${[['auto', 'Automatic'], ['claude', 'Claude (inside claude.ai)'], ['gemini', 'Gemini (your key)'], ['offline', 'Offline scenes']].map(([v, l]) => `<option value="${v}" ${ai.provider === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
       <label class="field"><span>Gemini API key</span><input class="input" id="ai-key" type="password" placeholder="Paste your key" value="${esc(ai.geminiKey)}"></label>
       <label class="field"><span>Gemini model</span><input class="input" id="ai-model" value="${esc(ai.geminiModel)}"></label>
       <label class="row">Voices<select id="ai-studio"><option value="on" ${ai.studio !== false ? 'selected' : ''}>Studio voices (Gemini, human-like)</option><option value="off" ${ai.studio === false ? 'selected' : ''}>Device voices</option></select></label>
-      <p class="note">${ai.geminiKey ? (Studio.on() ? 'Studio voices are on: every character has their own expressive voice.' : 'Studio voices are off. Device voices are used.') : 'Add a free Gemini key above to unlock human-like studio voices. Until then, Speakaboo picks the most natural voice on your device.'}</p>
+      <p class="note">${ai.geminiKey ? (Studio.on() ? 'Studio voices are on: every character has their own expressive voice.' : 'Studio voices are off. Device voices are used.') : 'Add a free Gemini key above to unlock human-like studio voices. Until then, GabBoo picks the most natural voice on your device.'}</p>
       <button class="btn ghost sm" id="voice-test">${ICON.speaker} Hear the cast</button>
       <p class="note">The key stays in this browser and is sent only to Google.</p>
     </div>
-    <p class="note ver-line" id="ver-line" style="text-align:center">${Tester.on() ? '<b>Tester mode on</b> · ' : ''}Speakaboo version ${SPEAKABOO_VERSION}</p>
+    <p class="note ver-line" id="ver-line" style="text-align:center">${Tester.on() ? '<b>Tester mode on</b> · ' : ''}GabBoo version ${SPEAKABOO_VERSION}</p>
     <p class="note" style="text-align:center"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a> · Pictures: Microsoft Fluent Emoji (MIT)</p>
     <div class="card settings"><h3>Data</h3>
       ${UI.meConfirm === 'reset' ? `<div class="p-row"><span class="note">Erase ${esc(p.name)}’s progress?</span><button class="btn danger sm" id="me-reset-yes">Erase</button><button class="btn ghost sm" data-me-cancel>Keep</button></div>` : `<button class="btn ghost sm" id="me-reset">Reset my progress</button>`}
@@ -8570,7 +8574,6 @@ function renderProfile() {
   $('#me-sound').onchange = e => { p.sound = e.target.checked; Store.save(); };
   $('#me-voice').onchange = e => { p.autoVoice = e.target.checked; Store.save(); };
   $('#me-en').onchange = e => { p.showEnglish = e.target.checked; Store.save(); };
-  $('#me-hearts').onchange = e => { p.unlimitedHearts = e.target.checked; Store.save(); renderChrome(); };
   $('#me-reset')?.addEventListener('click', () => { UI.meConfirm = 'reset'; renderProfile(); });
   $('#me-del')?.addEventListener('click', () => { UI.meConfirm = 'delete'; renderProfile(); });
   $$('[data-me-cancel]', root).forEach(b => b.onclick = () => { UI.meConfirm = null; renderProfile(); });
@@ -8593,11 +8596,10 @@ function renderProfile() {
    ===================================================================== */
 function heartsSheet(blocking) {
   const p = P(), h = Hearts.left(), mins = Math.ceil(Hearts.nextIn() / 60000);
-  openSheet(`<div class="sheet-head"><h2>${h === Infinity ? 'Unlimited hearts' : `${h} of ${MAX_HEARTS} hearts`}</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
-    <p>${blocking ? 'You’re out of hearts. ' : ''}You lose a heart for each mistake in a lesson. ${h < MAX_HEARTS && h !== Infinity ? `Next free heart in ${mins} min. ` : ''}Practice never costs hearts and earns one back.</p>
-    <div class="stack"><button class="btn primary" data-practice="mix">Practice to earn a heart</button>
-    <button class="btn gold" data-buy="hearts" ${p.gems >= 100 && h < MAX_HEARTS ? '' : 'disabled'}>Refill · 100 gems (you have ${p.gems})</button>
-    <p class="note">Rather not deal with hearts? Turn on “Unlimited hearts” in Profile.</p></div>`);
+  openSheet(`<div class="sheet-head"><h2>${h} of ${MAX_HEARTS} hearts</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
+    <p>${blocking ? 'You’re out of hearts. ' : ''}Your first mistake in each scene is free. After that, each mistake costs a heart. ${h < MAX_HEARTS ? `A free heart comes back in ${mins} min. ` : ''}Speaking never costs hearts.</p>
+    <div class="stack"><button class="btn primary" data-practice="speak">Say it to earn a heart</button>
+    <button class="btn gold" data-buy="hearts" ${p.gems >= 100 && h < MAX_HEARTS ? '' : 'disabled'}>Refill · 100 gems (you have ${p.gems})</button></div>`);
 }
 function streakSheet() {
   const p = P();
@@ -8611,9 +8613,9 @@ function langSheet() {
     ${Object.values(COURSES).map(c => `<button class="lang-opt" data-lang="${c.code}" aria-pressed="${P().lang === c.code}"><span class="flag script" ${attrs(c)} style="font-family:${c.font}">${c.flag}</span><span>${c.name} <span class="script" ${attrs(c)} style="font-family:${c.font};font-weight:600">${c.native}</span><small>${c.level} · ${c.units.length} units${c.letterUnits.length ? ' + letters' : ''}${c.status === 'preview' ? ' · preview' : ''}</small></span></button>`).join('')}`);
 }
 async function installApp() {
-  if (installPrompt) { installPrompt.prompt(); const r = await installPrompt.userChoice.catch(() => null); installPrompt = null; if (r?.outcome === 'accepted') toast('Installed! Open Speakaboo from your home screen.'); return; }
+  if (installPrompt) { installPrompt.prompt(); const r = await installPrompt.userChoice.catch(() => null); installPrompt = null; if (r?.outcome === 'accepted') toast('Installed! Open GabBoo from your home screen.'); return; }
   const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  openSheet(`<div class="sheet-head"><h2>Install Speakaboo</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
+  openSheet(`<div class="sheet-head"><h2>Install GabBoo</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
     ${IN_ARTIFACT ? `<p>Apps can’t be installed from inside claude.ai.${APP_URL ? ` Open <b style="user-select:all">${esc(APP_URL)}</b> in your phone’s browser first, then follow the steps below.` : ''}</p>` : ''}
     <div class="guide-card"><h3>iPhone / iPad (Safari)</h3><p>Tap the Share button, then “Add to Home Screen”, then “Add”.</p></div>
     <div class="guide-card"><h3>Android (Chrome)</h3><p>Tap the ⋮ menu, then “Install app” or “Add to Home screen”.</p></div>
@@ -8709,11 +8711,14 @@ function booBookSVG(mood = 'happy') {
 }
 function splash() {
   const el = document.createElement('div'); el.id = 'splash'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${booBookSVG('happy')}</div><div class="sp-word">Speakaboo</div><div class="sp-tag">peek · speak · repeat</div>`;
+  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${booBookSVG('boo')}</div><div class="sp-bubble">Boo!</div><div class="sp-word">GabBoo</div><div class="sp-tag">Peek. Speak. Repeat.</div>`;
   document.body.append(el);
+  // Boo swoops in from the corner holding the book (a friendly scare), gives a peeky smile, then settles in the middle.
+  const face = m => { const b = $('.sp-boo', el); if (b) b.innerHTML = booBookSVG(m); };
+  setTimeout(() => face('giggle'), 1050); setTimeout(() => face('happy'), 1800);
   const t0 = Date.now(); let gone = false;
-  const hide = () => { if (gone) return; gone = true; setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 600); }, Math.max(0, 1100 - (Date.now() - t0))); };
-  setTimeout(hide, 2400);   // never block sign-in or slow networks
+  const hide = () => { if (gone) return; gone = true; setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 600); }, Math.max(0, 3000 - (Date.now() - t0))); };
+  setTimeout(hide, 3600);   // never block sign-in or slow networks
   return hide;
 }
 /** Phones: shrink an exercise a little so it fits the screen and never needs scrolling. */
@@ -8760,7 +8765,7 @@ Object.values(MASCOTS).forEach(m => Object.assign(m, {
     _renderProfile();
     const root = $('#tab-profile'), stack = root && root.querySelector('.stack'); if (!stack) return;
     root.querySelectorAll('.why-card').forEach(x => x.remove());
-    if (!Tester.on()) { const h = $('#me-hearts'); if (h) h.closest('label').remove(); const ai = $('#ai-panel'); if (ai) ai.remove(); }
+    if (!Tester.on()) { const ai = $('#ai-panel'); if (ai) ai.remove(); }
     const order = ['Preferences', 'Profile', 'Account', 'Microphone & app', 'Writing', 'Boo’s wardrobe', 'Chat tutor brain', 'Data'];
     const label = { 'Chat tutor brain': 'AI tutor (advanced)' };
     const list = document.createElement('div'); list.className = 'me-list';
@@ -8779,7 +8784,7 @@ Object.values(MASCOTS).forEach(m => Object.assign(m, {
 const REPORT_EMAIL = 'ayeshaferozroza@gmail.com';
 function reportHref(t, r, en) {
   const c = course(), body = `Language: ${c ? c.name : ''}\nText: ${t}\nPronunciation: ${r || ''}\nMeaning: ${en || ''}\n\nWhat is wrong:\n`;
-  return `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent('Speakaboo mistake')}&body=${encodeURIComponent(body)}`;
+  return `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent('GabBoo mistake')}&body=${encodeURIComponent(body)}`;
 }
 /* Offline note: lessons keep working, translations need internet. */
 {
@@ -8895,7 +8900,7 @@ renderChat = renderTalk;
 const Share = {
   text() {
     const p = P(), c = course(), w = learnedWords(p, c.code).length;
-    return `I’m learning ${c.name} on Speakaboo: ${liveStreak(p)}-day streak, level ${levelFor(p.xp)}, ${w} words. Join me!`;
+    return `I’m learning ${c.name} on GabBoo: ${liveStreak(p)}-day streak, level ${levelFor(p.xp)}, ${w} words. Join me!`;
   },
   card() {
     const p = P(), c = course(), W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
@@ -8912,7 +8917,7 @@ const Share = {
         center(p.name, 720, 84); center(`is learning ${c.name}`, 800, 48, 600, '#C9CCFF');
         const stats = [[liveStreak(p), 'day streak'], [levelFor(p.xp), 'level'], [learnedWords(p, c.code).length, 'words']];
         stats.forEach(([v, l], i) => { const x = 210 + i * 330; g.fillStyle = 'rgba(255,255,255,.12)'; g.beginPath(); g.roundRect ? g.roundRect(x - 140, 880, 280, 220, 36) : g.rect(x - 140, 880, 280, 220); g.fill(); g.textAlign = 'center'; g.font = `800 100px ${font}`; g.fillStyle = '#fff'; g.fillText(String(v), x, 1010); g.font = `600 36px ${font}`; g.fillStyle = '#C9CCFF'; g.fillText(l, x, 1070); });
-        center('Speakaboo', 1230, 64); center('Talk your way to fluent', 1290, 36, 600, '#C9CCFF');
+        center('GabBoo', 1230, 64); center('Peek. Speak. Repeat.', 1290, 36, 600, '#C9CCFF');
         cv.toBlob(b => res(b), 'image/png');
       };
       img.onerror = () => res(null);
@@ -8936,6 +8941,21 @@ document.addEventListener('click', e => { if (e.target.closest && e.target.close
     _rp2(); const b = document.querySelector('#tab-profile [data-switch]');
     if (b && !document.querySelector('#tab-profile [data-share]')) b.insertAdjacentHTML('beforebegin', '<button class="btn primary sm" data-share>Share my progress</button>');
   };
+}
+/* Sentences start with a capital letter (pronunciation lines and English lines). Single words stay lowercase. */
+{
+  const SEL = '.ex-rom, .ex-en, .wt-rom, .tk-r, .tk-en, .tk-chip small, .sp2-rom, .sp2-en, .speak-rom, .speak-en, .blank-rom, .ask-rom, .rom, .en, .wd-rom, .wd-en, .ph-rom, .story-rom, .story-en, .gp-rom, .gp-en, .tip-chip small, .say-hint, .wd-m small, .t-rom, .wt small';
+  let q = 0;
+  const run = () => {
+    q = 0;
+    document.querySelectorAll(SEL).forEach(el => {
+      if (el.children.length) return; const t = el.textContent; if (!t) return;
+      const m = t.match(/^(\s*)([a-z])(.*)$/s); if (!m || !/\s/.test(t.trim())) return;
+      el.textContent = m[1] + m[2].toUpperCase() + m[3];
+    });
+  };
+  const sched = () => { if (!q) q = requestAnimationFrame(run); };
+  new MutationObserver(sched).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
 }
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
@@ -10258,7 +10278,7 @@ const TRIAL_DAYS = CFG.trialDays || 7;
 const FREE = { episodes: 2, talkPerDay: 3, gamesPerDay: 1 };
 Object.assign(TRIAL, { callBoo: true });
 const WHY_SB = [
-  ['speak', 'You speak from minute one', 'Most apps have you tap tiles and match pairs. In Speakaboo you answer out loud and Boo listens, scores and reacts.'],
+  ['speak', 'You speak from minute one', 'Most apps have you tap tiles and match pairs. In GabBoo you answer out loud and Boo listens, scores and reacts.'],
   ['friends', 'Moments, not word lists', 'Every phrase lives in a tiny comic scene: who you’re talking to and where. That’s how you learn when to be polite or casual.'],
   ['clock', 'It follows your day', 'Today shows what people actually say in the next few hours, then sends you out with a real-life mission.'],
   ['radio', 'Hear the feeling', '진짜? vs 진짜! Tone Studio teaches the melody of real speech and draws your own voice so you can match it.'],
@@ -10317,7 +10337,7 @@ const Acct = {
 const isOwner = () => OWNERS.includes(String(Acct.email() || '').toLowerCase());
 
 /* ---------- Who gets what ---------- */
-/* Guest mode: try Speakaboo on this phone without an email. Everything is unlocked and saved on this device only. */
+/* Guest mode: try GabBoo on this phone without an email. Everything is unlocked and saved on this device only. */
 const GUEST_EMAIL = 'guest@this-device.local';
 const isGuest = () => { try { return !Acct.cloud() && DeviceAcct.session() === GUEST_EMAIL; } catch (e) { return false; } };
 async function startGuest() {
@@ -10385,11 +10405,11 @@ authScreen = function (mode, msg = '') {
   if (!el) { el = document.createElement('div'); el.id = 'auth'; el.className = 'auth'; document.body.append(el); }
   el.hidden = false; $('#app').hidden = true; $('#profiles').hidden = true; $('#splash')?.remove();
   const boo = `<div class="auth-boo mascot" id="auth-m"></div>`;
-  if (mode === 'loading') { el.innerHTML = `<div class="auth-card">${boo}<h1>Speakaboo</h1><p class="note">Peeking at your account…</p></div>`; paintMascot($('#auth-m'), 'mandu', 'peek', true); return; }
-  if (mode === 'offline') { el.innerHTML = `<div class="auth-card">${boo}<h1>No connection</h1><p class="note">Speakaboo needs the internet the first time you sign in.</p><button class="btn primary" onclick="location.reload()">Try again</button></div>`; paintMascot($('#auth-m'), 'mandu', 'sad', true); return; }
+  if (mode === 'loading') { el.innerHTML = `<div class="auth-card">${boo}<h1>GabBoo</h1><p class="note">Peeking at your account…</p></div>`; paintMascot($('#auth-m'), 'mandu', 'peek', true); return; }
+  if (mode === 'offline') { el.innerHTML = `<div class="auth-card">${boo}<h1>No connection</h1><p class="note">GabBoo needs the internet the first time you sign in.</p><button class="btn primary" onclick="location.reload()">Try again</button></div>`; paintMascot($('#auth-m'), 'mandu', 'sad', true); return; }
   const titles = { signup: ['Create your account', `Your ${TRIAL_DAYS}-day free trial starts today. No payment needed.`, 'Create account'], signin: ['Welcome back!', 'Sign in to pick up where you left off.', 'Sign in'], reset: ['Forgot your password?', Acct.cloud() ? 'We’ll email you a link to choose a new one.' : 'Your account lives on this phone, so there’s no email to send. Create a new account, or try your password again.', Acct.cloud() ? 'Send reset link' : 'Back to sign in'] };
   const [h, sub, cta] = titles[mode];
-  el.innerHTML = `<div class="auth-card">${boo}<div class="auth-brand">${BRAND_SVG}<b>Speakaboo</b></div><h1>${h}</h1><p class="note">${sub}</p>
+  el.innerHTML = `<div class="auth-card">${boo}<div class="auth-brand">${BRAND_SVG}<b>GabBoo</b></div><h1>${h}</h1><p class="note">${sub}</p>
     <form id="auth-form" class="stack" autocomplete="on" novalidate>
       ${mode !== 'reset' || Acct.cloud() ? `<label class="field"><span>Email</span><input class="input" id="au-email" type="email" autocomplete="email" required inputmode="email" placeholder="you@example.com"></label>` : ''}
       ${mode !== 'reset' ? `<label class="field"><span>Password</span><div class="pw-wrap"><input class="input" id="au-pw" type="password" autocomplete="${mode === 'signup' ? 'new-password' : 'current-password'}" minlength="8" required placeholder="${mode === 'signup' ? 'At least 8 characters' : 'Your password'}"><button type="button" class="pw-eye" id="au-eye" aria-label="Show password">Show</button></div></label>` : ''}
@@ -10398,7 +10418,7 @@ authScreen = function (mode, msg = '') {
     </form>
     <div class="auth-links">${mode === 'signup' ? '<button class="link" data-auth="signin">I already have an account</button>' : '<button class="link" data-auth="signup">Create a new account</button>'}
       ${mode === 'signin' ? '<button class="link" data-auth="reset">Forgot password?</button>' : mode === 'reset' ? '<button class="link" data-auth="signin">Back to sign in</button>' : ''}</div>
-    ${mode === 'signup' ? `<details class="auth-why"><summary>What makes Speakaboo different?</summary>${whyHTML(true)}</details>
+    ${mode === 'signup' ? `<details class="auth-why"><summary>What makes GabBoo different?</summary>${whyHTML(true)}</details>
       <p class="auth-fine">By creating an account you agree to the Terms and Privacy policy. After the ${TRIAL_DAYS}-day trial you keep a free plan, or subscribe monthly or yearly through Google Play to unlock everything. Cancel any time.</p>` : ''}</div>`;
   paintMascot($('#auth-m'), 'mandu', mode === 'signup' ? 'cheer' : 'happy', true);
   $$('[data-auth]', el).forEach(b => b.onclick = () => authScreen(b.dataset.auth));
@@ -10474,14 +10494,14 @@ accountHTML = function () {
       <button class="btn ghost sm" data-signout>Sign out</button>
       <button class="btn ghost sm danger" data-delete-account>Delete account</button></div>
     <p class="note">${Acct.cloud() ? 'Progress saves to your account automatically, so you can switch phones any time.' : 'Your account and progress are saved on this phone.'}</p></div>
-    <div class="card why-card"><h3>What makes Speakaboo different</h3>${whyHTML(false)}</div>`;
+    <div class="card why-card"><h3>What makes GabBoo different</h3>${whyHTML(false)}</div>`;
 };
 document.addEventListener('click', e => {
   const t = e.target; if (!t.closest) return;
   if (t.closest('[data-signout]')) { e.stopImmediatePropagation(); Acct.signOut(); }
   if (t.closest('[data-delete-account]') && !Acct.cloud()) {
     e.stopImmediatePropagation();
-    openSheet(`<div class="sheet-head"><h2>Delete your account?</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div><p>This permanently deletes your Speakaboo account and progress from this phone.</p>
+    openSheet(`<div class="sheet-head"><h2>Delete your account?</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div><p>This permanently deletes your GabBoo account and progress from this phone.</p>
       <div class="stack"><button class="btn danger" id="del-yes">Delete my account</button><button class="btn ghost" data-close>Keep my account</button></div>`);
     $('#del-yes').onclick = () => { closeSheet(); DeviceAcct.remove(); Store.data = Store.fresh(); $('#app').hidden = true; toast('Your account was deleted.'); authScreen('signup'); };
   }
@@ -10499,21 +10519,21 @@ Paywall.show = async function (soft, reason) {
   const rows = [['Season 1 episodes', '2 samples', 'All', 'All 6 seasons'], ['Languages', '1', '1', 'Korean, Arabic & Spanish'], ['Talk with Boo', '3 a day', '10 a day', 'Unlimited'], ['Call Boo (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
   el.innerHTML = `<div class="pw-card">${soft ? `<button class="icon-btn pw-x" data-pw-close aria-label="Close">${ICON.x}</button>` : ''}
     <div class="mascot pw-boo" id="pw-m"></div>
-    <h2>${s.mode === 'free' ? 'Your free week is over. Boo isn’t!' : s.mode === 'trial' ? `Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left` : 'Speakaboo Premium'}</h2>
+    <h2>${s.mode === 'free' ? 'Your free week is over. Boo isn’t!' : s.mode === 'trial' ? `Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left` : 'GabBoo Premium'}</h2>
     ${reason ? `<p class="pw-reason">${esc(reason)}</p>` : ''}
     <table class="pw-table"><thead><tr><th></th><th>Free</th><th>Trial</th><th class="pro">Premium</th></tr></thead><tbody>${rows.map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="pro">${esc(r[3])}</td></tr>`).join('')}</tbody></table>
     <div class="plans">${plans}</div>
-    ${inPlay ? '' : `<p class="pw-note">Subscriptions are bought securely through Google Play in the Speakaboo app.${CFG.playStoreUrl ? ` <a href="${esc(CFG.playStoreUrl)}" target="_blank" rel="noopener">Get it on Google Play</a>` : ''}</p>`}
-    <details class="auth-why" open><summary>Why people pick Speakaboo</summary>${whyHTML(true)}</details>
+    ${inPlay ? '' : `<p class="pw-note">Subscriptions are bought securely through Google Play in the GabBoo app.${CFG.playStoreUrl ? ` <a href="${esc(CFG.playStoreUrl)}" target="_blank" rel="noopener">Get it on Google Play</a>` : ''}</p>`}
+    <details class="auth-why" open><summary>Why people pick GabBoo</summary>${whyHTML(true)}</details>
     <div class="pw-links">${inPlay ? '<button class="link" data-restore>Restore purchase</button><a class="link" href="https://play.google.com/store/account/subscriptions" target="_blank" rel="noopener">Manage in Google Play</a>' : ''}</div>
     <p class="auth-fine">Payment is charged to your Google Play account. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the period.</p></div>`;
   paintMascot($('#pw-m'), p ? p.mascot : 'mandu', s.mode === 'free' ? 'sad' : 'cheer', true);
 };
 const _buyClick = Billing.buy.bind(Billing);
-Billing.buy = async function (sku) { if (!this.available()) { toast('Subscriptions open in the Speakaboo app from Google Play.'); return false; } return _buyClick(sku); };
+Billing.buy = async function (sku) { if (!this.available()) { toast('Subscriptions open in the GabBoo app from Google Play.'); return false; } return _buyClick(sku); };
 /* =====================================================================
    SPEAKABOO — FIRST RUN, v2
-   Find Boo → meet Boo → what makes Speakaboo different → pick a city →
+   Find Boo → meet Boo → what makes GabBoo different → pick a city →
    why you're learning → SAY your first word → create your account
    (email + password, trial starts) → name, buddy and daily goal.
    ===================================================================== */
@@ -10533,7 +10553,7 @@ const Onboard2 = {
       () => `<div class="ob-s s-hide"><h1>Psst… Boo is hiding.</h1><p>Can you find him?</p>
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}</button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
       () => `<div class="ob-s"><div class="ob-boo mascot" id="ob-boo"></div><h1>Peekaboo! I’m Boo.</h1><p>I’ll help you <b>speak</b> a new language, out loud, from day one.</p><button class="btn primary big" data-ob-next>Hi Boo!</button></div>`,
-      () => `<div class="ob-s"><h1>Not another tap-the-tiles app</h1><p>Here’s what you’ll do differently with Speakaboo:</p>${whyHTML(false)}<button class="btn primary big" data-ob-next>Sounds good!</button></div>`,
+      () => `<div class="ob-s"><h1>Not another tap-the-tiles app</h1><p>Here’s what you’ll do differently with GabBoo:</p>${whyHTML(false)}<button class="btn primary big" data-ob-next>Sounds good!</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
         <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,

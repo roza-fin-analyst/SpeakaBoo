@@ -1,7 +1,7 @@
 {
-  "name": "Speakaboo: Talk your way to fluent",
-  "short_name": "Speakaboo",
-  "description": "A free, talk-first way to learn Korean, Arabic and Spanish with a cheeky Boo buddy who listens, laughs and helps.",
+  "name": "GabBoo: Peek. Speak. Repeat.",
+  "short_name": "GabBoo",
+  "description": "A free, talk-first way to learn Korean, Arabic and Spanish with a friendly Boo buddy who listens and helps.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
