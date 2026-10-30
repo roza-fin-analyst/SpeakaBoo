@@ -1281,7 +1281,6 @@ figure.panel figcaption b { color: #4146C9; }
 html.sound-first .teach > .badge-new { order: -4; } html.sound-first .teach > figure.panel, html.sound-first .teach > .pic-hero { order: -3; }
 html.sound-first .teach > .rom { order: -2; font-size: clamp(26px, 8.5vw, 42px); color: var(--ink); overflow-wrap: anywhere; max-width: 100%; line-height: 1.15; }
 html.sound-first .glyph-btn { padding: 8px 18px; border-bottom-width: 4px; } html.sound-first .glyph-btn .big, html.sound-first .glyph-btn .big.long { font-size: 26px !important; opacity: .8; }
-html.sound-first .glyph-btn small::after { content: ' · how it’s written'; color: var(--ink-2); font-weight: 600; }
 html.sound-first .pn-bub { display: flex; flex-direction: column-reverse; } html.sound-first .pn-bub small { font: 800 19px var(--font-display); color: #1C1B2E; } html.sound-first .pn-bub .script { font-size: 13px; font-weight: 700; opacity: .6; }
 html.sound-first .opt > span, html.sound-first .ctx-opts .opt > span { display: flex; flex-direction: column-reverse; align-items: flex-start; }
 html.sound-first .opt.script > span { font-size: 14px; } html.sound-first .opt-rom { font: 800 18px var(--font-body) !important; color: var(--ink) !important; } html.sound-first .ctx-opts .opt .script { font-size: 14px; opacity: .7; }
@@ -1655,3 +1654,39 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 @media (max-height: 820px) { .listen-tools { flex-wrap: nowrap; gap: 6px; } .listen-tools .btn { padding-left: 10px; padding-right: 10px; } .sp2-rom { font-size: 18px; } .sp2 .speak-target { font-size: 19px !important; } .sp2-en { margin-top: 0; } }
 /* Answer bar: Boo sits inside the card so it never covers the answers */
 .l-foot.ok .fb .mascot, .l-foot.bad .fb .mascot { top: 10px !important; left: auto !important; right: 16px; width: 56px !important; height: 56px !important; }
+
+/* Larger text inside exercises (two sizes up) */
+.l-inner .opt, .l-inner .rt-opt { font-size: 20px; } .l-inner .opt small, .l-inner .opt .script { font-size: 17px; }
+.l-inner .q { font-size: 26px; } .l-inner .prompt-text { font-size: 26px; }
+.l-inner .wt { font-size: 22px; } .l-inner .wt small { font-size: 14px; }
+.l-inner .en { font-size: 22px; } .l-inner .ex-line .script { font-size: 20px; }
+@media (max-height: 820px) { .l-inner figure.panel { zoom: .72; } .l-inner .scene-wrap { zoom: .7; } .l-inner { gap: 8px; } }
+@media (max-height: 680px) { .l-inner figure.panel { zoom: .55; } }
+.l-inner .prompt .script, .l-inner .prompt-text.script { font-size: 26px; } .l-inner .opt .script { font-size: 18px; }
+/* Smaller mic on the speaking screen */
+.mic-pill { width: 64px; height: 64px; border-radius: 50%; box-shadow: 0 4px 0 var(--berry-deep); }
+.mic-pill svg { width: 26px; height: 26px; }
+.mic-pill.on { width: 120px; border-radius: 32px; }
+.sp2-boo { width: 120px; height: 120px; }
+
+/* Hear / Slow / Say it / Aa: one row, same size, evenly spaced */
+.listen-tools { flex-wrap: nowrap !important; gap: 8px; }
+.listen-tools > .btn, .listen-tools > .hear { flex: 1 1 0; min-width: 0; height: 46px; min-height: 46px; padding: 0 6px !important; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: 14px; font-size: 14px; }
+.listen-tools > .hear.words { width: auto; border-radius: 14px; }
+.card-actions { align-items: center; }
+.card-actions > * { height: 48px; min-width: 48px; display: inline-flex; align-items: center; justify-content: center; }
+.card-actions > .btn { padding: 0 20px; }
+.listen-tools { width: 100%; }
+.card-actions > * { min-width: 100px; padding: 0 12px; }
+.listen-tools { flex-wrap: wrap !important; }
+.listen-tools .say-res { flex: 0 0 100%; text-align: center; font-weight: 700; } .listen-tools .say-res:empty { display: none; }
+.card-actions > .star-btn { min-width: 48px; width: 48px; padding: 0; border-radius: 50%; }
+/* New-word card actions: small and tidy */
+.card-actions { gap: 10px; align-items: center; }
+.card-actions > * { height: 40px; min-height: 40px; min-width: 0; }
+.card-actions > .star-btn { width: 40px; min-width: 40px; padding: 0; border-radius: 50%; }
+.card-actions > .speaker.slow { width: 56px; border-radius: 14px; }
+.card-actions > .say-it { min-height: 40px; padding: 0 16px; border-radius: 14px; font-size: 15px; }
+.card-actions > .say-it svg { width: 18px; height: 18px; }
+.card-actions > .speaker.slow { width: 56px !important; height: 40px !important; min-height: 40px !important; }
+.card-actions > .star-btn { width: 40px !important; height: 40px !important; }

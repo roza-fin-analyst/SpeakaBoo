@@ -8082,7 +8082,7 @@ const RENDER = {
     const c = course();
     el.innerHTML = `<div class="teach"><span class="badge-new">${esc(step.label)}</span>
       ${step.pic ? `<div class="pic-hero" aria-hidden="true">${artSVG(step.pic)}</div>` : ''}
-      <button class="glyph-btn" data-say="${esc(step.say)}"><span class="big script ${[...step.big].length > 3 || step.pic ? 'long' : ''}" ${attrs(c)}>${esc(step.big)}</span><small>${ICON.speaker} Tap to hear</small></button>
+      <button class="glyph-btn" data-say="${esc(step.say)}"><span class="big script ${[...step.big].length > 3 || step.pic ? 'long' : ''}" ${attrs(c)}>${esc(step.big)}</span><small>${ICON.speaker}</small></button>
       <div class="rom">${esc(step.rom)}</div><div class="${step.isWord ? 'en' : 'hint'}">${esc(step.note)}</div>
       ${step.ex ? `<button class="ex-line" data-say="${esc(step.ex.t)}">${ICON.speaker}<span><span class="script" ${attrs(c)}>${esc(step.ex.t)}</span>${(step.ex.r || romFor(step.ex.t)) && !isLatinLang(c.code) ? `<small class="ex-rom">${esc(step.ex.r || romFor(step.ex.t))}</small>` : ''}<small class="ex-en">${esc(step.ex.en)}</small></span></button>` : ''}
       <div class="card-actions">${step.isWord ? starBtn({ t: step.say, r: step.rom, en: step.note }) : ''}<button class="speaker slow" data-say="${esc(step.say)}" data-rate=".55" aria-label="Play slowly">${ICON.turtle}</button>
@@ -8724,8 +8724,8 @@ function fitStage() {
     const fb = $('#l-foot'); if (fb && (fb.classList.contains('ok') || fb.classList.contains('bad'))) return;   // keep the size while the answer bar is showing
     inn.style.zoom = ''; const cs = getComputedStyle(st);
     const foot = $('#l-foot'), footH = foot && !foot.hidden ? foot.offsetHeight : 0;   // the answer bar's space is reserved up front, so nothing resizes when it appears
-    const avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - Math.max(0, 215 - footH), need = inn.offsetHeight;
-    if (need > avail + 2) inn.style.zoom = Math.max(0.6, avail / need).toFixed(3);
+    const avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - Math.max(0, 170 - footH), need = inn.offsetHeight;
+    if (need > avail + 2) inn.style.zoom = Math.max(0.9, avail / need).toFixed(3);
   });
 }
 { const wire = () => { const st = document.getElementById('l-stage'); if (!st) return setTimeout(wire, 500);
