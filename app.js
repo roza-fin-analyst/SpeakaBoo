@@ -4389,7 +4389,7 @@ function applyFreezes(p = P()) {
   }
 }
 
-const HEART_MS = 30 * 60 * 1000, MAX_HEARTS = 5;
+const HEART_MS = 15 * 60 * 1000, MAX_HEARTS = 5;
 const Hearts = {
   sync(p = P()) {
     if (p.hearts >= MAX_HEARTS) { p.heartAt = Date.now(); return p.hearts; }
