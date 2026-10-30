@@ -4204,20 +4204,40 @@ const MASCOT_ART = {
 
 Object.assign(MASCOT_ART, typeof CAST_ART === 'object' ? CAST_ART : {}, typeof BOO_ART === 'object' ? BOO_ART : {});
 /* ---- Cast: a clever fox teacher (Kit) and animal friends ---- */
+const mix = (a, b, t) => { const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)), A = p(a), B = p(b); return '#' + A.map((v, i) => Math.round(v + (B[i] - v) * t).toString(16).padStart(2, '0')).join(''); };
+const FOX_CLASP = `<circle cx="60" cy="110" r="4" fill="#FFC23D" stroke="#B8860B" stroke-width="1.5"/>`;
+const FOX_GLASSES = `<g fill="rgba(190,225,255,.14)" stroke="#6B4A36" stroke-width="2.6"><circle cx="40" cy="66" r="14.8"/><circle cx="80" cy="66" r="14.8"/></g><path d="M54.8 63q5.2-3.6 10.4 0" stroke="#6B4A36" stroke-width="2.6" fill="none"/><path d="M31 58q4-5 10-5.6M71 58q4-5 10-5.6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" opacity=".75"/>`;
 function animalArt(sp, c, d, o = {}) {
   const ear = (x, flip) => '';
   const inner = o.inner || '#FFC4C4', cream = o.cream || '#FFF3E3';
   const head = `<circle cx="60" cy="68" r="42" fill="${c}" stroke="${d}" stroke-width="3"/>`;
   const muzzle = `<ellipse cx="60" cy="87" rx="19" ry="13" fill="${cream}"/>`;
   const nose = (col = '#3A2418') => `<ellipse cx="60" cy="77" rx="5" ry="3.6" fill="${col}"/>`;
-  let body = '';
+  let body = '', under = '';
   switch (sp) {
-    case 'fox': body =
-      `<path d="M16 60Q10 14 30 11Q46 12 58 36z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/><path d="M24 46Q22 22 31 21Q40 22 46 36z" fill="#FFB9A0"/>` +
-      `<path d="M104 60Q110 14 90 11Q74 12 62 36z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/><path d="M96 46Q98 22 89 21Q80 22 74 36z" fill="#FFB9A0"/>` +
-      `<path d="M60 112C28 112 8 92 8 70 8 48 28 36 60 36s52 12 52 34c0 22-20 42-52 42z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/>` +
-      `<path d="M10 76Q22 74 28 84 22 86 26 92 36 92 40 100 50 102 60 108 70 102 80 100 84 92 94 92 98 86 92 84 98 74 110 76Q60 96 10 76z" fill="${cream}"/>` +
-      `<path d="M60 38l-7 11q7 4 14 0z" fill="${cream}"/><path d="M56 78q4 3.4 8 0q-1 4-4 4t-4-4z" fill="#3A2418"/>`; break;
+    case 'fox': {
+      const tip = '#2E1A10', ink = '#2B1D14', lite = mix(c, '#ffffff', .38), deep = mix(c, '#6b2a05', .32), crm = o.cream || '#FFF3E3', crmD = mix(crm, '#c99a70', .3);
+      const tailD = 'M88 112C130 118 142 76 118 50 124 78 112 98 84 100z';
+      under = `<defs>
+        <radialGradient id="hd@@" cx=".36" cy=".26" r=".9"><stop offset="0" stop-color="${lite}"/><stop offset=".5" stop-color="${c}"/><stop offset="1" stop-color="${deep}"/></radialGradient>
+        <linearGradient id="ea@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${tip}"/><stop offset=".26" stop-color="${tip}"/><stop offset=".33" stop-color="${c}"/><stop offset="1" stop-color="${deep}"/></linearGradient>
+        <radialGradient id="cr@@" cx=".5" cy=".25" r=".85"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="${crmD}"/></radialGradient>
+        <linearGradient id="tl@@" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="${deep}"/><stop offset=".55" stop-color="${c}"/><stop offset="1" stop-color="${lite}"/></linearGradient>
+        <radialGradient id="ir@@" cx=".5" cy=".36" r=".72"><stop offset="0" stop-color="#A8E0FF"/><stop offset=".5" stop-color="#3F95DD"/><stop offset="1" stop-color="#1B4F95"/></radialGradient>
+        <linearGradient id="cp@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4E3E34"/><stop offset="1" stop-color="#1E140E"/></linearGradient>
+        <clipPath id="tc@@"><path d="${tailD}"/></clipPath></defs>
+        <ellipse cx="62" cy="146" rx="46" ry="5.5" fill="#1d3b22" opacity=".18"/>
+        <g class="fox-tail"><path d="${tailD}" fill="url(#tl@@)"/><g clip-path="url(#tc@@)"><g transform="translate(107.8 67.9) rotate(30)"><rect x="-40" y="-4.5" width="80" height="10" fill="${tip}"/></g><g transform="translate(117.5 51) rotate(30)"><rect x="-40" y="-14" width="80" height="30" fill="#FFFFFF"/></g></g><path d="${tailD}" fill="none" stroke="${d}" stroke-width="3.2" stroke-linejoin="round"/></g>
+        <path d="M30 104C26 124 38 134 60 134S94 124 90 104z" fill="url(#hd@@)" stroke="${d}" stroke-width="3.2" stroke-linejoin="round"/>
+        <path d="M22 106Q60 98 98 106L108 138Q60 150 12 138z" fill="url(#cp@@)" stroke="#120A06" stroke-width="2" stroke-linejoin="round"/><path d="M48 112L60 132 72 112z" fill="url(#cr@@)"/>`;
+      body =
+        `<path d="M16 60Q10 12 30 9Q47 10 58 36z" fill="url(#ea@@)" stroke="${d}" stroke-width="3.2" stroke-linejoin="round"/><path d="M25 50Q22 24 31 21Q41 22 46 38z" fill="url(#cr@@)"/>` +
+        `<path d="M104 60Q110 12 90 9Q73 10 62 36z" fill="url(#ea@@)" stroke="${d}" stroke-width="3.2" stroke-linejoin="round"/><path d="M95 50Q98 24 89 21Q79 22 74 38z" fill="url(#cr@@)"/>` +
+        `<path d="M14 70L-2 76 9 80 0 88 13 86 12 97 25 88z" fill="url(#cr@@)" stroke="${d}" stroke-width="2.2" stroke-linejoin="round"/><path d="M106 70L122 76 111 80 120 88 107 86 108 97 95 88z" fill="url(#cr@@)" stroke="${d}" stroke-width="2.2" stroke-linejoin="round"/>` +
+        `<path d="M60 112C28 112 8 92 8 70 8 48 28 36 60 36s52 12 52 34c0 22-20 42-52 42z" fill="url(#hd@@)" stroke="${d}" stroke-width="3.2" stroke-linejoin="round"/>` +
+        `<path d="M60 77C44 77 26 77 10 83 16 102 36 112 60 112s44-10 50-29C94 77 76 77 60 77z" fill="url(#cr@@)"/>` +
+        `<path d="M60 38l-7 11q7 4 14 0z" fill="url(#cr@@)"/><ellipse cx="60" cy="81" rx="6.2" ry="4.6" fill="${ink}"/><ellipse cx="58" cy="79.4" rx="2.4" ry="1.2" fill="#fff" opacity=".75"/>`;
+      break; }
     case 'fennec': body =
       `<path d="M16 60L14 4l34 34z" fill="${c}" stroke="${d}" stroke-width="3" stroke-linejoin="round"/><path d="M22 48l-1-30 16 18z" fill="${inner}"/>` +
       `<path d="M104 60L106 4 72 38z" fill="${c}" stroke="${d}" stroke-width="3" stroke-linejoin="round"/><path d="M98 48l1-30-16 18z" fill="${inner}"/>` +
@@ -4249,7 +4269,7 @@ function animalArt(sp, c, d, o = {}) {
     case 'duck': default: body =
       `<path d="M60 24q6-10 12-4-8 0-10 8z" fill="${c}" stroke="${d}" stroke-width="2"/>` + head + `<ellipse cx="60" cy="80" rx="15" ry="7" fill="#FF9A3D" stroke="#E07A1F" stroke-width="2"/><path d="M47 80h26" stroke="#E07A1F" stroke-width="2" stroke-linecap="round"/>`; break;
   }
-  return { ink: '#2B1D14', cheek: '#FF9A8A', ey: sp === 'fox' ? 66 : sp === 'frog' ? 64 : 62, my: sp === 'duck' ? 92 : sp === 'fox' ? 91 : 87, sp: sp === 'fox' ? 20 : 16, er: sp === 'fox' ? 1.28 : 1, c, d, body };
+  return { ink: '#2B1D14', cheek: '#FF9A8A', ey: sp === 'fox' ? 66 : sp === 'frog' ? 64 : 62, my: sp === 'duck' ? 92 : sp === 'fox' ? 91 : 87, sp: sp === 'fox' ? 20 : 16, er: sp === 'fox' ? 1.28 : 1, iris: sp === 'fox', c, d, body, under, after: sp === 'fox' && o.glasses !== false ? FOX_GLASSES + FOX_CLASP : '' };
 }
 {
   const FRIENDS = {
@@ -4271,7 +4291,9 @@ function mascotFace(mood, a) {
   const hi = eyeBg === '#fff' ? '#fff' : eyeBg;
   /* Big shiny eyes (two catchlights) inside a blink group */
   const er = a.er || 1;
-  const dotEye = (x, dy = 0) => `<g class="eye"><ellipse cx="${x}" cy="${ey + dy}" rx="${7.4 * er}" ry="${9 * er}" fill="${ink}"/><circle cx="${x + 2.4 * er}" cy="${ey + dy - 3.2 * er}" r="${3 * er}" fill="${hi}"/><circle cx="${x - 1.8 * er}" cy="${ey + dy + 2.6 * er}" r="${1.2 * er}" fill="${hi}" opacity=".9"/><circle cx="${x + 3.6 * er}" cy="${ey + dy + 3.4 * er}" r="${.8 * er}" fill="${hi}" opacity=".7"/></g>`;
+  const irisEye = (x, dy = 0) => `<g class="eye"><ellipse cx="${x}" cy="${ey + dy}" rx="${8 * er}" ry="${9.6 * er}" fill="url(#ir@@)" stroke="${ink}" stroke-width="1.6"/><ellipse cx="${x}" cy="${ey + dy + 1.2 * er}" rx="${3.5 * er}" ry="${5.2 * er}" fill="${ink}"/><path d="M${x - 7.6 * er} ${ey + dy - 3 * er}Q${x} ${ey + dy - 13 * er} ${x + 7.6 * er} ${ey + dy - 3 * er}" fill="none" stroke="${ink}" stroke-width="2.6" stroke-linecap="round"/><circle cx="${x + 3 * er}" cy="${ey + dy - 3.4 * er}" r="${3.1 * er}" fill="#fff"/><circle cx="${x - 2.4 * er}" cy="${ey + dy + 3.6 * er}" r="${1.3 * er}" fill="#fff" opacity=".9"/></g>`;
+  const dotEye0 = (x, dy = 0) => `<g class="eye"><ellipse cx="${x}" cy="${ey + dy}" rx="${7.4 * er}" ry="${9 * er}" fill="${ink}"/><circle cx="${x + 2.4 * er}" cy="${ey + dy - 3.2 * er}" r="${3 * er}" fill="${hi}"/><circle cx="${x - 1.8 * er}" cy="${ey + dy + 2.6 * er}" r="${1.2 * er}" fill="${hi}" opacity=".9"/><circle cx="${x + 3.6 * er}" cy="${ey + dy + 3.4 * er}" r="${.8 * er}" fill="${hi}" opacity=".7"/></g>`;
+  const dotEye = a.iris ? irisEye : dotEye0;
   const arcEye = x => `<path d="M${x - 5} ${ey + 1}q5-7 10 0" fill="none" stroke="${ink}" stroke-width="3.2" stroke-linecap="round"/>`;
   const stroke = `stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"`;
   const tongue = y => `<ellipse cx="60" cy="${y}" rx="4.5" ry="2.6" fill="#FF7A9A"/>`;
@@ -4321,9 +4343,12 @@ function mascotFace(mood, a) {
     default: return cheeks + dotEye(L) + dotEye(R) + `<path d="M53 ${my - 1}q7 7 14 0" ${stroke} stroke-width="2.8"/>`;
   }
 }
+let _svgUid = 0;
+const uniqIds = svg => svg.replace(/@@/g, 'u' + (++_svgUid));
 function mascotSVG(kind = 'mandu', mood = 'happy') {
   const a = MASCOT_ART[kind] || MASCOT_ART.mandu, wear = typeof wearOverlay === 'function' ? wearOverlay(kind) : '';
-  return `<svg viewBox="${wear ? '-7 -14 134 134' : '0 0 120 120'}" role="img" aria-label="${esc((MASCOTS[kind] || MASCOTS.mandu).name)}, ${mood}"><ellipse cx="60" cy="110" rx="34" ry="5" fill="#33223F" opacity=".1"/>${a.body}${mascotFace(mood, a)}${wear}</svg>`;
+  const vb = a.under ? '-4 -4 146 154' : wear ? '-7 -14 134 134' : '0 0 120 120';
+  return uniqIds(`<svg viewBox="${vb}" role="img" aria-label="${esc((MASCOTS[kind] || MASCOTS.mandu).name)}, ${mood}">${a.under ? '' : '<ellipse cx="60" cy="110" rx="34" ry="5" fill="#33223F" opacity=".1"/>'}${a.under || ''}${a.body}${mascotFace(mood, a)}${a.after || ''}${wear}</svg>`);
 }
 /** Paint a mascot into an element (animated by mood class). */
 function paintMascot(el, kind, mood = 'happy', animate = true) {
@@ -7086,7 +7111,7 @@ function renderNow() {
       <h1 class="sky-hi">${hi}, ${esc(p.name)}.</h1>
       <p class="sky-sub">${['bored', 'missing', 'fading', 'ghosted'].includes(st.key) ? esc(st.line) : `Here’s what people say in ${esc(c.name)} around now.`}</p>
       <button class="sky-boo" data-sky-boo aria-label="Tap ${esc(mc.name)}"></button><div class="sky-bubble" id="sky-bubble" hidden></div>
-      ${skylineSVG(c.code, sky)}
+      ${jungleSVG(sky)}
     </section>
     ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Episode ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
     <section class="moment card-lift">
@@ -8747,19 +8772,17 @@ document.addEventListener('visibilitychange', () => {
 addEventListener('pageshow', e => { if (e.persisted) goHome(); });
 
 /* Kit hugging a little multi-language dictionary: used by the opening screen and app icons. */
-function booBookSVG(mood = 'happy') {   // Kit the fox, sitting, holding the language book
-  const A = MASCOT_ART.mandu, ink = '#2B1D14', c = A.c, d = A.d;
-  const tail = `<path d="M88 112C130 118 142 76 118 50 124 78 112 98 84 100z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/><path d="M118 50C128 62 130 78 124 90 118 82 114 70 118 50z" fill="#FFF3E3"/>`;
-  const torso = `<path d="M30 104C26 124 38 134 60 134S94 124 90 104z" fill="${c}" stroke="${d}" stroke-width="3.4" stroke-linejoin="round"/><path d="M44 112q16 14 32 0 -2 14 -16 14t-16-14z" fill="#FFF3E3"/>`;
-  const book = `<g transform="translate(11 44) scale(.74) rotate(-7 60 90)">
+function booBookSVG(mood = 'happy') {   // Kit the fox teacher: glasses, little cape, language book
+  const A = MASCOT_ART.mandu, ink = '#2B1D14', dark = '#3A2418';
+  const book = `<g transform="translate(11 46) scale(.72) rotate(-7 60 90)">
     <rect x="37" y="77" width="50" height="33" rx="5" fill="#FFF2E1" stroke="${ink}" stroke-width="3.6"/>
     <rect x="33" y="73" width="50" height="33" rx="5" fill="#FF6B6B" stroke="${ink}" stroke-width="3.6"/>
     <path d="M41 73v33" stroke="${ink}" stroke-width="3"/>
     <rect x="47" y="79" width="31" height="21" rx="4" fill="#FFF2E1"/>
     <text x="62.5" y="94" text-anchor="middle" font-size="10" font-weight="900" fill="${ink}" font-family="'Noto Sans KR','Noto Sans Arabic','Nunito',system-ui,sans-serif">A 가 ع</text></g>
-    <ellipse cx="34" cy="116" rx="7.5" ry="6.5" fill="${c}" stroke="${d}" stroke-width="3"/>
-    <ellipse cx="78" cy="113" rx="7.5" ry="6.5" fill="${c}" stroke="${d}" stroke-width="3"/>`;
-  return `<svg viewBox="-4 -4 146 150" width="100%" height="100%">${tail}${torso}${A.body}${mascotFace(mood, A)}${book}</svg>`;
+    <ellipse cx="35" cy="119" rx="7.5" ry="6.5" fill="${dark}" stroke="${ink}" stroke-width="2.4"/>
+    <ellipse cx="78" cy="116" rx="7.5" ry="6.5" fill="${dark}" stroke="${ink}" stroke-width="2.4"/>`;
+  return uniqIds(`<svg viewBox="-4 -4 146 154" width="100%" height="100%">${A.under || ''}${A.body}${mascotFace(mood, A)}${A.after || ''}${book}</svg>`);
 }
 function splash() {
   const el = document.createElement('div'); el.id = 'splash'; el.setAttribute('aria-hidden', 'true');
@@ -9009,6 +9032,45 @@ document.addEventListener('click', e => { if (e.target.closest && e.target.close
   const sched = () => { if (!q) q = requestAnimationFrame(run); };
   new MutationObserver(sched).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
 }
+/* ---- Nature theme (like the fox picture): misty mountains, a lake, trees, a rock to sit on ---- */
+function jungleSVG(sky) {
+  const P = {
+    dawn: { m1: '#E6D2CC', m2: '#CDB8BA', hill: '#A5CC9C', t1: '#6BAE68', t2: '#4A8F55', t3: '#2F6F43', lake: '#F4CBAA', lake2: '#FFE8CF', rock: '#A09A92', rock2: '#C4BFB6', trunk: '#6B4A2B', sunl: '#FFE6B0' },
+    day: { m1: '#CFE0EE', m2: '#A9C3D8', hill: '#8FCB8F', t1: '#58AA5E', t2: '#3A8D4A', t3: '#256E3A', lake: '#7FBDE2', lake2: '#C4E4F6', rock: '#939A94', rock2: '#BCC1BB', trunk: '#6B4A2B', sunl: '#FFF6C4' },
+    dusk: { m1: '#E0B3A8', m2: '#BD909A', hill: '#92B672', t1: '#5E8A4A', t2: '#41703D', t3: '#2C5430', lake: '#E69F6E', lake2: '#F8D0A0', rock: '#847B74', rock2: '#AAA096', trunk: '#5A3A22', sunl: '#FFC48A' },
+    night: { m1: '#3A5784', m2: '#2B456F', hill: '#21503F', t1: '#1B4033', t2: '#14332A', t3: '#0E2620', lake: '#1F4470', lake2: '#3C6A9A', rock: '#4D5864', rock2: '#6A7886', trunk: '#2B2118', sunl: '#9FC8FF' }
+  }[sky] || {};
+  const blob = (x, y, r, c) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
+  const canopy = (x, base, h, r) => `<path d="M${x} ${base}V${base - h}" stroke="${P.trunk}" stroke-width="6" stroke-linecap="round"/>${blob(x, base - h, r, P.t2)}${blob(x - r * .62, base - h + r * .34, r * .74, P.t1)}${blob(x + r * .64, base - h + r * .3, r * .78, P.t1)}${blob(x - r * .2, base - h - r * .34, r * .62, P.t3)}<ellipse cx="${x - r * .25}" cy="${base - h - r * .55}" rx="${r * .5}" ry="${r * .22}" fill="#fff" opacity=".18"/>`;
+  const frond = (x, y, rot, sc, c) => `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${sc})"><path d="M0 0C10-26 40-30 62 0 40 26 10 26 0 0z" fill="${c}"/><path d="M2 0H58" stroke="#000" stroke-opacity=".2" stroke-width="1.8"/><path d="M6-9C20-18 36-18 50-6" stroke="#fff" stroke-opacity=".28" stroke-width="3" fill="none" stroke-linecap="round"/></g>`;
+  const vine = (x, len, flip) => `<path d="M${x} 0q${flip ? -7 : 7} ${len * .3} 0 ${len * .55}t0 ${len * .45}" fill="none" stroke="${P.t2}" stroke-width="3" stroke-linecap="round"/>${frond(x, len * .45, flip ? 150 : 30, .34, P.t1)}${frond(x, len * .85, flip ? 30 : 150, .3, P.t1)}`;
+  const stars = sky === 'night' ? [[90, 14], [230, 10], [330, 22], [44, 36]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.4" fill="#fff"/>`).join('') + `<circle cx="316" cy="26" r="9" fill="#FFF3C8"/><circle cx="320" cy="23" r="9" fill="#14264A" opacity=".0"/>` : '';
+  const rays = sky === 'night' ? '' : `<path d="M120 0L170 112H96z M210 0L280 112H190z" fill="${P.sunl}" opacity=".28"/>`;
+  const bokeh = [[60, 30, 6], [140, 52, 4], [250, 34, 7], [330, 60, 5], [190, 22, 3]].map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" opacity=".22"/>`).join('');
+  return uniqIds(`<svg class="skyline jungle" viewBox="0 0 400 130" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs>
+      <linearGradient id="hz@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="${sky === 'night' ? .12 : .5}"/></linearGradient>
+      <linearGradient id="mt@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.m1}"/><stop offset="1" stop-color="${P.m2}"/></linearGradient>
+      <linearGradient id="rk@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.rock2}"/><stop offset="1" stop-color="${P.rock}"/></linearGradient></defs>
+    ${stars}${rays}${bokeh}
+    <path d="M-10 94C20 38 60 12 98 20c34 8 56 40 80 74z" fill="url(#mt@@)"/><path d="M196 96C238 36 276 4 320 10c40 6 62 52 100 86z" fill="url(#mt@@)"/>
+    <rect x="-10" y="60" width="420" height="40" fill="url(#hz@@)"/>
+    <path d="M-10 98C40 88 90 92 140 98s120 6 150 0 90-6 130 0v32H-10z" fill="${P.hill}"/>
+    ${canopy(46, 112, 34, 17)}${canopy(120, 112, 26, 15)}${canopy(176, 112, 38, 16)}${canopy(224, 112, 24, 13)}
+    <path d="M0 108C60 100 120 104 190 106s150-4 210 0v24H0z" fill="${P.lake}"/><path d="M26 114h64M120 118h56M210 112h80" stroke="${P.lake2}" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+    <path d="M232 130C238 108 262 99 296 99c34 0 72 6 108 14v17z" fill="url(#rk@@)"/><path d="M256 110C266 101 292 99 320 101c26 2 50 6 76 12" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
+    <rect x="-6" y="0" width="20" height="104" rx="8" fill="${P.trunk}"/><path d="M-6 8C30 -6 70 4 96 -2" stroke="${P.trunk}" stroke-width="9" fill="none" stroke-linecap="round"/>
+    ${vine(40, 78, false)}${vine(76, 50, true)}${blob(28, 6, 14, P.t2)}${blob(58, 2, 12, P.t1)}${blob(88, 0, 10, P.t2)}
+    ${vine(374, 70, true)}${vine(348, 46, false)}<rect x="392" y="0" width="16" height="96" rx="8" fill="${P.trunk}"/>
+    ${frond(4, 118, -48, 1, P.t2)}${frond(0, 104, -78, .9, P.t1)}${frond(404, 120, 228, 1, P.t2)}${frond(400, 106, 258, .9, P.t1)}${frond(170, 130, -24, .75, P.t1)}${frond(236, 131, -156, .65, P.t2)}</svg>`);
+}
+function jungleBackdrop() {
+  if (document.getElementById('jungle-bg')) return;
+  const el = document.createElement('div'); el.id = 'jungle-bg'; el.setAttribute('aria-hidden', 'true');
+  el.innerHTML = `<svg viewBox="0 0 400 140" preserveAspectRatio="xMidYMax slice"><g opacity=".55"><path d="M-10 100C30 52 70 34 110 44c30 8 50 34 70 56z" fill="#C3D7E6"/><path d="M170 100C214 48 252 28 296 36c40 8 66 40 110 64z" fill="#B3CCDD"/><path d="M-10 112C60 98 120 104 200 110s140 2 210-4v34H-10z" fill="#A5D3A0"/><circle cx="34" cy="108" r="14" fill="#6FB56F"/><circle cx="52" cy="112" r="10" fill="#58A25F"/><circle cx="360" cy="106" r="15" fill="#6FB56F"/><circle cx="342" cy="112" r="10" fill="#58A25F"/></g></svg>`;
+  document.body.prepend(el);
+}
+jungleBackdrop();
+
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
@@ -10136,7 +10198,7 @@ const Onboard = {
     const screens = [
       () => `<div class="ob-s s-hide"><h1>Psst… Kit is hiding.</h1><p>Can you find him?</p>
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}<span class="peek-eyes"></span></button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
-      () => `<div class="ob-s"><div class="ob-boo mascot" id="ob-boo"></div><h1>Peekaboo! I’m Kit.</h1><p>I help you <b>speak</b> a new language, out loud, from day one. No boring drills, I promise.</p><button class="btn primary big" data-ob-next>Hi Kit!</button></div>`,
+      () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Hi! I’m Kit.</b><span>I’ll help you speak a new language. Look at the book, then say it out loud with me.</span></div><div class="ob-fox" id="ob-fox">${booBookSVG('happy')}</div><button class="btn primary big" data-ob-next>Let’s start</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
         <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
@@ -10171,7 +10233,8 @@ const Onboard = {
         else { b.classList.add('nope'); b.disabled = true; $('#ob-hint').textContent = pick(['Not here! Try another…', 'Nope, nobody here!', 'Hmm, keep looking!']); Sfx.wrong(); }
       });
     }
-    if (this.step === 1) setTimeout(() => Voice.speak('Hi! I’m Kit. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
+    if (this.step === 1) { const f = $('#ob-fox', el); let n = 0; const t = setInterval(() => { if (!f.isConnected) return clearInterval(t); f.innerHTML = booBookSVG(n++ % 2 ? 'cheer' : 'happy'); if (n > 14) { clearInterval(t); f.innerHTML = booBookSVG('happy'); } }, 210); }
+    if (false) setTimeout(() => Voice.speak('Hi! I’m Kit. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
     if (this.step === 2) $$('[data-city]', el).forEach(b => b.onclick = () => { d.lang = b.dataset.city; $$('[data-city]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).textContent = `Let’s go to ${CITY[d.lang].city}`; Voice.speak(this.GREET[d.lang][0], COURSES[d.lang].tts, .9, d.mascot, 'happy'); });
     if (this.step === 3) $$('[data-why]', el).forEach(b => b.onclick = () => { d.why = b.dataset.why; $$('[data-why]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).disabled = false; Sfx.tap(); });
     if (this.step === 4) {
@@ -10604,7 +10667,7 @@ const Onboard2 = {
     const S = [
       () => `<div class="ob-s s-hide"><h1>Psst… Kit is hiding.</h1><p>Can you find him?</p>
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}</button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
-      () => `<div class="ob-s"><div class="ob-boo mascot" id="ob-boo"></div><h1>Peekaboo! I’m Kit.</h1><p>I’ll help you <b>speak</b> a new language, out loud, from day one.</p><button class="btn primary big" data-ob-next>Hi Kit!</button></div>`,
+      () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Hi! I’m Kit.</b><span>I’ll help you speak a new language. Look at the book, then say it out loud with me.</span></div><div class="ob-fox" id="ob-fox">${booBookSVG('happy')}</div><button class="btn primary big" data-ob-next>Let’s start</button></div>`,
       () => `<div class="ob-s"><h1>Not another tap-the-tiles app</h1><p>Here’s what you’ll do differently with GabBoo:</p>${whyHTML(false)}<button class="btn primary big" data-ob-next>Sounds good!</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
         <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
@@ -10648,7 +10711,8 @@ const Onboard2 = {
         else { b.classList.add('nope'); b.disabled = true; $('#ob-hint').textContent = pick(['Not here! Try another…', 'Nope, nobody here!', 'Hmm, keep looking!']); Sfx.wrong(); }
       });
     }
-    if (this.step === 1) setTimeout(() => Voice.speak('Hi! I’m Kit. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
+    if (this.step === 1) { const f = $('#ob-fox', el); let n = 0; const t = setInterval(() => { if (!f || !f.isConnected) return clearInterval(t); f.innerHTML = booBookSVG(n++ % 2 ? 'cheer' : 'happy'); if (n > 14) { clearInterval(t); f.innerHTML = booBookSVG('happy'); } }, 210); }
+    if (false) setTimeout(() => Voice.speak('Hi! I’m Kit. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
     if (this.step === 3) $$('[data-city]', el).forEach(b => b.onclick = () => { d.lang = b.dataset.city; $$('[data-city]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).textContent = `Let’s go to ${CITY[d.lang].city}`; Voice.speak(Onboard.GREET[d.lang][0], COURSES[d.lang].tts, .9, d.mascot, 'happy'); });
     if (this.step === 4) $$('[data-why]', el).forEach(b => b.onclick = () => { d.why = b.dataset.why; $$('[data-why]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).disabled = false; Sfx.tap(); });
     if (this.step === 5) {
