@@ -1741,3 +1741,20 @@ html.sound-first .wt.script { flex-direction: column-reverse; } html.sound-first
 .tk-chip { padding: 8px 14px; } .tk-chip .script { font-size: 20px; } .tk-chip small { font-size: 14px; }
 .tk-end .tk-boo { width: 140px; height: 140px; }
 .tk-h2 { font: 600 20px var(--font-display); margin: 12px 0 0; }
+
+/* Splash: Boo flies in from a corner with the book, gives a peeky smile, settles in the middle */
+#splash { overflow: hidden; }
+.sp-boo { width: 132px; height: 132px; animation: spFly 2.4s cubic-bezier(.3, .8, .3, 1) both, spBob 2.6s ease-in-out 2.4s infinite; will-change: transform; }
+@keyframes spFly {
+  0% { transform: translate(-70vw, -62vh) rotate(-40deg) scale(.3); }
+  36% { transform: translate(12vw, 10vh) rotate(10deg) scale(1.9); }
+  44% { transform: translate(12vw, 10vh) rotate(-5deg) scale(2); }
+  51% { transform: translate(12vw, 10vh) rotate(4deg) scale(1.95); }
+  72% { transform: translate(0, -16px) rotate(0) scale(1.12); }
+  86% { transform: translate(0, 4px) rotate(0) scale(.97); }
+  100% { transform: none; }
+}
+.sp-bubble { position: absolute; top: 24%; left: 56%; padding: 8px 18px; border-radius: 20px 20px 20px 4px; background: #FFF2E1; color: #1C1B2E; font: 600 30px var(--font-display); opacity: 0; transform: scale(.4); animation: spBubble 1s .7s both; }
+@keyframes spBubble { 0% { opacity: 0; transform: scale(.4) rotate(-8deg); } 20% { opacity: 1; transform: scale(1.1) rotate(4deg); } 70% { opacity: 1; transform: scale(1) rotate(0); } 100% { opacity: 0; transform: scale(.9) translateY(-8px); } }
+.sp-word { animation-delay: 1.9s !important; } .sp-tag { animation-delay: 2.1s !important; }
+@media (prefers-reduced-motion: reduce) { .sp-boo { animation: none; } .sp-bubble { display: none; } .sp-word, .sp-tag { animation-delay: .1s !important; } }
