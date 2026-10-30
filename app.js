@@ -8082,7 +8082,7 @@ const RENDER = {
     const c = course();
     el.innerHTML = `<div class="teach"><span class="badge-new">${esc(step.label)}</span>
       ${step.pic ? `<div class="pic-hero" aria-hidden="true">${artSVG(step.pic)}</div>` : ''}
-      <button class="glyph-btn" data-say="${esc(step.say)}"><span class="big script ${[...step.big].length > 3 || step.pic ? 'long' : ''}" ${attrs(c)}>${esc(step.big)}</span><small>${ICON.speaker} Tap to hear</small></button>
+      <button class="glyph-btn" data-say="${esc(step.say)}"><span class="big script ${[...step.big].length > 3 || step.pic ? 'long' : ''}" ${attrs(c)}>${esc(step.big)}</span><small>${ICON.speaker}</small></button>
       <div class="rom">${esc(step.rom)}</div><div class="${step.isWord ? 'en' : 'hint'}">${esc(step.note)}</div>
       ${step.ex ? `<button class="ex-line" data-say="${esc(step.ex.t)}">${ICON.speaker}<span><span class="script" ${attrs(c)}>${esc(step.ex.t)}</span>${(step.ex.r || romFor(step.ex.t)) && !isLatinLang(c.code) ? `<small class="ex-rom">${esc(step.ex.r || romFor(step.ex.t))}</small>` : ''}<small class="ex-en">${esc(step.ex.en)}</small></span></button>` : ''}
       <div class="card-actions">${step.isWord ? starBtn({ t: step.say, r: step.rom, en: step.note }) : ''}<button class="speaker slow" data-say="${esc(step.say)}" data-rate=".55" aria-label="Play slowly">${ICON.turtle}</button>
