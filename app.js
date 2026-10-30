@@ -4392,8 +4392,8 @@ const Hearts = {
     if (gained > 0) { p.hearts = Math.min(MAX_HEARTS, p.hearts + gained); p.heartAt += gained * HEART_MS; }
     return p.hearts;
   },
-  left(p = P()) { return p.unlimitedHearts ? Infinity : this.sync(p); },
-  lose(p = P()) { if (p.unlimitedHearts) return; this.sync(p); if (p.hearts === MAX_HEARTS) p.heartAt = Date.now(); p.hearts = Math.max(0, p.hearts - 1); Store.save(); },
+  left(p = P()) { return this.sync(p); },
+  lose(p = P()) { if (Tester.on()) return; this.sync(p); if (p.hearts === MAX_HEARTS) p.heartAt = Date.now(); p.hearts = Math.max(0, p.hearts - 1); Store.save(); },
   gain(n = 1, p = P()) { this.sync(p); p.hearts = Math.min(MAX_HEARTS, p.hearts + n); Store.save(); },
   nextIn(p = P()) { return Math.max(0, HEART_MS - (Date.now() - p.heartAt)); }
 };
@@ -7821,7 +7821,7 @@ function startPractice(kind) {
    ===================================================================== */
 const Runner = {
   open(meta, steps) {
-    Object.assign(this, { meta, queue: steps, i: 0, graded: 0, correct: 0, combo: 0, maxCombo: 0, wrongRun: 0, halfDone: false, missedItems: [], missed: new Set(), finished: false, mode: 'wait', select: null, outOfHearts: false, advanceT: null });
+    Object.assign(this, { meta, queue: steps, forgave: false, freeMiss: false, i: 0, graded: 0, correct: 0, combo: 0, maxCombo: 0, wrongRun: 0, halfDone: false, missedItems: [], missed: new Set(), finished: false, mode: 'wait', select: null, outOfHearts: false, advanceT: null });
     React.comboChip(0); DailyUse.seen.clear();
     $('#lesson').hidden = false; clearInterval(this.tick); this.deadline = meta.speed ? Date.now() + 60000 : 0;
     if (meta.speed) this.tick = setInterval(() => { this.drawHearts(); if (Date.now() > this.deadline && !this.finished && !this.locked) this.complete(); }, 250);
@@ -7871,7 +7871,7 @@ const Runner = {
       if (step.srsId && VOCAB_INDEX[step.srsId] && !this.missedItems.some(x => x.id === step.srsId)) this.missedItems.push({ id: step.srsId, ...VOCAB_INDEX[step.srsId] });
       else if (step.s && !this.missedItems.some(x => x.t === step.s.t)) this.missedItems.push({ t: step.s.t, r: step.s.r, en: step.s.en });
       if (!step.retry && step.kind !== 'speak' && step.kind !== 'match' && !this.meta.speed) this.queue.push({ ...step, retry: true });
-      if (!this.practiceMode()) { Hearts.lose(); this.drawHearts(); if (Hearts.left() <= 0) this.outOfHearts = true; }
+      if (!this.practiceMode()) { if (!this.forgave) { this.forgave = true; this.freeMiss = true; } else { Hearts.lose(); this.drawHearts(); if (Hearts.left() <= 0) this.outOfHearts = true; } }
     }
     const item = (info.show && typeof info.show === 'object' && info.show.t) ? info.show : step.w || (step.srsId && VOCAB_INDEX[step.srsId]) || step.item || (step.s && step.s.en && [...step.s.t].length <= 14 ? step.s : null);
     const title = React.message(ok, item, { you: info.you || '…', right: typeof info.show === 'string' ? info.show : (info.show?.t || step.answer || '…') }, this.wrongRun);
@@ -7879,7 +7879,7 @@ const Runner = {
     React.comboChip(this.combo);
     const foot = $('#l-foot'); foot.hidden = false; foot.className = 'l-foot ' + (ok ? 'ok' : 'bad');
     $('#l-fb').hidden = false; $('#l-fb-title').textContent = React.headline(ok, this.combo, this.wrongRun);
-    $('#l-fb-msg').textContent = title;
+    $('#l-fb-msg').textContent = this.freeMiss ? 'Free miss: no heart lost.' : title; this.freeMiss = false;
     const show = info.show, d = [];
     if (show) {
       const c = course(), txt = typeof show === 'string' ? show : show.t;
@@ -7929,12 +7929,12 @@ const Runner = {
     const m = $('#modal'), p = P(); m.hidden = false;
     const mins = Math.ceil(Hearts.nextIn() / 60000);
     m.innerHTML = `<div class="panel"><div class="mascot" id="ho-m"></div><h3>You ran out of hearts</h3>
-      <p>Next heart in ${mins} min. Practice earns a heart back, or refill now.</p>
-      <button class="btn primary" id="ho-practice">Practice to earn a heart</button>
+      <p>Say a few phrases out loud to earn one back. Or wait ${mins} min for a free one.</p>
+      <button class="btn primary" id="ho-practice">Say it to earn a heart</button>
       <button class="btn gold" id="ho-refill" ${p.gems >= 100 ? '' : 'disabled'}>Refill hearts · 100 gems</button>
       <button class="btn ghost" id="ho-quit">Quit lesson</button></div>`;
     paintMascot($('#ho-m'), p.mascot, 'shocked');
-    $('#ho-practice').onclick = () => { m.hidden = true; this.close(); startPractice('mix'); };
+    $('#ho-practice').onclick = () => { m.hidden = true; this.close(); startPractice('speak'); };
     $('#ho-refill').onclick = () => { p.gems -= 100; Hearts.gain(MAX_HEARTS); this.outOfHearts = false; m.hidden = true; this.drawHearts(); renderChrome(); this.next(); };
     $('#ho-quit').onclick = () => this.close();
   },
@@ -8490,7 +8490,7 @@ function renderQuests() {
     <div class="card"><h3>Shop <span class="price num">${ICON.gem}${p.gems}</span></h3>
       <div class="shop-item"><div class="ic">${ICON.snow}</div><div><b>Streak freeze</b><p>Protects your streak for one missed day. You have ${p.freezes} of 2.</p></div>
         <button class="btn gold sm" data-buy="freeze" ${p.gems >= 100 && p.freezes < 2 ? '' : 'disabled'}><span class="price">${ICON.gem}100</span></button></div>
-      <div class="shop-item"><div class="ic" style="background:var(--coral-soft);color:var(--coral)">${ICON.heart}</div><div><b>Refill hearts</b><p>${Hearts.left() === Infinity ? 'You have unlimited hearts on.' : `You have ${Hearts.left()} of ${MAX_HEARTS}.`}</p></div>
+      <div class="shop-item"><div class="ic" style="background:var(--coral-soft);color:var(--coral)">${ICON.heart}</div><div><b>Refill hearts</b><p>You have ${Hearts.left()} of ${MAX_HEARTS}.</p></div>
         <button class="btn gold sm" data-buy="hearts" ${p.gems >= 100 && Hearts.left() < MAX_HEARTS ? '' : 'disabled'}><span class="price">${ICON.gem}100</span></button></div>
       <p class="note">Everything is free: gems come from lessons, quests and unit tests, never from money.</p></div>
     <div class="card"><h3>Achievements <span class="muted num" style="font:700 14px var(--font-body)">${ACHIEVEMENTS.filter(a => p.achievements[a.id]).length}/${ACHIEVEMENTS.length}</span></h3>
@@ -8537,7 +8537,6 @@ function renderProfile() {
       <label class="row">Sound effects<input type="checkbox" class="toggle" id="me-sound" ${p.sound ? 'checked' : ''}></label>
       <label class="row">Tutor reads lines aloud<input type="checkbox" class="toggle" id="me-voice" ${p.autoVoice ? 'checked' : ''}></label>
       <label class="row">Show English in chat<input type="checkbox" class="toggle" id="me-en" ${p.showEnglish ? 'checked' : ''}></label>
-      <label class="row">Unlimited hearts<input type="checkbox" class="toggle" id="me-hearts" ${p.unlimitedHearts ? 'checked' : ''}></label>
     </div>
     ${!isLatinLang(c.code) ? `<div class="card settings"><h3>Writing</h3><p class="note">GabBoo starts by ear: pronunciation first, ${esc(c.name)} script as a sneak peek. After Season 1 the script takes the lead.</p>
       <label class="row">Show<select id="script-mode">${[['auto', 'Automatic (recommended)'], ['sound', 'Sounds first'], ['script', 'Script first']].map(([v, l]) => `<option value="${v}" ${(p.scriptMode || 'auto') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>` : ''}
@@ -8570,7 +8569,6 @@ function renderProfile() {
   $('#me-sound').onchange = e => { p.sound = e.target.checked; Store.save(); };
   $('#me-voice').onchange = e => { p.autoVoice = e.target.checked; Store.save(); };
   $('#me-en').onchange = e => { p.showEnglish = e.target.checked; Store.save(); };
-  $('#me-hearts').onchange = e => { p.unlimitedHearts = e.target.checked; Store.save(); renderChrome(); };
   $('#me-reset')?.addEventListener('click', () => { UI.meConfirm = 'reset'; renderProfile(); });
   $('#me-del')?.addEventListener('click', () => { UI.meConfirm = 'delete'; renderProfile(); });
   $$('[data-me-cancel]', root).forEach(b => b.onclick = () => { UI.meConfirm = null; renderProfile(); });
@@ -8593,11 +8591,10 @@ function renderProfile() {
    ===================================================================== */
 function heartsSheet(blocking) {
   const p = P(), h = Hearts.left(), mins = Math.ceil(Hearts.nextIn() / 60000);
-  openSheet(`<div class="sheet-head"><h2>${h === Infinity ? 'Unlimited hearts' : `${h} of ${MAX_HEARTS} hearts`}</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
-    <p>${blocking ? 'You’re out of hearts. ' : ''}You lose a heart for each mistake in a lesson. ${h < MAX_HEARTS && h !== Infinity ? `Next free heart in ${mins} min. ` : ''}Practice never costs hearts and earns one back.</p>
-    <div class="stack"><button class="btn primary" data-practice="mix">Practice to earn a heart</button>
-    <button class="btn gold" data-buy="hearts" ${p.gems >= 100 && h < MAX_HEARTS ? '' : 'disabled'}>Refill · 100 gems (you have ${p.gems})</button>
-    <p class="note">Rather not deal with hearts? Turn on “Unlimited hearts” in Profile.</p></div>`);
+  openSheet(`<div class="sheet-head"><h2>${h} of ${MAX_HEARTS} hearts</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
+    <p>${blocking ? 'You’re out of hearts. ' : ''}Your first mistake in each scene is free. After that, each mistake costs a heart. ${h < MAX_HEARTS ? `A free heart comes back in ${mins} min. ` : ''}Speaking never costs hearts.</p>
+    <div class="stack"><button class="btn primary" data-practice="speak">Say it to earn a heart</button>
+    <button class="btn gold" data-buy="hearts" ${p.gems >= 100 && h < MAX_HEARTS ? '' : 'disabled'}>Refill · 100 gems (you have ${p.gems})</button></div>`);
 }
 function streakSheet() {
   const p = P();
@@ -8763,7 +8760,7 @@ Object.values(MASCOTS).forEach(m => Object.assign(m, {
     _renderProfile();
     const root = $('#tab-profile'), stack = root && root.querySelector('.stack'); if (!stack) return;
     root.querySelectorAll('.why-card').forEach(x => x.remove());
-    if (!Tester.on()) { const h = $('#me-hearts'); if (h) h.closest('label').remove(); const ai = $('#ai-panel'); if (ai) ai.remove(); }
+    if (!Tester.on()) { const ai = $('#ai-panel'); if (ai) ai.remove(); }
     const order = ['Preferences', 'Profile', 'Account', 'Microphone & app', 'Writing', 'Boo’s wardrobe', 'Chat tutor brain', 'Data'];
     const label = { 'Chat tutor brain': 'AI tutor (advanced)' };
     const list = document.createElement('div'); list.className = 'me-list';
