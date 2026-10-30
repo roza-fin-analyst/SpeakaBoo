@@ -8806,7 +8806,7 @@ const Talk = {
     renderTalk(); this.hear();
   },
   line() { const st = this.cur.t.steps[this.cur.i]; return { say: fillSay(st.say), chips: (st.chips || []).slice(0, 3).map(fillSay), st }; },
-  hear() { if (!this.cur || this.cur.done) return; const c = course(), L = this.line(); setTimeout(() => Voice.speak(L.say.t, c.tts, .9, this.who(this.cur.t)), 350); },
+  hear() { if (!this.cur || this.cur.done || !P().autoVoice) return; const c = course(), L = this.line(); setTimeout(() => Voice.speak(L.say.t, c.tts, .9, this.who(this.cur.t)), 350); },
   next() {
     const cur = this.cur; cur.i++; cur.tries = 0; cur.sel = 0; cur.ok = false;
     if (cur.i >= cur.t.steps.length) {
@@ -10396,7 +10396,6 @@ authScreen = function (mode, msg = '') {
       <p class="auth-err" id="au-err" role="alert">${esc(msg)}</p>
       <button class="btn primary" type="submit">${cta}</button>
     </form>
-    ${!Acct.cloud() && mode !== 'reset' ? '<div class="auth-links"><button class="link" data-guest>Skip for now · use without an email</button></div>' : ''}
     <div class="auth-links">${mode === 'signup' ? '<button class="link" data-auth="signin">I already have an account</button>' : '<button class="link" data-auth="signup">Create a new account</button>'}
       ${mode === 'signin' ? '<button class="link" data-auth="reset">Forgot password?</button>' : mode === 'reset' ? '<button class="link" data-auth="signin">Back to sign in</button>' : ''}</div>
     ${mode === 'signup' ? `<details class="auth-why"><summary>What makes Speakaboo different?</summary>${whyHTML(true)}</details>
@@ -10552,7 +10551,6 @@ const Onboard2 = {
           <p class="auth-err" id="ob-err" role="alert"></p>
           <button class="btn primary big" type="submit">Create my account</button></form>
         <button class="link-btn" data-ob-signin>I already have an account</button>
-        ${Acct.cloud() ? '' : '<button class="link-btn" data-ob-guest>Skip for now · use without an email</button>'}
         <p class="ob-fine">After the trial you keep a free plan, or subscribe monthly or yearly through Google Play. Cancel any time.</p></div>`,
       () => `<div class="ob-s"><h1>What’s your name?</h1>
         <input class="input ob-name" id="ob-name" maxlength="20" placeholder="Your name" value="${esc(d.name)}" autocomplete="given-name" enterkeyhint="done">
