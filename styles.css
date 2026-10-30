@@ -1820,7 +1820,7 @@ body { background: linear-gradient(180deg, #C9E6B0 0, #DFF0CD 280px, var(--bg) 5
 .sky-night { background: linear-gradient(180deg, #072018 0%, #12392B 62%, #24593F 100%); }
 #splash { background: radial-gradient(circle at 50% 38%, #7FD08A 0, #2F9A55 38%, #17613A 70%, #0B3A22 100%); }
 .ob { background: radial-gradient(circle at 50% 30%, #7FD08A 0, #3FA85F 36%, #17613A 72%, #0B3A22 100%); }
-#leaf-fall { position: fixed; inset: 0; pointer-events: none; z-index: 3; overflow: hidden; }
+#leaf-fall { position: fixed; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
 #leaf-fall i { position: absolute; top: -40px; background-size: contain; background-repeat: no-repeat; opacity: .8; animation: leafFall 16s linear infinite; will-change: transform; }
 @keyframes leafFall { 0% { transform: translate3d(0, -8vh, 0) rotate(0); } 20% { transform: translate3d(34px, 20vh, 0) rotate(80deg); } 45% { transform: translate3d(-26px, 46vh, 0) rotate(190deg); } 70% { transform: translate3d(30px, 74vh, 0) rotate(280deg); } 100% { transform: translate3d(-10px, 112vh, 0) rotate(380deg); } }
 @media (prefers-reduced-motion: reduce) { #leaf-fall { display: none; } }
@@ -1843,3 +1843,78 @@ body { background: linear-gradient(180deg, #C9E6B0 0, #DFF0CD 280px, var(--bg) 5
 .journey-head { background: linear-gradient(135deg, #2F8F4E, #62B96B); box-shadow: 0 6px 0 #1F6A3A; }
 .jh-top { display: flex; align-items: center; gap: 12px; } .jh-pals { display: flex; flex: none; } .jh-pals .mascot { width: 48px; height: 48px; margin-right: -10px; filter: drop-shadow(0 3px 4px rgb(0 0 0 / .25)); }
 .jh-bar { background: rgb(255 255 255 / .3); } .jh-bar i { background: #FFD66B; }
+
+/* =================================================================
+   JUNGLE SKIN: stone tablets, wooden signs, vines (follows the mock-up)
+   ================================================================= */
+:root {
+  --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .3  0 0 0 0 .26  0 0 0 .22 0'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+  --grain: repeating-linear-gradient(96deg, rgb(0 0 0 / .10) 0 2px, rgb(255 255 255 / 0) 2px 12px);
+  --stone-bg: var(--noise), linear-gradient(180deg, #F1EFE6 0%, #D9D6CA 100%);
+  --wood-bg: var(--grain), linear-gradient(180deg, #7A5232 0%, #4D311C 100%);
+  --cream-ink: #FFF1D6;
+}
+body { background: #A9D898; }
+#jungle-bg { z-index: -1; }
+#jungle-bg svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lesson, .rt, .call-screen { background: transparent; }
+.lesson::before, .rt::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 30%, #F1FADA 0, #C7E6A8 55%, #8FC784 100%); }
+
+/* top bar: stone pills */
+.topbar { background: transparent; border-bottom: 0; }
+.lang-chip, .stat { background: var(--stone-bg); border: 2.5px solid #A19D8D; border-radius: 16px; box-shadow: 0 3px 0 #8A8676, inset 0 2px 0 rgb(255 255 255 / .6); color: #2A2A22; }
+.stat { min-height: 38px; padding: 3px 10px 3px 6px; }
+.stat svg { width: 26px; height: 26px; } .stat.streak.cold svg { opacity: .55; filter: grayscale(.6); }
+.lang-chip { padding: 5px 12px; font-weight: 800; }
+
+/* Chapter Board: dark wooden sign with leaves */
+.journey-head { position: relative; background: var(--wood-bg); border: 3px solid #3A2414; border-radius: 22px; color: var(--cream-ink); box-shadow: 0 6px 0 #2E1B0E, 0 16px 24px rgb(20 40 20 / .3), inset 0 2px 0 rgb(255 255 255 / .18); padding-top: 22px; margin-top: 18px; }
+.journey-head::before { content: "Chapter Board"; position: absolute; left: 50%; top: -20px; transform: translateX(-50%); padding: 5px 22px; border-radius: 12px; background: var(--wood-bg); border: 3px solid #3A2414; font: 600 20px var(--font-display); color: var(--cream-ink); white-space: nowrap; box-shadow: 0 3px 0 #2E1B0E; }
+.journey-head::after { content: ""; position: absolute; left: 10px; right: 10px; top: -26px; height: 30px; background:
+  radial-gradient(ellipse 22px 11px at 14% 70%, #5DB36A 99%, transparent), radial-gradient(ellipse 22px 11px at 26% 40%, #3E9B54 99%, transparent), radial-gradient(ellipse 22px 11px at 78% 45%, #3E9B54 99%, transparent), radial-gradient(ellipse 22px 11px at 90% 70%, #6FC079 99%, transparent); pointer-events: none; }
+.journey-head small { color: #F1DDB4; } .journey-head b { color: #fff; }
+.jh-bar { background: #2E1B0E; box-shadow: inset 0 2px 4px rgb(0 0 0 / .5); height: 14px; } .jh-bar i { background: linear-gradient(180deg, #8FE06A, #4FB05C); }
+.seg.track-seg { background: none; padding: 0; gap: 12px; }
+.seg.track-seg button { background: var(--stone-bg); border: 2.5px solid #A19D8D; border-radius: 18px; box-shadow: 0 4px 0 #8A8676, inset 0 2px 0 rgb(255 255 255 / .6); color: #2A2A22; font-weight: 800; }
+.seg.track-seg button.on { background: var(--stone-bg); color: #B84A08; box-shadow: 0 2px 0 #8A8676, inset 0 2px 0 rgb(255 255 255 / .6), 0 0 0 3px rgb(255 181 46 / .6); }
+
+/* branch banner: weathered plank */
+.season-head { background: var(--wood-bg); border: 3px solid #3A2414; border-radius: 10px 18px 10px 18px; box-shadow: 0 5px 0 #2E1B0E, 0 12px 18px rgb(20 40 20 / .25), inset 0 2px 0 rgb(255 255 255 / .16); }
+.season-tag { border: 1.5px solid rgb(255 241 214 / .35); }
+
+/* tester / info card: parchment framed with vines */
+.skip-card { background: linear-gradient(180deg, #F6F6D6, #E6EBB8); border: 4px solid #8A6A3A; border-style: solid; border-radius: 14px; box-shadow: 0 0 0 2px #5DB36A inset, 0 6px 0 #5A3A1E, 0 14px 20px rgb(20 40 20 / .25); color: #2E3A1E; }
+.skip-card::before, .skip-card::after { content: ""; position: absolute; width: 36px; height: 20px; background: #5DB36A; border-radius: 100% 0 100% 0; box-shadow: inset -3px -3px 0 rgb(0 0 0 / .14); }
+.skip-card { position: relative; } .skip-card::before { left: 8px; top: -10px; transform: rotate(-20deg); } .skip-card::after { right: 14px; bottom: -10px; transform: rotate(160deg); background: #FFC23D; }
+.skip-card .btn { background: var(--stone-bg); color: #2A2A22; border: 2.5px solid #A19D8D; box-shadow: 0 4px 0 #8A8676; }
+
+/* chapter cards: mossy stone tablets */
+.ep { background: var(--stone-bg); border: 3.5px solid #9C998B; border-radius: 22px 18px 24px 16px; box-shadow: 0 6px 0 #7E7B6D, 0 16px 24px rgb(20 40 20 / .28), inset 0 2px 0 rgb(255 255 255 / .6); position: relative; }
+.ep::after { content: none; }
+.ep .ep-head::before { content: ""; position: absolute; left: -2px; top: -6px; width: 96px; height: 26px; background: radial-gradient(ellipse 30px 12px at 30% 70%, #6BA84C 98%, transparent), radial-gradient(ellipse 26px 10px at 70% 60%, #4E8F3C 98%, transparent); border-radius: 20px 20px 0 0; pointer-events: none; }
+.ep .ep-head { position: relative; }
+.ep-icon { background: radial-gradient(circle at 35% 30%, #F3F1E8, #BDBAAC); border: 3px solid #8E8B7D; color: #3A3A30; box-shadow: inset 0 2px 0 rgb(255 255 255 / .6), 0 3px 0 #77746A; border-radius: 50%; }
+.ep h2, .ep .eyebrow { color: #2A2A20; } .ep .eyebrow { opacity: .8; } .ep small { color: #55554A; }
+.ep.locked, .ep.mini.locked { background: var(--wood-bg); border-color: #3A2414; box-shadow: 0 6px 0 #2E1B0E, 0 12px 18px rgb(20 40 20 / .25); }
+.ep.locked h2, .ep.locked .eyebrow, .ep.locked small { color: var(--cream-ink); }
+.ep.now { box-shadow: 0 6px 0 #7E7B6D, 0 0 0 4px rgb(255 181 46 / .75), 0 16px 24px rgb(20 40 20 / .28); }
+.ep-seg.done { background: #4FB05C; } .ep-seg.open { background: #7E8A74; opacity: .55; } .ep-seg { background: #9A9A8E; }
+.guide-btn { background: rgb(255 255 255 / .55); border: 2px solid #9C998B; border-radius: 50%; color: #3A3A30; }
+
+/* cards, answers and buttons: stone */
+.card, .moment, .tk-card, .journey-card, .me-group { background: var(--stone-bg); border: 3px solid #A19D8D; box-shadow: 0 5px 0 #8A8676, 0 14px 22px rgb(20 40 20 / .22), inset 0 2px 0 rgb(255 255 255 / .6); }
+.opt, .rt-opt { background: var(--stone-bg); border: 3px solid #A19D8D; box-shadow: 0 5px 0 #8A8676, inset 0 2px 0 rgb(255 255 255 / .6); }
+.opt.right { background: linear-gradient(180deg, #D9F5D2, #B8E8AE); border-color: #4FA85A; box-shadow: 0 5px 0 #2F8F4A; }
+.opt.wrong { background: linear-gradient(180deg, #FFE0D6, #F7B9A6); border-color: #D65A45; box-shadow: 0 5px 0 #B3402E; }
+.btn.ghost { background: var(--stone-bg); border: 2.5px solid #A19D8D; box-shadow: 0 4px 0 #8A8676; color: #2A2A22; }
+.l-foot { background: transparent; border-top: 0; }
+
+/* bottom navigation: stone slab with a mossy centre button */
+.bnav { background: var(--stone-bg); border: 3.5px solid #A19D8D; border-radius: 30px; box-shadow: 0 6px 0 #8A8676, 0 16px 26px rgb(20 40 20 / .3), inset 0 2px 0 rgb(255 255 255 / .6); }
+.bnav button { color: #4A4A3E; } .bnav button[aria-current="page"] { color: #B84A08; }
+.bnav button[aria-current="page"] svg { background: rgb(242 154 60 / .22); box-shadow: inset 0 0 0 2px #F29A3C; }
+.bnav button[data-tab="chat"] svg { background: radial-gradient(circle at 35% 30%, #7CCB6A, #2F8F4A); color: #fff; box-shadow: 0 5px 0 #1F6A3A, 0 0 0 5px #D9D6CA, 0 0 0 8px #A19D8D; }
+.bnav button[data-tab="chat"][aria-current="page"] svg { background: radial-gradient(circle at 35% 30%, #5DB36A, #1F6A3A); }
+
+/* sky hero keeps its scenery; headings stay readable */
+.sky { border: 3px solid rgb(255 255 255 / .35); }

@@ -7245,6 +7245,8 @@ const LATIN_LANGS = ['es', 'fr', 'de'];
 const isLatinLang = code => LATIN_LANGS.includes(code);
 const BRAND_SVG = `<span class="brand-boo" aria-hidden="true">${mascotSVG('mandu', 'peek')}</span>`;
 const SPEAKABOO_VERSION = '2026.10.25-a';
+const ICON_BANANA = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 21C3 11 11 4 25 5c-2 3-3 6-6 9-4 4-7 6-9 9-2 2-4 1-5-2z" fill="#FFD43B" stroke="#B8860B" stroke-width="2" stroke-linejoin="round"/><path d="M25 5l3-2" stroke="#6B4A2B" stroke-width="3" stroke-linecap="round"/><path d="M8 19C10 12 15 8 22 7" stroke="#fff" stroke-opacity=".55" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
+const ICON_LEAFY = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 28C4 12 14 4 28 4c0 14-8 24-24 24z" fill="#5DB36A" stroke="#2F8F4A" stroke-width="2" stroke-linejoin="round"/><path d="M7 25C13 18 19 12 25 8" stroke="#2F8F4A" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
 const UI = { tab: 'now', manage: false, creating: false, confirmDel: null, draft: { name: '', mascot: 'mandu', lang: 'ko' }, meConfirm: null };
 const attrs = c => `lang="${c.code}" dir="${c.dir}"`;
 const IN_ARTIFACT = !!window.claude;                              // opened inside claude.ai (mic blocked there)
@@ -7472,8 +7474,8 @@ function setLang(code) {
 }
 function statsHTML(p) {
   const live = p.lastDay === dayKey(), h = Hearts.left(p);
-  return `<button class="stat streak ${live ? '' : 'cold'}" data-sheet="streak" aria-label="${liveStreak(p)} day streak">${ICON.flame}<span class="num">${liveStreak(p)}</span></button>
-    <button class="stat gems" data-sheet="gems" aria-label="${p.gems} gems">${ICON.gem}<span class="num">${p.gems}</span></button>
+  return `<button class="stat streak ${live ? '' : 'cold'}" data-sheet="streak" aria-label="${liveStreak(p)} day streak">${ICON_BANANA}<span class="num">${liveStreak(p)}</span></button>
+    <button class="stat gems" data-sheet="gems" aria-label="${p.gems} gems">${ICON_LEAFY}<span class="num">${p.gems}</span></button>
     <button class="stat hearts" data-sheet="hearts" aria-label="${h === Infinity ? 'unlimited' : h} hearts">${ICON.heart}<span class="num">${h === Infinity ? '∞' : h}</span></button>`;
 }
 function langChipHTML() {
@@ -9092,15 +9094,26 @@ function fallingLeaves() {
 fallingLeaves();
 function jungleBackdrop() {
   if (document.getElementById('jungle-bg')) return;
-  const L = (x, y, sc, rot, c) => `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${sc})"><path d="M0 0C12-22 40-22 54 0 40 22 12 22 0 0z" fill="${c}"/><path d="M3 0H50" stroke="#fff" stroke-opacity=".35" stroke-width="1.6"/></g>`;
+  const L = (x, y, sc, rot, c) => `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${sc})"><path d="M0 0C14-26 46-26 62 0 46 26 14 26 0 0z" fill="${c}"/><path d="M3 0H58" stroke="#000" stroke-opacity=".2" stroke-width="1.8"/><path d="M8-8C22-17 40-17 52-5" stroke="#fff" stroke-opacity=".3" stroke-width="2.6" fill="none"/></g>`;
+  const F = (x, y, c, r = 7) => `<g><circle cx="${x - r * .7}" cy="${y}" r="${r * .7}" fill="${c}"/><circle cx="${x + r * .7}" cy="${y}" r="${r * .7}" fill="${c}"/><circle cx="${x}" cy="${y - r * .7}" r="${r * .7}" fill="${c}"/><circle cx="${x}" cy="${y + r * .7}" r="${r * .7}" fill="${c}"/><circle cx="${x}" cy="${y}" r="${r * .5}" fill="#FFE066"/></g>`;
+  const stone = (x, y, w, c, glow) => `<ellipse cx="${x}" cy="${y + 4}" rx="${w}" ry="${w * .42}" fill="#000" opacity=".25"/><ellipse cx="${x}" cy="${y}" rx="${w}" ry="${w * .42}" fill="${c}" ${glow ? 'filter="url(#jbg2)"' : ''}/><ellipse cx="${x - w * .2}" cy="${y - w * .12}" rx="${w * .55}" ry="${w * .16}" fill="#fff" opacity=".45"/>`;
   const el = document.createElement('div'); el.id = 'jungle-bg'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = `<svg class="jb-top" viewBox="0 0 400 130" preserveAspectRatio="xMidYMin slice"><g opacity=".7">
-      <path d="M18 0q14 34 0 66t0 54" fill="none" stroke="#4FA85A" stroke-width="3.4"/>${L(18, 30, .95, 40, '#6FC079')}${L(18, 62, .85, 140, '#4FA85A')}${L(18, 96, .75, 40, '#6FC079')}
-      <path d="M52 0q-10 26 0 44t0 30" fill="none" stroke="#4FA85A" stroke-width="3"/>${L(52, 24, .7, 140, '#85D08A')}${L(52, 52, .65, 40, '#4FA85A')}
-      <path d="M382 0q-14 34 0 58t0 46" fill="none" stroke="#4FA85A" stroke-width="3.4"/>${L(382, 26, .95, 140, '#6FC079')}${L(382, 58, .85, 40, '#4FA85A')}${L(382, 88, .75, 140, '#6FC079')}
-      <path d="M348 0q10 26 0 40t0 26" fill="none" stroke="#4FA85A" stroke-width="3"/>${L(348, 22, .7, 40, '#85D08A')}${L(348, 46, .65, 140, '#4FA85A')}
-      <circle cx="30" cy="58" r="4.5" fill="#FF7A9A"/><circle cx="366" cy="44" r="4.5" fill="#FFC23D"/></g></svg>
-    <svg class="jb-bottom" viewBox="0 0 400 120" preserveAspectRatio="xMidYMax slice"><g opacity=".75">${L(8, 118, 1.5, -48, '#4FA85A')}${L(30, 118, 1.3, -78, '#6FC079')}${L(52, 120, 1.1, -108, '#3E9B54')}${L(392, 118, 1.5, 228, '#4FA85A')}${L(370, 118, 1.3, 258, '#6FC079')}${L(348, 120, 1.1, 288, '#3E9B54')}${L(90, 122, .9, -30, '#85D08A')}${L(310, 122, .9, 210, '#85D08A')}<circle cx="44" cy="96" r="5" fill="#FF7A9A"/><circle cx="356" cy="92" r="5" fill="#FFC23D"/></g></svg>`;
+  el.innerHTML = `<svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice"><defs>
+      <radialGradient id="jbg" cx=".52" cy=".34" r=".85"><stop offset="0" stop-color="#C9EE9A"/><stop offset=".35" stop-color="#7DBF6A"/><stop offset=".75" stop-color="#2F7A47"/><stop offset="1" stop-color="#17462C"/></radialGradient>
+      <filter id="jbl"><feGaussianBlur stdDeviation="3"/></filter><filter id="jbl2"><feGaussianBlur stdDeviation="9"/></filter><filter id="jbg2"><feGaussianBlur stdDeviation="2.4"/></filter></defs>
+    <rect width="400" height="800" fill="url(#jbg)"/>
+    <g filter="url(#jbl2)" opacity=".7"><ellipse cx="40" cy="300" rx="90" ry="190" fill="#1F5A33"/><ellipse cx="370" cy="340" rx="90" ry="200" fill="#1F5A33"/><ellipse cx="150" cy="250" rx="80" ry="60" fill="#2F7A47"/><ellipse cx="280" cy="230" rx="90" ry="60" fill="#2F7A47"/></g>
+    <path d="M150 0L230 560H90z M262 0L350 600H214z" fill="#FFFBD0" opacity=".16"/>
+    <g filter="url(#jbl)"><rect x="-30" y="0" width="76" height="800" rx="28" fill="#4A3826" opacity=".85"/><rect x="354" y="0" width="76" height="800" rx="28" fill="#4A3826" opacity=".85"/><rect x="60" y="0" width="30" height="500" rx="12" fill="#3B2C1E" opacity=".45"/></g>
+    <path d="M250 560C300 600 330 640 290 690S210 720 250 780L330 800H170C150 760 190 720 240 700S270 640 220 610z" fill="#B58B52" opacity=".9"/>
+    <path d="M232 584C262 612 286 650 258 690S206 724 236 784" fill="none" stroke="#E2C58A" stroke-width="5" opacity=".6" stroke-linecap="round"/>
+    ${stone(236, 612, 22, '#7DE08A', 1)}${stone(280, 650, 24, '#9AEA8A', 1)}${stone(262, 700, 20, '#FFB52E', 1)}${stone(230, 742, 26, '#7DE08A', 1)}
+    <g opacity=".95"><path d="M26 0q18 70 0 150t0 120" fill="none" stroke="#3E9B54" stroke-width="3.8"/>${L(26, 60, 1.05, 40, '#6FC079')}${L(26, 124, .95, 140, '#4FA85A')}${L(26, 196, .9, 40, '#6FC079')}${F(34, 150, '#FF8AA8', 9)}${F(16, 250, '#FF9A5C', 9)}
+      <path d="M64 0q-10 50 0 96t0 70" fill="none" stroke="#3E9B54" stroke-width="3"/>${L(64, 44, .8, 140, '#85D08A')}${L(64, 100, .75, 40, '#4FA85A')}${F(70, 130, '#B58CFF', 8)}
+      <path d="M376 0q-18 70 0 140t0 130" fill="none" stroke="#3E9B54" stroke-width="3.8"/>${L(376, 56, 1.05, 140, '#6FC079')}${L(376, 128, .95, 40, '#4FA85A')}${L(376, 204, .9, 140, '#6FC079')}${F(366, 120, '#B58CFF', 9)}${F(386, 262, '#FFF3C8', 9)}
+      <path d="M336 0q10 40 0 80t0 56" fill="none" stroke="#3E9B54" stroke-width="3"/>${L(336, 36, .8, 40, '#85D08A')}${L(336, 86, .75, 140, '#4FA85A')}</g>
+    <g>${L(0, 690, 2.1, -62, '#1F6A3A')}${L(0, 760, 1.9, -28, '#2F8F4A')}${L(24, 806, 1.7, -98, '#3E9B54')}${L(400, 650, 2.3, 244, '#1F6A3A')}${L(396, 744, 2.0, 208, '#2F8F4A')}${L(366, 806, 1.8, 278, '#3E9B54')}${L(96, 810, 1.2, -44, '#5DB36A')}${L(318, 810, 1.2, 222, '#5DB36A')}${L(8, 560, 1.2, -75, '#2F8F4A')}${L(396, 520, 1.2, 255, '#2F8F4A')}</g>
+    <g fill="#fff" opacity=".22"><circle cx="120" cy="150" r="9"/><circle cx="270" cy="210" r="6"/><circle cx="200" cy="90" r="5"/><circle cx="310" cy="420" r="8"/><circle cx="90" cy="520" r="7"/></g></svg>`;
   document.body.prepend(el);
 }
 jungleBackdrop();
