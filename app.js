@@ -4242,6 +4242,11 @@ function mascotFace(mood, a) {
       `<circle cx="${R}" cy="${ey}" r="7.5" fill="${eyeBg}" stroke="${ink}" stroke-width="2.4"/><circle cx="${R}" cy="${ey}" r="3.2" fill="${ink}"/>` +
       `<path d="M${L - 7} ${ey - 12}l11-3M${R + 7} ${ey - 12}l-11-3" ${stroke}/>` +
       `<ellipse cx="60" cy="${my + 2}" rx="5.5" ry="7" fill="${ink}"/>` + drop(R + 17, ey - 14);
+    case 'boo': return cheeks +   // the naughty "BOO!" face: slanted brows, sideways glance, big sly grin with little fangs
+      `<circle cx="${L}" cy="${ey}" r="7.8" fill="${eyeBg}" stroke="${ink}" stroke-width="2.4"/><circle cx="${L + 2.6}" cy="${ey - 1.6}" r="3.6" fill="${ink}"/><circle cx="${L + 3.6}" cy="${ey - 2.8}" r="1.1" fill="${hi}"/>` +
+      `<circle cx="${R}" cy="${ey}" r="7.8" fill="${eyeBg}" stroke="${ink}" stroke-width="2.4"/><circle cx="${R + 2.6}" cy="${ey - 1.6}" r="3.6" fill="${ink}"/><circle cx="${R + 3.6}" cy="${ey - 2.8}" r="1.1" fill="${hi}"/>` +
+      `<path d="M${L - 9} ${ey - 15}l15 7M${R + 9} ${ey - 15}l-15 7" ${stroke} stroke-width="3.6"/>` +
+      `<path d="M42 ${my - 7}q18 8 36 0q-3 24 -18 24q-15 0 -18 -24z" fill="${ink}"/><path d="M46 ${my - 5}l4 8l4 -6M74 ${my - 5}l-4 8l-4 -6" fill="#fff"/>` + tongue(my + 11);
     case 'cheer': return cheeks +
       `<path d="M${L - 5} ${ey - 4}l8 4-8 4M${R + 5} ${ey - 4}l-8 4 8 4" ${stroke} stroke-linejoin="round"/>` +
       `<path d="M49 ${my - 3}q11 18 22 0z" fill="${ink}"/>` + tongue(my + 6) +
@@ -8706,7 +8711,7 @@ function booBookSVG(mood = 'happy') {
 }
 function splash() {
   const el = document.createElement('div'); el.id = 'splash'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${booBookSVG('shocked')}</div><div class="sp-bubble">Boo!</div><div class="sp-word">GabBoo</div><div class="sp-tag">Peek. Speak. Repeat.</div>`;
+  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${booBookSVG('boo')}</div><div class="sp-bubble">Boo!</div><div class="sp-word">GabBoo</div><div class="sp-tag">Peek. Speak. Repeat.</div>`;
   document.body.append(el);
   // Boo swoops in from the corner holding the book (a friendly scare), gives a peeky smile, then settles in the middle.
   const face = m => { const b = $('.sp-boo', el); if (b) b.innerHTML = booBookSVG(m); };
