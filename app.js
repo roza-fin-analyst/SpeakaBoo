@@ -7551,7 +7551,7 @@ function trailMapHTML(units, sections, cur, p, c) {
       nodes.push(`<div class="tsign" style="top:${y}px"><span class="season-tag">Branch ${u.s + 1}</span><b>${esc(sections[u.s].title)}</b></div>`);
       y += SIGN;
       if (Tester.on() && sections[u.s + 1] && !sectionDone(p, c.code, u.s) && !tester) tester = `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Branch ${u.s + 1} done and open Branch ${u.s + 2}: ${esc(sections[u.s + 1].title)}.</small></div><button class="btn sm" data-skip-section="${u.s}">Skip</button></div>`;
-      decor.push({ y: y + 6, side: u.s % 2 ? 'l' : 'r', kind: u.s % 3 === 0 ? 'monkey' : u.s % 3 === 1 ? 'toucan' : 'pillar' });
+      decor.push({ y: y + 6, side: u.s % 2 ? 'l' : 'r', kind: u.s % 2 === 0 ? 'palm' : 'pillar' });
     }
     const x = 50 + 27 * Math.sin(k * 1.02), prog = unitProgress(p, c.code, u.id), open = unitUnlocked(u);
     const done = prog >= UNIT_LESSONS, isCur = cur && cur.u === u, mastered = prog > UNIT_LESSONS;
@@ -7566,10 +7566,10 @@ function trailMapHTML(units, sections, cur, p, c) {
     if (isCur) { kitY = y; kitSide = x > 50 ? 'l' : 'r'; }
     if (isCur) nodes.push(`<img class="tkit ${x > 50 ? 'l' : 'r'}" style="top:${y - 36}px" src="kit/thumbs.webp" alt="" draggable="false">`);
     if (k % 3 === 2) decor.push({ y: y + 40, side: x > 50 ? 'l' : 'r', kind: k % 2 ? 'pillar' : 'palm' });
-    if (k % 4 === 1) decor.push({ y: y + 100, side: x > 50 ? 'r' : 'l', kind: 'bush', id: castId });
     y += PITCH; k++;
   });
   const H = y + 90;
+  let pebbles = ''; for (let i = 0; i < Math.floor(H / 46); i++) { const py = 20 + i * 46 + ((i * 37) % 17), px = 200 + (((i * 83) % 150) - 75) * .9; pebbles += `<ellipse cx="${px.toFixed(0)}" cy="${py}" rx="${5 + (i % 3) * 2}" ry="${3 + (i % 2) * 2}" fill="#B79A5E" opacity=".55"/>`; }
   // smooth dirt path through the stones
   let d = '';
   pts.forEach((pt, i) => { if (!i) d = `M${pt[0]} ${pt[1] - 60}L${pt[0]} ${pt[1]}`; else { const q = pts[i - 1], my = (q[1] + pt[1]) / 2; d += `C${q[0]} ${my} ${pt[0]} ${my} ${pt[0]} ${pt[1]}`; } });
@@ -7579,7 +7579,7 @@ function trailMapHTML(units, sections, cur, p, c) {
     : o.kind === 'palm' ? '<svg viewBox="0 0 80 120"><path d="M40 118Q36 70 42 36" stroke="#8A5E36" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#3E9B54" stroke="#2A7A3E" stroke-width="2"><path d="M42 36C20 22 6 30 2 44 20 38 32 40 42 36z"/><path d="M42 36C64 22 78 30 78 44 60 38 50 40 42 36z"/><path d="M42 36C28 12 36 4 46 2 46 18 44 28 42 36z"/><path d="M42 36C30 30 14 14 8 14 20 24 30 34 42 36z"/></g></svg>'
     : o.kind === 'bush' ? `<span class="mascot" data-tm="${o.id}"></span><svg class="bush" viewBox="0 0 90 40"><path d="M0 40C0 18 20 10 44 14 70 8 90 20 90 40z" fill="#3E9B54"/><path d="M10 40C14 28 28 24 40 28" stroke="#5DB36A" stroke-width="3" fill="none"/></svg>`
     : `<span class="mascot" data-tm="${o.kind === 'monkey' ? 'bora' : 'tuki'}"></span>`}</div>`).join('');
-  return `${tester}<div class="tmap" style="height:${H}px"><svg class="tmap-path" viewBox="0 0 400 ${H}" preserveAspectRatio="none"><path d="${d}" fill="none" stroke="#7A5A34" stroke-width="64" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="${d}" fill="none" stroke="#D9B878" stroke-width="54" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#EBD29A" stroke-width="40" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/><path d="${d}" fill="none" stroke="#B8955A" stroke-width="3" stroke-dasharray="4 14" stroke-linecap="round" opacity=".6"/></svg>${pic}${nodes.join('')}</div>`;
+  return `<button class="play-top" data-play><b>PLAY</b><small>Start lesson</small></button>${tester}<div class="tmap" style="height:${H}px"><svg class="tmap-path" viewBox="0 0 400 ${H}" preserveAspectRatio="none"><path d="${d}" fill="none" stroke="#5B3F22" stroke-width="128" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/><path d="${d}" fill="none" stroke="#6BAE4E" stroke-width="124" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="${d}" fill="none" stroke="#C9A468" stroke-width="104" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#E9D199" stroke-width="84" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-dasharray="2 18" stroke-linecap="round"/>${pebbles}</svg>${pic}${nodes.join('')}</div>`;
 }
 function renderLearn() { renderPath('main'); }
 function renderLetters() { renderPath('letters'); }
@@ -9189,10 +9189,8 @@ const kitPose = (pose, cls = '') => `<img class="kit-pose ${cls}" src="kit/${pos
 {
   const mk = () => {
     if (document.getElementById('play-btn')) return;
-    const b = document.createElement('button'); b.id = 'play-btn'; b.innerHTML = '<b>PLAY</b><small>Start lesson</small>'; document.body.append(b);
-    b.onclick = () => { const cur = currentLesson('main'); if (cur) startLesson(cur.u.id, cur.i, 'lesson'); else startPractice('mix'); };
+    document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-play]')) { const cur = currentLesson('main'); if (cur) startLesson(cur.u.id, cur.i, 'lesson'); else startPractice('mix'); } });
   };
-  mk();
   document.addEventListener('click', e => { const l = e.target.closest && e.target.closest('[data-locked]'); if (l) { toast('Finish the chapter before it first'); Sfx.wrong && Sfx.wrong(); } });
 }
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
