@@ -2201,3 +2201,48 @@ body.entering #app, body.entering .main { animation: none; } body.entering::afte
 .lesson .opt { padding-left: 18px; }
 @media (prefers-reduced-motion: reduce) { .tfog, .lamp circle, .tnode { animation: none !important; } #lesson:not([hidden]), .l-inner, .tab.tab-in { animation: none !important; } }
 #cs-help, .cs-help, #sp-self-no { display: none !important; }
+
+/* ===== The haunted manor (replaces the trail) ===== */
+.manor { display: flex; flex-direction: column; gap: 22px; padding: 6px 0 30px; max-width: 640px; margin: 0 auto; }
+.floor { position: relative; border-radius: 22px 22px 8px 8px; padding: 0 12px 16px; background:
+  repeating-linear-gradient(90deg, rgb(255 255 255 / .025) 0 2px, transparent 2px 38px),
+  linear-gradient(180deg, #2A1F47 0%, #1A1230 100%); border: 3px solid #0A0614; box-shadow: 0 0 0 1px #4A3578, 0 14px 24px rgb(0 0 0 / .5); }
+.floor::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 12px; border-radius: 0 0 6px 6px; background: repeating-linear-gradient(90deg, #4A3224 0 46px, #3A2619 46px 48px); }
+.floor-sign { display: flex; align-items: center; gap: 10px; margin: 0 -12px 14px; padding: 10px 14px; border-radius: 19px 19px 0 0; background: var(--wood-bg); border-bottom: 3px solid #0A0614; }
+.floor-sign b { flex: 1; min-width: 0; font: 600 19px var(--font-display); color: #fff; }
+.floor-crew { display: flex; flex-direction: column; align-items: center; background: none; border: 0; padding: 0; flex: none; }
+.floor-crew .mascot { width: 44px; height: 44px; filter: drop-shadow(0 0 8px rgb(190 170 255 / .7)); } .floor-crew small { font: 800 10px var(--font-body); color: #FFB066; margin-top: -2px; }
+.doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 8px; padding-bottom: 12px; position: relative; z-index: 1; }
+.door { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0; background: none; border: 0; color: #fff; text-align: center; min-width: 0; }
+.door-frame { position: relative; width: 84px; height: 112px; border-radius: 42px 42px 3px 3px; background: #07040F; border: 5px solid #4A3224; box-shadow: 0 0 0 2px #0A0614, 0 8px 12px rgb(0 0 0 / .5); perspective: 300px; overflow: visible; }
+.door-glow { position: absolute; inset: 0; border-radius: 36px 36px 0 0; background: radial-gradient(ellipse at 50% 80%, #1B1430, #07040F); }
+.door-leaf { position: absolute; inset: 0; border-radius: 36px 36px 0 0; background: linear-gradient(180deg, #6A4A33, #3E2A1C); border: 2px solid #1A0F08; transform-origin: left center; transition: transform .6s cubic-bezier(.3, 1.2, .5, 1); display: grid; place-items: center; box-shadow: inset 0 0 0 4px rgb(0 0 0 / .18); }
+.door-leaf::before { content: ""; position: absolute; inset: 10px 10px 40px; border-radius: 26px 26px 0 0; border: 2px solid rgb(0 0 0 / .3); }
+.door-num { position: relative; z-index: 1; font: 600 24px var(--font-display); color: #FFE8C7; text-shadow: 0 2px 0 rgb(0 0 0 / .6); margin-top: -8px; }
+.door-knob { position: absolute; right: 9px; top: 58%; width: 9px; height: 9px; border-radius: 50%; background: #FFC857; box-shadow: 0 0 6px #FFC857; }
+.door.done .door-glow { background: radial-gradient(ellipse at 50% 70%, #9AFFD0, #1FB77A 60%, #0B3A28); box-shadow: 0 0 22px rgb(62 232 154 / .7); }
+.door.done .door-leaf { transform: rotateY(-72deg); }
+.door.current .door-glow { background: radial-gradient(ellipse at 50% 70%, #FFE0A0, #FF8A1F 62%, #5A2A06); box-shadow: 0 0 30px rgb(255 138 31 / .95); animation: doorPulse 2.2s ease-in-out infinite; }
+.door.current .door-leaf { transform: rotateY(-34deg); }
+@keyframes doorPulse { 50% { box-shadow: 0 0 44px rgb(255 138 31 / 1); } }
+.door.locked .door-leaf { filter: grayscale(.5) brightness(.6); } .door.locked .door-num { display: none; }
+.door-chain { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: repeating-linear-gradient(45deg, transparent 0 10px, rgb(200 195 225 / .55) 10px 12px), repeating-linear-gradient(-45deg, transparent 0 10px, rgb(200 195 225 / .45) 10px 12px); border-radius: 36px 36px 0 0; }
+.door-lock { position: absolute; z-index: 3; left: 50%; top: 50%; width: 30px; height: 30px; transform: translate(-50%, -50%); filter: drop-shadow(0 2px 3px #000); pointer-events: none; }
+.door-tick { position: absolute; z-index: 3; right: -10px; top: -8px; width: 28px; height: 28px; padding: 4px; background: #3EE89A; border: 3px solid #0A0614; border-radius: 50%; box-sizing: border-box; pointer-events: none; }
+.door:not(.locked):active .door-frame { transform: scale(.95); } .door.launch .door-leaf { transform: rotateY(-95deg); } .door.launch .door-glow { box-shadow: 0 0 60px rgb(255 190 90 / 1); }
+.door-name { display: block; max-width: 100%; } .door-name small { display: block; font: 800 10px var(--font-body); color: #FF9A4D; text-transform: uppercase; letter-spacing: .05em; } .door-name b { display: block; font: 600 13.5px/1.2 var(--font-display); color: #fff; overflow-wrap: anywhere; }
+.door.locked .door-name b { color: #A79CCB; }
+.door-dots { display: flex; gap: 4px; } .door-dots i { width: 9px; height: 9px; border-radius: 50%; background: #3A3156; } .door-dots i.on { background: #5CFFB0; box-shadow: 0 0 7px #5CFFB0; }
+.door-peek { position: absolute; right: -2px; top: 40px; width: 40px; height: 38px; pointer-events: none; filter: drop-shadow(0 0 10px rgb(190 170 255 / .9)); animation: booFloat 4s ease-in-out infinite; } .door-peek svg { width: 100%; height: 100%; }
+@media (min-width: 560px) { .door-frame { width: 96px; height: 128px; } .door-name b { font-size: 15px; } .door-peek { width: 46px; height: 44px; top: 50px; } }
+/* laptop: nothing floats over the content; content stays inside the main column */
+@media (min-width: 900px) { .manor { max-width: 720px; } .doors { grid-template-columns: repeat(4, 1fr); } }
+
+/* ===== Laptop / tablet layout: phone-only bars stay hidden, content gets the full main column ===== */
+@media (min-width: 768px) { #bnav, .bnav { display: none !important; } }
+@media (min-width: 1100px) { #topbar, .topbar { display: none !important; } }
+@media (min-width: 768px) and (max-width: 1099px) { .topbar { display: flex; flex-direction: row; } .wcorner { display: none; } .wbar { flex: 1; } }
+.rail button.nav-i[data-tab="chat"], .rail button.nav-i[data-tab="chat"] svg { background: none; color: inherit; box-shadow: none; } .rail button.nav-i[aria-current="page"] { background: rgb(255 122 26 / .16); border-color: #FF7A1A; color: #FFB066; }
+.rail { background: linear-gradient(180deg, #1D1433, #130B24); border-right: 2px solid #0A0614; } .rail button.nav-i { color: #D9C9FF; } .rail .logo { color: #FF9A4D; text-shadow: 0 0 12px rgb(255 122 26 / .6); }
+.rail .who-btn { background: #2A2147; border: 2px solid #5A4890; color: #fff; } .rail .who-btn small { color: #B9A9DC; }
+aside.right .card { margin: 0; }

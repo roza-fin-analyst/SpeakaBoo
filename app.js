@@ -7454,50 +7454,32 @@ function lessonDesc(u, i) {
   return [`New words: ${W.slice(0, 3).map(w => w.t).join(', ')}…`, `More words: ${W.slice(Math.ceil(W.length / 2), Math.ceil(W.length / 2) + 3).map(w => w.t).join(', ')}…`,
     'Build sentences & say them', `Grammar: ${(u.guide[1] || u.guide[0]).h}`, 'Real conversation with a character'][i];
 }
-/* ---- The trail map: chapters are stepping stones on a winding jungle path ---- */
-function trailMapHTML(units, sections, cur, p, c) {
-  const PITCH = 190, SIGN = 84, TOP = 40, pts = [], nodes = [], decor = [];
-  let y = TOP, lastS = -1, k = 0, tester = '', kitY = -999, kitSide = '';
-  const cc = courseCast();
-  units.forEach(u => {
-    if (u.s !== lastS) {
-      lastS = u.s; y += (k ? 14 : 0);
-      nodes.push(`<div class="tsign" style="top:${y}px"><span class="season-tag">Part ${u.s + 1}</span><b>${esc(sections[u.s].title)}</b></div>`);
-      y += SIGN;
-      if (Tester.on() && sections[u.s + 1] && !sectionDone(p, c.code, u.s) && !tester) tester = `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Part ${u.s + 1} done and open Part ${u.s + 2}: ${esc(sections[u.s + 1].title)}.</small></div><button class="btn sm" data-skip-section="${u.s}">Skip</button></div>`;
-      decor.push({ y: y + 6, side: u.s % 2 ? 'l' : 'r', kind: u.s % 2 === 0 ? 'palm' : 'pillar' });
-    }
-    const x = 50 + 27 * Math.sin(k * 1.02), prog = unitProgress(p, c.code, u.id), open = unitUnlocked(u);
-    const done = prog >= UNIT_LESSONS, isCur = cur && cur.u === u, mastered = prog > UNIT_LESSONS;
-    const next = Math.min(prog, UNIT_LESSONS - 1), num = units.filter(z => z.s === u.s).indexOf(u) + 1;
-    const state = !open ? 'locked' : isCur ? 'current' : done ? 'done' : 'open';
-    pts.push([x * 4, y + 48]);
-    const castId = cc[(u.index) % cc.length];
-    const act = open ? `data-go="${u.id}:${next}:lesson"` : `data-locked="${u.id}"`;
-    nodes.push(`<div class="tnode" style="top:${y}px;left:${x}%">
-      <button class="tn ${state}" ${act} aria-label="Chapter ${num}: ${esc(u.title)}"><span class="tn-in" ${attrs(c)}>${state === 'locked' ? '' : esc(u.icon || num)}</span>${state === 'locked' ? '<svg class="tn-lock" viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><rect x="5" y="11" width="14" height="10" rx="3" fill="#fff"/></svg>' : ''}${done ? '<svg class="tn-done" viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>' : ''}</button>
-      <div class="tplaque ${state}"><small>Chapter ${num}${mastered ? ' · Mastered' : ''}</small><b>${esc(u.title)}</b><span class="tleaves">${Array.from({ length: UNIT_LESSONS }, (_, i) => `<i class="${prog > i ? 'on' : ''}"></i>`).join('')}</span></div></div>`);
-    if (isCur) { kitY = y; kitSide = x > 50 ? 'l' : 'r'; }
-    if (isCur) nodes.push(`<div class="tghost ${x > 50 ? 'l' : 'r'}" style="top:${y - 24}px">${booBookSVG('happy')}</div>`);
-    const crewId = CREW_ORDER[k % CREW_ORDER.length]; decor.push({ y: y + 6, side: x > 50 ? 'l' : 'r', kind: 'crew', id: crewId });
-    y += PITCH; k++;
+/* ---- The haunted manor: each Part is a floor, each chapter is a door in the hallway ---- */
+function mansionHTML(units, sections, cur, p, c) {
+  const LOCK = '<svg class="door-lock" viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="#C9C2E6" stroke-width="2.4" stroke-linecap="round"/><rect x="5" y="11" width="14" height="10" rx="3" fill="#C9C2E6"/><circle cx="12" cy="16" r="1.6" fill="#2A2148"/></svg>';
+  const TICK = '<svg class="door-tick" viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" fill="none" stroke="#05281A" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  let html = '', tester = '', lastS = -1, floors = [];
+  units.forEach((u, k) => {
+    if (u.s !== lastS) { lastS = u.s; floors.push({ s: u.s, items: [] }); }
+    floors[floors.length - 1].items.push({ u, k });
   });
-  const H = y + 90;
-  const curK = Math.max(0, units.findIndex(u => cur && cur.u === u));
-  let litD = ''; for (let i = 0; i <= curK && i < pts.length; i++) { if (!i) litD = `M${pts[0][0]} ${pts[0][1] - 60}L${pts[0][0]} ${pts[0][1]}`; else { const q = pts[i - 1], my = (q[1] + pts[i][1]) / 2; litD += `C${q[0]} ${my} ${pts[i][0]} ${my} ${pts[i][0]} ${pts[i][1]}`; } }
-  let lamps = ''; for (let i = 0; i < pts.length - 1; i++) { const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2, sd = i % 2 ? 1 : -1, lx = mx + sd * 74, lit = i < curK;
-    lamps += `<g class="lamp"><path d="M${lx} ${my + 30}V${my - 14}" stroke="#07040F" stroke-width="5" stroke-linecap="round"/><circle cx="${lx}" cy="${my - 20}" r="${lit ? 16 : 11}" fill="${lit ? '#9AFFD0' : '#FFC857'}" opacity=".35" filter="url(#tgl)"/><rect x="${lx - 5}" y="${my - 27}" width="10" height="14" rx="3" fill="${lit ? '#7CFFC4' : '#FFC857'}" stroke="#07040F" stroke-width="2"/></g>`; }
-  let pebbles = ''; for (let i = 0; i < Math.floor(H / 46); i++) { const py = 20 + i * 46 + ((i * 37) % 17), px = 200 + (((i * 83) % 150) - 75) * .9; pebbles += `<ellipse cx="${px.toFixed(0)}" cy="${py}" rx="${5 + (i % 3) * 2}" ry="${3 + (i % 2) * 2}" fill="#B79A5E" opacity=".55"/>`; }
-  // smooth dirt path through the stones
-  let d = '';
-  pts.forEach((pt, i) => { if (!i) d = `M${pt[0]} ${pt[1] - 60}L${pt[0]} ${pt[1]}`; else { const q = pts[i - 1], my = (q[1] + pt[1]) / 2; d += `C${q[0]} ${my} ${pt[0]} ${my} ${pt[0]} ${pt[1]}`; } });
-  if (pts.length) d += `L${pts[pts.length - 1][0]} ${H}`;
-  const pic = decor.filter(o => !(o.side === kitSide && Math.abs(o.y - kitY) < 260)).map(o => `<div class="tdecor ${o.kind} ${o.side}" style="top:${o.y}px">${
-    o.kind === 'crew' ? `<button class="tcrew" data-crew="${o.id}"><span class="mascot" data-tm="${o.id}"></span><small>${esc(CREW[o.id].name)}</small></button>` : o.kind === 'pillar' ? '<svg viewBox="0 0 50 130"><rect x="8" y="14" width="34" height="104" rx="6" fill="#B9B6A6" stroke="#8A8676" stroke-width="3"/><rect x="2" y="6" width="46" height="14" rx="5" fill="#CFCCBC" stroke="#8A8676" stroke-width="3"/><rect x="2" y="114" width="46" height="14" rx="5" fill="#CFCCBC" stroke="#8A8676" stroke-width="3"/><path d="M12 30h26M12 52h26M12 74h26" stroke="#8A8676" stroke-width="2"/><path d="M8 20q10 18 4 40 6 8 0 18" fill="#5DB36A" opacity=".85"/></svg>'
-    : o.kind === 'palm' ? '<svg viewBox="0 0 80 120"><path d="M40 118Q36 70 42 36" stroke="#8A5E36" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#3E9B54" stroke="#2A7A3E" stroke-width="2"><path d="M42 36C20 22 6 30 2 44 20 38 32 40 42 36z"/><path d="M42 36C64 22 78 30 78 44 60 38 50 40 42 36z"/><path d="M42 36C28 12 36 4 46 2 46 18 44 28 42 36z"/><path d="M42 36C30 30 14 14 8 14 20 24 30 34 42 36z"/></g></svg>'
-    : o.kind === 'bush' ? `<span class="mascot" data-tm="${o.id}"></span><svg class="bush" viewBox="0 0 90 40"><path d="M0 40C0 18 20 10 44 14 70 8 90 20 90 40z" fill="#3E9B54"/><path d="M10 40C14 28 28 24 40 28" stroke="#5DB36A" stroke-width="3" fill="none"/></svg>`
-    : `<span class="mascot" data-tm="${o.kind === 'monkey' ? 'bora' : 'tuki'}"></span>`}</div>`).join('');
-  return `${tester}<div class="tmap" style="height:${H}px"><div class="tfog" style="top:12%"></div><div class="tfog t2" style="top:46%"></div><div class="tfog" style="top:78%"></div><svg class="tmap-path" viewBox="0 0 400 ${H}" preserveAspectRatio="none"><defs><filter id="tgl"><feGaussianBlur stdDeviation="3"/></filter></defs><path d="${d}" fill="none" stroke="#000" stroke-width="136" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/><path d="${d}" fill="none" stroke="#5A4890" stroke-width="124" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="${d}" fill="none" stroke="#1A1230" stroke-width="112" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#3A2E5E" stroke-width="100" stroke-linecap="butt" stroke-dasharray="15 6" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#2A2148" stroke-width="72" stroke-linecap="butt" stroke-dasharray="10 12" stroke-dashoffset="6" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#4A3C75" stroke-width="40" stroke-linecap="butt" stroke-dasharray="8 14" stroke-dashoffset="3" opacity=".7"/>${litD ? `<path d="${litD}" fill="none" stroke="#3EE89A" stroke-width="14" stroke-linecap="round" opacity=".5" filter="url(#tgl)"/><path d="${litD}" fill="none" stroke="#9AFFD0" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 12"/>` : ''}${lamps}</svg>${pic}${nodes.join('')}</div>`;
+  floors.forEach((f, fi) => {
+    const crewId = CREW_ORDER[fi % CREW_ORDER.length], C = CREW[crewId];
+    if (Tester.on() && sections[f.s + 1] && !sectionDone(p, c.code, f.s) && !tester) tester = `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Part ${f.s + 1} done and open Part ${f.s + 2}: ${esc(sections[f.s + 1].title)}.</small></div><button class="btn sm" data-skip-section="${f.s}">Skip</button></div>`;
+    html += `<section class="floor"><div class="floor-sign"><span class="season-tag">Part ${f.s + 1}</span><b>${esc(sections[f.s].title)}</b><button class="floor-crew" data-crew="${crewId}" aria-label="${esc(C.name)}"><span class="mascot" data-tm="${crewId}"></span><small>${esc(C.name)}</small></button></div><div class="doors">`;
+    f.items.forEach(({ u, k }) => {
+      const prog = unitProgress(p, c.code, u.id), open = unitUnlocked(u), done = prog >= UNIT_LESSONS, isCur = cur && cur.u === u, mastered = prog > UNIT_LESSONS;
+      const num = units.filter(z => z.s === u.s).indexOf(u) + 1, next = Math.min(prog, UNIT_LESSONS - 1);
+      const state = !open ? 'locked' : isCur ? 'current' : done ? 'done' : 'open';
+      html += `<button class="door ${state}" ${open ? `data-go="${u.id}:${next}:lesson"` : `data-locked="${u.id}"`} aria-label="Chapter ${num}: ${esc(u.title)} (${state})">
+        <span class="door-frame"><span class="door-glow"></span><span class="door-leaf"><span class="door-num" ${attrs(c)}>${state === 'locked' ? '' : esc(u.icon || num)}</span><i class="door-knob"></i></span>${state === 'locked' ? '<span class="door-chain"></span>' + LOCK : ''}${done ? TICK : ''}</span>
+        <span class="door-name"><small>Chapter ${num}${mastered ? ' · Mastered' : ''}</small><b>${esc(u.title)}</b></span>
+        <span class="door-dots">${Array.from({ length: UNIT_LESSONS }, (_, i) => `<i class="${prog > i ? 'on' : ''}"></i>`).join('')}</span>
+        ${isCur ? `<span class="door-peek">${booBookSVG('happy')}</span>` : ''}</button>`;
+    });
+    html += `</div></section>`;
+  });
+  return `${tester}<div class="manor">${html}</div>`;
 }
 function renderLearn() { renderPath('main'); }
 function renderLetters() { renderPath('letters'); }
@@ -7512,7 +7494,7 @@ function renderPath(track) {
 
   let lastS = -1;
   const cur = currentLesson(track);
-  if (track === 'main') html += trailMapHTML(units, sections, cur, p, c);
+  if (track === 'main') html += mansionHTML(units, sections, cur, p, c);
   (track === 'main' ? [] : units).forEach(u => {
     if (u.s !== lastS) {
       lastS = u.s; html += `<div class="season-head"><span class="season-tag">${track === 'letters' ? 'Letters' : `Part ${u.s + 1}`}</span><b>${esc(sections[u.s].title)}</b>${sections[u.s].blurb ? `<small>${esc(sections[u.s].blurb)}</small>` : ''}</div>`;
@@ -7541,7 +7523,7 @@ function renderPath(track) {
   tab.innerHTML = html;
   $$('[data-path-m]', tab).forEach(el => paintMascot(el, el.dataset.pathM, el.dataset.mood, false));
   $$('[data-tm]', tab).forEach(el => paintMascot(el, el.dataset.tm, 'happy', false));
-  if (track === 'main') { const cn = $('.tn.current', tab); if (cn) setTimeout(() => { try { cn.scrollIntoView({ block: 'center' }); } catch (e) { /* ignore */ } }, 80); }
+  if (track === 'main') { const cn = $('.door.current', tab); if (cn) setTimeout(() => { try { cn.scrollIntoView({ block: 'center' }); } catch (e) { /* ignore */ } }, 80); }
   $$('[data-jh]', tab).forEach(el => paintMascot(el, el.dataset.jh, 'happy', false));
   const li = $('[data-li-m]', tab); if (li) paintMascot(li, courseCast()[0], 'happy', false);
   const fm = $('[data-feel-m]', tab); if (fm) paintMascot(fm, p.mascot, 'happy', false);
@@ -9200,7 +9182,7 @@ document.addEventListener('click', e => { if (e.target.closest && e.target.close
   const _g = Runner.grade; Runner.grade = function (ok, info = {}) { const was = this.locked, r = _g.call(this, ok, info); if (!was && !info.free) Coach.react(ok, info); return r; };
 }
 document.addEventListener('click', e => {
-  const n = e.target.closest && e.target.closest('.tn[data-go]'); if (!n || n.classList.contains('launch')) return;
+  const n = e.target.closest && e.target.closest('.door[data-go]'); if (!n || n.classList.contains('launch')) return;
   e.stopImmediatePropagation(); e.preventDefault(); n.classList.add('launch'); document.body.classList.add('entering');
   const [uid, i, mode] = n.dataset.go.split(':'); setTimeout(() => { document.body.classList.remove('entering'); n.classList.remove('launch'); startLesson(uid, +i, mode); }, 320);
 }, true);
