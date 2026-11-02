@@ -7483,6 +7483,10 @@ function trailMapHTML(units, sections, cur, p, c) {
     y += PITCH; k++;
   });
   const H = y + 90;
+  const curK = Math.max(0, units.findIndex(u => cur && cur.u === u));
+  let litD = ''; for (let i = 0; i <= curK && i < pts.length; i++) { if (!i) litD = `M${pts[0][0]} ${pts[0][1] - 60}L${pts[0][0]} ${pts[0][1]}`; else { const q = pts[i - 1], my = (q[1] + pts[i][1]) / 2; litD += `C${q[0]} ${my} ${pts[i][0]} ${my} ${pts[i][0]} ${pts[i][1]}`; } }
+  let lamps = ''; for (let i = 0; i < pts.length - 1; i++) { const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2, sd = i % 2 ? 1 : -1, lx = mx + sd * 74, lit = i < curK;
+    lamps += `<g class="lamp"><path d="M${lx} ${my + 30}V${my - 14}" stroke="#07040F" stroke-width="5" stroke-linecap="round"/><circle cx="${lx}" cy="${my - 20}" r="${lit ? 16 : 11}" fill="${lit ? '#9AFFD0' : '#FFC857'}" opacity=".35" filter="url(#tgl)"/><rect x="${lx - 5}" y="${my - 27}" width="10" height="14" rx="3" fill="${lit ? '#7CFFC4' : '#FFC857'}" stroke="#07040F" stroke-width="2"/></g>`; }
   let pebbles = ''; for (let i = 0; i < Math.floor(H / 46); i++) { const py = 20 + i * 46 + ((i * 37) % 17), px = 200 + (((i * 83) % 150) - 75) * .9; pebbles += `<ellipse cx="${px.toFixed(0)}" cy="${py}" rx="${5 + (i % 3) * 2}" ry="${3 + (i % 2) * 2}" fill="#B79A5E" opacity=".55"/>`; }
   // smooth dirt path through the stones
   let d = '';
@@ -7493,7 +7497,7 @@ function trailMapHTML(units, sections, cur, p, c) {
     : o.kind === 'palm' ? '<svg viewBox="0 0 80 120"><path d="M40 118Q36 70 42 36" stroke="#8A5E36" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#3E9B54" stroke="#2A7A3E" stroke-width="2"><path d="M42 36C20 22 6 30 2 44 20 38 32 40 42 36z"/><path d="M42 36C64 22 78 30 78 44 60 38 50 40 42 36z"/><path d="M42 36C28 12 36 4 46 2 46 18 44 28 42 36z"/><path d="M42 36C30 30 14 14 8 14 20 24 30 34 42 36z"/></g></svg>'
     : o.kind === 'bush' ? `<span class="mascot" data-tm="${o.id}"></span><svg class="bush" viewBox="0 0 90 40"><path d="M0 40C0 18 20 10 44 14 70 8 90 20 90 40z" fill="#3E9B54"/><path d="M10 40C14 28 28 24 40 28" stroke="#5DB36A" stroke-width="3" fill="none"/></svg>`
     : `<span class="mascot" data-tm="${o.kind === 'monkey' ? 'bora' : 'tuki'}"></span>`}</div>`).join('');
-  return `<button class="play-top" data-play><b>PLAY</b><small>Start lesson</small></button>${tester}<div class="tmap" style="height:${H}px"><svg class="tmap-path" viewBox="0 0 400 ${H}" preserveAspectRatio="none"><path d="${d}" fill="none" stroke="#5B3F22" stroke-width="128" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/><path d="${d}" fill="none" stroke="#6BAE4E" stroke-width="124" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="${d}" fill="none" stroke="#C9A468" stroke-width="104" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#E9D199" stroke-width="84" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-dasharray="2 18" stroke-linecap="round"/>${pebbles}</svg>${pic}${nodes.join('')}</div>`;
+  return `${tester}<div class="tmap" style="height:${H}px"><div class="tfog" style="top:12%"></div><div class="tfog t2" style="top:46%"></div><div class="tfog" style="top:78%"></div><svg class="tmap-path" viewBox="0 0 400 ${H}" preserveAspectRatio="none"><defs><filter id="tgl"><feGaussianBlur stdDeviation="3"/></filter></defs><path d="${d}" fill="none" stroke="#000" stroke-width="136" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/><path d="${d}" fill="none" stroke="#5A4890" stroke-width="124" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="${d}" fill="none" stroke="#1A1230" stroke-width="112" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#3A2E5E" stroke-width="100" stroke-linecap="butt" stroke-dasharray="15 6" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#2A2148" stroke-width="72" stroke-linecap="butt" stroke-dasharray="10 12" stroke-dashoffset="6" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#4A3C75" stroke-width="40" stroke-linecap="butt" stroke-dasharray="8 14" stroke-dashoffset="3" opacity=".7"/>${litD ? `<path d="${litD}" fill="none" stroke="#3EE89A" stroke-width="14" stroke-linecap="round" opacity=".5" filter="url(#tgl)"/><path d="${litD}" fill="none" stroke="#9AFFD0" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 12"/>` : ''}${lamps}</svg>${pic}${nodes.join('')}</div>`;
 }
 function renderLearn() { renderPath('main'); }
 function renderLetters() { renderPath('letters'); }
@@ -7550,7 +7554,7 @@ function renderPath(track) {
 /* ---------- Boo stage: the friendly top of the home screen ---------- */
 function journeyHeadHTML() {
   const c = course(), p = P(), done = c.units.filter(u => unitProgress(p, c.code, u.id) >= UNIT_LESSONS).length;
-  return `<div class="journey-head"><div class="jh-top"><span class="jh-pals"><span class="mascot" data-jh="mandu"></span><span class="mascot" data-jh="tavi"></span></span><div><small>Your haunting · ${esc(c.name)}</small><b>${done} of ${c.units.length} chapters</b></div></div><div class="jh-bar"><i style="width:${done / c.units.length * 100}%"></i></div></div>`;
+  return `<div class="journey-head"><div class="jh-top"><span class="jh-pals"><span class="mascot" data-jh="mandu"></span><span class="mascot" data-jh="tavi"></span></span><div><small>Escape the manor · ${esc(c.name)}</small><b>${done} of ${c.units.length} chapters</b></div></div><div class="jh-bar"><i style="width:${done / c.units.length * 100}%"></i></div></div>`;
 }
 function storyBannerHTML() {
   const st = ADV_STORIES[course().code]; if (!st) return '';
@@ -8037,11 +8041,11 @@ const Runner = {
     const friends = shuffle(courseCast()).slice(0, 2);
     const stars = acc >= .95 ? 3 : acc >= .75 ? 2 : 1, win = acc >= .5;
     const title = win ? (meta.mode === 'place' || meta.mode === 'test' || meta.mode === 'jump' ? headline.replace(/!$/, '').toUpperCase() : 'ESCAPED') : 'HAUNTED';
-    const sub = meta.unit && meta.unit.title ? `Chapter ${(meta.unit.index || 0) + 1}: ${meta.unit.title}` : headline;
+    const sub = meta.unit && meta.unit.title ? `Chapter ${(meta.unit.index || 0) + 1}: ${meta.unit.title} · room unlocked` : headline;
     $('#l-stage').innerHTML = `<div class="l-inner done-screen victory">
       <div class="vstars">${[0, 1, 2].map(i => `<svg class="vstar ${i < stars ? 'on' : ''}" style="animation-delay:${i * 160}ms" viewBox="0 0 40 40"><path d="M20 3l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" fill="${i < stars ? '#FFC23D' : '#8B8A7E'}" stroke="${i < stars ? '#B8760B' : '#5E5D52'}" stroke-width="2.4" stroke-linejoin="round"/></svg>`).join('')}</div>
       <div class="vplaque">${esc(title)}</div>
-      <div class="vpanel"><p class="vsub">${esc(sub)}${extra ? '' : ' cleared!'}</p>
+      <div class="vpanel"><p class="vsub">${esc(sub)}${extra ? '' : ''}</p>
         <div class="vtiles"><div class="vt">${ICON_BANANA}<b data-count="${xp}">0</b><small>XP</small></div><div class="vt">${ICON_LEAFY}<b data-count="${gems}">0</b><small>Souls</small></div><div class="vt"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="#5DB36A" stroke="#2F8F4A" stroke-width="2.4"/><path d="M9 17l5 5 9-11" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg><b data-count="${Math.round(acc * 100)}" data-suffix="%">0</b><small>${verdict}</small></div></div>
         ${extra ? `<p class="vextra">${esc(extra)}</p>` : ''}</div>
       ${P().mascot === 'mandu' ? ghostPose(win ? 'cheer' : 'ponder', 'vghost') : ''}
@@ -9195,6 +9199,11 @@ document.addEventListener('click', e => { if (e.target.closest && e.target.close
   const _r = Runner.render; Runner.render = function () { _r.apply(this, arguments); Coach.show(this.queue[this.i]); };
   const _g = Runner.grade; Runner.grade = function (ok, info = {}) { const was = this.locked, r = _g.call(this, ok, info); if (!was && !info.free) Coach.react(ok, info); return r; };
 }
+document.addEventListener('click', e => {
+  const n = e.target.closest && e.target.closest('.tn[data-go]'); if (!n || n.classList.contains('launch')) return;
+  e.stopImmediatePropagation(); e.preventDefault(); n.classList.add('launch'); document.body.classList.add('entering');
+  const [uid, i, mode] = n.dataset.go.split(':'); setTimeout(() => { document.body.classList.remove('entering'); n.classList.remove('launch'); startLesson(uid, +i, mode); }, 320);
+}, true);
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
@@ -10322,7 +10331,7 @@ const Onboard = {
     const screens = [
       () => `<div class="ob-s s-hide"><h1>Psst… Boo is hiding.</h1><p>Can you find him?</p>
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}<span class="peek-eyes"></span></button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
-      () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Psst… I’m Boo.</b><span>I’ll haunt you until you can speak a new language. Look at my book, then say it out loud with me.</span></div><div class="ob-ghost ob-ghost-img" id="ob-ghost">${ghostPose('welcome')}</div><button class="btn primary big" data-ob-next>Let’s begin</button></div>`,
+      () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Psst… I’m Boo.</b><span>I’ve haunted every country for 500 years, so I know every language. Learn from me, and speak your way out of the manor.</span></div><div class="ob-ghost ob-ghost-img" id="ob-ghost">${ghostPose('welcome')}</div><button class="btn primary big" data-ob-next>Let’s begin</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
         <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
