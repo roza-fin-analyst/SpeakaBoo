@@ -10783,7 +10783,12 @@ const Onboard2 = {
       () => `<div class="ob-s s-hide"><h1>Psst… Boo is hiding.</h1><p>Can you find him?</p>
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}</button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
       () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Psst… I’m Boo.</b><span>I’ll help you speak a new language. Look at the book, then say it out loud with me.</span></div><div class="ob-ghost ob-ghost-img" id="ob-ghost">${ghostPose('welcome')}<svg class="ob-book" viewBox="0 0 60 44" aria-hidden="true"><g transform="rotate(-6 30 24)"><rect x="8" y="12" width="44" height="28" rx="4" fill="#FFF2E1" stroke="#2B1D14" stroke-width="2.6"/><rect x="5" y="8" width="44" height="28" rx="4" fill="#E4572E" stroke="#2B1D14" stroke-width="2.6"/><path d="M12 8v28" stroke="#2B1D14" stroke-width="2"/><rect x="16" y="13" width="28" height="18" rx="3" fill="#FFF2E1"/><text x="30" y="26" text-anchor="middle" font-size="9" font-weight="900" fill="#2B1D14" font-family="Nunito,system-ui,sans-serif">A 가 ع</text></g></svg></div><button class="btn primary big" data-ob-next>Let’s start</button></div>`,
-      () => `<div class="ob-s"><h1>Not another tap-the-tiles app</h1><p>Here’s what you’ll do differently with GabBoo:</p>${whyHTML(false)}<button class="btn primary big" data-ob-next>Sounds good!</button></div>`,
+      () => `<div class="ob-s ob-story"><h1>Why a ghost?</h1>
+        <div class="story-cards"><div class="sc"><span>1</span><p><b>Boo is a ghost</b> who has haunted every country for 500 years.</p></div>
+        <div class="sc"><span>2</span><p><b>He heard every language</b>, so he knows them all.</p></div>
+        <div class="sc"><span>3</span><p><b>Ghosts only live through voices.</b> So Boo makes you speak.</p></div>
+        <div class="sc"><span>4</span><p><b>Speak the words</b> to open each door and escape the manor.</p></div></div>
+        <button class="btn primary big" data-ob-next>I’m in</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
         <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
@@ -10807,11 +10812,11 @@ const Onboard2 = {
         <p class="ob-label">My language <small>(for translations when you get stuck)</small></p><select class="input" id="ob-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (d.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select>
         <button class="btn primary big" id="ob-go">Start my journey</button></div>`
     ];
-    const pct = Math.round(([1, 3, 5, 6, 7].indexOf(this.step) + 1) / 5 * 100);
+    const pct = Math.round(([1, 2, 3, 5, 6, 7].indexOf(this.step) + 1) / 6 * 100);
     el.innerHTML = `<div class="ob-top"><div class="ob-bar"><i style="width:${pct}%"></i></div>${this.step < this.ACCOUNT ? '<button class="ob-skip" data-ob-skip>Skip</button>' : ''}</div><div class="ob-stage">${S[this.step]()}</div>`;
     this.wire();
   },
-  next() { this.step = Math.min(this.LAST, ({ 1: 3, 3: 5, 5: 6 })[this.step] || this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
+  next() { this.step = Math.min(this.LAST, ({ 1: 2, 2: 3, 3: 5, 5: 6 })[this.step] || this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
   accountReady() { if (this.step <= this.ACCOUNT) { this.step = this.PROFILE; this.show(); } },
   wire() {
     const el = $('#ob'), d = this.draft;

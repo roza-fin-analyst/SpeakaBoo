@@ -743,7 +743,7 @@ svg.i { width: 22px; height: 22px; flex: none; }
 .win-in svg { width: 22px; height: 22px; }
 .win.open { border-color: var(--ep); background: var(--ep-soft); } .win.open .win-in { background: var(--ep); color: #fff; }
 .win.done { border-color: var(--gold); background: #FFF3CC; } .win.done .win-in { background: var(--gold); color: #3E2A00; }
-.win.locked .win-in { background: repeating-linear-gradient(0deg, var(--surface-2) 0 6px, var(--line) 6px 8px); }
+.win.locked .win-in { background: var(--surface-2); }
 .win.trophy { border-radius: 50%; } .win.trophy .win-in { border-radius: 50%; }
 .win.current { animation: winBob 1.6s ease-in-out infinite; box-shadow: 0 0 0 4px color-mix(in srgb, var(--ep) 25%, transparent); }
 @keyframes winBob { 50% { transform: translateY(-4px); } }
@@ -1833,7 +1833,7 @@ body { background: linear-gradient(180deg, #C9E6B0 0, #DFF0CD 280px, var(--bg) 5
    ================================================================= */
 :root {
   --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .3  0 0 0 0 .26  0 0 0 .22 0'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
-  --grain: repeating-linear-gradient(96deg, rgb(0 0 0 / .10) 0 2px, rgb(255 255 255 / 0) 2px 12px);
+  --grain: none;
   --stone-bg: var(--noise), linear-gradient(180deg, #F1EFE6 0%, #D9D6CA 100%);
   --wood-bg: var(--grain), linear-gradient(180deg, #7A5232 0%, #4D311C 100%);
   --cream-ink: #FFF1D6;
@@ -2051,7 +2051,7 @@ body[data-tab="learn"] .tmap { margin-bottom: 110px; }
   --berry: #FF7A1A; --berry-deep: #B34A00; --berry-soft: #3A2210; --on-berry: #1B1030; --berry-text: #FFB066; --pink: #FF9A4D;
   --jade: #3EE89A; --jade-deep: #1F9A68; --jade-soft: #123A2E; --coral: #FF5C6C; --coral-soft: #3F1624;
   --gold: #FFC857; --gold-deep: #C28A0A; --gold-ink: #FFE29A; --sky: #8E7BFF; --sky-soft: #261E4F;
-  --wood-bg: repeating-linear-gradient(96deg, rgb(255 255 255 / .03) 0 2px, rgb(0 0 0 / .08) 2px 12px), linear-gradient(180deg, #3A2A58, #1A1030);
+  --wood-bg: linear-gradient(180deg, #3A2A58, #1A1030);
   --stone-bg: linear-gradient(180deg, #4A4266, #2A2444);
   --cream-ink: #EADFFF; --noise: none;
   --font-display: "Fredoka", "Nunito", system-ui, sans-serif; --font-spook: "Creepster", "Fredoka", system-ui, sans-serif;
@@ -2189,7 +2189,7 @@ input.input, select.input, .ob .input { background: #0C0719 !important; color: #
 .tplaque { border-radius: 34px 34px 10px 10px / 24px 24px 10px 10px; padding: 8px 14px 8px; min-width: 128px; }
 .tn { transition: transform .25s cubic-bezier(.3, 1.5, .5, 1), box-shadow .25s; } .tn.launch { transform: scale(1.18); box-shadow: 0 8px 0 #07040F, 0 0 0 3px #FFB066, 0 0 60px rgb(255 138 31 / 1); }
 .tnode { animation: nodeIn .6s cubic-bezier(.3, 1.4, .5, 1) both; } @keyframes nodeIn { from { opacity: 0; translate: 0 18px; scale: .9; } }
-.tsign { overflow: visible; } .tsign::before, .tsign::after { content: ""; position: absolute; top: -18px; width: 3px; height: 20px; background: repeating-linear-gradient(#8E7BD0 0 4px, transparent 4px 7px); } .tsign::before { left: 18%; } .tsign::after { right: 18%; }
+.tsign { overflow: visible; } .tsign::before, .tsign::after { content: ""; position: absolute; top: -18px; width: 3px; height: 20px; background: #8E7BD0; } .tsign::before { left: 18%; } .tsign::after { right: 18%; }
 body.entering #app, body.entering .main { animation: none; } body.entering::after { content: ""; position: fixed; inset: 0; z-index: 70; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgb(200 180 255 / .0), rgb(15 10 28 / .95) 75%); animation: mistClose .32s ease-in forwards; } @keyframes mistClose { from { opacity: 0; } to { opacity: 1; } }
 #lesson:not([hidden]) { animation: lessonIn .5s cubic-bezier(.2, .8, .3, 1) both; } @keyframes lessonIn { from { opacity: 0; transform: scale(1.06); filter: blur(8px) brightness(1.6); } to { opacity: 1; transform: none; filter: none; } }
 .tab.tab-in { animation: tabIn .5s cubic-bezier(.22, 1, .36, 1); } @keyframes tabIn { from { opacity: 0; transform: translateY(14px); filter: blur(3px); } }
@@ -2205,9 +2205,8 @@ body.entering #app, body.entering .main { animation: none; } body.entering::afte
 /* ===== The haunted manor (replaces the trail) ===== */
 .manor { display: flex; flex-direction: column; gap: 22px; padding: 6px 0 30px; max-width: 640px; margin: 0 auto; }
 .floor { position: relative; border-radius: 22px 22px 8px 8px; padding: 0 12px 16px; background:
-  repeating-linear-gradient(90deg, rgb(255 255 255 / .025) 0 2px, transparent 2px 38px),
   linear-gradient(180deg, #2A1F47 0%, #1A1230 100%); border: 3px solid #0A0614; box-shadow: 0 0 0 1px #4A3578, 0 14px 24px rgb(0 0 0 / .5); }
-.floor::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 12px; border-radius: 0 0 6px 6px; background: repeating-linear-gradient(90deg, #4A3224 0 46px, #3A2619 46px 48px); }
+.floor::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 12px; border-radius: 0 0 6px 6px; background: #3A2619; }
 .floor-sign { display: flex; align-items: center; gap: 10px; margin: 0 -12px 14px; padding: 10px 14px; border-radius: 19px 19px 0 0; background: var(--wood-bg); border-bottom: 3px solid #0A0614; }
 .floor-sign b { flex: 1; min-width: 0; font: 600 19px var(--font-display); color: #fff; }
 .floor-crew { display: flex; flex-direction: column; align-items: center; background: none; border: 0; padding: 0; flex: none; }
@@ -2226,7 +2225,7 @@ body.entering #app, body.entering .main { animation: none; } body.entering::afte
 .door.current .door-leaf { transform: rotateY(-34deg); }
 @keyframes doorPulse { 50% { box-shadow: 0 0 44px rgb(255 138 31 / 1); } }
 .door.locked .door-leaf { filter: grayscale(.5) brightness(.6); } .door.locked .door-num { display: none; }
-.door-chain { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: repeating-linear-gradient(45deg, transparent 0 10px, rgb(200 195 225 / .55) 10px 12px), repeating-linear-gradient(-45deg, transparent 0 10px, rgb(200 195 225 / .45) 10px 12px); border-radius: 36px 36px 0 0; }
+.door-chain { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: none; border: 3px dashed rgb(200 195 225 / .5); border-radius: 36px 36px 0 0; }
 .door-lock { position: absolute; z-index: 3; left: 50%; top: 50%; width: 30px; height: 30px; transform: translate(-50%, -50%); filter: drop-shadow(0 2px 3px #000); pointer-events: none; }
 .door-tick { position: absolute; z-index: 3; right: -10px; top: -8px; width: 28px; height: 28px; padding: 4px; background: #3EE89A; border: 3px solid #0A0614; border-radius: 50%; box-sizing: border-box; pointer-events: none; }
 .door:not(.locked):active .door-frame { transform: scale(.95); } .door.launch .door-leaf { transform: rotateY(-95deg); } .door.launch .door-glow { box-shadow: 0 0 60px rgb(255 190 90 / 1); }
@@ -2246,3 +2245,10 @@ body.entering #app, body.entering .main { animation: none; } body.entering::afte
 .rail { background: linear-gradient(180deg, #1D1433, #130B24); border-right: 2px solid #0A0614; } .rail button.nav-i { color: #D9C9FF; } .rail .logo { color: #FF9A4D; text-shadow: 0 0 12px rgb(255 122 26 / .6); }
 .rail .who-btn { background: #2A2147; border: 2px solid #5A4890; color: #fff; } .rail .who-btn small { color: #B9A9DC; }
 aside.right .card { margin: 0; }
+.ob-story { align-items: center; gap: 14px; } .ob-story h1 { font: 400 40px var(--font-spook); letter-spacing: .06em; color: #FF9A4D; text-shadow: 0 0 16px rgb(255 122 26 / .7); margin: 0; }
+.story-cards { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 360px; }
+.sc { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 16px; background: linear-gradient(180deg, #2A2147, #170F2B); border: 2.5px solid #5A4890; box-shadow: 0 4px 0 #07040F; animation: scIn .5s cubic-bezier(.22, 1, .36, 1) both; }
+.sc:nth-child(2) { animation-delay: .12s; } .sc:nth-child(3) { animation-delay: .24s; } .sc:nth-child(4) { animation-delay: .36s; }
+.sc span { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #FF7A1A; color: #1B1030; font: 600 18px var(--font-display); box-shadow: 0 0 12px rgb(255 122 26 / .6); }
+.sc p { margin: 0; color: #EADFFF; font: 700 16px/1.35 var(--font-body); text-align: left; } .sc b { color: #fff; }
+@keyframes scIn { from { opacity: 0; transform: translateX(-18px); } }
