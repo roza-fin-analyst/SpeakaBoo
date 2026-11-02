@@ -1657,7 +1657,7 @@ function booBody(o) {
     ${o.acc === 'gills' || o.acc === 'ears' ? '' : acc}${front}`;
 }
 const BOO_LOOK = {
-  mandu: { c: '#FFFFFF', d: '#1C1B2E', shade: '#DCDDF0', sw: 3.4, ink: '#1C1B2E' },          // Boo
+  mandu: { c: '#FFFFFF', d: '#2B1D14', shade: '#DCDDF0', sw: 3.4, ink: '#2B1D14' },          // Boo
   tokki: { c: '#E4DAFF', d: '#8E74E6', acc: 'ears' },                                     // Peeka
   horangi: { c: '#FFB870', d: '#E07A1F', acc: 'bolt' },                                    // Zap
   byte: { c: '#DCE4EE', d: '#7E8FA6', acc: 'antenna', ink: '#24384F' },                    // Blip
@@ -1677,6 +1677,9 @@ const BOO_LOOK = {
   axo: { c: '#FFC9D8', d: '#E8577A', acc: 'gills' },
   tuki: { c: '#4A4A5E', d: '#24243A', acc: 'tuft', belly: '#FFF7E6', ink: '#FFFFFF' }
 };
+/* Spooky palette: each Boo gets an eerie colour (the leader stays pale and ghostly) */
+{ const SP = [['#CDB8FF', '#6B4BC2'], ['#B8F2C9', '#2E9E63'], ['#FFC9A0', '#C2561B'], ['#D9E4F2', '#5B6F8E'], ['#FFB3C8', '#B3345E'], ['#E8E0A8', '#8F8420'], ['#A8E6F2', '#2B8FA8']]; let i = 0;
+  for (const [k, o] of Object.entries(BOO_LOOK)) { if (k === 'mandu') { o.c = '#F4F0FF'; o.d = '#8E7BD0'; o.shade = '#D8D0F0'; continue; } const p = SP[i++ % SP.length]; o.c = p[0]; o.d = p[1]; } }
 const BOO_ART = {};
 for (const [k, o] of Object.entries(BOO_LOOK)) BOO_ART[k] = { ink: o.ink || '#2A1E33', cheek: '#FFAA98', ey: 56, my: 68, sp: 16, c: o.c, d: o.d, screen: o.ink === '#FFFFFF' ? '#4A4A5E' : undefined, body: booBody(o) };
 
@@ -1726,18 +1729,18 @@ Object.assign(MASCOTS, {
     roman: ROMAN, mishear: ['I heard “{heard}”! Funny! Try “{right}” ({rom})!'],
     help: ['Here here here! Say: “{right}” ({rom})!'] },
   /* Local Boos you meet in each language */
-  bora: { name: 'Bora', kind: 'boo', culture: 'ko', tagline: 'Purple Seoul Boo who knows every café', persona: 'Bora (보라 = purple), a trendy Boo from Seoul who knows every café and K-drama.' },
-  dubu: { name: 'Dubu', kind: 'boo', culture: 'ko', tagline: 'Soft, polite tofu Boo', persona: 'Dubu (두부 = tofu), a soft, extremely polite Boo who bows a lot.' },
-  hodu: { name: 'Hodu', kind: 'boo', culture: 'ko', tagline: 'Walnut Boo from the countryside', persona: 'Hodu (호두 = walnut), a warm, chatty Boo from the countryside who loves market food.' },
-  haneul: { name: 'Haneul', kind: 'boo', culture: 'ko', tagline: 'Dreamy sky Boo', persona: 'Haneul (하늘 = sky), a dreamy, gentle Boo who loves weather and walks along the Han river.' },
-  jamal: { name: 'Qamar', kind: 'boo', culture: 'ar', tagline: 'Moon Boo who loves evening chats', persona: 'Qamar (قمر = moon), a calm, generous Boo who loves evening conversations and always offers tea.' },
-  saqr: { name: 'Nakhla', kind: 'boo', culture: 'ar', tagline: 'Palm-tree Boo, proud and precise', persona: 'Nakhla (نخلة = palm tree), a proud Boo with a big heart who loves precise pronunciation.' },
-  fanous: { name: 'Fanous', kind: 'boo', culture: 'ar', tagline: 'Glowing lantern Boo', persona: 'Fanous (فانوس = lantern), a cheerful Boo who carries a little lantern and loves stories and sweets.' },
-  tamra: { name: 'Tamra', kind: 'boo', culture: 'ar', tagline: 'Sweet date Boo from the souk', persona: 'Tamra (تمرة = date), a bubbly, kind Boo who runs a stall in the souk.' },
-  churro: { name: 'Churro', kind: 'boo', culture: 'es', tagline: 'Sugary Boo from Madrid', persona: 'Churro, a sugar-dusted Boo from Madrid. Upbeat, loves chocolate and late nights.' },
-  oliva: { name: 'Oliva', kind: 'boo', culture: 'es', tagline: 'Chic Andalusian olive Boo', persona: 'Oliva, a stylish Boo from Andalusia. Warm, dramatic, loves flamenco and tapas.' },
-  axo: { name: 'Axo', kind: 'boo', culture: 'es', tagline: 'Smiley Boo from Mexico City', persona: 'Axo, a smiley pink Boo from the canals of Mexico City. Relaxed, friendly, loves markets and tacos.' },
-  tuki: { name: 'Tuki', kind: 'boo', culture: 'es', tagline: 'Chatty rainforest Boo', persona: 'Tuki, a chatty Boo with an orange tuft from the Latin American rainforest. Loud, joyful, loves music and fruit.' }
+  bora: { name: 'Bora', kind: 'boo', culture: 'ko', tagline: 'Purple Seoul buddy who knows every café', persona: 'Bora (보라 = purple), a trendy Boo from Seoul who knows every café and K-drama.' },
+  dubu: { name: 'Dubu', kind: 'boo', culture: 'ko', tagline: 'Soft, polite tofu buddy', persona: 'Dubu (두부 = tofu), a soft, extremely polite Boo who bows a lot.' },
+  hodu: { name: 'Hodu', kind: 'boo', culture: 'ko', tagline: 'Walnut buddy from the countryside', persona: 'Hodu (호두 = walnut), a warm, chatty Boo from the countryside who loves market food.' },
+  haneul: { name: 'Haneul', kind: 'boo', culture: 'ko', tagline: 'Dreamy sky buddy', persona: 'Haneul (하늘 = sky), a dreamy, gentle Boo who loves weather and walks along the Han river.' },
+  jamal: { name: 'Qamar', kind: 'boo', culture: 'ar', tagline: 'Moon buddy who loves evening chats', persona: 'Qamar (قمر = moon), a calm, generous Boo who loves evening conversations and always offers tea.' },
+  saqr: { name: 'Nakhla', kind: 'boo', culture: 'ar', tagline: 'Palm-tree buddy, proud and precise', persona: 'Nakhla (نخلة = palm tree), a proud Boo with a big heart who loves precise pronunciation.' },
+  fanous: { name: 'Fanous', kind: 'boo', culture: 'ar', tagline: 'Glowing lantern buddy', persona: 'Fanous (فانوس = lantern), a cheerful Boo who carries a little lantern and loves stories and sweets.' },
+  tamra: { name: 'Tamra', kind: 'boo', culture: 'ar', tagline: 'Sweet date buddy from the souk', persona: 'Tamra (تمرة = date), a bubbly, kind Boo who runs a stall in the souk.' },
+  churro: { name: 'Churro', kind: 'boo', culture: 'es', tagline: 'Sugary buddy from Madrid', persona: 'Churro, a sugar-dusted Boo from Madrid. Upbeat, loves chocolate and late nights.' },
+  oliva: { name: 'Oliva', kind: 'boo', culture: 'es', tagline: 'Chic Andalusian olive buddy', persona: 'Oliva, a stylish Boo from Andalusia. Warm, dramatic, loves flamenco and tapas.' },
+  axo: { name: 'Axo', kind: 'boo', culture: 'es', tagline: 'Smiley buddy from Mexico City', persona: 'Axo, a smiley pink Boo from the canals of Mexico City. Relaxed, friendly, loves markets and tacos.' },
+  tuki: { name: 'Tuki', kind: 'boo', culture: 'es', tagline: 'Chatty rainforest buddy', persona: 'Tuki, a chatty Boo with an orange tuft from the Latin American rainforest. Loud, joyful, loves music and fruit.' }
 });
 CULTURE_CAST.ko = ['bora', 'dubu', 'hodu', 'haneul'];
 Object.assign(VOICES, { mandu: [1.25, .95], bora: [1.2, .95], dubu: [1.05, .85], hodu: [.85, .95], haneul: [1.3, .88] });
@@ -3817,8 +3820,8 @@ const PIC_FILES = {"0️⃣": "0030-fe0f-20e3.svg", "1️⃣": "0031-fe0f-20e3.s
 function emojiArt(e) { const f = PIC_FILES[e]; if (!f) return ''; if (!ART[e]) ART[e] = () => `<image href="pics/${f}" x="4" y="4" width="92" height="92"/>`; return e; }
 /* =====================================================================
    SPEAKABOO — SEASONS 5 & 6: from "getting by" to "speaking your mind"
-   Season 5 "Real life": shopping & sizes, phone & messages.
-   Season 6 "Speak your mind": opinions, and telling a story in the past.
+   Part 5 "Real life": shopping & sizes, phone & messages.
+   Part 6 "Speak your mind": opinions, and telling a story in the past.
    ===================================================================== */
 for (const k of ['ko', 'ar', 'es']) EXTRA_SECTIONS[k].push(
   { title: 'Real life', blurb: 'Try things on, haggle, answer the phone, say you’re running late.' },
@@ -4203,12 +4206,24 @@ const MASCOT_ART = {
 };
 
 Object.assign(MASCOT_ART, typeof CAST_ART === 'object' ? CAST_ART : {}, typeof BOO_ART === 'object' ? BOO_ART : {});
+/* ---- Cast: the ghost Boos ---- */
+{
+  Object.assign(MASCOT_ART, BOO_ART);   // the ghost Boos are the cast
+  MASCOT_ART.tavi = BOO_ART.nabi;
+  MASCOTS.tavi = Object.assign({}, MASCOTS.mandu, { name: 'Wisp', kind: 'boo', tagline: 'A pale little ghost friend', persona: 'Wisp, a pale, shy little ghost who whispers hints. Short, plain and encouraging.' });
+  Object.assign(MASCOTS.mandu, { name: 'Boo', kind: 'boo', tagline: 'Your friendly ghost guide',
+    persona: 'Boo, a friendly little ghost who haunts the learner until they can speak. Patient, encouraging, plain and short.' });
+}
+
 function mascotFace(mood, a) {
   const { ink, cheek, ey, my, sp } = a, L = 60 - sp, R = 60 + sp, eyeBg = a.screen || '#fff';
   const cheeks = `<ellipse cx="${L - 9}" cy="${ey + 11}" rx="7.5" ry="4.6" fill="${cheek}" opacity=".7"/><ellipse cx="${R + 9}" cy="${ey + 11}" rx="7.5" ry="4.6" fill="${cheek}" opacity=".7"/><circle cx="${L - 11}" cy="${ey + 9.5}" r="1.4" fill="#fff" opacity=".8"/><circle cx="${R + 7}" cy="${ey + 9.5}" r="1.4" fill="#fff" opacity=".8"/>`;
   const hi = eyeBg === '#fff' ? '#fff' : eyeBg;
   /* Big shiny eyes (two catchlights) inside a blink group */
-  const dotEye = (x, dy = 0) => `<g class="eye"><ellipse cx="${x}" cy="${ey + dy}" rx="7.4" ry="9" fill="${ink}"/><circle cx="${x + 2.4}" cy="${ey + dy - 3.2}" r="3" fill="${hi}"/><circle cx="${x - 1.8}" cy="${ey + dy + 2.6}" r="1.1" fill="${hi}" opacity=".85"/></g>`;
+  const er = a.er || 1;
+  const irisEye = (x, dy = 0) => `<g class="eye"><ellipse cx="${x}" cy="${ey + dy}" rx="${8 * er}" ry="${9.6 * er}" fill="url(#ir@@)" stroke="${ink}" stroke-width="1.6"/><ellipse cx="${x}" cy="${ey + dy + 1.2 * er}" rx="${3.5 * er}" ry="${5.2 * er}" fill="${ink}"/><path d="M${x - 7.6 * er} ${ey + dy - 3 * er}Q${x} ${ey + dy - 13 * er} ${x + 7.6 * er} ${ey + dy - 3 * er}" fill="none" stroke="${ink}" stroke-width="2.6" stroke-linecap="round"/><circle cx="${x + 3 * er}" cy="${ey + dy - 3.4 * er}" r="${3.1 * er}" fill="#fff"/><circle cx="${x - 2.4 * er}" cy="${ey + dy + 3.6 * er}" r="${1.3 * er}" fill="#fff" opacity=".9"/></g>`;
+  const dotEye0 = (x, dy = 0) => `<g class="eye"><ellipse cx="${x}" cy="${ey + dy}" rx="${7.4 * er}" ry="${9 * er}" fill="${ink}"/><circle cx="${x + 2.4 * er}" cy="${ey + dy - 3.2 * er}" r="${3 * er}" fill="${hi}"/><circle cx="${x - 1.8 * er}" cy="${ey + dy + 2.6 * er}" r="${1.2 * er}" fill="${hi}" opacity=".9"/><circle cx="${x + 3.6 * er}" cy="${ey + dy + 3.4 * er}" r="${.8 * er}" fill="${hi}" opacity=".7"/></g>`;
+  const dotEye = a.iris ? irisEye : dotEye0;
   const arcEye = x => `<path d="M${x - 5} ${ey + 1}q5-7 10 0" fill="none" stroke="${ink}" stroke-width="3.2" stroke-linecap="round"/>`;
   const stroke = `stroke="${ink}" stroke-width="3" fill="none" stroke-linecap="round"`;
   const tongue = y => `<ellipse cx="60" cy="${y}" rx="4.5" ry="2.6" fill="#FF7A9A"/>`;
@@ -4258,16 +4273,20 @@ function mascotFace(mood, a) {
     default: return cheeks + dotEye(L) + dotEye(R) + `<path d="M53 ${my - 1}q7 7 14 0" ${stroke} stroke-width="2.8"/>`;
   }
 }
-function mascotSVG(kind = 'mandu', mood = 'happy') {
+let _svgUid = 0;
+const uniqIds = svg => svg.replace(/@@/g, 'u' + (++_svgUid));
+function mascotSVG(kind = 'mandu', mood = 'happy', small = true) {
   const a = MASCOT_ART[kind] || MASCOT_ART.mandu, wear = typeof wearOverlay === 'function' ? wearOverlay(kind) : '';
-  return `<svg viewBox="${wear ? '-7 -14 134 134' : '0 0 120 120'}" role="img" aria-label="${esc((MASCOTS[kind] || MASCOTS.mandu).name)}, ${mood}"><ellipse cx="60" cy="110" rx="34" ry="5" fill="#33223F" opacity=".1"/>${a.body}${mascotFace(mood, a)}${wear}</svg>`;
+  const vb = a.under ? '-4 -4 146 154' : wear ? '-7 -14 134 134' : '0 0 120 120';
+  return uniqIds(`<svg viewBox="${vb}" role="img" aria-label="${esc((MASCOTS[kind] || MASCOTS.mandu).name)}, ${mood}">${a.under ? '' : '<ellipse cx="60" cy="110" rx="34" ry="5" fill="#33223F" opacity=".1"/>'}${a.under || ''}${a.body}${mascotFace(mood, a)}${a.after || ''}${wear}</svg>`);
 }
 /** Paint a mascot into an element (animated by mood class). */
 function paintMascot(el, kind, mood = 'happy', animate = true) {
   if (!el) return;
   [...el.classList].filter(c => c.startsWith('m-')).forEach(c => el.classList.remove(c));
   el.classList.add('mascot'); if (animate) el.classList.add('m-' + mood);
-  el.innerHTML = mascotSVG(kind, mood);
+  const w = el.clientWidth || el.getBoundingClientRect().width || 0;
+  el.innerHTML = mascotSVG(kind, mood, !!w && w < 90);
 }
 
 /* ---------- 4. Storage & profiles (localStorage, try/catch everywhere) ---------- */
@@ -5737,7 +5756,7 @@ const Tester = {
   toggleLocal() {
     if (Account.enabled()) { toast(Tester.on() ? 'Tester mode is on for your owner account' : 'Tester mode is only for the app owner', '🔒'); return; }
     const next = !Tester.on(); try { localStorage.setItem('speakaboo-tester', next ? '1' : '0'); } catch (e) { /* ignore */ }
-    toast(next ? 'Tester mode on: every episode is open' : 'Tester mode off', next ? '🔓' : '🔒');
+    toast(next ? 'Tester mode on: every chapter is open' : 'Tester mode off', next ? '🔓' : '🔒');
     renderLearn(); renderLetters(); renderProfile(); renderChrome();
   }
 };
@@ -5758,11 +5777,11 @@ const Access = {
 /* ---------- What the free trial includes (edit in config.js → trial) ---------- */
 const TRIAL = Object.assign({ seasons: 1, talkPerDay: 10, callBoo: false, drills: ['mix', 'listen', 'speak', 'letters', 'sentences', 'pictures', 'water', 'sleepy', 'chatty'] }, CFG.trial || {});
 const LOCK_REASON = {
-  season: `The free trial covers Season ${TRIAL.seasons === 1 ? '1' : '1–' + TRIAL.seasons}. Go Premium to unlock every season.`,
+  season: `The free trial covers Part ${TRIAL.seasons === 1 ? '1' : '1–' + TRIAL.seasons}. Go Premium to unlock every season.`,
   talk: `That’s ${TRIAL.talkPerDay} Talk rounds today, the free-trial limit. Premium talks all day.`,
   call: 'Call Boo is a Premium feature: hands-free voice practice, as long as you like.',
   drill: 'This drill is part of Premium. The trial includes the basic drills.',
-  skip: 'Episodes open one by one as you finish them.'
+  skip: 'Chapters open one by one as you finish them.'
 };
 /** Is a feature allowed right now? trial = limited, premium/local = everything. */
 Access.allows = function (what, ctx) {
@@ -5783,7 +5802,7 @@ Access.need = function (what, ctx) { if (this.allows(what, ctx)) return true; Pa
 function trialBannerHTML() {
   const s = Access.state();
   if (s.mode !== 'trial') return '';
-  return `<button class="trial-pill" data-plans>${artSVG('gift')}<span><b>Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left</b><small>Season ${TRIAL.seasons === 1 ? '1' : '1–' + TRIAL.seasons} + ${TRIAL.talkPerDay} Talk rounds a day. See plans</small></span></button>`;
+  return `<button class="trial-pill" data-plans>${artSVG('gift')}<span><b>Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left</b><small>Part ${TRIAL.seasons === 1 ? '1' : '1–' + TRIAL.seasons} + ${TRIAL.talkPerDay} Talk rounds a day. See plans</small></span></button>`;
 }
 
 /* ---------- Google Play Billing (inside the Play Store app) ---------- */
@@ -5905,7 +5924,7 @@ function perMonth(pr) { try { return new Intl.NumberFormat(undefined, { style: '
 function accountHTML() {
   if (!Account.enabled()) return '';
   const s = Access.state(), u = Account.user;
-  const status = s.mode === 'premium' ? `Premium · renews or ends on ${new Date(s.until).toLocaleDateString()}` : s.mode === 'trial' ? `Free trial · ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left · Season 1 and ${TRIAL.talkPerDay} Talk rounds a day` : 'Trial ended';
+  const status = s.mode === 'premium' ? `Premium · renews or ends on ${new Date(s.until).toLocaleDateString()}` : s.mode === 'trial' ? `Free trial · ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left · Part 1 and ${TRIAL.talkPerDay} Talk rounds a day` : 'Trial ended';
   return `<div class="card account"><h3>Account</h3>
     <label class="row">Email<span class="note">${esc(u ? u.email : '')}${u && !u.emailVerified ? ' · not verified' : ''}</span></label>
     <label class="row">Plan<span class="note">${esc(status)}</span></label>
@@ -6049,7 +6068,7 @@ Object.assign(React, {
   rain(type = 'hearts', n = 18) {
     const layer = document.createElement('div'); layer.className = 'fx-rain'; document.body.append(layer);
     const sh = { hearts: c => `<svg viewBox="0 0 20 20"><path d="M10 18C2 12 0 7 3 4c2-2 5-1 7 2 2-3 5-4 7-2 3 3 1 8-7 14z" fill="${c}"/></svg>`, stars: c => `<svg viewBox="0 0 20 20"><path d="M10 1l2.7 5.6 6.1.8-4.5 4.2 1.2 6L10 14.7 4.5 17.6l1.2-6L1.2 7.4l6.1-.8z" fill="${c}"/></svg>`, confetti: c => `<i style="background:${c}"></i>` };
-    const cols = { hearts: ['#FF6B6B', '#FF8A8A', '#FFB3B3'], stars: ['#FFC23D', '#FFE066', '#8D92FF'], confetti: ['#8D92FF', '#FF6B6B', '#FFC23D', '#4146C9', '#FFF2E1'] }[type];
+    const cols = { hearts: ['#FF6B6B', '#FF8A8A', '#FFB3B3'], stars: ['#FFC23D', '#FFE066', '#FFB27A'], confetti: ['#FFB27A', '#FF6B6B', '#FFC23D', '#D95B0C', '#FFF2E1'] }[type];
     for (let i = 0; i < n; i++) {
       const s = document.createElement('span'); s.className = 'drop ' + type;
       s.style.left = (Math.random() * 100) + 'vw'; s.style.animationDelay = (Math.random() * 500) + 'ms'; s.style.animationDuration = (1300 + Math.random() * 900) + 'ms';
@@ -6060,6 +6079,7 @@ Object.assign(React, {
   },
   /** Big streak moment: Boo pops up blushing, hearts or stars fall. */
   streak(n, kind) {
+    return;   // the Boo crew cheers streaks in their own words
     const tiers = n >= 10 ? ['confetti', 'Legendary streak!', 'star'] : n >= 8 ? ['stars', 'Unstoppable!', 'star'] : n >= 5 ? ['hearts', 'Aww, ' + n + ' in a row!', 'love'] : ['hearts', n + ' in a row!', 'love'];
     const el = document.createElement('div'); el.className = 'streak-pop' + (n >= 8 ? ' gold' : '');
     el.innerHTML = `<div class="sp-m mascot"></div><div class="sp-txt"><b>${tiers[1]}</b><small>${esc(pick(n >= 8 ? ['Boo is screaming (happily)', 'Is this even legal?', 'Fluent behaviour detected'] : ['Boo is blushing', 'Boo’s heart just did a flip', 'Keep it going!']))}</small></div>`;
@@ -6085,7 +6105,7 @@ Object.assign(React, {
    Emotions: happy | neutral | confused | offended | impressed
    ===================================================================== */
 const RT_MODES = {
-  MICRO_ROLEPLAY: { name: 'Micro role-play', short: 'Role-play', color: '#4146C9' },
+  MICRO_ROLEPLAY: { name: 'Micro role-play', short: 'Role-play', color: '#D95B0C' },
   TONE_SLIDER: { name: 'Tone slider', short: 'Tone', color: '#7A5AF8' },
   SOCIAL_STAKES: { name: 'Social stakes', short: 'Stakes', color: '#FF6B6B' },
   SPEED_ROUND: { name: 'Speed round', short: 'Speed', color: '#E0A100' }
@@ -6536,7 +6556,7 @@ const RealTalk = {
    ===================================================================== */
 const STORY_CAST = {
   voice_leo_04: { name: 'Leo (Energetic Teen)', short: 'Leo', pitch: 1.3, rate: 1, pick: 0,
-    look: { c: '#C4F0F6', d: '#2F9C95', ink: '#1C1B2E' } },
+    look: { c: '#C4F0F6', d: '#2F9C95', ink: '#2B1D14' } },
   voice_sophia_02: { name: 'Sophia (Sarcastic Barista)', short: 'Sophia', pitch: .9, rate: 1, pick: 1,
     look: { c: '#FFE6D2', d: '#B9825A', ink: '#3A2416' } },
   voice_hiro_01: { name: 'Grandpa Hiro (Wise/Calm)', short: 'Grandpa Hiro', pitch: .7, rate: 1, pick: 2,
@@ -6988,12 +7008,12 @@ function skyDeco(sky) {
 
 /* ---------- Places in your neighbourhood: every feature is somewhere ---------- */
 const PLACE_ART = {
-  cafe: `<svg viewBox="0 0 64 64"><rect x="8" y="22" width="48" height="36" rx="3" fill="#FFF6EA" stroke="#1C1B2E" stroke-width="2.5"/><path d="M6 22l4-10h44l4 10z" fill="#FF7A59" stroke="#1C1B2E" stroke-width="2.5" stroke-linejoin="round"/><path d="M16 12v10M26 12v10M38 12v10M48 12v10" stroke="#fff" stroke-width="4"/><rect x="26" y="38" width="12" height="20" rx="2" fill="#4146C9"/><rect x="12" y="30" width="10" height="10" rx="2" fill="#BFE3FF" stroke="#1C1B2E" stroke-width="2"/><rect x="42" y="30" width="10" height="10" rx="2" fill="#BFE3FF" stroke="#1C1B2E" stroke-width="2"/></svg>`,
-  street: `<svg viewBox="0 0 64 64"><path d="M10 58V30h44v28" fill="#2A2E6E" stroke="#1C1B2E" stroke-width="2.5"/><path d="M6 30q26-14 52 0" fill="#FF7A59" stroke="#1C1B2E" stroke-width="2.5"/><circle cx="18" cy="40" r="5" fill="#FFD66B"/><circle cx="32" cy="40" r="5" fill="#FF9F6B"/><circle cx="46" cy="40" r="5" fill="#FFD66B"/><path d="M12 50h40" stroke="#FFF6EA" stroke-width="3"/></svg>`,
-  books: `<svg viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="42" rx="3" fill="#E6E7FB" stroke="#1C1B2E" stroke-width="2.5"/><rect x="14" y="24" width="7" height="26" fill="#FF7A59"/><rect x="23" y="20" width="7" height="30" fill="#4146C9"/><rect x="32" y="26" width="7" height="24" fill="#2F9C95"/><rect x="41" y="22" width="9" height="28" fill="#FFD66B" transform="rotate(8 45 36)"/><path d="M8 50h48" stroke="#1C1B2E" stroke-width="2.5"/></svg>`,
-  booth: `<svg viewBox="0 0 64 64"><rect x="18" y="8" width="28" height="50" rx="4" fill="#FF7A59" stroke="#1C1B2E" stroke-width="2.5"/><rect x="23" y="18" width="18" height="30" rx="2" fill="#BFE3FF" stroke="#1C1B2E" stroke-width="2"/><path d="M27 30q5-6 10 0" stroke="#1C1B2E" stroke-width="2.5" fill="none"/><rect x="22" y="11" width="20" height="5" rx="1.5" fill="#FFF6EA"/></svg>`,
-  stage: `<svg viewBox="0 0 64 64"><path d="M6 58h52V24H6z" fill="#2A2E6E" stroke="#1C1B2E" stroke-width="2.5"/><path d="M4 24q14-14 28-6 14-8 28 6z" fill="#FF7A59" stroke="#1C1B2E" stroke-width="2.5" stroke-linejoin="round"/><rect x="28" y="30" width="8" height="14" rx="4" fill="#FFD66B"/><path d="M24 40q8 8 16 0M32 46v6" stroke="#FFD66B" stroke-width="2.5" fill="none"/><path d="M12 34q4-4 0-8M52 34q-4-4 0-8" stroke="#8D92FF" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
-  gym: `<svg viewBox="0 0 64 64"><rect x="8" y="20" width="48" height="38" rx="3" fill="#FFF6EA" stroke="#1C1B2E" stroke-width="2.5"/><path d="M4 22l28-14 28 14" fill="#4146C9" stroke="#1C1B2E" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38h24" stroke="#1C1B2E" stroke-width="3"/><rect x="14" y="31" width="6" height="14" rx="2" fill="#2F9C95"/><rect x="44" y="31" width="6" height="14" rx="2" fill="#2F9C95"/></svg>`
+  cafe: `<svg viewBox="0 0 64 64"><rect x="8" y="22" width="48" height="36" rx="3" fill="#FFF6EA" stroke="#2B1D14" stroke-width="2.5"/><path d="M6 22l4-10h44l4 10z" fill="#FF7A59" stroke="#2B1D14" stroke-width="2.5" stroke-linejoin="round"/><path d="M16 12v10M26 12v10M38 12v10M48 12v10" stroke="#fff" stroke-width="4"/><rect x="26" y="38" width="12" height="20" rx="2" fill="#D95B0C"/><rect x="12" y="30" width="10" height="10" rx="2" fill="#BFE3FF" stroke="#2B1D14" stroke-width="2"/><rect x="42" y="30" width="10" height="10" rx="2" fill="#BFE3FF" stroke="#2B1D14" stroke-width="2"/></svg>`,
+  street: `<svg viewBox="0 0 64 64"><path d="M10 58V30h44v28" fill="#7A3410" stroke="#2B1D14" stroke-width="2.5"/><path d="M6 30q26-14 52 0" fill="#FF7A59" stroke="#2B1D14" stroke-width="2.5"/><circle cx="18" cy="40" r="5" fill="#FFD66B"/><circle cx="32" cy="40" r="5" fill="#FF9F6B"/><circle cx="46" cy="40" r="5" fill="#FFD66B"/><path d="M12 50h40" stroke="#FFF6EA" stroke-width="3"/></svg>`,
+  books: `<svg viewBox="0 0 64 64"><rect x="8" y="16" width="48" height="42" rx="3" fill="#E6E7FB" stroke="#2B1D14" stroke-width="2.5"/><rect x="14" y="24" width="7" height="26" fill="#FF7A59"/><rect x="23" y="20" width="7" height="30" fill="#D95B0C"/><rect x="32" y="26" width="7" height="24" fill="#2F9C95"/><rect x="41" y="22" width="9" height="28" fill="#FFD66B" transform="rotate(8 45 36)"/><path d="M8 50h48" stroke="#2B1D14" stroke-width="2.5"/></svg>`,
+  booth: `<svg viewBox="0 0 64 64"><rect x="18" y="8" width="28" height="50" rx="4" fill="#FF7A59" stroke="#2B1D14" stroke-width="2.5"/><rect x="23" y="18" width="18" height="30" rx="2" fill="#BFE3FF" stroke="#2B1D14" stroke-width="2"/><path d="M27 30q5-6 10 0" stroke="#2B1D14" stroke-width="2.5" fill="none"/><rect x="22" y="11" width="20" height="5" rx="1.5" fill="#FFF6EA"/></svg>`,
+  stage: `<svg viewBox="0 0 64 64"><path d="M6 58h52V24H6z" fill="#7A3410" stroke="#2B1D14" stroke-width="2.5"/><path d="M4 24q14-14 28-6 14-8 28 6z" fill="#FF7A59" stroke="#2B1D14" stroke-width="2.5" stroke-linejoin="round"/><rect x="28" y="30" width="8" height="14" rx="4" fill="#FFD66B"/><path d="M24 40q8 8 16 0M32 46v6" stroke="#FFD66B" stroke-width="2.5" fill="none"/><path d="M12 34q4-4 0-8M52 34q-4-4 0-8" stroke="#FFB27A" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+  gym: `<svg viewBox="0 0 64 64"><rect x="8" y="20" width="48" height="38" rx="3" fill="#FFF6EA" stroke="#2B1D14" stroke-width="2.5"/><path d="M4 22l28-14 28 14" fill="#D95B0C" stroke="#2B1D14" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38h24" stroke="#2B1D14" stroke-width="3"/><rect x="14" y="31" width="6" height="14" rx="2" fill="#2F9C95"/><rect x="44" y="31" width="6" height="14" rx="2" fill="#2F9C95"/></svg>`
 };
 function placesHTML() {
   const c = course(), st = ADV_STORIES[c.code];
@@ -7023,9 +7043,9 @@ function renderNow() {
       <h1 class="sky-hi">${hi}, ${esc(p.name)}.</h1>
       <p class="sky-sub">${['bored', 'missing', 'fading', 'ghosted'].includes(st.key) ? esc(st.line) : `Here’s what people say in ${esc(c.name)} around now.`}</p>
       <button class="sky-boo" data-sky-boo aria-label="Tap ${esc(mc.name)}"></button><div class="sky-bubble" id="sky-bubble" hidden></div>
-      ${skylineSVG(c.code, sky)}
+      ${jungleSVG(sky)}
     </section>
-    ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Episode ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
+    ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Chapter ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
     <section class="moment card-lift">
       <div class="moment-head"><span class="chip-time">${DAYPARTS[part].name}</span><b>Your next few hours</b></div>
       ${ph.map((x, i) => `<div class="phrase" style="animation-delay:${i * 80}ms"><button class="ph-play" data-say="${esc(x.t)}" aria-label="Play">${ICON.speaker}</button>
@@ -7134,25 +7154,18 @@ function skyBooTap() {
    quests & shop, profile & settings, chat, install & microphone helpers.
    ===================================================================== */
 /* ---------- Theme: Auto / Light / Dark ---------- */
-const Theme = {
-  get() { try { const t = localStorage.getItem('speakaboo.theme'); return t === 'light' || t === 'dark' ? t : 'auto'; } catch (e) { return 'auto'; } },
-  set(v) {
-    try { v === 'auto' ? localStorage.removeItem('speakaboo.theme') : localStorage.setItem('speakaboo.theme', v); } catch (e) { /* ignore */ }
-    this.apply();
-  },
-  apply() {
-    const t = this.get(), root = document.documentElement;
-    t === 'auto' ? root.removeAttribute('data-theme') : root.setAttribute('data-theme', t);
-    const dark = t === 'dark' || (t === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
-    const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = dark ? '#11111C' : '#FFF8EE';
-  }
+const Theme = {   // light only
+  get() { return 'light'; },
+  set() { /* no dark theme */ },
+  apply() { document.documentElement.setAttribute('data-theme', 'light'); const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = '#FFF8F0'; }
 };
 Theme.apply();
-try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => Theme.apply()); } catch (e) { /* older browsers */ }
 const LATIN_LANGS = ['es', 'fr', 'de'];
 const isLatinLang = code => LATIN_LANGS.includes(code);
 const BRAND_SVG = `<span class="brand-boo" aria-hidden="true">${mascotSVG('mandu', 'peek')}</span>`;
 const SPEAKABOO_VERSION = '2026.10.25-a';
+const ICON_BANANA = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 7c-9 0-13 6-13 12s5 9 13 9 13-3 13-9S25 7 16 7z" fill="#FF8A1F" stroke="#B3500A" stroke-width="2"/><path d="M16 7c-3 4-3 17 0 21M16 7c3 4 3 17 0 21" fill="none" stroke="#B3500A" stroke-width="1.6"/><path d="M16 7q0-4 4-5" stroke="#4B7A2A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M10 16l3 3-4 0zM22 16l-3 3 4 0z M11 22q5 4 10 0" fill="#2A1450" stroke="#2A1450" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+const ICON_LEAFY = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3c-7 0-10 6-10 11v14l4-3 3 3 3-3 3 3 3-3 4 3V14c0-5-3-11-10-11z" fill="#B7FFD1" stroke="#2EA86B" stroke-width="2" stroke-linejoin="round"/><circle cx="12.500" cy="14" r="2.200" fill="#123"/><circle cx="19.500" cy="14" r="2.200" fill="#123"/></svg>`;
 const UI = { tab: 'now', manage: false, creating: false, confirmDel: null, draft: { name: '', mascot: 'mandu', lang: 'ko' }, meConfirm: null };
 const attrs = c => `lang="${c.code}" dir="${c.dir}"`;
 const IN_ARTIFACT = !!window.claude;                              // opened inside claude.ai (mic blocked there)
@@ -7271,7 +7284,7 @@ function confetti() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const cv = $('#confetti'), ctx = cv.getContext('2d'); cv.hidden = false;
   const W = cv.width = innerWidth, H = cv.height = innerHeight;
-  const cols = ['#8D92FF', '#4146C9', '#FF6B6B', '#FFC23D', '#FFF2E1', '#1C1B2E'];
+  const cols = ['#FFB27A', '#D95B0C', '#FF6B6B', '#FFC23D', '#FFF2E1', '#2B1D14'];
   const ps = Array.from({ length: 150 }, () => ({ x: W / 2 + (Math.random() - .5) * 200, y: H * .35, vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 4, r: Math.random() * 6 + 4, c: pick(cols), a: Math.random() * 6, s: Math.random() > .5 }));
   let f = 0;
   (function tick() {
@@ -7358,7 +7371,7 @@ function showProfiles() { Store.data.active = null; Store.save(); UI.manage = fa
 /* =====================================================================
    APP SHELL & NAVIGATION
    ===================================================================== */
-const TABS = [['now', 'Today', 'sunI'], ['learn', 'Journey', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Scenes', 'chat'], ['practice', 'Practice', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
+const TABS = [['now', 'Today', 'sunI'], ['learn', 'Manor', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Haunts', 'chat'], ['practice', 'Practice', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Spirit', 'user']];
 const NAV_HIDDEN = ['letters', 'quests'];
 
 function enterApp(id) {
@@ -7380,8 +7393,8 @@ function setLang(code) {
 }
 function statsHTML(p) {
   const live = p.lastDay === dayKey(), h = Hearts.left(p);
-  return `<button class="stat streak ${live ? '' : 'cold'}" data-sheet="streak" aria-label="${liveStreak(p)} day streak">${ICON.flame}<span class="num">${liveStreak(p)}</span></button>
-    <button class="stat gems" data-sheet="gems" aria-label="${p.gems} gems">${ICON.gem}<span class="num">${p.gems}</span></button>
+  return `<button class="stat streak ${live ? '' : 'cold'}" data-sheet="streak" aria-label="${liveStreak(p)} day streak">${ICON_BANANA}<span class="num">${liveStreak(p)}</span></button>
+    <button class="stat gems" data-sheet="gems" aria-label="${p.gems} gems">${ICON_LEAFY}<span class="num">${p.gems}</span></button>
     <button class="stat hearts" data-sheet="hearts" aria-label="${h === Infinity ? 'unlimited' : h} hearts">${ICON.heart}<span class="num">${h === Infinity ? '∞' : h}</span></button>`;
 }
 function langChipHTML() {
@@ -7441,6 +7454,33 @@ function lessonDesc(u, i) {
   return [`New words: ${W.slice(0, 3).map(w => w.t).join(', ')}…`, `More words: ${W.slice(Math.ceil(W.length / 2), Math.ceil(W.length / 2) + 3).map(w => w.t).join(', ')}…`,
     'Build sentences & say them', `Grammar: ${(u.guide[1] || u.guide[0]).h}`, 'Real conversation with a character'][i];
 }
+/* ---- The haunted manor: each Part is a floor, each chapter is a door in the hallway ---- */
+function mansionHTML(units, sections, cur, p, c) {
+  const LOCK = '<svg class="door-lock" viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3" fill="none" stroke="#C9C2E6" stroke-width="2.4" stroke-linecap="round"/><rect x="5" y="11" width="14" height="10" rx="3" fill="#C9C2E6"/><circle cx="12" cy="16" r="1.6" fill="#2A2148"/></svg>';
+  const TICK = '<svg class="door-tick" viewBox="0 0 24 24"><path d="M5 13l4 4 10-10" fill="none" stroke="#05281A" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  let html = '', tester = '', lastS = -1, floors = [];
+  units.forEach((u, k) => {
+    if (u.s !== lastS) { lastS = u.s; floors.push({ s: u.s, items: [] }); }
+    floors[floors.length - 1].items.push({ u, k });
+  });
+  floors.forEach((f, fi) => {
+    const crewId = CREW_ORDER[fi % CREW_ORDER.length], C = CREW[crewId];
+    if (Tester.on() && sections[f.s + 1] && !sectionDone(p, c.code, f.s) && !tester) tester = `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Part ${f.s + 1} done and open Part ${f.s + 2}: ${esc(sections[f.s + 1].title)}.</small></div><button class="btn sm" data-skip-section="${f.s}">Skip</button></div>`;
+    html += `<section class="floor"><div class="floor-sign"><span class="season-tag">Part ${f.s + 1}</span><b>${esc(sections[f.s].title)}</b><button class="floor-crew" data-crew="${crewId}" aria-label="${esc(C.name)}"><span class="mascot" data-tm="${crewId}"></span><small>${esc(C.name)}</small></button></div><div class="doors">`;
+    f.items.forEach(({ u, k }) => {
+      const prog = unitProgress(p, c.code, u.id), open = unitUnlocked(u), done = prog >= UNIT_LESSONS, isCur = cur && cur.u === u, mastered = prog > UNIT_LESSONS;
+      const num = units.filter(z => z.s === u.s).indexOf(u) + 1, next = Math.min(prog, UNIT_LESSONS - 1);
+      const state = !open ? 'locked' : isCur ? 'current' : done ? 'done' : 'open';
+      html += `<button class="door ${state}" ${open ? `data-go="${u.id}:${next}:lesson"` : `data-locked="${u.id}"`} aria-label="Chapter ${num}: ${esc(u.title)} (${state})">
+        <span class="door-frame"><span class="door-glow"></span><span class="door-leaf"><span class="door-num" ${attrs(c)}>${state === 'locked' ? '' : esc(u.icon || num)}</span><i class="door-knob"></i></span>${state === 'locked' ? '<span class="door-chain"></span>' + LOCK : ''}${done ? TICK : ''}</span>
+        <span class="door-name"><small>Chapter ${num}${mastered ? ' · Mastered' : ''}</small><b>${esc(u.title)}</b></span>
+        <span class="door-dots">${Array.from({ length: UNIT_LESSONS }, (_, i) => `<i class="${prog > i ? 'on' : ''}"></i>`).join('')}</span>
+        ${isCur ? `<span class="door-peek">${booBookSVG('happy')}</span>` : ''}</button>`;
+    });
+    html += `</div></section>`;
+  });
+  return `${tester}<div class="manor">${html}</div>`;
+}
 function renderLearn() { renderPath('main'); }
 function renderLetters() { renderPath('letters'); }
 function renderPath(track) {
@@ -7454,19 +7494,20 @@ function renderPath(track) {
 
   let lastS = -1;
   const cur = currentLesson(track);
-  units.forEach(u => {
+  if (track === 'main') html += mansionHTML(units, sections, cur, p, c);
+  (track === 'main' ? [] : units).forEach(u => {
     if (u.s !== lastS) {
-      lastS = u.s; html += `<div class="season-head"><span class="season-tag">${track === 'letters' ? 'Letters' : `Season ${u.s + 1}`}</span><b>${esc(sections[u.s].title)}</b>${sections[u.s].blurb ? `<small>${esc(sections[u.s].blurb)}</small>` : ''}</div>`;
-      if (track === 'main' && Tester.on() && sections[u.s + 1] && !sectionDone(p, c.code, u.s)) html += `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Season ${u.s + 1} done and open Season ${u.s + 2}: ${esc(sections[u.s + 1].title)}.</small></div><button class="btn primary sm" data-skip-section="${u.s}">Skip</button></div>`;
+      lastS = u.s; html += `<div class="season-head"><span class="season-tag">${track === 'letters' ? 'Letters' : `Part ${u.s + 1}`}</span><b>${esc(sections[u.s].title)}</b>${sections[u.s].blurb ? `<small>${esc(sections[u.s].blurb)}</small>` : ''}</div>`;
+      if (track === 'main' && Tester.on() && sections[u.s + 1] && !sectionDone(p, c.code, u.s)) html += `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Part ${u.s + 1} done and open Part ${u.s + 2}: ${esc(sections[u.s + 1].title)}.</small></div><button class="btn primary sm" data-skip-section="${u.s}">Skip</button></div>`;
     }
     const prog = unitProgress(p, c.code, u.id), open = unitUnlocked(u), num = units.filter(x => x.s === u.s).indexOf(u) + 1;
     const cc = courseCast(), castId = cc[(u.index + (track === 'letters' ? 1 : 0)) % cc.length];
     const doneN = Math.min(prog, UNIT_LESSONS), mastered = prog > UNIT_LESSONS;
-    if (!open) { html += `<section class="ep mini c${u.index % UNIT_COLORS} locked" id="unit-${u.id}"><div class="ep-icon" ${attrs(c)}>${esc(u.icon || num)}</div><div class="ep-title"><span class="eyebrow">Episode ${num}${Access.allows('season', u) ? '' : ' · ★ Premium'}</span><b>${esc(u.title)}</b></div><button class="guide-btn" data-guide="${u.id}" aria-label="Guide">${ICON.guide}</button><span class="ep-lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 10V8a5 5 0 0 1 10 0v2h1v11H6V10zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg></span></section>`; return; }
+    if (!open) { html += `<section class="ep mini c${u.index % UNIT_COLORS} locked" id="unit-${u.id}"><div class="ep-icon" ${attrs(c)}>${esc(u.icon || num)}</div><div class="ep-title"><span class="eyebrow">Chapter ${num}${Access.allows('season', u) ? '' : ' · ★ Premium'}</span><b>${esc(u.title)}</b></div><button class="guide-btn" data-guide="${u.id}" aria-label="Guide">${ICON.guide}</button><span class="ep-lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M7 10V8a5 5 0 0 1 10 0v2h1v11H6V10zm2 0h6V8a3 3 0 0 0-6 0z" fill="currentColor"/></svg></span></section>`; return; }
     html += `<section class="ep c${u.index % UNIT_COLORS} ${open ? '' : 'locked'} ${Access.allows('season', u) ? '' : 'premium'} ${cur && cur.u === u ? 'now' : ''}" id="unit-${u.id}">
       <div class="ep-boo" data-path-m="${castId}" data-mood="${open ? (cur && cur.u === u ? 'cheer' : 'happy') : 'peek'}" title="${esc(MASCOTS[castId].name)}"></div>
       <div class="ep-head"><div class="ep-icon" ${attrs(c)}>${esc(u.icon || num)}</div>
-        <div class="ep-title"><span class="eyebrow">Episode ${num}${mastered ? ' · Mastered' : ''}${Access.allows('season', u) ? '' : ' · <span class="crown-tag">★ Premium</span>'}</span><h2>${esc(u.title)}</h2>
+        <div class="ep-title"><span class="eyebrow">Chapter ${num}${mastered ? ' · Mastered' : ''}${Access.allows('season', u) ? '' : ' · <span class="crown-tag">★ Premium</span>'}</span><h2>${esc(u.title)}</h2>
           <small>${open ? `${doneN}/${UNIT_LESSONS} scenes · with ${esc(MASCOTS[castId].name)}` : `${esc(MASCOTS[castId].name)} is hiding until you get here`}</small></div>
         <button class="guide-btn" data-guide="${u.id}" aria-label="Guide">${ICON.guide}</button></div>
       <div class="ep-row segs">`;
@@ -7478,9 +7519,12 @@ function renderPath(track) {
     }
     html += `</div></section>`;
   });
-  html += `<p class="unit-end">${track === 'letters' ? 'That’s the whole alphabet season.' : 'New episodes are on the way. Meanwhile, Talk and Practice keep your streak alive.'}</p></div>`;
+  html += `<p class="unit-end">${track === 'letters' ? 'That’s the whole alphabet season.' : 'New chapters are on the way. Meanwhile, Talk and Practice keep your streak alive.'}</p></div>`;
   tab.innerHTML = html;
   $$('[data-path-m]', tab).forEach(el => paintMascot(el, el.dataset.pathM, el.dataset.mood, false));
+  $$('[data-tm]', tab).forEach(el => paintMascot(el, el.dataset.tm, 'happy', false));
+  if (track === 'main') { const cn = $('.door.current', tab); if (cn) setTimeout(() => { try { cn.scrollIntoView({ block: 'center' }); } catch (e) { /* ignore */ } }, 80); }
+  $$('[data-jh]', tab).forEach(el => paintMascot(el, el.dataset.jh, 'happy', false));
   const li = $('[data-li-m]', tab); if (li) paintMascot(li, courseCast()[0], 'happy', false);
   const fm = $('[data-feel-m]', tab); if (fm) paintMascot(fm, p.mascot, 'happy', false);
   $$('[data-sb]', tab).forEach((el, k) => paintChar(el, el.dataset.sb, ['cheer', 'pout', 'happy'][k]));
@@ -7492,7 +7536,7 @@ function renderPath(track) {
 /* ---------- Boo stage: the friendly top of the home screen ---------- */
 function journeyHeadHTML() {
   const c = course(), p = P(), done = c.units.filter(u => unitProgress(p, c.code, u.id) >= UNIT_LESSONS).length;
-  return `<div class="journey-head"><div><small>Your journey in ${esc(c.name)}</small><b>${done} of ${c.units.length} stations</b></div><div class="jh-bar"><i style="width:${done / c.units.length * 100}%"></i></div></div>`;
+  return `<div class="journey-head"><div class="jh-top"><span class="jh-pals"><span class="mascot" data-jh="mandu"></span><span class="mascot" data-jh="tavi"></span></span><div><small>Escape the manor · ${esc(c.name)}</small><b>${done} of ${c.units.length} chapters</b></div></div><div class="jh-bar"><i style="width:${done / c.units.length * 100}%"></i></div></div>`;
 }
 function storyBannerHTML() {
   const st = ADV_STORIES[course().code]; if (!st) return '';
@@ -7510,7 +7554,7 @@ function heroHTML() {
     <div class="stage-actions v5">
       ${cur ? `<button class="stage-go" data-go="${cur.u.id}:${cur.i}:lesson"><span><b>Continue</b><small>${esc(cur.u.title)} · scene ${cur.i + 1}</small></span>${ICON.play5}</button>`
         : `<button class="stage-go" data-practice="mix"><span><b>Practice</b><small>Keep your words fresh</small></span>${ICON.play5}</button>`}
-      <div class="stage-mini"><button class="mini-btn" data-tab="chat">${ICON.mic}<span>Scenes</span></button><button class="mini-btn rt-btn" data-realtalk><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H9l-4 3v-3.2A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z" fill="currentColor"/><path d="M20 9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2l-3-2h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Real Talk</span></button><button class="mini-btn call" data-call><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>Call</span></button></div>
+      <div class="stage-mini"><button class="mini-btn" data-tab="chat">${ICON.mic}<span>Haunts</span></button><button class="mini-btn rt-btn" data-realtalk><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H9l-4 3v-3.2A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z" fill="currentColor"/><path d="M20 9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2l-3-2h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Real Talk</span></button><button class="mini-btn call" data-call><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>Call</span></button></div>
     </div></div>`;
 }
 let _peekBusy = false;
@@ -7977,12 +8021,18 @@ const Runner = {
     const verdict = acc >= .95 ? 'Amazing' : acc >= .8 ? 'Great' : acc >= .6 ? 'Good' : 'Keep going';
     $('#l-bar').style.width = '100%'; $('#l-boo').style.left = '100%';
     const friends = shuffle(courseCast()).slice(0, 2);
-    $('#l-stage').innerHTML = `<div class="l-inner done-screen"><div class="done-cast"><div class="mascot" data-dc="${friends[0]}"></div><div class="mascot big" id="done-m"></div><div class="mascot" data-dc="${friends[1]}"></div></div>
-      <h2>${headline}</h2>${extra ? `<p class="muted" style="margin:0">${esc(extra)}</p>` : ''}
-      <div class="tiles"><div><small>Total XP</small><b data-count="${xp}">0</b></div><div><small>${verdict}</small><b data-count="${Math.round(acc * 100)}" data-suffix="%">0</b></div><div><small>Best combo</small><b data-count="${this.maxCombo}">0</b></div></div>
-      ${gems ? `<div class="levelup">+${gems} gems</div>` : ''}
-      <p class="muted">${esc(perfect ? pick(MASCOTS[p.mascot].praise) : 'Every mistake unlocked a joke in your Joke jar. Worth it.')}</p>
-      ${this.missedItems.length ? `<div class="review-card"><b>Words to peek at again</b>${this.missedItems.slice(0, 6).map(x => `<button class="review-row" data-say="${esc(x.t)}"><span class="script" ${attrs(c)}>${esc(x.t)}</span><small>${esc(x.r || '')} · ${esc(x.en || '')}</small></button>`).join('')}</div>` : ''}</div>`;
+    const stars = acc >= .95 ? 3 : acc >= .75 ? 2 : 1, win = acc >= .5;
+    const title = win ? (meta.mode === 'place' || meta.mode === 'test' || meta.mode === 'jump' ? headline.replace(/!$/, '').toUpperCase() : 'ESCAPED') : 'HAUNTED';
+    const sub = meta.unit && meta.unit.title ? `Chapter ${(meta.unit.index || 0) + 1}: ${meta.unit.title} · room unlocked` : headline;
+    $('#l-stage').innerHTML = `<div class="l-inner done-screen victory">
+      <div class="vstars">${[0, 1, 2].map(i => `<svg class="vstar ${i < stars ? 'on' : ''}" style="animation-delay:${i * 160}ms" viewBox="0 0 40 40"><path d="M20 3l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" fill="${i < stars ? '#FFC23D' : '#8B8A7E'}" stroke="${i < stars ? '#B8760B' : '#5E5D52'}" stroke-width="2.4" stroke-linejoin="round"/></svg>`).join('')}</div>
+      <div class="vplaque">${esc(title)}</div>
+      <div class="vpanel"><p class="vsub">${esc(sub)}${extra ? '' : ''}</p>
+        <div class="vtiles"><div class="vt">${ICON_BANANA}<b data-count="${xp}">0</b><small>XP</small></div><div class="vt">${ICON_LEAFY}<b data-count="${gems}">0</b><small>Souls</small></div><div class="vt"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="#5DB36A" stroke="#2F8F4A" stroke-width="2.4"/><path d="M9 17l5 5 9-11" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg><b data-count="${Math.round(acc * 100)}" data-suffix="%">0</b><small>${verdict}</small></div></div>
+        ${extra ? `<p class="vextra">${esc(extra)}</p>` : ''}</div>
+      ${P().mascot === 'mandu' ? ghostPose(win ? 'cheer' : 'ponder', 'vghost') : ''}
+      ${meta.unit ? `<button class="vreplay" data-go="${meta.unit.id}:${Math.min(meta.level || 0, UNIT_LESSONS - 1)}:lesson">Replay</button>` : ''}
+      ${this.missedItems.length ? `<div class="review-card"><b>Words to look at again</b>${this.missedItems.slice(0, 6).map(x => `<button class="review-row" data-say="${esc(x.t)}"><span class="script" ${attrs(c)}>${esc(x.t)}</span><small>${esc(x.r || '')} · ${esc(x.en || '')}</small></button>`).join('')}</div>` : ''}</div>`;
     $$('[data-count]').forEach((b, k) => { const n = +b.dataset.count, suf = b.dataset.suffix || '', t0 = performance.now() + k * 180; const f = now => { const q = Math.min(1, Math.max(0, (now - t0) / 700)); b.textContent = Math.round(n * (1 - Math.pow(1 - q, 3))) + suf; if (q < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); });
     React.play($('#done-m'), p.mascot, acc >= .95 ? 'love' : acc >= .8 ? 'star' : acc >= .6 ? 'proud' : 'oops');
     setTimeout(() => React.burst($('#done-m'), acc >= .6 ? 'stars' : 'hearts', 14), 250);
@@ -8036,7 +8086,7 @@ const RENDER = {
     const c = course(), u = step.u, cc = courseCast(), who = cc[(u.index || 0) % cc.length] || P().mascot;
     const W = u.words || [], items = u.letters && step.level < 3 ? u.letters.slice(0, 6).map(l => ({ t: l.g, r: l.r })) : (step.level === 1 ? W.slice(Math.ceil(W.length / 2)) : W).slice(0, 4);
     el.innerHTML = `<div class="intro-card"><div class="intro-boo"><div class="mascot" id="in-m"></div><div class="intro-bubble"><b>${esc(MASCOTS[who].name)}</b><span>${esc(pick(['Ready? This one’s fun!', 'Let’s learn something cool!', 'I’ll be right here cheering.', 'Peekaboo! Shall we start?']))}</span></div></div>
-      <span class="badge-new">Episode ${(u.index || 0) + 1} · Scene ${step.level + 1}</span><h2>${esc(u.title)}</h2><p class="muted" style="margin:0">${esc(lessonDesc(u, step.level))}</p>
+      <span class="badge-new">Chapter ${(u.index || 0) + 1} · Scene ${step.level + 1}</span><h2>${esc(u.title)}</h2><p class="muted" style="margin:0">${esc(lessonDesc(u, step.level))}</p>
       ${items.length ? `<div class="intro-words">${items.map((w, k) => `<button class="iw" style="animation-delay:${120 + k * 90}ms" data-say="${esc(w.t)}">${w.pic ? artSVG(w.pic) : ''}<span class="script" ${attrs(c)}>${esc(w.t)}</span><small>${esc(w.r || '')}</small></button>`).join('')}</div>` : ''}</div>`;
     React.play($('#in-m', el), who, 'cheer');
     R.nextOnly('Let’s go!');
@@ -8536,14 +8586,13 @@ function renderProfile() {
       <div class="field"><span>Tutor</span><div class="pick-grid">${MASCOT_ORDER.map(k => `<button type="button" class="pick" data-me-m="${k}" aria-pressed="${k === p.mascot}"><div class="mascot" data-art="${k}"></div><b>${MASCOTS[k].name}</b></button>`).join('')}</div></div>
     </div>
     <div class="card settings"><h3>Preferences</h3>
-      <label class="row">Theme<select id="me-theme">${[['auto', 'Automatic (follows your phone)'], ['light', 'Light'], ['dark', 'Dark']].map(([v, l]) => `<option value="${v}" ${Theme.get() === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
       <label class="row">My language<select id="me-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (p.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
       <label class="row">Daily goal<select id="me-goal">${[20, 50, 100, 150].map(g => `<option value="${g}" ${p.dailyGoal === g ? 'selected' : ''}>${g} XP</option>`).join('')}</select></label>
       <label class="row">Sound effects<input type="checkbox" class="toggle" id="me-sound" ${p.sound ? 'checked' : ''}></label>
       <label class="row">Tutor reads lines aloud<input type="checkbox" class="toggle" id="me-voice" ${p.autoVoice ? 'checked' : ''}></label>
       <label class="row">Show English in chat<input type="checkbox" class="toggle" id="me-en" ${p.showEnglish ? 'checked' : ''}></label>
     </div>
-    ${!isLatinLang(c.code) ? `<div class="card settings"><h3>Writing</h3><p class="note">GabBoo starts by ear: pronunciation first, ${esc(c.name)} script as a sneak peek. After Season 1 the script takes the lead.</p>
+    ${!isLatinLang(c.code) ? `<div class="card settings"><h3>Writing</h3><p class="note">GabBoo starts by ear: pronunciation first, ${esc(c.name)} script as a sneak peek. After Part 1 the script takes the lead.</p>
       <label class="row">Show<select id="script-mode">${[['auto', 'Automatic (recommended)'], ['sound', 'Sounds first'], ['script', 'Script first']].map(([v, l]) => `<option value="${v}" ${(p.scriptMode || 'auto') === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>` : ''}
     <div class="card settings" id="ai-panel"><h3>Chat tutor brain</h3>
       <p class="note">Now using: <b>${esc(Tutor.label())}</b>. Claude works when GabBoo is opened inside claude.ai. Anywhere else, paste a free Gemini key from Google AI Studio. Offline scenes always work.</p>
@@ -8568,7 +8617,6 @@ function renderProfile() {
   $('#mic-test').onclick = async () => { const ok = await Mic.prepare(); toast(ok ? 'Microphone ready. You can answer by voice.' : Mic.explain('not-allowed')); renderProfile(); };
   $('#me-name').onchange = e => { const v = e.target.value.trim(); if (v) { p.name = v; Store.save(); renderChrome(); } };
   $$('[data-me-m]', root).forEach(b => b.onclick = () => { p.mascot = b.dataset.meM; Store.save(); renderChrome(); renderProfile(); Mascot.set('cheer', `${MASCOTS[p.mascot].name} is your buddy now.`); Sfx.pop(); Voice.speak(`Hi, I’m ${MASCOTS[p.mascot].name}! ${MASCOTS[p.mascot].tagline}. Let’s talk!`, 'en-US', 1, p.mascot); });
-  $('#me-theme').onchange = e => { Theme.set(e.target.value); Sfx.pop(); };
   $('#me-mylang').onchange = e => { p.myLang = e.target.value; Store.save(); toast(`Translations will appear in ${(MY_LANGS.find(x => x[0] === p.myLang) || [])[1] || 'English'}.`); };
   $('#me-goal').onchange = e => { p.dailyGoal = +e.target.value; Store.save(); renderChrome(); };
   $('#me-sound').onchange = e => { p.sound = e.target.checked; Store.save(); };
@@ -8695,26 +8743,25 @@ document.addEventListener('visibilitychange', () => {
 addEventListener('pageshow', e => { if (e.persisted) goHome(); });
 
 /* Boo hugging a little multi-language dictionary: used by the opening screen and app icons. */
-function booBookSVG(mood = 'happy') {
-  const A = MASCOT_ART.mandu, ink = '#1C1B2E';
+function booBookSVG(mood = 'happy') {   // Boo the ghost holding the language book
+  const A = MASCOT_ART.mandu, ink = '#2B1D3F';
   const body = A.body.replace(/<ellipse class="arm-[lr]"[^>]*\/>/g, '');
   const book = `<g transform="rotate(-7 60 90)">
-    <rect x="37" y="77" width="50" height="33" rx="5" fill="#FFF2E1" stroke="${ink}" stroke-width="3"/>
-    <path d="M44 106h40" stroke="#EADCC8" stroke-width="2"/>
-    <rect x="33" y="73" width="50" height="33" rx="5" fill="#FF6B6B" stroke="${ink}" stroke-width="3"/>
-    <path d="M41 73v33" stroke="${ink}" stroke-width="2.4"/>
-    <rect x="47" y="79" width="31" height="21" rx="4" fill="#FFF2E1"/>
-    <text x="62.5" y="94" text-anchor="middle" font-size="10" font-weight="900" fill="${ink}" font-family="'Noto Sans KR','Noto Sans Arabic','Nunito',system-ui,sans-serif">A 가 ع</text></g>
-    <ellipse cx="33" cy="88" rx="7.5" ry="6.5" fill="#fff" stroke="${ink}" stroke-width="3.2"/>
-    <ellipse cx="86" cy="84" rx="7.5" ry="6.5" fill="#fff" stroke="${ink}" stroke-width="3.2"/>`;
-  return `<svg viewBox="-4 -4 128 124" width="100%" height="100%">${body}${mascotFace(mood, A)}${book}</svg>`;
+    <rect x="37" y="77" width="50" height="33" rx="5" fill="#2A1A3E" stroke="${ink}" stroke-width="3"/>
+    <rect x="33" y="73" width="50" height="33" rx="5" fill="#5B2A86" stroke="#1B1030" stroke-width="3"/>
+    <path d="M41 73v33" stroke="#1B1030" stroke-width="2.4"/>
+    <rect x="47" y="79" width="31" height="21" rx="4" fill="#E9DFFF"/>
+    <text x="62.5" y="94" text-anchor="middle" font-size="10" font-weight="900" fill="#2B1D3F" font-family="'Noto Sans KR','Noto Sans Arabic','Nunito',system-ui,sans-serif">A 가 ع</text></g>
+    <ellipse cx="33" cy="88" rx="7.5" ry="6.5" fill="#F4F0FF" stroke="${ink}" stroke-width="3.2"/>
+    <ellipse cx="86" cy="84" rx="7.5" ry="6.5" fill="#F4F0FF" stroke="${ink}" stroke-width="3.2"/>`;
+  return uniqIds(`<svg viewBox="-4 -4 128 124" width="100%" height="100%">${body}${mascotFace(mood, A)}${book}</svg>`);
 }
 function splash() {
   const el = document.createElement('div'); el.id = 'splash'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${booBookSVG('boo')}</div><div class="sp-bubble">Boo!</div><div class="sp-word">GabBoo</div><div class="sp-tag">Peek. Speak. Repeat.</div>`;
+  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${ghostPose('cheer')}</div><div class="sp-bubble">Boo!</div><div class="sp-word">GabBoo</div><div class="sp-tag">Peek. Speak. Repeat.</div>`;
   document.body.append(el);
   // Boo swoops in from the corner holding the book (a friendly scare), gives a peeky smile, then settles in the middle.
-  const face = m => { const b = $('.sp-boo', el); if (b) b.innerHTML = booBookSVG(m); };
+  const face = m => { const b = $('.sp-boo', el); if (b) b.innerHTML = ghostPose(m === 'giggle' ? 'welcome' : m === 'happy' ? 'thumbs' : 'cheer'); };
   setTimeout(() => face('giggle'), 1050); setTimeout(() => face('happy'), 1800);
   const t0 = Date.now(); let gone = false;
   const hide = () => { if (gone) return; gone = true; setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 600); }, Math.max(0, 3000 - (Date.now() - t0))); };
@@ -8730,7 +8777,7 @@ function fitStage() {
     const fb = $('#l-foot'); if (fb && (fb.classList.contains('ok') || fb.classList.contains('bad'))) return;   // keep the size while the answer bar is showing
     inn.style.zoom = ''; const cs = getComputedStyle(st);
     const foot = $('#l-foot'), footH = foot && !foot.hidden ? foot.offsetHeight : 0;   // the answer bar's space is reserved up front, so nothing resizes when it appears
-    const avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - Math.max(0, 170 - footH), need = inn.offsetHeight;
+    const co = $('.coach', st), avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - Math.max(0, 170 - footH) - (co ? co.offsetHeight + 10 : 0), need = inn.offsetHeight;
     if (need > avail + 2) inn.style.zoom = Math.max(0.9, avail / need).toFixed(3);
   });
 }
@@ -8845,7 +8892,7 @@ function renderTalk() {
   const root = $('#tab-chat'); if (!root) return;
   const c = course(), T = Talk, cur = T.cur;
   if (!cur) {
-    root.innerHTML = `<div class="tk"><h1 class="tk-h">Scenes</h1><p class="tk-sub">Real situations you will face. Boo plays the other person.</p>
+    root.innerHTML = `<div class="tk"><h1 class="tk-h">Haunts</h1><p class="tk-sub">Real situations you will face. Boo plays the other person.</p>
       <div class="tk-list">${T.scenes().map(t => `<button class="tk-card" data-tk-open="${t.id}"><span class="mascot" data-tk-m="${T.who(t)}"></span><span class="tk-ct"><b>${esc(t.title)}</b><small>${esc(t.en)}</small></span><span class="tk-go">›</span></button>`).join('')}</div>
       <h2 class="tk-h2">More with characters</h2>
       <div class="tk-list"><button class="tk-card" data-realtalk><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Real Talk</b><small>Slang, tone and idioms</small></span><span class="tk-go">›</span></button>
@@ -8897,6 +8944,7 @@ renderChat = renderTalk;
 /* =====================================================================
    SHARE: send your progress to a friend (picture + message). Works everywhere.
    ===================================================================== */
+function ghostSvgFile() { const h = document.createElement('div'); h.innerHTML = booBookSVG('happy'); const e = h.firstElementChild; e.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); e.setAttribute('width', '520'); e.setAttribute('height', '520'); return new XMLSerializer().serializeToString(e); }
 const Share = {
   text() {
     const p = P(), c = course(), w = learnedWords(p, c.code).length;
@@ -8905,23 +8953,20 @@ const Share = {
   card() {
     const p = P(), c = course(), W = 1080, H = 1350, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
     const g = cv.getContext('2d'), bg = g.createRadialGradient(W / 2, 420, 60, W / 2, 520, 1100);
-    bg.addColorStop(0, '#4B50D6'); bg.addColorStop(.5, '#2F3394'); bg.addColorStop(1, '#1C1B2E'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    bg.addColorStop(0, '#F08A3E'); bg.addColorStop(.5, '#B4510F'); bg.addColorStop(1, '#2B1D14'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
     const font = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', center = (t, y, size, wt = 800, col = '#fff') => { g.font = `${wt} ${size}px ${font}`; g.fillStyle = col; g.textAlign = 'center'; g.fillText(t, W / 2, y); };
-    const holder = document.createElement('div'); holder.innerHTML = booBookSVG('happy');   // the HTML parser tidies the markup so it can be drawn as a picture
-    const el = holder.firstElementChild; el.setAttribute('xmlns', 'http://www.w3.org/2000/svg'); el.setAttribute('width', '520'); el.setAttribute('height', '520');
-    const svg = new XMLSerializer().serializeToString(el);
     return new Promise(res => {
       const img = new Image();
       img.onload = () => {
         g.drawImage(img, W / 2 - 260, 90, 520, 520);
-        center(p.name, 720, 84); center(`is learning ${c.name}`, 800, 48, 600, '#C9CCFF');
+        center(p.name, 720, 84); center(`is learning ${c.name}`, 800, 48, 600, '#FFD9B8');
         const stats = [[liveStreak(p), 'day streak'], [levelFor(p.xp), 'level'], [learnedWords(p, c.code).length, 'words']];
-        stats.forEach(([v, l], i) => { const x = 210 + i * 330; g.fillStyle = 'rgba(255,255,255,.12)'; g.beginPath(); g.roundRect ? g.roundRect(x - 140, 880, 280, 220, 36) : g.rect(x - 140, 880, 280, 220); g.fill(); g.textAlign = 'center'; g.font = `800 100px ${font}`; g.fillStyle = '#fff'; g.fillText(String(v), x, 1010); g.font = `600 36px ${font}`; g.fillStyle = '#C9CCFF'; g.fillText(l, x, 1070); });
-        center('GabBoo', 1230, 64); center('Peek. Speak. Repeat.', 1290, 36, 600, '#C9CCFF');
+        stats.forEach(([v, l], i) => { const x = 210 + i * 330; g.fillStyle = 'rgba(255,255,255,.12)'; g.beginPath(); g.roundRect ? g.roundRect(x - 140, 880, 280, 220, 36) : g.rect(x - 140, 880, 280, 220); g.fill(); g.textAlign = 'center'; g.font = `800 100px ${font}`; g.fillStyle = '#fff'; g.fillText(String(v), x, 1010); g.font = `600 36px ${font}`; g.fillStyle = '#FFD9B8'; g.fillText(l, x, 1070); });
+        center('GabBoo', 1230, 64); center('Peek. Speak. Repeat.', 1290, 36, 600, '#FFD9B8');
         cv.toBlob(b => res(b), 'image/png');
       };
       img.onerror = () => res(null);
-      img.src = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+      img.src = URL.createObjectURL(new Blob([ghostSvgFile()], { type: 'image/svg+xml' }));
     });
   },
   async progress() {
@@ -8957,6 +9002,190 @@ document.addEventListener('click', e => { if (e.target.closest && e.target.close
   const sched = () => { if (!q) q = requestAnimationFrame(run); };
   new MutationObserver(sched).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
 }
+/* ---- Scenery used behind the Today sign ---- */
+function jungleSVG(sky) {
+  const P = {
+    dawn: { far: '#C8E2B0', mid: '#9ACB7E', t1: '#6DB567', t2: '#4A9457', t3: '#2F7045', water: '#F4CBAA', water2: '#FFE8CF', rock: '#A09A92', rock2: '#C4BFB6', trunk: '#6B4A2B', sunl: '#FFE6B0' },
+    day: { far: '#A9DDA0', mid: '#6DC271', t1: '#4FB05C', t2: '#2F8F4A', t3: '#1F6E3A', water: '#7FC6D8', water2: '#C4EAF0', rock: '#8F9A8E', rock2: '#B7C0B4', trunk: '#6B4A2B', sunl: '#FFF6C4' },
+    dusk: { far: '#C9B873', mid: '#93A94E', t1: '#5E8A4A', t2: '#41703D', t3: '#2C5430', water: '#E69F6E', water2: '#F8D0A0', rock: '#847B74', rock2: '#AAA096', trunk: '#5A3A22', sunl: '#FFC48A' },
+    night: { far: '#2E6350', mid: '#21503F', t1: '#1B4033', t2: '#14332A', t3: '#0E2620', water: '#1F4470', water2: '#3C6A9A', rock: '#4D5864', rock2: '#6A7886', trunk: '#2B2118', sunl: '#9FC8FF' }
+  }[sky] || {};
+  const blob = (x, y, r, c) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
+  const canopy = (x, base, h, r) => `<path d="M${x} ${base}V${base - h}" stroke="${P.trunk}" stroke-width="6" stroke-linecap="round"/>${blob(x, base - h, r, P.t2)}${blob(x - r * .62, base - h + r * .34, r * .74, P.t1)}${blob(x + r * .64, base - h + r * .3, r * .78, P.t1)}${blob(x - r * .2, base - h - r * .34, r * .62, P.t3)}<ellipse cx="${x - r * .25}" cy="${base - h - r * .55}" rx="${r * .5}" ry="${r * .22}" fill="#fff" opacity=".18"/>`;
+  const frond = (x, y, rot, sc, c) => `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${sc})"><path d="M0 0C10-26 40-30 62 0 40 26 10 26 0 0z" fill="${c}"/><path d="M2 0H58" stroke="#000" stroke-opacity=".2" stroke-width="1.8"/><path d="M6-9C20-18 36-18 50-6" stroke="#fff" stroke-opacity=".28" stroke-width="3" fill="none" stroke-linecap="round"/></g>`;
+  const vine = (x, len, flip) => `<path d="M${x} 0q${flip ? -7 : 7} ${len * .3} 0 ${len * .55}t0 ${len * .45}" fill="none" stroke="${P.t2}" stroke-width="3" stroke-linecap="round"/>${frond(x, len * .45, flip ? 150 : 30, .34, P.t1)}${frond(x, len * .85, flip ? 30 : 150, .3, P.t1)}`;
+  const flower = (x, y, c) => `<circle cx="${x}" cy="${y}" r="4" fill="${c}"/><circle cx="${x}" cy="${y}" r="1.6" fill="#FFE066"/>`;
+  const flies = sky === 'night' ? [[60, 70], [150, 50], [250, 80], [330, 60], [200, 100]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3" fill="#FFF3A0"/><circle cx="${x}" cy="${y}" r="7" fill="#FFF3A0" opacity=".25"/>`).join('') : '';
+  const rays = sky === 'night' ? '' : `<path d="M110 0L160 112H86z M200 0L270 112H180z M300 0L360 112H280z" fill="${P.sunl}" opacity=".3"/>`;
+  return uniqIds(`<svg class="skyline jungle" viewBox="0 0 400 130" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs>
+      <linearGradient id="hz@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="${sky === 'night' ? .1 : .45}"/></linearGradient>
+      <linearGradient id="rk@@" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.rock2}"/><stop offset="1" stop-color="${P.rock}"/></linearGradient></defs>
+    ${rays}
+    <path d="M-10 70Q20 38 52 60T114 56T178 50T240 58T304 48T366 56T412 46V130H-10z" fill="${P.far}"/>
+    <rect x="-10" y="40" width="420" height="50" fill="url(#hz@@)"/>
+    <path d="M-10 84Q30 56 70 76T150 70T230 78T310 66T410 76V130H-10z" fill="${P.mid}"/>
+    ${canopy(34, 112, 52, 20)}${canopy(112, 112, 38, 17)}${canopy(166, 112, 62, 22)}${canopy(226, 112, 36, 15)}${canopy(262, 112, 56, 19)}
+    <path d="M0 110C60 102 120 106 190 108s150-4 210 0v22H0z" fill="${P.water}"/><path d="M26 116h64M120 120h56M210 114h80" stroke="${P.water2}" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+    <path d="M232 130C238 108 262 99 296 99c34 0 72 6 108 14v17z" fill="url(#rk@@)"/><path d="M256 110C266 101 292 99 320 101c26 2 50 6 76 12" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
+    <rect x="-6" y="0" width="22" height="108" rx="8" fill="${P.trunk}"/><path d="M-6 10C30 -6 70 6 100 -2" stroke="${P.trunk}" stroke-width="9" fill="none" stroke-linecap="round"/>
+    ${vine(40, 82, false)}${vine(76, 52, true)}${blob(26, 6, 15, P.t2)}${blob(58, 2, 13, P.t1)}${blob(90, 0, 11, P.t2)}${flower(46, 70, '#FF7A9A')}${flower(72, 46, '#FFD66B')}
+    ${vine(374, 74, true)}${vine(346, 48, false)}<rect x="392" y="0" width="16" height="96" rx="8" fill="${P.trunk}"/>${flower(366, 60, '#FF7A9A')}
+    ${frond(4, 118, -48, 1, P.t2)}${frond(0, 104, -78, .9, P.t1)}${frond(404, 120, 228, 1, P.t2)}${frond(400, 106, 258, .9, P.t1)}${frond(170, 130, -24, .75, P.t1)}${frond(236, 131, -156, .65, P.t2)}${flies}</svg>`);
+}
+/* ---- Falling leaves: a few drift down the screen all the time ---- */
+function fallingLeaves() {   // spooky: glowing wisps rise, bats cross the sky
+  if (document.getElementById('leaf-fall')) return;
+  const el = document.createElement('div'); el.id = 'leaf-fall'; el.setAttribute('aria-hidden', 'true');
+  const bat = `<svg viewBox="0 0 40 20"><path d="M20 6C16 0 8 0 0 4 4 6 5 9 6 14 9 10 12 10 14 13 16 10 18 9 20 11 22 9 24 10 26 13 28 10 31 10 34 14 35 9 36 6 40 4 32 0 24 0 20 6z" fill="#0A0612"/></svg>`;
+  for (let i = 0; i < 10; i++) { const w = document.createElement('i'); w.className = 'wisp'; w.style.cssText = `left:${(i * 10 + (i % 3) * 4) % 96}%;--s:${6 + (i * 5) % 9}px;animation-duration:${14 + (i * 7) % 12}s;animation-delay:${-(i * 4.3) % 16}s`; el.append(w); }
+  for (let i = 0; i < 3; i++) { const b = document.createElement('b'); b.className = 'bat'; b.innerHTML = bat; b.style.cssText = `top:${8 + i * 9}%;animation-duration:${17 + i * 6}s;animation-delay:${-i * 7}s;--sc:${.8 + i * .25}`; el.append(b); }
+  document.body.append(el);
+}
+fallingLeaves();
+function jungleBackdrop() {   // spooky: a moonlit haunted hill
+  if (document.getElementById('jungle-bg')) return;
+  const el = document.createElement('div'); el.id = 'jungle-bg'; el.setAttribute('aria-hidden', 'true');
+  const tree = (x, h, sc) => `<g transform="translate(${x} 800) scale(${sc})" fill="none" stroke="#06030D" stroke-linecap="round"><path d="M0 0V-${h}" stroke-width="14"/><path d="M0 -${h * .6}l-46 -50 -20 -8M0 -${h * .74}l50 -44 24 -6M0 -${h * .9}l-30 -34M0 -${h}l22 -36 -4 -26M-46 -${h * .6 + 50}l-12 -34M50 -${h * .74 + 44}l8 -30" stroke-width="7"/></g>`;
+  const stone = (x, y, w, h) => `<g transform="translate(${x} ${y})"><path d="M0 ${h}V${w / 2}a${w / 2} ${w / 2} 0 0 1 ${w} 0V${h}z" fill="#241A38" stroke="#0C0716" stroke-width="3"/><path d="M${w * .5} ${w * .5}v${h * .28}M${w * .3} ${w * .72}h${w * .4}" stroke="#4B3D6B" stroke-width="3" stroke-linecap="round"/></g>`;
+  el.innerHTML = `<svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice"><defs>
+      <linearGradient id="nsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0A0618"/><stop offset=".45" stop-color="#1D1040"/><stop offset=".8" stop-color="#3A1A52"/><stop offset="1" stop-color="#1A0B2B"/></linearGradient>
+      <radialGradient id="moon" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFFBE6"/><stop offset=".6" stop-color="#F3E7B8"/><stop offset="1" stop-color="#F3E7B8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#C9B6FF" stop-opacity=".55"/><stop offset="1" stop-color="#C9B6FF" stop-opacity="0"/></radialGradient></defs>
+    <rect width="400" height="800" fill="url(#nsky)"/>
+    <g fill="#fff" opacity=".8"><circle cx="40" cy="60" r="1.4"/><circle cx="120" cy="120" r="1.1"/><circle cx="210" cy="40" r="1.5"/><circle cx="300" cy="150" r="1.2"/><circle cx="360" cy="70" r="1.4"/><circle cx="70" cy="200" r="1"/><circle cx="180" cy="210" r="1.2"/><circle cx="330" cy="260" r="1"/></g>
+    <circle cx="290" cy="130" r="110" fill="url(#glow)"/><circle cx="290" cy="130" r="48" fill="url(#moon)"/><g fill="#D8C98F" opacity=".5"><circle cx="276" cy="120" r="8"/><circle cx="302" cy="146" r="6"/><circle cx="296" cy="112" r="4"/></g>
+    <path d="M-10 560C60 520 130 540 200 520s140 20 210-10V800H-10z" fill="#150A26"/>
+    <g fill="#0B0617"><path d="M232 500h86v-40l-14-22-14 22h-14v-52l-18-28-18 28v52h-8z"/><rect x="226" y="500" width="100" height="40"/><path d="M300 460h22v-50h-22z"/></g>
+    <g fill="#FFC857"><rect x="246" y="478" width="9" height="14" rx="2"/><rect x="270" y="478" width="9" height="14" rx="2"><animate attributeName="opacity" values="1;.2;1;.6;1" dur="4.5s" repeatCount="indefinite"/></rect><rect x="296" y="478" width="9" height="14" rx="2"/><rect x="262" y="440" width="9" height="12" rx="2"/></g>
+    ${tree(40, 280, 1)}${tree(372, 340, 1.1)}${tree(110, 150, .6)}
+    <path d="M-10 640C70 610 150 630 220 612s130 14 200 -6V800H-10z" fill="#0D0719"/>
+    ${stone(18, 676, 42, 62)}${stone(78, 700, 34, 50)}${stone(318, 690, 44, 66)}${stone(366, 720, 30, 44)}${stone(150, 730, 30, 44)}
+    <g stroke="#06030D" stroke-width="4"><path d="M0 760h400M20 744v40M60 744v40M100 744v40M300 744v40M340 744v40M380 744v40"/></g>
+    <g stroke="#CFC6EE" stroke-width="1.2" fill="none" opacity=".6"><path d="M0 0L120 0M0 0L0 120M0 0L84 84M0 30Q40 34 54 54M30 0Q34 40 54 54M0 66Q50 62 78 78M66 0Q62 50 78 78"/><path d="M400 0L280 0M400 0L400 120M400 0L316 84M400 30Q360 34 346 54M370 0Q366 40 346 54M400 66Q350 62 322 78M334 0Q338 50 322 78"/></g></svg>
+    <div class="fog f1"></div><div class="fog f2"></div><div class="float-boo b1"></div><div class="float-boo b2"></div><div class="float-boo b3"></div><div class="flash"></div>`;
+  document.body.prepend(el);
+  const gh = `<svg viewBox="0 0 60 70"><path d="M30 4C14 4 8 18 8 32v34l8-6 7 6 7-6 7 6 7-6 8 6V32C52 18 46 4 30 4z" fill="#EDE6FF"/><ellipse cx="22" cy="30" rx="4" ry="5.500" fill="#1B1030"/><ellipse cx="38" cy="30" rx="4" ry="5.500" fill="#1B1030"/><ellipse cx="30" cy="44" rx="4.500" ry="6" fill="#1B1030"/></svg>`;
+  el.querySelectorAll('.float-boo').forEach(b => { b.innerHTML = gh; });
+}
+jungleBackdrop();
+
+{
+  document.body.dataset.tab = 'now';
+  const _st = showTab;
+  showTab = function (t, ...r) { document.body.dataset.tab = t; return _st.call(this, t, ...r); };
+}
+/* Boo as artwork (poses cut from the character sheet): welcome, cheer, think, ponder... */
+const GHOST_MOOD = { welcome: 'happy', cheer: 'cheer', ponder: 'oops', thumbs: 'proud', think: 'think', cross: 'happy' };
+const ghostPose = (pose, cls = '') => `<div class="ghost-pose ${cls}">${booBookSVG(GHOST_MOOD[pose] || 'happy')}</div>`;
+/* PLAY: start the next lesson from anywhere on the Journey */
+{
+  const mk = () => {
+    if (document.getElementById('play-btn')) return;
+    document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-play]')) { const cur = currentLesson('main'); if (cur) startLesson(cur.u.id, cur.i, 'lesson'); else startPractice('mix'); } });
+  };
+  document.addEventListener('click', e => { const l = e.target.closest && e.target.closest('[data-locked]'); if (l) { toast('Finish the chapter before it first'); Sfx.wrong && Sfx.wrong(); } });
+}
+/* ---- Game-style chrome (follows the design picture): wooden stats bar, corner buttons, carved bottom bar ---- */
+const GI = {
+  ghost: `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M24 3C13 3 8 12 8 21v19l6-4 5 4 5-4 5 4 5-4 6 4V21C40 12 35 3 24 3z" fill="#F4F0FF" stroke="#8E7BD0" stroke-width="2.4" stroke-linejoin="round"/><ellipse cx="18" cy="20" rx="3" ry="4" fill="#2B1D3F"/><ellipse cx="30" cy="20" rx="3" ry="4" fill="#2B1D3F"/><ellipse cx="24" cy="29" rx="3.200" ry="4" fill="#2B1D3F"/></svg>`,
+  book: `<svg viewBox="0 0 48 40" aria-hidden="true"><path d="M4 8Q14 3 24 9 34 3 44 8V34Q34 29 24 35 14 29 4 34z" fill="#F6E7C1" stroke="#7A4E1E" stroke-width="2.6" stroke-linejoin="round"/><path d="M24 9V35" stroke="#7A4E1E" stroke-width="2.4"/><path d="M9 14Q15 12 20 15M9 20Q15 18 20 21M28 15Q33 12 39 14M28 21Q33 18 39 20" stroke="#B58B52" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M4 34Q14 29 24 35 34 29 44 34V38Q34 33 24 39 14 33 4 38z" fill="#A5472E" stroke="#7A4E1E" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  swords: `<svg viewBox="0 0 48 44" aria-hidden="true"><g stroke="#4A4F5A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M10 6l22 22-4 4L6 10z" fill="#DADFE8"/><path d="M38 6L16 28l4 4 22-22z" fill="#C7CED9"/><path d="M26 34l8 8M22 34l-8 8" stroke="#7A4E1E" stroke-width="4"/><path d="M26 28l8 8-3 3-8-8zM22 28l-8 8 3 3 8-8z" fill="#C9962E" stroke="#7A4E1E"/></g></svg>`,
+  chest: `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M6 20Q6 8 24 8t18 12v20H6z" fill="#B7793A" stroke="#5A3A1E" stroke-width="2.6" stroke-linejoin="round"/><path d="M6 20h36" stroke="#5A3A1E" stroke-width="2.6"/><path d="M6 20Q6 8 24 8t18 12z" fill="#CF9150"/><rect x="19" y="18" width="10" height="12" rx="3" fill="#F2C94C" stroke="#8A6A12" stroke-width="2"/><circle cx="24" cy="24" r="2" fill="#5A3A1E"/><path d="M12 10v30M36 10v30" stroke="#8A5A28" stroke-width="2"/></svg>`,
+  map: `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M5 12l12-4 14 4 12-4v26l-12 4-14-4-12 4z" fill="#EAD9A8" stroke="#7A4E1E" stroke-width="2.4" stroke-linejoin="round"/><path d="M17 8v26M31 12v26" stroke="#B58B52" stroke-width="2"/><path d="M36 6a6 6 0 0 1 6 6c0 5-6 10-6 10s-6-5-6-10a6 6 0 0 1 6-6z" fill="#E4472E" stroke="#8A1F12" stroke-width="2"/><circle cx="36" cy="12" r="2.2" fill="#fff"/></svg>`
+};
+const PLAY_SWIRL = `<svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27" fill="#1F8F4E" stroke="#C9962E" stroke-width="4"/><path d="M30 12a18 18 0 1 0 18 18c0-10-7-14-13-14s-10 4-10 9 4 7 7 7 6-2 6-5" fill="none" stroke="#F2C94C" stroke-width="5" stroke-linecap="round"/></svg>`;
+function gameChrome() {
+  const p = P(); if (!p || $('#app').hidden) return;
+  const h = Hearts.left(p), tx = todayXP(p), goal = p.dailyGoal || 50, pct = Math.min(100, Math.round(tx / goal * 100)), c = course();
+  const tb = $('#topbar');
+  if (tb) tb.innerHTML = `<div class="wbar">
+      <button class="wb wb-gem" data-sheet="gems" aria-label="${p.gems} leaves">${ICON_BANANA}<b>${p.gems}</b></button>
+      <button class="wb wb-lvl" data-sheet="streak" aria-label="Level ${levelFor(p.xp)}"><span class="wb-ring">${ICON_LEAFY}</span><svg class="wb-star" viewBox="0 0 24 24"><path d="M12 2l3 7 7 .7-5.3 4.8 1.6 7.2L12 18l-6.3 3.7 1.6-7.2L2 9.7 9 9z" fill="#FFC23D" stroke="#B8760B" stroke-width="1.6" stroke-linejoin="round"/></svg><b>LVL ${levelFor(p.xp)}</b></button>
+      <button class="wb wb-xp" data-sheet="streak" aria-label="Daily goal">${ICON_LEAFY}<span class="wb-track"><i style="width:${pct}%"></i><em>${tx}/${goal}</em></span></button>
+      <button class="wb wb-heart" data-sheet="hearts" aria-label="${h} hearts">${ICON.heart}<b>${h}</b></button></div>
+    <div class="wcorner"><button class="wc" data-tab="now" aria-label="Today">${GI.map}<small>HOME</small></button>
+      <button class="lang-chip" data-sheet="lang" aria-label="Change language"><span class="flag script" ${attrs(c)} style="font-family:${c.font}">${c.flag}</span>${c.name}</button>
+      <button class="wc" data-tab="practice" aria-label="Practice">${GI.chest}<small>TRAIN</small></button></div>`;
+  const bn = $('#bnav');
+  if (bn) bn.innerHTML = `<button class="bn" data-tab="learn">${GI.book}<span>MANOR</span></button>
+    <button class="bn" data-tab="chat">${GI.swords}<span>HAUNTS</span></button>
+    <button class="bn-play" data-play aria-label="Play">${PLAY_SWIRL}<span><b>ENTER</b><small>NEXT ROOM</small></span></button>
+    <button class="bn" data-tab="profile">${GI.ghost}<span>SPIRIT</span></button>
+    <button class="bn" data-tab="quests">${GI.chest}<span>CRYPT</span></button>`;
+  markNav(UI.tab);
+}
+function markNav(t) { $$('#bnav .bn').forEach(b => { if (b.dataset.tab === t || (t === 'letters' && b.dataset.tab === 'learn')) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); }
+{
+  const _rc = renderChrome; renderChrome = function () { _rc.apply(this, arguments); gameChrome(); };
+  const _st2 = showTab; showTab = function (t, ...r) { const out = _st2.call(this, t, ...r); markNav(t); return out; };
+}
+/* =====================================================================
+   THE BOO CREW: friends along the journey. Each has a name, a personality and a job,
+   talks to the learner, cheers streaks and droops when you slip.
+   ===================================================================== */
+const CREW = {
+  nabi: { name: 'Mimi', role: 'Word Whisperer', does: 'I teach you new words, gently.', hi: 'Let’s meet a new word, gently.',
+    good: ['Lovely! You remembered.', 'Yes! You’ve got it.', 'So good, I’m glowing.'], streak: ['{n} in a row! I’m so proud.', '{n} straight. You’re glowing!'],
+    sad: ['Oh… that’s okay. Try again soon.', 'Aww, it was “{right}”.', 'No worries, words take time.'], down: ['I believe in you. Deep breath.', 'We’ll learn it together.'],
+    chat: ['I collect words like flowers.', 'Say each word out loud. It helps.', 'Tiny steps still count.'] },
+  horangi: { name: 'Zap', role: 'Speaking Coach', does: 'I make you speak out loud!', hi: 'Time to SPEAK! Loud and proud!',
+    good: ['BOOM! Perfect!', 'YES! That was electric!', 'Spook-tacular!'], streak: ['{n} STRAIGHT! Unstoppable!', '{n} in a row! I can’t stop cheering!'],
+    sad: ['Ouch! Shake it off!', 'Not yet! Louder next time.', 'Argh! It was “{right}”.'], down: ['My sparks are fading…', 'Don’t give up, I’m here!'],
+    chat: ['Speaking is a superpower!', 'Open your mouth wide. Be brave!', 'Practice makes thunder.'] },
+  byte: { name: 'Blip', role: 'Sentence Builder', does: 'I help you build sentences.', hi: 'Let’s build it, piece by piece.',
+    good: ['Correct. Sentence complete.', 'Logic confirmed. Nice.', 'Processing… perfect.'], streak: ['{n} correct in sequence. Impressive.', 'Streak: {n}. Calculating joy.'],
+    sad: ['Error. Check the word order.', 'Hmm. The answer is “{right}”.', 'Recalculating… try again.'], down: ['My circuits feel heavy…', 'Let’s fix it, step by step.'],
+    chat: ['Every sentence is a puzzle.', 'Order matters. Always.', 'Beep. You are doing well.'] },
+  tokki: { name: 'Peeka', role: 'Quiz Master', does: 'I quiz you. No pressure. Maybe.', hi: 'Quick quiz. No pressure. Maybe.',
+    good: ['Fine. That was good.', 'Correct. I’m only slightly impressed.', 'Not bad at all.'], streak: ['{n} in a row? Suspicious.', '{n} straight. Show-off.'],
+    sad: ['Oof. Bold guess.', 'Wrong. But brave. It’s “{right}”.', 'Almost. Not really.'], down: ['My ears just drooped.', 'Ugh… we’ll get the next one.'],
+    chat: ['I only pretend not to care.', 'Quizzes are secretly fun.', 'Try not to overthink it.'] },
+  gom: { name: 'Snooze', role: 'Story Listener', does: 'We read and listen together.', hi: 'Shhh… listen and read with me.',
+    good: ['Mmm… nice work.', 'Yes… so peaceful.', 'Well done… yawn.'], streak: ['{n} in a row… I’m awake!', 'Wow… {n}. I can’t sleep!'],
+    sad: ['Oh… that’s alright.', 'Mmm… it was “{right}”.', 'Sleepy sigh… try again.'], down: ['I feel a bit sad too…', 'Let’s rest and try again.'],
+    chat: ['Stories help words stick.', 'I read until I fall asleep.', 'Listen closely. Slowly.'] },
+  ori: { name: 'Pop', role: 'Pop Quiz Pal', does: 'I make it fun and bouncy!', hi: 'Hooray, let’s play!',
+    good: ['POP! Correct!', 'Yay! Bounce time!', 'So good!'], streak: ['{n} in a row! POP POP!', '{n} straight! Yay!'],
+    sad: ['Aw, pop! It’s “{right}”.', 'Oopsie! Try again!', 'Bounce back!'], down: ['Aww… my bubble deflated.', 'Next one will pop, promise!'],
+    chat: ['I bounce when you win!', 'Games make memory stronger.', 'Pop pop pop!'] },
+  mandu: { name: 'Boo', role: 'Your Guide', does: 'I haunt you until you can speak.', hi: 'I’ll haunt you until you can speak.',
+    good: ['Spook-tacular!', 'Boo-tiful!', 'Well said!'], streak: ['{n} in a row! Eek, impressive!', '{n} straight! You’re haunting this!'],
+    sad: ['Eek! Not quite. It’s “{right}”.', 'Oh no… try again.', 'Don’t be scared, try again.'], down: ['Oh no… don’t worry.', 'Even ghosts mess up.'],
+    chat: ['Peek. Speak. Repeat.', 'I follow you everywhere. Friendly!', 'Every word makes me brighter.'] }
+};
+const CREW_KIND = { teach: 'nabi', pics: 'nabi', guess: 'nabi', tip: 'nabi', speak: 'horangi', shadow: 'horangi', ctxsay: 'horangi', say: 'horangi',
+  tiles: 'byte', blank: 'byte', build: 'byte', order: 'byte', mcq: 'tokki', tf: 'tokki', match: 'tokki', pop: 'ori', feel: 'ori',
+  story: 'gom', dialog: 'gom', ctxpick: 'gom', oops: 'gom', intro: 'mandu', scene: 'mandu' };
+const CREW_ORDER = ['nabi', 'horangi', 'byte', 'tokki', 'gom', 'ori'];
+const Coach = {
+  owner: '', pending: '', fill(t, right) { return String(t).replace(/\{n\}/g, Runner.combo || 0).replace(/\{right\}/g, right || ''); },
+  idFor(step) { return CREW_KIND[step && step.kind] || 'mandu'; },
+  show(step) {
+    const st = $('#l-stage'); if (!st || !step) return; const id = this.idFor(step), C = CREW[id], cur = $('.coach', st); if (cur) cur.remove();
+    const line = this.pending || (this.owner !== id ? C.hi : C.does); this.pending = ''; this.owner = id;
+    st.insertAdjacentHTML('afterbegin', `<div class="coach" data-coach="${id}"><div class="mascot" id="coach-m"></div><div class="coach-bub"><b>${esc(C.name)}</b><small>${esc(C.role)}</small><p id="coach-line">${esc(line)}</p></div></div>`);
+    paintMascot($('#coach-m', st), id, 'happy', true); fitStage();
+  },
+  say(line, mood) { const el = $('#coach-line'), m = $('#coach-m'); if (el) el.textContent = line; if (m) paintMascot(m, this.owner, mood, true); const f = $('#l-fb-m'); if (f) paintMascot(f, this.owner, mood, true); },
+  react(ok, info) {
+    const id = this.owner || 'mandu', C = CREW[id], right = typeof info.show === 'string' ? info.show : (info.show && info.show.t) || '';
+    let pool, mood;
+    if (ok) { const n = Runner.combo; if (n >= 3 && (n === 3 || n % 5 === 0)) { pool = C.streak; mood = n >= 8 ? 'love' : 'star'; } else { pool = C.good; mood = 'cheer'; } }
+    else if (Runner.wrongRun >= 2) { pool = C.down; mood = 'cry'; } else { pool = C.sad; mood = 'oops'; }
+    this.say(this.fill(pick(pool), right), mood);
+  },
+  chat() { const C = CREW[this.owner || 'mandu']; this.say(pick(C.chat), 'happy'); }
+};
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('.coach')) Coach.chat(); const f = e.target.closest && e.target.closest('[data-crew]'); if (f) { const C = CREW[f.dataset.crew]; toast(`${C.name}: ${C.does}`); } });
+{
+  const _r = Runner.render; Runner.render = function () { _r.apply(this, arguments); Coach.show(this.queue[this.i]); };
+  const _g = Runner.grade; Runner.grade = function (ok, info = {}) { const was = this.locked, r = _g.call(this, ok, info); if (!was && !info.free) Coach.react(ok, info); return r; };
+}
+document.addEventListener('click', e => {
+  const n = e.target.closest && e.target.closest('.door[data-go]'); if (!n || n.classList.contains('launch')) return;
+  e.stopImmediatePropagation(); e.preventDefault(); n.classList.add('launch'); document.body.classList.add('entering');
+  const [uid, i, mode] = n.dataset.go.split(':'); setTimeout(() => { document.body.classList.remove('entering'); n.classList.remove('launch'); startLesson(uid, +i, mode); }, 320);
+}, true);
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
@@ -9115,14 +9344,14 @@ Object.assign(SCENE_CTX.ko, {
   '머리': ['hospital', 'doctor', 'You point at your head.'], '배': ['hospital', 'doctor', 'Too much spicy food last night.'], '목': ['hospital', 'doctor', 'It hurts to swallow.'],
   '아파요': ['hospital', 'doctor', 'Dr. Hiro asks what’s wrong.'], '감기': ['hospital', 'doctor', 'Sneezing and a runny nose.'], '열': ['hospital', 'doctor', 'The thermometer says 38.5°C.', 'them'],
   '약': ['hospital', 'doctor', 'Dr. Hiro hands you a small paper bag.', 'them'], '병원': ['street', 'friend', 'You look pale. Leo is worried.'], '의사': ['hospital', 'local', 'Someone in a white coat walks in.'], '푹 쉬세요': ['hospital', 'doctor', 'Dr. Hiro says goodbye.', 'them'],
-  // Season 5: shopping & phone
+  // Part 5: shopping & phone
   '입어 봐도 돼요?': ['shop', 'clerk', 'You found a jacket you love.'], '커요': ['shop', 'clerk', 'You try it on. You could fit two of you inside.'], '작아요': ['shop', 'clerk', 'The zip won’t close.'],
   '사이즈': ['shop', 'clerk', 'The clerk asks which one you wear.', 'them'], '다른 색': ['shop', 'clerk', 'You like it, but not in orange.'], '비싸요': ['shop', 'clerk', 'The tag says 300,000 won.'],
   '깎아 주세요': ['shop', 'clerk', 'A street market stall. You smile sweetly.'], '할인': ['shop', 'clerk', 'Big red “50%” signs everywhere.'], '교환': ['shop', 'clerk', 'Wrong size. You’re back with the bag.'], '영수증': ['shop', 'clerk', 'The clerk asks for proof you bought it.', 'them'],
   '여보세요': ['phone', 'friend', 'Your phone rings. Leo’s name on the screen.'], '누구세요?': ['phone', 'local', 'An unknown number calls you.'], '잠깐만요': ['phone', 'clerk', 'Sophia needs a second to check.', 'them'],
   '바빠요': ['office', 'coworker', 'You’re drowning in work when the phone rings.'], '나중에': ['phone', 'friend', 'You can’t talk right now.'], '전화할게요': ['phone', 'friend', 'You promise to ring Leo back.'],
   '문자': ['phone', 'friend', 'Leo’s phone buzzes with your words.'], '늦어요': ['station', 'friend', 'Your train is stuck.'], '배터리': ['phone', 'friend', 'Your screen shows 1%.'], '도착했어요': ['cafe', 'friend', 'You walk in and wave at Leo.'],
-  // Season 6: opinions & stories
+  // Part 6: opinions & stories
   '생각해요': ['cafe', 'friend', 'Leo asks your opinion about his plan.'], '맞아요': ['cafe', 'friend', 'Leo says kimchi makes everything better.'], '저도요': ['cafe', 'friend', 'Leo says he’s hungry. Same here!'],
   '글쎄요': ['office', 'coworker', 'A tricky question. You need a second.'], '솔직히': ['cafe', 'friend', 'Leo asks if you liked his cooking.'], '아마': ['street', 'friend', 'Grey clouds are rolling in.'],
   '별로예요': ['cafe', 'friend', 'Leo asks how the movie was. Meh.'], '최고예요': ['cafe', 'friend', 'The best fried chicken of your life.'], '잘 모르겠어요': ['street', 'local', 'A stranger asks you for directions.'], '왜냐하면': ['cafe', 'friend', 'Leo asks why you’re learning Korean.'],
@@ -9154,7 +9383,7 @@ Object.assign(SCENE_CTX.ar, {
   'رأسي': ['hospital', 'doctor', 'You point at your head.'], 'بطني': ['hospital', 'doctor', 'Too much koshari last night.'], 'يؤلمني': ['hospital', 'doctor', 'Dr. Hiro asks what’s wrong.'], 'زكام': ['hospital', 'doctor', 'Sneezing and a runny nose.'],
   'حمى': ['hospital', 'doctor', 'The thermometer says 38.5°C.', 'them'], 'دواء': ['hospital', 'doctor', 'Dr. Hiro hands you a small box.', 'them'], 'الطبيب': ['hospital', 'local', 'Someone in a white coat walks in.'],
   'مستشفى': ['street', 'friend', 'You look pale. Leo is worried.'], 'مريض': ['home', 'friend', 'You can’t come to the party.'], 'سلامتك': ['home', 'friend', 'Leo visits you in bed.', 'them'],
-  // Season 5–6
+  // Part 5–6
   'أجرّب': ['shop', 'clerk', 'You found a jacket you love.'], 'مقاس': ['shop', 'clerk', 'The clerk asks which one you wear.', 'them'], 'كبير': ['shop', 'clerk', 'You could fit two of you inside.'],
   'صغير': ['shop', 'clerk', 'The zip won’t close.'], 'أصغر': ['shop', 'clerk', 'This one is too big. You need…'], 'لون آخر': ['shop', 'clerk', 'You like it, but not in orange.'], 'خصم': ['shop', 'clerk', 'Big red “50%” signs everywhere.'],
   'أرخص': ['shop', 'clerk', 'Too pricey. You ask for something…'], 'أستبدل': ['shop', 'clerk', 'Wrong size. You’re back with the bag.'], 'إيصال': ['shop', 'clerk', 'The clerk asks for proof you bought it.', 'them'],
@@ -9195,7 +9424,7 @@ Object.assign(SCENE_CTX.es, {
   'vuelvo': ['station', 'coworker', 'Heading home after work.'], 'ceno': ['home', 'elder', 'Evening meal time (late, in Spain!).'], 'me acuesto': ['home', 'elder', 'It’s midnight. Bedtime.'], 'normalmente': ['cafe', 'friend', 'Leo asks what time you usually wake up.'], 'primero': ['home', 'elder', 'Grandpa Hiro asks about your morning.'], 'después': ['home', 'elder', 'Coffee, and after that…'],
   'la cabeza': ['hospital', 'doctor', 'You point at your head.'], 'el estómago': ['hospital', 'doctor', 'Too many tacos last night.'], 'me duele': ['hospital', 'doctor', 'Dr. Hiro asks what’s wrong.'], 'la fiebre': ['hospital', 'doctor', 'The thermometer says 38.5°C.', 'them'],
   'resfriado': ['hospital', 'doctor', 'Sneezing and a runny nose.'], 'la medicina': ['hospital', 'doctor', 'Dr. Hiro hands you a small box.', 'them'], 'el médico': ['street', 'friend', 'You look pale. Who should you see?'], 'el hospital': ['street', 'friend', 'You look very pale. Leo is worried.'], 'enfermo': ['home', 'friend', 'You can’t come to the party.'], 'necesito': ['shop', 'clerk', 'You must have water. Now.'],
-  // Season 5–6
+  // Part 5–6
   '¿me lo puedo probar?': ['shop', 'clerk', 'You found a jacket you love.'], 'la talla': ['shop', 'clerk', 'The clerk asks which one you wear.', 'them'], 'me queda grande': ['shop', 'clerk', 'You could fit two of you inside.'],
   'pequeño': ['shop', 'clerk', 'The zip won’t close.'], 'otro color': ['shop', 'clerk', 'You like it, but not in orange.'], 'caro': ['shop', 'clerk', 'The tag says 300 euros.'], 'barato': ['shop', 'clerk', 'Only 5 euros! What a deal.'],
   'el descuento': ['shop', 'clerk', 'Big red “50%” signs everywhere.'], 'cambiar': ['shop', 'clerk', 'Wrong size. You’re back with the bag.'], 'el recibo': ['shop', 'clerk', 'The clerk asks for proof you bought it.', 'them'],
@@ -9235,27 +9464,27 @@ function placeSVG(place) {
   if (place === 'street') return `<rect width="320" height="170" fill="#D6ECFF"/><circle cx="270" cy="28" r="14" fill="#FFE08A"/>
     <g fill="#B9C6EE"><rect x="0" y="46" width="54" height="104"/><rect x="58" y="70" width="40" height="80"/><rect x="236" y="58" width="48" height="92"/><rect x="288" y="80" width="32" height="70"/></g>
     <g fill="#fff" opacity=".7">${[[8, 56], [28, 56], [8, 80], [28, 80], [66, 82], [244, 70], [262, 70], [244, 96], [262, 96]].map(([x, y]) => `<rect x="${x}" y="${y}" width="10" height="12" rx="2"/>`).join('')}</g>
-    <path d="M150 150V66" stroke="#5D5A72" stroke-width="4"/><circle cx="150" cy="62" r="7" fill="#FFD66B"/><rect y="146" width="320" height="24" fill="#D9D3C7"/>`;
+    <path d="M150 150V66" stroke="#6B5A4E" stroke-width="4"/><circle cx="150" cy="62" r="7" fill="#FFD66B"/><rect y="146" width="320" height="24" fill="#D9D3C7"/>`;
   if (place === 'shop') return `<rect width="320" height="170" fill="#FFF1E6"/>
     <g stroke="#C9A27E" stroke-width="4"><path d="M150 44h170M150 84h170"/></g>
-    <g>${[[160, 22, '#FF7A59'], [182, 26, '#4146C9'], [204, 20, '#2F9C95'], [236, 24, '#FFD66B'], [262, 18, '#FF7A59'], [292, 24, '#7A5AF8'], [168, 62, '#FFD66B'], [196, 64, '#FF7A59'], [226, 58, '#4146C9'], [258, 64, '#2F9C95'], [288, 60, '#FFD66B']].map(([x, y, f]) => `<rect x="${x}" y="${y}" width="18" height="${(y < 40 ? 44 : 84) - y}" rx="3" fill="${f}"/>`).join('')}</g>
+    <g>${[[160, 22, '#FF7A59'], [182, 26, '#D95B0C'], [204, 20, '#2F9C95'], [236, 24, '#FFD66B'], [262, 18, '#FF7A59'], [292, 24, '#7A5AF8'], [168, 62, '#FFD66B'], [196, 64, '#FF7A59'], [226, 58, '#D95B0C'], [258, 64, '#2F9C95'], [288, 60, '#FFD66B']].map(([x, y, f]) => `<rect x="${x}" y="${y}" width="18" height="${(y < 40 ? 44 : 84) - y}" rx="3" fill="${f}"/>`).join('')}</g>
     <rect x="10" y="20" width="110" height="64" rx="8" fill="#fff" stroke="#E3D9C8" stroke-width="3"/><path d="M20 32h90M20 46h70M20 60h80" stroke="#E3D9C8" stroke-width="5" stroke-linecap="round"/>${floor}`;
   if (place === 'cafe') return `<rect width="320" height="170" fill="#F1EAFE"/>
-    <rect x="160" y="14" width="140" height="62" rx="8" fill="#2A2E6E"/><path d="M174 30h70M174 44h100M174 58h60" stroke="#FFF2E1" stroke-width="4" stroke-linecap="round" opacity=".8"/>
-    <g fill="#fff" stroke="#5D5A72" stroke-width="2"><rect x="20" y="40" width="16" height="18" rx="3"/><rect x="44" y="40" width="16" height="18" rx="3"/><rect x="68" y="40" width="16" height="18" rx="3"/></g><path d="M14 60h80" stroke="#C9A27E" stroke-width="5"/>${floor}`;
+    <rect x="160" y="14" width="140" height="62" rx="8" fill="#7A3410"/><path d="M174 30h70M174 44h100M174 58h60" stroke="#FFF2E1" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+    <g fill="#fff" stroke="#6B5A4E" stroke-width="2"><rect x="20" y="40" width="16" height="18" rx="3"/><rect x="44" y="40" width="16" height="18" rx="3"/><rect x="68" y="40" width="16" height="18" rx="3"/></g><path d="M14 60h80" stroke="#C9A27E" stroke-width="5"/>${floor}`;
   if (place === 'home') return `<rect width="320" height="170" fill="#E7F3EA"/>
     <rect x="120" y="18" width="80" height="62" rx="6" fill="#D6ECFF" stroke="#fff" stroke-width="6"/><path d="M160 18v62M120 49h80" stroke="#fff" stroke-width="4"/>
     <path d="M286 150v-40" stroke="#6E8E2E" stroke-width="4"/><circle cx="286" cy="102" r="16" fill="#8CC56A"/><rect x="276" y="132" width="20" height="18" rx="3" fill="#FF7A59"/>${floor}`;
-  if (place === 'station') return `<rect width="320" height="170" fill="#E4ECF7"/><rect y="22" width="320" height="8" fill="#5D5A72"/><rect x="40" y="36" width="250" height="70" rx="14" fill="#4146C9"/>
+  if (place === 'station') return `<rect width="320" height="170" fill="#E4ECF7"/><rect y="22" width="320" height="8" fill="#6B5A4E"/><rect x="40" y="36" width="250" height="70" rx="14" fill="#D95B0C"/>
     <g fill="#D6ECFF">${[60, 110, 160, 210].map(x => `<rect x="${x}" y="48" width="38" height="28" rx="5"/>`).join('')}</g><rect x="40" y="88" width="250" height="6" fill="#FF7A59"/><rect y="138" width="320" height="32" fill="#CFC8BA"/><rect y="136" width="320" height="5" fill="#FFD66B"/>`;
-  if (place === 'office') return `<rect width="320" height="170" fill="#EEF2F6"/><rect x="18" y="16" width="70" height="46" rx="5" fill="#fff" stroke="#C9D2DE" stroke-width="3"/><path d="M28 50l14-14 12 10 18-20" stroke="#4146C9" stroke-width="4" fill="none" stroke-linecap="round"/>
-    <rect x="128" y="64" width="60" height="38" rx="5" fill="#1C1B2E"/><rect x="133" y="69" width="50" height="28" rx="3" fill="#8D92FF"/><rect x="150" y="102" width="16" height="10" fill="#5D5A72"/><rect x="104" y="112" width="110" height="8" rx="3" fill="#C98B5E"/><path d="M278 150v-34" stroke="#6E8E2E" stroke-width="4"/><circle cx="278" cy="108" r="14" fill="#8CC56A"/>${floor}`;
+  if (place === 'office') return `<rect width="320" height="170" fill="#EEF2F6"/><rect x="18" y="16" width="70" height="46" rx="5" fill="#fff" stroke="#C9D2DE" stroke-width="3"/><path d="M28 50l14-14 12 10 18-20" stroke="#D95B0C" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <rect x="128" y="64" width="60" height="38" rx="5" fill="#2B1D14"/><rect x="133" y="69" width="50" height="28" rx="3" fill="#FFB27A"/><rect x="150" y="102" width="16" height="10" fill="#6B5A4E"/><rect x="104" y="112" width="110" height="8" rx="3" fill="#C98B5E"/><path d="M278 150v-34" stroke="#6E8E2E" stroke-width="4"/><circle cx="278" cy="108" r="14" fill="#8CC56A"/>${floor}`;
   if (place === 'hospital') return `<rect width="320" height="170" fill="#EAF6F4"/><rect x="128" y="18" width="64" height="64" rx="12" fill="#fff" stroke="#BFE3DD" stroke-width="3"/><path d="M160 32v36M142 50h36" stroke="#FF6B6B" stroke-width="10" stroke-linecap="round"/>
     <rect x="16" y="22" width="84" height="54" rx="6" fill="#fff" stroke="#BFE3DD" stroke-width="3"/><path d="M26 50h14l6-14 8 26 6-12h30" stroke="#2F9C95" stroke-width="3" fill="none" stroke-linejoin="round"/>${floor}`;
   if (place === 'park') return `<rect width="320" height="170" fill="#DDF1FF"/><circle cx="60" cy="30" r="14" fill="#FFE08A"/><path d="M0 120q80-40 160-10t160-14V170H0z" fill="#9BD07A"/>
     <path d="M150 140V96" stroke="#7A5230" stroke-width="7"/><circle cx="150" cy="80" r="30" fill="#6DBB5A"/><circle cx="132" cy="92" r="18" fill="#7FCB6A"/><circle cx="170" cy="90" r="20" fill="#7FCB6A"/><rect y="150" width="320" height="20" fill="#8BC56A"/>`;
   if (place === 'phone') return `<rect width="160" height="170" fill="#F1EAFE"/><rect x="160" width="160" height="170" fill="#E4ECF7"/><path d="M160 0v170" stroke="#fff" stroke-width="6" stroke-dasharray="10 8"/>
-    <g transform="translate(108 22)"><rect width="22" height="38" rx="5" fill="#1C1B2E"/><rect x="3" y="4" width="16" height="26" rx="2" fill="#8D92FF"/></g><g transform="translate(190 22)"><rect width="22" height="38" rx="5" fill="#1C1B2E"/><rect x="3" y="4" width="16" height="26" rx="2" fill="#FFB3A0"/></g>
+    <g transform="translate(108 22)"><rect width="22" height="38" rx="5" fill="#2B1D14"/><rect x="3" y="4" width="16" height="26" rx="2" fill="#FFB27A"/></g><g transform="translate(190 22)"><rect width="22" height="38" rx="5" fill="#2B1D14"/><rect x="3" y="4" width="16" height="26" rx="2" fill="#FFB3A0"/></g>
     <path d="M140 40q20-16 40 0" stroke="#FF7A59" stroke-width="3" fill="none" stroke-dasharray="4 5"/><rect y="150" width="320" height="20" fill="#E3D9C8"/>`;
   return `<rect width="320" height="170" fill="#EEF0FF"/><rect x="96" y="14" width="128" height="70" rx="6" fill="#2F6B4F" stroke="#C9A27E" stroke-width="5"/>
     <text x="160" y="58" text-anchor="middle" font-size="22" font-weight="700" fill="#F4F1EA" font-family="system-ui, sans-serif">A 가 ع</text>${floor}`;
@@ -9323,7 +9552,7 @@ Object.assign(RENDER, {
     const set = (step.level === 1 ? W.slice(Math.ceil(W.length / 2)) : W.slice(0, Math.ceil(W.length / 2))).slice(0, 6);
     const lead = set.find(ctxOf);
     if (u.letters || !lead) return _introOrig(step, el, R);
-    el.innerHTML = `<div class="intro-card v2"><span class="badge-new">Episode ${(u.index || 0) + 1} · Scene ${step.level + 1}</span><h2>${esc(u.title)}</h2>
+    el.innerHTML = `<div class="intro-card v2"><span class="badge-new">Chapter ${(u.index || 0) + 1} · Scene ${step.level + 1}</span><h2>${esc(u.title)}</h2>
       ${panelHTML(lead, 'blank')}
       <p class="intro-hook">By the end of this scene you’ll know exactly what to say here, and in ${Math.max(2, set.filter(ctxOf).length)} other moments.</p>
       <div class="intro-chips">${set.map((w, k) => `<button class="ichip" data-say="${esc(w.t)}" style="animation-delay:${200 + k * 70}ms"><span class="script" ${attrs(c)}>${esc(w.t)}</span>${!isLatinLang(c.code) ? `<small>${esc(w.r)}</small>` : ''}</button>`).join('')}</div></div>`;
@@ -9451,7 +9680,7 @@ buildLesson = function (u, level) {
 /* =====================================================================
    SOUNDS FIRST, LETTERS LATER
    Korean and Arabic start by ear: pronunciation big, the real script
-   small underneath as a sneak peek. After Season 1 the script takes over
+   small underneath as a sneak peek. After Part 1 the script takes over
    and the Letters track opens with a little ceremony.
    ===================================================================== */
 function lettersOpen(p = P(), code = course().code) {
@@ -9470,7 +9699,7 @@ function lettersLockedSheet() {
   const c = course();
   openSheet(`<div class="sheet-head"><h2>Letters come a bit later</h2><button class="icon-btn" data-close aria-label="Close">${ICON.x}</button></div>
     <div class="ll-sheet"><div class="mascot" id="ll-m"></div><p>Babies speak before they read. We do the same: you learn real phrases <b>by ear</b> first, then the ${c.code === 'ko' ? 'Hangeul' : 'Arabic'} letters feel easy, because you already know the words they spell.</p>
-    <p class="note">The letters open when you finish Season 1. Curious already?</p>
+    <p class="note">The letters open when you finish Part 1. Curious already?</p>
     <div class="stack"><button class="btn primary" data-close>Keep learning by ear</button><button class="btn ghost" data-letters-early>Show me the letters now</button></div></div>`);
   paintMascot($('#ll-m'), P().mascot, 'giggle', true);
 }
@@ -9600,7 +9829,7 @@ const Prosody = {
     shape.forEach(([x, y], i) => i ? g.lineTo(x * W, y * H) : g.moveTo(x * W, y * H)); g.stroke(); g.setLineDash([]);
     const v = frames.filter(f => f.f0 > 0); if (!v.length) return;
     const t0 = v[0].t, span = Math.max(900, v[v.length - 1].t - t0), meds = v.map(f => f.f0).sort((a, b) => a - b), med = meds[Math.floor(meds.length / 2)];
-    g.strokeStyle = EMO_COLOR[emo] || '#4146C9'; g.lineWidth = 7; g.beginPath();
+    g.strokeStyle = EMO_COLOR[emo] || '#D95B0C'; g.lineWidth = 7; g.beginPath();
     v.forEach((f, i) => { const x = (f.t - t0) / span * W, y = H / 2 - 12 * Math.log2(f.f0 / med) / 12 * (H * .8); i ? g.lineTo(x, Math.max(6, Math.min(H - 6, y))) : g.moveTo(x, Math.max(6, Math.min(H - 6, y))); });
     g.stroke();
   }
@@ -10084,7 +10313,7 @@ const Onboard = {
     const screens = [
       () => `<div class="ob-s s-hide"><h1>Psst… Boo is hiding.</h1><p>Can you find him?</p>
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}<span class="peek-eyes"></span></button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
-      () => `<div class="ob-s"><div class="ob-boo mascot" id="ob-boo"></div><h1>Peekaboo! I’m Boo.</h1><p>I help you <b>speak</b> a new language, out loud, from day one. No boring drills, I promise.</p><button class="btn primary big" data-ob-next>Hi Boo!</button></div>`,
+      () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Psst… I’m Boo.</b><span>I’ve haunted every country for 500 years, so I know every language. Learn from me, and speak your way out of the manor.</span></div><div class="ob-ghost ob-ghost-img" id="ob-ghost">${ghostPose('welcome')}</div><button class="btn primary big" data-ob-next>Let’s begin</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
         <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
@@ -10119,7 +10348,8 @@ const Onboard = {
         else { b.classList.add('nope'); b.disabled = true; $('#ob-hint').textContent = pick(['Not here! Try another…', 'Nope, nobody here!', 'Hmm, keep looking!']); Sfx.wrong(); }
       });
     }
-    if (this.step === 1) setTimeout(() => Voice.speak('Hi! I’m Boo. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
+    if (this.step === 1) { const f = $('#ob-ghost', el); let n = 0; const t = setInterval(() => { if (!f.isConnected) return clearInterval(t); f.innerHTML = booBookSVG(n++ % 2 ? 'cheer' : 'happy'); if (n > 14) { clearInterval(t); f.innerHTML = booBookSVG('happy'); } }, 210); }
+    if (false) setTimeout(() => Voice.speak('Psst… I’m Boo. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
     if (this.step === 2) $$('[data-city]', el).forEach(b => b.onclick = () => { d.lang = b.dataset.city; $$('[data-city]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).textContent = `Let’s go to ${CITY[d.lang].city}`; Voice.speak(this.GREET[d.lang][0], COURSES[d.lang].tts, .9, d.mascot, 'happy'); });
     if (this.step === 3) $$('[data-why]', el).forEach(b => b.onclick = () => { d.why = b.dataset.why; $$('[data-why]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).disabled = false; Sfx.tap(); });
     if (this.step === 4) {
@@ -10269,13 +10499,13 @@ buildPractice = function (kind) {
    · Without them: the account lives on this device (password hashed),
      so the full sign-up → trial → plans flow already works.
    Access:
-     trial   (7 days from sign-up) → all of Season 1, every game, Call Boo, 10 Talk rounds/day
-     free    (after the trial)     → 2 sample episodes, Live it, 1 round a day of each game, 3 Talk rounds/day
+     trial   (7 days from sign-up) → all of Part 1, every game, Call Boo, 10 Talk rounds/day
+     free    (after the trial)     → 2 sample chapters, Live it, 1 round a day of each game, 3 Talk rounds/day
      premium / owner               → everything
    ===================================================================== */
 const QA = /[?&]qa=sb7731\b/.test(location.search) && !Account.enabled();
 const TRIAL_DAYS = CFG.trialDays || 7;
-const FREE = { episodes: 2, talkPerDay: 3, gamesPerDay: 1 };
+const FREE = { chapters: 2, talkPerDay: 3, gamesPerDay: 1 };
 Object.assign(TRIAL, { callBoo: true });
 const WHY_SB = [
   ['speak', 'You speak from minute one', 'Most apps have you tap tiles and match pairs. In GabBoo you answer out loud and Boo listens, scores and reacts.'],
@@ -10358,7 +10588,7 @@ Access.state = function () {
 };
 Access.check = function () { if (P() && !$('#app').hidden && UI.tab === 'learn') renderLearn(); };
 Object.assign(LOCK_REASON, {
-  season: 'This episode is part of Premium. Your free plan includes the first 2 episodes.',
+  season: 'This chapter is part of Premium. Your free plan includes the first 2 chapters.',
   talk: 'That’s today’s free Talk rounds. Premium talks all day.',
   call: 'Call Boo is part of Premium: hands-free voice practice, as long as you like.',
   drill: 'This drill is part of Premium.',
@@ -10376,7 +10606,7 @@ Access.allows = function (what, ctx) {
     return true;
   }
   // free plan (trial over)
-  if (what === 'season') return !ctx || (ctx.track === 'letters' ? (ctx.index || 0) < 1 : (ctx.s || 0) === 0 && (ctx.index || 0) < FREE.episodes);
+  if (what === 'season') return !ctx || (ctx.track === 'letters' ? (ctx.index || 0) < 1 : (ctx.s || 0) === 0 && (ctx.index || 0) < FREE.chapters);
   if (what === 'drill') return ['mix', 'listen', 'water', 'mistakes'].includes(ctx);
   if (what === 'call') return false;
   if (what === 'talk') { if (!p) return true; if (!p.talkDay || p.talkDay.day !== t) p.talkDay = { day: t, n: 0 }; return p.talkDay.n < FREE.talkPerDay; }
@@ -10391,8 +10621,8 @@ for (const [obj, key] of [[RealTalk, 'realtalk'], [Adventure, 'story'], [ToneLab
 }
 trialBannerHTML = function () {
   const s = Access.state();
-  if (s.mode === 'trial') return `<button class="trial-pill" data-plans>${artSVG('gift')}<span><b>Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left</b><small>All of Season 1, every game and Call Boo. See plans</small></span></button>`;
-  if (s.mode === 'free') return `<button class="trial-pill free" data-plans>${artSVG('gift')}<span><b>Free plan</b><small>2 sample episodes + a daily round of each game. Unlock everything</small></span></button>`;
+  if (s.mode === 'trial') return `<button class="trial-pill" data-plans>${artSVG('gift')}<span><b>Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left</b><small>All of Part 1, every game and Call Boo. See plans</small></span></button>`;
+  if (s.mode === 'free') return `<button class="trial-pill free" data-plans>${artSVG('gift')}<span><b>Free plan</b><small>2 sample chapters + a daily round of each game. Unlock everything</small></span></button>`;
   return '';
 };
 /* Show the plan pill on Today too */
@@ -10516,7 +10746,7 @@ Paywall.show = async function (soft, reason) {
     const pr = Billing.prices[x.id];
     return `<button class="plan ${x.best ? 'best' : ''}" data-sub="${esc(x.id)}">${x.best ? '<span class="plan-tag">Best value</span>' : ''}<b>${esc(x.name)}</b><span class="plan-price">${pr ? esc(pr.label) : esc(x.price || '')}</span><small>per ${esc(x.period)}${x.note ? ` · ${esc(x.note)}` : ''}</small></button>`;
   }).join('');
-  const rows = [['Season 1 episodes', '2 samples', 'All', 'All 6 seasons'], ['Languages', '1', '1', 'Korean, Arabic & Spanish'], ['Talk with Boo', '3 a day', '10 a day', 'Unlimited'], ['Call Boo (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
+  const rows = [['Part 1 chapters', '2 samples', 'All', 'All 6 seasons'], ['Languages', '1', '1', 'Korean, Arabic & Spanish'], ['Talk with Boo', '3 a day', '10 a day', 'Unlimited'], ['Call Boo (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
   el.innerHTML = `<div class="pw-card">${soft ? `<button class="icon-btn pw-x" data-pw-close aria-label="Close">${ICON.x}</button>` : ''}
     <div class="mascot pw-boo" id="pw-m"></div>
     <h2>${s.mode === 'free' ? 'Your free week is over. Boo isn’t!' : s.mode === 'trial' ? `Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left` : 'GabBoo Premium'}</h2>
@@ -10552,8 +10782,13 @@ const Onboard2 = {
     const S = [
       () => `<div class="ob-s s-hide"><h1>Psst… Boo is hiding.</h1><p>Can you find him?</p>
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}</button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
-      () => `<div class="ob-s"><div class="ob-boo mascot" id="ob-boo"></div><h1>Peekaboo! I’m Boo.</h1><p>I’ll help you <b>speak</b> a new language, out loud, from day one.</p><button class="btn primary big" data-ob-next>Hi Boo!</button></div>`,
-      () => `<div class="ob-s"><h1>Not another tap-the-tiles app</h1><p>Here’s what you’ll do differently with GabBoo:</p>${whyHTML(false)}<button class="btn primary big" data-ob-next>Sounds good!</button></div>`,
+      () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Psst… I’m Boo.</b><span>I’ll help you speak a new language. Look at the book, then say it out loud with me.</span></div><div class="ob-ghost ob-ghost-img" id="ob-ghost">${ghostPose('welcome')}<svg class="ob-book" viewBox="0 0 60 44" aria-hidden="true"><g transform="rotate(-6 30 24)"><rect x="8" y="12" width="44" height="28" rx="4" fill="#FFF2E1" stroke="#2B1D14" stroke-width="2.6"/><rect x="5" y="8" width="44" height="28" rx="4" fill="#E4572E" stroke="#2B1D14" stroke-width="2.6"/><path d="M12 8v28" stroke="#2B1D14" stroke-width="2"/><rect x="16" y="13" width="28" height="18" rx="3" fill="#FFF2E1"/><text x="30" y="26" text-anchor="middle" font-size="9" font-weight="900" fill="#2B1D14" font-family="Nunito,system-ui,sans-serif">A 가 ع</text></g></svg></div><button class="btn primary big" data-ob-next>Let’s start</button></div>`,
+      () => `<div class="ob-s ob-story"><h1>Why a ghost?</h1>
+        <div class="story-cards"><div class="sc"><span>1</span><p><b>Boo is a ghost</b> who has haunted every country for 500 years.</p></div>
+        <div class="sc"><span>2</span><p><b>He heard every language</b>, so he knows them all.</p></div>
+        <div class="sc"><span>3</span><p><b>Ghosts only live through voices.</b> So Boo makes you speak.</p></div>
+        <div class="sc"><span>4</span><p><b>Speak the words</b> to open each door and escape the manor.</p></div></div>
+        <button class="btn primary big" data-ob-next>I’m in</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
         <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
@@ -10577,11 +10812,11 @@ const Onboard2 = {
         <p class="ob-label">My language <small>(for translations when you get stuck)</small></p><select class="input" id="ob-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (d.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select>
         <button class="btn primary big" id="ob-go">Start my journey</button></div>`
     ];
-    const pct = Math.round(([1, 3, 5, 6, 7].indexOf(this.step) + 1) / 5 * 100);
+    const pct = Math.round(([1, 2, 3, 5, 6, 7].indexOf(this.step) + 1) / 6 * 100);
     el.innerHTML = `<div class="ob-top"><div class="ob-bar"><i style="width:${pct}%"></i></div>${this.step < this.ACCOUNT ? '<button class="ob-skip" data-ob-skip>Skip</button>' : ''}</div><div class="ob-stage">${S[this.step]()}</div>`;
     this.wire();
   },
-  next() { this.step = Math.min(this.LAST, ({ 1: 3, 3: 5, 5: 6 })[this.step] || this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
+  next() { this.step = Math.min(this.LAST, ({ 1: 2, 2: 3, 3: 5, 5: 6 })[this.step] || this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
   accountReady() { if (this.step <= this.ACCOUNT) { this.step = this.PROFILE; this.show(); } },
   wire() {
     const el = $('#ob'), d = this.draft;
@@ -10596,7 +10831,8 @@ const Onboard2 = {
         else { b.classList.add('nope'); b.disabled = true; $('#ob-hint').textContent = pick(['Not here! Try another…', 'Nope, nobody here!', 'Hmm, keep looking!']); Sfx.wrong(); }
       });
     }
-    if (this.step === 1) setTimeout(() => Voice.speak('Hi! I’m Boo. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
+    if (this.step === 1) { const f = $('#ob-ghost', el); let n = 0; const t = setInterval(() => { if (!f || !f.isConnected) return clearInterval(t); n++; f.classList.toggle('talk', n % 2 === 1); if (n > 14) { clearInterval(t); f.classList.remove('talk'); } }, 210); }
+    if (false) setTimeout(() => Voice.speak('Psst… I’m Boo. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
     if (this.step === 3) $$('[data-city]', el).forEach(b => b.onclick = () => { d.lang = b.dataset.city; $$('[data-city]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).textContent = `Let’s go to ${CITY[d.lang].city}`; Voice.speak(Onboard.GREET[d.lang][0], COURSES[d.lang].tts, .9, d.mascot, 'happy'); });
     if (this.step === 4) $$('[data-why]', el).forEach(b => b.onclick = () => { d.why = b.dataset.why; $$('[data-why]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).disabled = false; Sfx.tap(); });
     if (this.step === 5) {
