@@ -7371,7 +7371,7 @@ function showProfiles() { Store.data.active = null; Store.save(); UI.manage = fa
 /* =====================================================================
    APP SHELL & NAVIGATION
    ===================================================================== */
-const TABS = [['now', 'Today', 'sunI'], ['learn', 'Journey', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Challenges', 'chat'], ['practice', 'Practice', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
+const TABS = [['now', 'Today', 'sunI'], ['learn', 'Manor', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Haunts', 'chat'], ['practice', 'Practice', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Spirit', 'user']];
 const NAV_HIDDEN = ['letters', 'quests'];
 
 function enterApp(id) {
@@ -7554,7 +7554,7 @@ function heroHTML() {
     <div class="stage-actions v5">
       ${cur ? `<button class="stage-go" data-go="${cur.u.id}:${cur.i}:lesson"><span><b>Continue</b><small>${esc(cur.u.title)} · scene ${cur.i + 1}</small></span>${ICON.play5}</button>`
         : `<button class="stage-go" data-practice="mix"><span><b>Practice</b><small>Keep your words fresh</small></span>${ICON.play5}</button>`}
-      <div class="stage-mini"><button class="mini-btn" data-tab="chat">${ICON.mic}<span>Challenges</span></button><button class="mini-btn rt-btn" data-realtalk><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H9l-4 3v-3.2A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z" fill="currentColor"/><path d="M20 9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2l-3-2h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Real Talk</span></button><button class="mini-btn call" data-call><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>Call</span></button></div>
+      <div class="stage-mini"><button class="mini-btn" data-tab="chat">${ICON.mic}<span>Haunts</span></button><button class="mini-btn rt-btn" data-realtalk><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H9l-4 3v-3.2A3 3 0 0 1 2 13V8a3 3 0 0 1 2-3z" fill="currentColor"/><path d="M20 9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2l-3-2h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Real Talk</span></button><button class="mini-btn call" data-call><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="currentColor"/></svg><span>Call</span></button></div>
     </div></div>`;
 }
 let _peekBusy = false;
@@ -8892,7 +8892,7 @@ function renderTalk() {
   const root = $('#tab-chat'); if (!root) return;
   const c = course(), T = Talk, cur = T.cur;
   if (!cur) {
-    root.innerHTML = `<div class="tk"><h1 class="tk-h">Challenges</h1><p class="tk-sub">Real situations you will face. Boo plays the other person.</p>
+    root.innerHTML = `<div class="tk"><h1 class="tk-h">Haunts</h1><p class="tk-sub">Real situations you will face. Boo plays the other person.</p>
       <div class="tk-list">${T.scenes().map(t => `<button class="tk-card" data-tk-open="${t.id}"><span class="mascot" data-tk-m="${T.who(t)}"></span><span class="tk-ct"><b>${esc(t.title)}</b><small>${esc(t.en)}</small></span><span class="tk-go">›</span></button>`).join('')}</div>
       <h2 class="tk-h2">More with characters</h2>
       <div class="tk-list"><button class="tk-card" data-realtalk><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Real Talk</b><small>Slang, tone and idioms</small></span><span class="tk-go">›</span></button>
@@ -9103,15 +9103,15 @@ function gameChrome() {
       <button class="wb wb-lvl" data-sheet="streak" aria-label="Level ${levelFor(p.xp)}"><span class="wb-ring">${ICON_LEAFY}</span><svg class="wb-star" viewBox="0 0 24 24"><path d="M12 2l3 7 7 .7-5.3 4.8 1.6 7.2L12 18l-6.3 3.7 1.6-7.2L2 9.7 9 9z" fill="#FFC23D" stroke="#B8760B" stroke-width="1.6" stroke-linejoin="round"/></svg><b>LVL ${levelFor(p.xp)}</b></button>
       <button class="wb wb-xp" data-sheet="streak" aria-label="Daily goal">${ICON_LEAFY}<span class="wb-track"><i style="width:${pct}%"></i><em>${tx}/${goal}</em></span></button>
       <button class="wb wb-heart" data-sheet="hearts" aria-label="${h} hearts">${ICON.heart}<b>${h}</b></button></div>
-    <div class="wcorner"><button class="wc" data-tab="now" aria-label="Today">${GI.map}<small>MAP</small></button>
+    <div class="wcorner"><button class="wc" data-tab="now" aria-label="Today">${GI.map}<small>HOME</small></button>
       <button class="lang-chip" data-sheet="lang" aria-label="Change language"><span class="flag script" ${attrs(c)} style="font-family:${c.font}">${c.flag}</span>${c.name}</button>
-      <button class="wc" data-tab="practice" aria-label="Practice">${GI.chest}<small>PRACTICE</small></button></div>`;
+      <button class="wc" data-tab="practice" aria-label="Practice">${GI.chest}<small>TRAIN</small></button></div>`;
   const bn = $('#bnav');
-  if (bn) bn.innerHTML = `<button class="bn" data-tab="learn">${GI.book}<span>CHAPTERS</span></button>
-    <button class="bn" data-tab="chat">${GI.swords}<span>CHALLENGES</span></button>
-    <button class="bn-play" data-play aria-label="Play">${PLAY_SWIRL}<span><b>PLAY</b><small>START LESSON</small></span></button>
-    <button class="bn" data-tab="profile">${GI.ghost}<span>PROFILE</span></button>
-    <button class="bn" data-tab="quests">${GI.chest}<span>SHOP</span></button>`;
+  if (bn) bn.innerHTML = `<button class="bn" data-tab="learn">${GI.book}<span>MANOR</span></button>
+    <button class="bn" data-tab="chat">${GI.swords}<span>HAUNTS</span></button>
+    <button class="bn-play" data-play aria-label="Play">${PLAY_SWIRL}<span><b>ENTER</b><small>NEXT ROOM</small></span></button>
+    <button class="bn" data-tab="profile">${GI.ghost}<span>SPIRIT</span></button>
+    <button class="bn" data-tab="quests">${GI.chest}<span>CRYPT</span></button>`;
   markNav(UI.tab);
 }
 function markNav(t) { $$('#bnav .bn').forEach(b => { if (b.dataset.tab === t || (t === 'letters' && b.dataset.tab === 'learn')) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); }
