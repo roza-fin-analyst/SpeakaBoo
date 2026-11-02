@@ -9098,20 +9098,14 @@ function gameChrome() {
   const p = P(); if (!p || $('#app').hidden) return;
   const h = Hearts.left(p), tx = todayXP(p), goal = p.dailyGoal || 50, pct = Math.min(100, Math.round(tx / goal * 100)), c = course();
   const tb = $('#topbar');
-  if (tb) tb.innerHTML = `<div class="wbar">
-      <button class="wb wb-gem" data-sheet="gems" aria-label="${p.gems} leaves">${ICON_BANANA}<b>${p.gems}</b></button>
-      <button class="wb wb-lvl" data-sheet="streak" aria-label="Level ${levelFor(p.xp)}"><span class="wb-ring">${ICON_LEAFY}</span><svg class="wb-star" viewBox="0 0 24 24"><path d="M12 2l3 7 7 .7-5.3 4.8 1.6 7.2L12 18l-6.3 3.7 1.6-7.2L2 9.7 9 9z" fill="#FFC23D" stroke="#B8760B" stroke-width="1.6" stroke-linejoin="round"/></svg><b>LVL ${levelFor(p.xp)}</b></button>
-      <button class="wb wb-xp" data-sheet="streak" aria-label="Daily goal">${ICON_LEAFY}<span class="wb-track"><i style="width:${pct}%"></i><em>${tx}/${goal}</em></span></button>
-      <button class="wb wb-heart" data-sheet="hearts" aria-label="${h} hearts">${ICON.heart}<b>${h}</b></button></div>
-    <div class="wcorner"><button class="wc" data-tab="now" aria-label="Today">${GI.map}<small>HOME</small></button>
-      <button class="lang-chip" data-sheet="lang" aria-label="Change language"><span class="flag script" ${attrs(c)} style="font-family:${c.font}">${c.flag}</span>${c.name}</button>
-      <button class="wc" data-tab="practice" aria-label="Practice">${GI.chest}<small>TRAIN</small></button></div>`;
+  if (tb) tb.innerHTML = `<button class="lang-chip" data-sheet="lang" aria-label="Change language"><span class="flag script" ${attrs(c)} style="font-family:${c.font}">${c.flag}</span>${c.name}</button><span class="spacer"></span>
+    <button class="sp-stat" data-sheet="streak" aria-label="${p.xp} points">${ICON_BANANA}<b>${p.xp}</b></button>
+    <button class="sp-stat" data-sheet="hearts" aria-label="${h} hearts">${ICON.heart}<b>${h}</b></button>`;
   const bn = $('#bnav');
-  if (bn) bn.innerHTML = `<button class="bn" data-tab="learn">${GI.book}<span>MANOR</span></button>
-    <button class="bn" data-tab="chat">${GI.swords}<span>HAUNTS</span></button>
-    <button class="bn-play" data-play aria-label="Play">${PLAY_SWIRL}<span><b>ENTER</b><small>NEXT ROOM</small></span></button>
-    <button class="bn" data-tab="profile">${GI.ghost}<span>SPIRIT</span></button>
-    <button class="bn" data-tab="quests">${GI.chest}<span>CRYPT</span></button>`;
+  if (bn) bn.innerHTML = `<button class="bn" data-tab="now">${ICON.sunI}<span>Today</span></button><button class="bn" data-tab="learn">${GI.book}<span>Manor</span></button>
+    <button class="bn" data-tab="chat">${GI.ghost}<span>Haunts</span></button>
+    <button class="bn" data-tab="practice">${GI.swords}<span>Train</span></button>
+    <button class="bn" data-tab="profile">${GI.chest}<span>Me</span></button>`;
   markNav(UI.tab);
 }
 function markNav(t) { $$('#bnav .bn').forEach(b => { if (b.dataset.tab === t || (t === 'letters' && b.dataset.tab === 'learn')) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); }
