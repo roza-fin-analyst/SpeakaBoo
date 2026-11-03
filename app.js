@@ -4495,7 +4495,7 @@ function addJoke(text) {
 const Sfx = {
   ctx: null,
   tone(f, t0, dur, type = 'sine', g = .14) {
-    if (P() && !P().sound) return;
+    if (!Sound.on()) return;
     try {
       this.ctx ||= new (window.AudioContext || window.webkitAudioContext)();
       const c = this.ctx, o = c.createOscillator(), v = c.createGain(), t = c.currentTime + t0;
@@ -7043,7 +7043,7 @@ function renderNow() {
       <h1 class="sky-hi">${hi}, ${esc(p.name)}.</h1>
       <p class="sky-sub">${['bored', 'missing', 'fading', 'ghosted'].includes(st.key) ? esc(st.line) : `Here’s what people say in ${esc(c.name)} around now.`}</p>
       <button class="sky-boo" data-sky-boo aria-label="Tap ${esc(mc.name)}"></button><div class="sky-bubble" id="sky-bubble" hidden></div>
-      ${jungleSVG(sky)}
+      ${skylineSVG(c.code, sky)}
     </section>
     ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Chapter ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
     <section class="moment card-lift">
@@ -8756,18 +8756,6 @@ function booBookSVG(mood = 'happy') {   // Boo the ghost holding the language bo
     <ellipse cx="86" cy="84" rx="7.5" ry="6.5" fill="#F4F0FF" stroke="${ink}" stroke-width="3.2"/>`;
   return uniqIds(`<svg viewBox="-4 -4 128 124" width="100%" height="100%">${body}${mascotFace(mood, A)}${book}</svg>`);
 }
-function splash() {
-  const el = document.createElement('div'); el.id = 'splash'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = `<div class="sp-glow"></div><div class="sp-boo">${ghostPose('cheer')}</div><div class="sp-bubble">Boo!</div><div class="sp-word">GabBoo</div><div class="sp-tag">Peek. Speak. Repeat.</div>`;
-  document.body.append(el);
-  // Boo swoops in from the corner holding the book (a friendly scare), gives a peeky smile, then settles in the middle.
-  const face = m => { const b = $('.sp-boo', el); if (b) b.innerHTML = ghostPose(m === 'giggle' ? 'welcome' : m === 'happy' ? 'thumbs' : 'cheer'); };
-  setTimeout(() => face('giggle'), 1050); setTimeout(() => face('happy'), 1800);
-  const t0 = Date.now(); let gone = false;
-  const hide = () => { if (gone) return; gone = true; setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 600); }, Math.max(0, 3000 - (Date.now() - t0))); };
-  setTimeout(hide, 3600);   // never block sign-in or slow networks
-  return hide;
-}
 /** Phones: shrink an exercise a little so it fits the screen and never needs scrolling. */
 let _fitQ = 0;
 function fitStage() {
@@ -9180,6 +9168,115 @@ document.addEventListener('click', e => {
   e.stopImmediatePropagation(); e.preventDefault(); n.classList.add('launch'); document.body.classList.add('entering');
   const [uid, i, mode] = n.dataset.go.split(':'); setTimeout(() => { document.body.classList.remove('entering'); n.classList.remove('launch'); startLesson(uid, +i, mode); }, 320);
 }, true);
+/* =====================================================================
+   CUTE + SIMPLE: sound switch, opening sequence, costumes, friends, sharing
+   ===================================================================== */
+const Sound = {
+  on() { try { const v = localStorage.getItem('gabboo.sound'); return v === null ? true : v === '1'; } catch (e) { return true; } },
+  set(v) { try { localStorage.setItem('gabboo.sound', v ? '1' : '0'); } catch (e) { /* ignore */ } const p = P(); if (p) { p.sound = !!v; Store.save(); } if (!v) { Voice.stop(); } },
+  ready() { try { Sfx.ctx ||= new (window.AudioContext || window.webkitAudioContext)(); if (Sfx.ctx.state === 'suspended') Sfx.ctx.resume(); return Sfx.ctx.state === 'running'; } catch (e) { return false; } }
+};
+Object.assign(Sfx, {
+  sweep(f0, f1, t0, dur, type = 'sine', g = .1) {
+    if (!Sound.on() || !Sound.ready()) return;
+    try { const c = this.ctx, o = c.createOscillator(), v = c.createGain(), t = c.currentTime + t0; o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      v.gain.setValueAtTime(0, t); v.gain.linearRampToValueAtTime(g, t + .03); v.gain.exponentialRampToValueAtTime(.0001, t + dur); o.connect(v).connect(c.destination); o.start(t); o.stop(t + dur + .02); } catch (e) { /* ignore */ }
+  },
+  whoosh() { this.sweep(180, 900, 0, .5, 'sawtooth', .05); },
+  boo() { this.sweep(420, 150, 0, .55, 'triangle', .16); this.sweep(840, 300, 0, .4, 'sine', .06); },
+  giggle() { [740, 880, 740, 988].forEach((f, i) => this.tone(f, i * .09, .09, 'sine', .08)); },
+  chime() { [659, 784, 988, 1319].forEach((f, i) => this.tone(f, i * .12, .5, 'triangle', .09)); }
+});
+
+/* ---- costumes: unlock with level ---- */
+const COSTUME_LEVEL = { partyhat: 1, shades: 2, flowercrown: 3, witch: 4, headphones: 5, beanie: 7, pumpkin: 9, crown: 11, grad: 14, halo: 18 };
+WARDROBE.push({ id: 'witch', name: 'Witch hat', at: 99 }, { id: 'pumpkin', name: 'Pumpkin hat', at: 99 });
+{
+  const _ws = wearSVG;
+  wearSVG = function (id, a) {
+    if (id === 'witch') return `<path d="M20 36Q60 46 100 36 94 28 80 26 76 4 62 -12 56 10 44 26 28 28z" fill="#6B3FA0" stroke="#3E1E66" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 26Q60 32 80 26" stroke="#FFC23D" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="56" y="22" width="9" height="9" rx="2" fill="#FFC23D" stroke="#B8860B" stroke-width="1.5"/>`;
+    if (id === 'pumpkin') return `<path d="M60 30c-22 0-32 10-32 22 0 4 10 6 32 6s32-2 32-6C92 40 82 30 60 30z" fill="#FF8A1F" stroke="#B3500A" stroke-width="2.5"/><path d="M60 30c-6 4-6 26 0 28M60 30c6 4 6 26 0 28" fill="none" stroke="#B3500A" stroke-width="2"/><path d="M60 30q0-8 8-10" stroke="#3E8E3E" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+    return _ws(id, a);
+  };
+}
+const costumeUnlocked = (p, id) => levelFor(p.xp) >= (COSTUME_LEVEL[id] || 1);
+function syncCostumes(p) { p.wardrobe = WARDROBE.filter(w => costumeUnlocked(p, w.id)).map(w => w.id); if (p.wear && !costumeUnlocked(p, p.wear)) p.wear = null; }
+const ghostAvatar = (kind, wear, mood = 'happy') => { const a = MASCOT_ART[kind] || MASCOT_ART.mandu; return `<svg viewBox="-7 -14 134 134" aria-hidden="true">${a.body}${mascotFace(mood, a)}${wear ? wearSVG(wear, a) : ''}</svg>`; };
+
+/* ---- friends: a short code holds a friend's name, level, streak and costume; no account needed ---- */
+const Friends = {
+  code() { const p = P(), o = { v: 1, n: p.name, m: p.mascot, w: p.wear || '', l: levelFor(p.xp), s: liveStreak(p), x: p.xp, c: course().code }; return 'GB-' + btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); },
+  parse(txt) { try { let t = String(txt).trim(); const i = t.indexOf('GB-'); if (i < 0) return null; t = t.slice(i + 3).replace(/[^A-Za-z0-9_-].*$/, '').replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '='; const o = JSON.parse(decodeURIComponent(escape(atob(t)))); return o && o.v === 1 && o.n ? o : null; } catch (e) { return null; } },
+  add(o) { const p = P(); p.friends ||= []; const k = o.n + '|' + o.m, i = p.friends.findIndex(f => f.n + '|' + f.m === k); o.at = Date.now(); if (i >= 0) p.friends[i] = o; else p.friends.push(o); Store.save(); },
+  link() { return `${APP_URL || location.origin + location.pathname}#f=${this.code()}`; },
+  list() { const p = P(), me = { n: p.name, m: p.mascot, w: p.wear || '', l: levelFor(p.xp), s: liveStreak(p), x: p.xp, me: 1 }; return [me, ...(p.friends || [])].sort((a, b) => b.x - a.x); },
+  inviteFromHash() { try { const m = location.hash.match(/f=(GB-[A-Za-z0-9_-]+)/); if (!m || !P()) return; const o = this.parse(m[1]); history.replaceState(null, '', location.pathname + location.search); if (o) { this.add(o); toast(`${o.n} is now your friend`); if (UI.tab === 'profile') renderProfile(); } } catch (e) { /* ignore */ } }
+};
+{ const _ea = enterApp; enterApp = function (...a) { const r = _ea.apply(this, a); setTimeout(() => Friends.inviteFromHash(), 900); return r; }; }
+
+/* ---- sharing: progress, or a single achievement ---- */
+{
+  const _txt = Share.text.bind(Share);
+  Share.text = function () { if (this.line) { const l = this.line; return l + ' Join me on GabBoo!'; } return _txt(); };
+}
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-share-win]'); if (b) { Share.line = b.dataset.shareWin; Share.progress().finally(() => { Share.line = ''; }); } });
+
+/* ---- the new, small Me tab ---- */
+renderProfile = function () {
+  const p = P(), c = course(); if (!p) return; syncCostumes(p);
+  const lvl = levelFor(p.xp), st = Access.state(), my = p.myLang || 'en';
+  const plan = st.mode === 'premium' ? 'Premium' : st.mode === 'trial' ? `Free trial · ${st.daysLeft} day${st.daysLeft > 1 ? 's' : ''} left` : st.mode === 'owner' || st.mode === 'local' ? 'Everything unlocked' : 'Free trial ended';
+  const showPlan = st.mode !== 'owner' && st.mode !== 'local';
+  const nextC = WARDROBE.filter(w => !costumeUnlocked(p, w.id)).sort((a, b) => COSTUME_LEVEL[a.id] - COSTUME_LEVEL[b.id])[0];
+  $('#tab-profile').innerHTML = `<div class="pad me2">
+    <section class="me-hero"><div class="me-ghost" data-mascot-live></div><div class="me-who"><h1>${esc(p.name)}</h1><p>Level ${lvl} · ${liveStreak(p)}-day streak</p><button class="btn primary sm" data-share>Share my progress</button></div></section>
+    <section class="me-sec"><h2>Costumes</h2><p class="hint">${nextC ? `Next: ${esc(nextC.name)} at level ${COSTUME_LEVEL[nextC.id]}` : 'You unlocked them all!'}</p>
+      <div class="costumes"><button class="cos ${!p.wear ? 'on' : ''}" data-wear=""><span>${ghostAvatar(p.mascot, '')}</span><small>None</small></button>
+      ${WARDROBE.slice().sort((a, b) => COSTUME_LEVEL[a.id] - COSTUME_LEVEL[b.id]).map(w => { const ok = costumeUnlocked(p, w.id); return `<button class="cos ${p.wear === w.id ? 'on' : ''} ${ok ? '' : 'locked'}" ${ok ? `data-wear="${w.id}"` : 'disabled'}><span>${ghostAvatar(p.mascot, ok ? w.id : '')}</span><small>${ok ? esc(w.name) : 'Level ' + COSTUME_LEVEL[w.id]}</small></button>`; }).join('')}</div></section>
+    <section class="me-sec"><h2>Friends</h2>
+      <div class="friend-list">${Friends.list().map((f, i) => `<div class="friend ${f.me ? 'me' : ''}"><b class="rk">${i + 1}</b><span class="fav">${ghostAvatar(f.m, f.w)}</span><span class="fname"><b>${esc(f.n)}${f.me ? ' (you)' : ''}</b><small>Level ${f.l} · ${f.s}-day streak</small></span>${f.me ? '' : `<button class="fx" data-fdel="${esc(f.n + '|' + f.m)}" aria-label="Remove">×</button>`}</div>`).join('')}</div>
+      <div class="friend-actions"><button class="btn primary sm" id="fr-invite">Invite a friend</button></div>
+      <div class="friend-add"><input class="input" id="fr-code" placeholder="Paste a friend’s code or link"><button class="btn ghost sm" id="fr-add">Add</button></div>
+      <p class="hint">Friends update when they share a new code or link with you.</p></section>
+    <section class="me-sec"><h2>Settings</h2>
+      <label class="set-row">My language<select id="me-mylang">${MY_LANGS.map(([cc, n]) => `<option value="${cc}" ${cc === my ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+      <label class="set-row">Sound<input type="checkbox" class="toggle" id="me-sound" ${Sound.on() ? 'checked' : ''}></label>
+      ${showPlan ? `<div class="set-row">${esc(plan)}<button class="btn ghost sm" data-plans>${st.mode === 'premium' ? 'Manage' : 'See plans'}</button></div>` : ''}</section>
+    <p class="me-foot"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a> · <button class="link" data-signout>Sign out</button></p></div>`;
+  const root = $('#tab-profile');
+  $$('[data-mascot-live]', root).forEach(el => paintMascot(el, p.mascot, 'happy', true));
+  $$('[data-wear]', root).forEach(b => b.onclick = () => { p.wear = b.dataset.wear || null; Store.save(); renderProfile(); renderChrome(); Sfx.pop(); const w = WARDROBE.find(x => x.id === p.wear); toast(w ? `Wearing the ${w.name.toLowerCase()}` : 'No costume'); });
+  $('#me-mylang').onchange = e => { p.myLang = e.target.value; Store.save(); };
+  $('#me-sound').onchange = e => { Sound.set(e.target.checked); if (e.target.checked) { Sound.ready(); Sfx.chime(); } };
+  $('#fr-invite').onclick = async () => { const link = Friends.link(), text = `Come learn ${c.name} with me on GabBoo!`; try { if (navigator.share) { await navigator.share({ text, url: link }); return; } } catch (e) { if (e && e.name === 'AbortError') return; } try { await navigator.clipboard.writeText(`${text} ${link}`); toast('Link copied. Send it to a friend.'); } catch (e) { toast(link); } };
+  $('#fr-add').onclick = () => { const o = Friends.parse($('#fr-code').value); if (!o) { toast('That code doesn’t look right'); return; } Friends.add(o); toast(`${o.n} added`); renderProfile(); };
+  $$('[data-fdel]', root).forEach(b => b.onclick = () => { p.friends = (p.friends || []).filter(f => f.n + '|' + f.m !== b.dataset.fdel); Store.save(); renderProfile(); });
+};
+
+/* ---- the opening sequence ---- */
+function splash() {
+  const el = document.createElement('div'); el.id = 'splash'; el.setAttribute('aria-hidden', 'false');
+  const bat = `<svg viewBox="0 0 40 20"><path d="M20 6C16 0 8 0 0 4 4 6 5 9 6 14 9 10 12 10 14 13 16 10 18 9 20 11 22 9 24 10 26 13 28 10 31 10 34 14 35 9 36 6 40 4 32 0 24 0 20 6z" fill="#4B3A7A"/></svg>`;
+  const sp = Sound.on() ? 'on' : 'off';
+  el.innerHTML = `<div class="sp-moon"></div><div class="sp-stars"></div>
+    <svg class="sp-house" viewBox="0 0 200 120" preserveAspectRatio="xMidYMax meet"><path d="M20 120V70l20-24 20 24v50zM64 120V52l30-34 30 34v68zM126 120V64l22-22 22 22v56z" fill="#5B4B9A"/><path d="M0 120h200" stroke="#5B4B9A" stroke-width="6"/><rect x="88" y="62" width="12" height="16" rx="3" fill="#FFE29A"/><rect x="72" y="86" width="10" height="14" rx="3" fill="#FFE29A"/><rect x="138" y="76" width="10" height="14" rx="3" fill="#FFE29A"/></svg>
+    <b class="sp-bat a">${bat}</b><b class="sp-bat b">${bat}</b>
+    <div class="sp-boo"><div class="sp-ghost">${booBookSVG('boo')}</div></div><div class="sp-bubble">Boo!</div>
+    <div class="sp-word">${'GabBoo'.split('').map((ch, i) => `<span style="animation-delay:${2.4 + i * .09}s">${ch}</span>`).join('')}</div><div class="sp-tag">Peek. Speak. Repeat.</div>
+    <button class="sp-sound" aria-label="Sound" data-state="${sp}">${sp === 'on' ? '♪ Sound on' : 'Sound off'}</button><button class="sp-skip">Skip</button>`;
+  document.body.append(el);
+  const ghost = $('.sp-ghost', el), face = m => { if (ghost.isConnected) ghost.innerHTML = booBookSVG(m); };
+  const T = [[350, () => Sfx.whoosh()], [1250, () => { Sfx.boo(); el.classList.add('flash'); }], [1750, () => el.classList.remove('flash')], [2100, () => { face('giggle'); Sfx.giggle(); }], [2800, () => { face('happy'); Sfx.chime(); }]];
+  const timers = T.map(([ms, fn]) => setTimeout(fn, ms));
+  const btn = $('.sp-sound', el);
+  btn.onclick = () => { const v = !Sound.on(); Sound.set(v); btn.dataset.state = v ? 'on' : 'off'; btn.textContent = v ? '♪ Sound on' : 'Sound off'; if (v) { Sound.ready(); Sfx.chime(); } };
+  document.addEventListener('pointerdown', () => Sound.ready(), { once: true });
+  const t0 = Date.now(); let gone = false;
+  const hide = (now) => { if (gone) return; gone = true; timers.forEach(clearTimeout); setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 600); }, now ? 0 : Math.max(0, 4600 - (Date.now() - t0))); };
+  $('.sp-skip', el).onclick = () => hide(true);
+  setTimeout(hide, 5600);
+  return hide;
+}
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
