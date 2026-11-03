@@ -8737,12 +8737,7 @@ function goHome() {
   if (!$('#lesson').hidden) Runner.close();
   UI.tab = 'now'; BooMood.apply(); renderChrome(); showTab('now'); setTimeout(welcomeBack, 700);
 }
-let hiddenAt = 0;
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') hiddenAt = Date.now();
-  else if (hiddenAt && Date.now() - hiddenAt > 90 * 1000) goHome();
-});
-addEventListener('pageshow', e => { if (e.persisted) goHome(); });
+/* Leaving the app in the background keeps your place: nothing resets when you come back. */
 
 /* Boo hugging a little multi-language dictionary: used by the opening screen and app icons. */
 function booBookSVG(mood = 'happy') {   // Boo the ghost holding the language book
@@ -9299,6 +9294,15 @@ const passMark = u => [.6, .7, .8, .85][tierOf(u) - 1];
     return out;
   };
 }
+/* Fresh launch = opening animation + Today. Coming back from the background (same session) = no animation, same screen. */
+const RESUMED = (() => { try { const r = sessionStorage.getItem('gabboo.alive') === '1'; sessionStorage.setItem('gabboo.alive', '1'); return r; } catch (e) { return false; } })();
+{
+  const _sh = showTab;
+  showTab = function (t, ...r) { try { sessionStorage.setItem('gabboo.tab', t); } catch (e) { /* ignore */ } return _sh.call(this, t, ...r); };
+  const _en = enterApp;
+  enterApp = function (...a) { let t = null; try { t = sessionStorage.getItem('gabboo.tab'); } catch (e) { /* ignore */ } const out = _en.apply(this, a); if (RESUMED) { if (t && t !== 'now' && $('#tab-' + t)) setTimeout(() => showTab(t), 30); } return out; };
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') Voice.stop(); });
+}
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
@@ -9307,7 +9311,7 @@ function warmPics() {
 }
 function bootApp() {
   warmPics();
-  const hideSplash = splash();
+  const hideSplash = RESUMED ? (() => {}) : splash();   // the opening animation plays only on a fresh launch
   Store.load(); Voice.init();
   Account.boot(() => {
     Object.values(Store.data.profiles).forEach(upgradeProfile);
@@ -10791,7 +10795,7 @@ const Starter = {
   go() {
     Object.values(Store.data.profiles).forEach(upgradeProfile);
     const d = Store.data, id = d.active && d.profiles[d.active] ? d.active : d.order[0];
-    $('#auth') && ($('#auth').hidden = true); $('#splash')?.remove();
+    $('#auth') && ($('#auth').hidden = true);
     if (id) { enterApp(id); Access.check(); } else Onboard2.open(Onboard2.PROFILE);
   }
 };
