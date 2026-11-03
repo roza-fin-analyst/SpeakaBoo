@@ -8010,8 +8010,10 @@ const Runner = {
       const prog = unitProgress(p, c.code, meta.unit.id), first = meta.level === prog;
       xp = first ? 10 : 5; xp += perfect ? 5 : 0; xp += Math.floor(this.maxCombo / 5);
       gems = first ? 5 + (perfect ? 5 : 0) : 0;
-      if (first) LS().path[meta.unit.id] = prog + 1;
-      if (first && prog + 1 === UNIT_LESSONS) { extra = `Unit “${meta.unit.title}” complete! New Passport stamp${meta.unit.culture ? `: “${meta.unit.culture[0]}”` : ''}. The next unit and the trophy test are unlocked.`; gems += 10; }
+      const need = passMark(meta.unit); this._gateFail = false;
+      if (first && (acc >= need || Tester.on())) LS().path[meta.unit.id] = prog + 1;
+      else if (first) { this._gateFail = true; gems = 0; headline = 'Almost there!'; extra = `Score ${Math.round(need * 100)}% to open the next scene. You got ${Math.round(acc * 100)}%. Try again.`; }
+      if (first && !this._gateFail && prog + 1 === UNIT_LESSONS) { extra = `Unit “${meta.unit.title}” complete! New Passport stamp${meta.unit.culture ? `: “${meta.unit.culture[0]}”` : ''}. The next unit and the trophy test are unlocked.`; gems += 10; }
       if (meta.level === 4 && meta.unit.story) Quests.bump('story');
     }
     p.stats.lessons++; LS().lessons++; if (perfect) { p.stats.perfect++; Quests.bump('perfect'); }
@@ -8021,8 +8023,8 @@ const Runner = {
     const verdict = acc >= .95 ? 'Amazing' : acc >= .8 ? 'Great' : acc >= .6 ? 'Good' : 'Keep going';
     $('#l-bar').style.width = '100%'; $('#l-boo').style.left = '100%';
     const friends = shuffle(courseCast()).slice(0, 2);
-    const stars = acc >= .95 ? 3 : acc >= .75 ? 2 : 1, win = acc >= .5;
-    const title = win ? (meta.mode === 'place' || meta.mode === 'test' || meta.mode === 'jump' ? headline.replace(/!$/, '').toUpperCase() : 'ESCAPED') : 'HAUNTED';
+    const stars = acc >= .95 ? 3 : acc >= .75 ? 2 : 1, win = acc >= .5 && !this._gateFail;
+    const title = win ? (meta.mode === 'place' || meta.mode === 'test' || meta.mode === 'jump' ? headline.replace(/!$/, '').toUpperCase() : 'ESCAPED') : (this._gateFail ? 'ALMOST' : 'HAUNTED');
     const sub = meta.unit && meta.unit.title ? `Chapter ${(meta.unit.index || 0) + 1}: ${meta.unit.title} · room unlocked` : headline;
     $('#l-stage').innerHTML = `<div class="l-inner done-screen victory">
       <div class="vstars">${[0, 1, 2].map(i => `<svg class="vstar ${i < stars ? 'on' : ''}" style="animation-delay:${i * 160}ms" viewBox="0 0 40 40"><path d="M20 3l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" fill="${i < stars ? '#FFC23D' : '#8B8A7E'}" stroke="${i < stars ? '#B8760B' : '#5E5D52'}" stroke-width="2.4" stroke-linejoin="round"/></svg>`).join('')}</div>
@@ -9276,6 +9278,26 @@ function splash() {
   $('.sp-skip', el).onclick = () => hide(true);
   setTimeout(hide, 5600);
   return hide;
+}
+/* ---- Difficulty ramp: later chapters are harder and more conversational ---- */
+const tierOf = u => { const i = (u && u.track !== 'letters' ? u.index : 0) || 0; return i < 6 ? 1 : i < 12 ? 2 : i < 18 ? 3 : 4; };
+const passMark = u => [.6, .7, .8, .85][tierOf(u) - 1];
+{
+  const _bl = buildLesson;
+  buildLesson = function (u, level) {
+    const out = _bl.call(this, u, level);
+    try {
+      if (!u || u.track === 'letters' || (u.letters || []).length) return out;
+      const t = tierOf(u), S = shuffle((u.sentences || []).slice());
+      if (t < 2 || !S.length) return out;
+      const add = (fn, n) => S.splice(0, n).forEach(s => { try { const st = fn(s); if (st) out.push(st); } catch (e) { /* skip */ } });
+      const after = S.slice();
+      if (t === 2) { add(EX.toKo, 2); }
+      if (t === 3) { add(EX.toKo, 2); add(EX.listenTiles, 1); add(x => EX.speak(x), 1); }
+      if (t === 4) { add(EX.toKo, 3); add(EX.listenTiles, 2); add(x => EX.speak(x), 2); }
+    } catch (e) { /* keep the normal lesson */ }
+    return out;
+  };
 }
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
