@@ -9702,11 +9702,10 @@ Object.assign(RENDER, {
       const w = step.ws[i], last = i === step.ws.length - 1;
       el.innerHTML = `<p class="q">Watch the scene <span class="muted num" style="font-size:15px">${i + 1}/${step.ws.length}</span></p>
         <div class="scene-wrap">${panelHTML(w, 'word', { rom: true })}</div>
-        <button class="reveal" id="sc-rev">What does it mean? <small>Guess, then tap</small></button>
+        <div class="sc-en"><small>In English</small><b>${esc(cleanEn(w.en))}</b></div>
         ${last ? '' : `<button class="btn primary" id="sc-next" style="width:100%;margin-top:10px">Next panel</button>`}`;
       setTimeout(() => sayCtx(w), 350);
       $('.panel', el).onclick = () => sayCtx(w);
-      $('#sc-rev').onclick = e => { const b = e.currentTarget; b.classList.add('on'); b.innerHTML = `<b>${esc(cleanEn(w.en))}</b>`; Sfx.pop(); };
       $('#sc-next') && ($('#sc-next').onclick = () => { i++; show(); });
       if (last) R.nextOnly('I’ve seen it');
     };

@@ -2410,7 +2410,7 @@ input.input, select.input, .ob .input { background: var(--surface) !important; c
 /* letters page: the old intro card text is invisible on white, remove it */
 .letters-intro { display: none !important; }
 /* the "What does it mean?" button on scene panels is not needed */
-.sc-rev, #sc-rev { display: none !important; }
+
 .door:nth-child(odd) .door-peek { left: -16px; } .door:nth-child(even) .door-peek { right: -16px; }
 .door-peek { width: 70px; height: 68px; bottom: 14px; }
 .door-peek { top: -50px !important; bottom: auto !important; width: 78px; height: 74px; }
@@ -2439,3 +2439,8 @@ input.input, select.input, .ob .input { background: var(--surface) !important; c
 
 .ob-verify { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; padding-top: 40px; } .ob-verify h1 { margin: 0; } .ob-verify p { margin: 0; max-width: 320px; color: var(--ink-2) !important; } .ob-verify p b { color: var(--ink); }
 .ob-verify .btn { width: 100%; max-width: 320px; }
+
+/* scene panels: the English meaning is always shown */
+.sc-en { display: flex; flex-direction: column; align-items: center; gap: 2px; margin: 12px 0 4px; padding: 12px 14px; border-radius: 16px; background: var(--berry-soft); text-align: center; }
+.sc-en small { font: 800 12px var(--font-body); text-transform: uppercase; letter-spacing: .06em; color: var(--berry-text); }
+.sc-en b { font: 600 24px var(--font-display); color: var(--ink); }
