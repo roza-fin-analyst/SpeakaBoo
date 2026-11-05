@@ -2384,3 +2384,55 @@ input.input, select.input, .ob .input { background: var(--surface) !important; c
 .sky .sky-bubble[hidden] { display: none !important; }
 .sp-stat svg path[fill="currentColor"], .sp-stat .heart { color: var(--coral); }
 .sp-stat[aria-label$="hearts"] svg { color: #E5484D; } .sp-stat[aria-label$="hearts"] svg path { fill: #E5484D; stroke: #B32E37; }
+
+/* ===== Manor v2: a winding staircase of doors (zig-zag, bigger Boo) ===== */
+.floor { padding: 0 14px 18px; overflow: visible; }
+.floor-sign { position: sticky; top: 0; z-index: 4; margin: 0 -14px 14px; background: linear-gradient(180deg, #FFFFFF 70%, rgb(255 255 255 / 0)) !important; border-radius: 19px 19px 0 0; }
+.doors { display: flex !important; flex-direction: column; gap: 34px; padding: 6px 0 14px; }
+.door { flex-direction: row; align-items: center; gap: 14px; width: 82%; text-align: left; position: relative; }
+.door:nth-child(odd) { align-self: flex-start; } .door:nth-child(even) { align-self: flex-end; flex-direction: row-reverse; text-align: right; }
+.door-frame { flex: none; width: 92px; height: 124px; }
+.door.current .door-frame { width: 108px; height: 146px; }
+.door-name { flex: 1; min-width: 0; } .door-name b { font-size: 16px; } .door-name small { font-size: 11px; }
+.door-dots { position: absolute; left: 0; right: 0; bottom: -18px; justify-content: center; }
+.door:nth-child(odd) .door-dots { left: 0; right: auto; width: 92px; } .door:nth-child(even) .door-dots { right: 0; left: auto; width: 92px; }
+.door.current:nth-child(odd) .door-dots { width: 108px; } .door.current:nth-child(even) .door-dots { width: 108px; }
+.door:not(:last-child)::after { content: ""; position: absolute; top: calc(100% - 4px); width: 54%; height: 38px; border-bottom: 4px dotted #D8CCEE; z-index: 0; pointer-events: none; }
+.door:nth-child(odd)::after { left: 46px; border-radius: 0 0 0 60%; border-left: 4px dotted #D8CCEE; transform: skewX(-12deg); } .door:nth-child(even)::after { right: 46px; border-radius: 0 0 60% 0; border-right: 4px dotted #D8CCEE; transform: skewX(12deg); }
+.door-peek { display: block !important; position: absolute; width: 84px; height: 80px; top: auto; bottom: 6px; animation: booHop 1.6s ease-in-out infinite; filter: drop-shadow(0 6px 8px rgb(60 30 120 / .3)); z-index: 5; }
+.door:nth-child(odd) .door-peek { left: calc(108px - 20px); } .door:nth-child(even) .door-peek { right: calc(108px - 20px); }
+@keyframes booHop { 0%, 100% { transform: translateY(0); } 45% { transform: translateY(-12px); } }
+.door.current .door-name b { color: var(--berry-text) !important; font-size: 18px; }
+.door.current .door-name::after { content: "Open me!"; display: inline-block; margin-top: 4px; padding: 3px 10px; border-radius: 999px; background: var(--berry); color: #fff; font: 800 12px var(--font-body); }
+.door.done .door-tick { right: auto; left: -8px; } .door:nth-child(even).done .door-tick { left: auto; right: -8px; }
+@media (min-width: 900px) { .doors { gap: 40px; } .door { width: 70%; } }
+@media (prefers-reduced-motion: reduce) { .door-peek { animation: none; } }
+/* letters page: the old intro card text is invisible on white, remove it */
+.letters-intro { display: none !important; }
+/* the "What does it mean?" button on scene panels is not needed */
+.sc-rev, #sc-rev { display: none !important; }
+.door:nth-child(odd) .door-peek { left: -16px; } .door:nth-child(even) .door-peek { right: -16px; }
+.door-peek { width: 70px; height: 68px; bottom: 14px; }
+.door-peek { top: -50px !important; bottom: auto !important; width: 78px; height: 74px; }
+.door:nth-child(odd) .door-peek { left: 18px; } .door:nth-child(even) .door-peek { right: 18px; }
+.door.current { margin-top: 44px; } .door.current:first-child { margin-top: 44px; }
+
+/* ===== Streak and encouragement ===== */
+.sp-stat.streak svg { width: 24px; height: 24px; }
+.streak-card { background: var(--surface) !important; border: 1px solid var(--line) !important; border-radius: 20px; padding: 14px; margin: 12px 14px 0; display: flex; flex-direction: column; gap: 10px; cursor: pointer; }
+.sk-top { display: flex; align-items: center; gap: 10px; } .sk-top svg { width: 40px; height: 40px; flex: none; } .sk-top b { display: block; font: 600 18px var(--font-display); color: var(--ink); } .sk-top small { color: var(--ink-2); font-weight: 700; }
+.sk-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; } .wk { display: flex; flex-direction: column; align-items: center; gap: 3px; } .wk i { width: 30px; height: 30px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; font: 800 15px var(--font-body); font-style: normal; color: #fff; } .wk.on i { background: #FF9A1F; } .wk.today i { box-shadow: 0 0 0 2px var(--berry); } .wk small { font: 800 11px var(--font-body); color: var(--ink-2); }
+.sk-bar { height: 10px; border-radius: 6px; background: var(--surface-2); overflow: hidden; } .sk-bar i { display: block; height: 100%; background: var(--berry); border-radius: 6px; transition: width .6s; }
+.vstreak { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 12px 0 0; color: #F1DDB4; font-weight: 700; } .vstreak svg { width: 28px; height: 28px; } .vstreak b { color: #fff; }
+.sky .sky-boo { top: 74px !important; right: 10px !important; width: 76px !important; height: 76px !important; }
+.l-inner .scene-wrap { zoom: 1 !important; }
+
+/* sign-up: goal and level */
+.ob-goal { gap: 10px; } .ob-goal h1 { margin: 0; } .ob-q { margin: 8px 0 0; font: 800 16px var(--font-body); color: var(--ink) !important; text-align: left; width: 100%; max-width: 380px; }
+.ob-opts { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; max-width: 380px; } .ob-opts.col { flex-direction: column; }
+.ob-pill { padding: 10px 16px; border-radius: 999px; background: var(--surface); border: 2px solid var(--line); color: var(--ink); font: 800 15px var(--font-body); }
+.ob-pill.wide { border-radius: 16px; width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 0; text-align: left; } .ob-pill.wide small { color: var(--ink-2); font-weight: 700; }
+.ob-pill.on { border-color: var(--berry); background: var(--berry-soft); color: var(--berry-text); }
+.ob-s.ob-goal { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; padding-top: 4px; }
+.ob-opts.col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .ob-pill.wide { padding: 10px 12px; } .ob-pill.wide small { font-size: 12px; line-height: 1.2; }
+.ob-goal h1 { font-size: 28px; }
