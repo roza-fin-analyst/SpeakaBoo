@@ -7045,6 +7045,7 @@ function renderNow() {
       <button class="sky-boo" data-sky-boo aria-label="Tap ${esc(mc.name)}"></button><div class="sky-bubble" id="sky-bubble" hidden></div>
       ${skylineSVG(c.code, sky)}
     </section>
+    ${streakCardHTML(p)}
     ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Chapter ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
     <section class="moment card-lift">
       <div class="moment-head"><span class="chip-time">${DAYPARTS[part].name}</span><b>Your next few hours</b></div>
@@ -7494,8 +7495,8 @@ function renderPath(track) {
 
   let lastS = -1;
   const cur = currentLesson(track);
-  if (track === 'main') html += mansionHTML(units, sections, cur, p, c);
-  (track === 'main' ? [] : units).forEach(u => {
+  html += mansionHTML(units, sections, cur, p, c);
+  [].forEach(u => {
     if (u.s !== lastS) {
       lastS = u.s; html += `<div class="season-head"><span class="season-tag">${track === 'letters' ? 'Letters' : `Part ${u.s + 1}`}</span><b>${esc(sections[u.s].title)}</b>${sections[u.s].blurb ? `<small>${esc(sections[u.s].blurb)}</small>` : ''}</div>`;
       if (track === 'main' && Tester.on() && sections[u.s + 1] && !sectionDone(p, c.code, u.s)) html += `<div class="skip-card tester"><div><b>Tester: jump ahead</b><small>Only you see this. Mark Part ${u.s + 1} done and open Part ${u.s + 2}: ${esc(sections[u.s + 1].title)}.</small></div><button class="btn primary sm" data-skip-section="${u.s}">Skip</button></div>`;
@@ -7831,7 +7832,6 @@ function startLesson(uid, i, mode) {
   if (!Access.need('season', u)) return;
   if (Hearts.left() <= 0) return heartsSheet(true);
   const steps = (mode === 'test' || mode === 'jump') ? buildTest(u) : buildLesson(u, i);
-  if (mode === 'lesson') steps.unshift({ kind: 'intro', u, level: i });
   Runner.open({ unit: u, level: i, mode }, steps);
 }
 function skipSectionSheet(s) {
@@ -8031,7 +8031,7 @@ const Runner = {
       <div class="vplaque">${esc(title)}</div>
       <div class="vpanel"><p class="vsub">${esc(sub)}${extra ? '' : ''}</p>
         <div class="vtiles"><div class="vt">${ICON_BANANA}<b data-count="${xp}">0</b><small>XP</small></div><div class="vt">${ICON_LEAFY}<b data-count="${gems}">0</b><small>Souls</small></div><div class="vt"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="#5DB36A" stroke="#2F8F4A" stroke-width="2.4"/><path d="M9 17l5 5 9-11" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg><b data-count="${Math.round(acc * 100)}" data-suffix="%">0</b><small>${verdict}</small></div></div>
-        ${extra ? `<p class="vextra">${esc(extra)}</p>` : ''}</div>
+        ${extra ? `<p class="vextra">${esc(extra)}</p>` : ''}${!this._gateFail && liveStreak(p) > 0 ? `<p class="vstreak">${ICON_CANDLE}<b>${liveStreak(p)}-day streak!</b> ${liveStreak(p) >= 3 ? 'You’re on a roll.' : 'Come back tomorrow to grow it.'}</p>` : ''}</div>
       ${P().mascot === 'mandu' ? ghostPose(win ? 'cheer' : 'ponder', 'vghost') : ''}
       ${meta.unit ? `<button class="vreplay" data-go="${meta.unit.id}:${Math.min(meta.level || 0, UNIT_LESSONS - 1)}:lesson">Replay</button>` : ''}
       ${this.missedItems.length ? `<div class="review-card"><b>Words to look at again</b>${this.missedItems.slice(0, 6).map(x => `<button class="review-row" data-say="${esc(x.t)}"><span class="script" ${attrs(c)}>${esc(x.t)}</span><small>${esc(x.r || '')} · ${esc(x.en || '')}</small></button>`).join('')}</div>` : ''}</div>`;
@@ -8919,7 +8919,7 @@ renderChat = renderTalk;
 /* One home for each thing: Today = phrases + Continue, Journey = course, Scenes = role-play, Pocket = practice (no repeats). */
 {
   const _now = renderNow, _prac = renderPractice;
-  renderNow = function () { _now(); const t = $('#tab-now'); t && t.querySelectorAll('.hood').forEach(x => x.remove()); };
+  renderNow = function () { if (!P()) return; _now(); const t = $('#tab-now'); t && t.querySelectorAll('.hood').forEach(x => x.remove()); };
   renderPractice = function () {
     _prac(); const t = $('#tab-practice'); if (!t) return;
     const drop = ['.rt-promo', '.adv-promo', '[data-tone]', '[data-adventure="LETTER_EXPLORER"]', '[data-practice="letters"]', '[data-practice="story"]', '[data-practice="soundlab"]', '[data-practice="catch"]', '[data-practice="roleplay"]'];
@@ -9071,6 +9071,7 @@ const ghostPose = (pose, cls = '') => `<div class="ghost-pose ${cls}">${booBookS
   document.addEventListener('click', e => { const l = e.target.closest && e.target.closest('[data-locked]'); if (l) { toast('Finish the chapter before it first'); Sfx.wrong && Sfx.wrong(); } });
 }
 /* ---- Game-style chrome (follows the design picture): wooden stats bar, corner buttons, carved bottom bar ---- */
+const ICON_CANDLE = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2c3 4 6 7 6 11a6 6 0 0 1-12 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4 0-6 2-10z" fill="#FF9A1F" stroke="#C25A0A" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9c1.500 2 2.500 3 2.500 5a2.500 2.500 0 0 1-5 0c0-1 1-2 2.500-5z" fill="#FFE29A"/><rect x="10" y="19" width="12" height="11" rx="3" fill="#F4F0FF" stroke="#8E7BD0" stroke-width="1.800"/><circle cx="13.500" cy="23.500" r="1.200" fill="#2B1D3F"/><circle cx="18.500" cy="23.500" r="1.200" fill="#2B1D3F"/></svg>`;
 const GI = {
   ghost: `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M24 3C13 3 8 12 8 21v19l6-4 5 4 5-4 5 4 5-4 6 4V21C40 12 35 3 24 3z" fill="#F4F0FF" stroke="#8E7BD0" stroke-width="2.4" stroke-linejoin="round"/><ellipse cx="18" cy="20" rx="3" ry="4" fill="#2B1D3F"/><ellipse cx="30" cy="20" rx="3" ry="4" fill="#2B1D3F"/><ellipse cx="24" cy="29" rx="3.200" ry="4" fill="#2B1D3F"/></svg>`,
   book: `<svg viewBox="0 0 48 40" aria-hidden="true"><path d="M4 8Q14 3 24 9 34 3 44 8V34Q34 29 24 35 14 29 4 34z" fill="#F6E7C1" stroke="#7A4E1E" stroke-width="2.6" stroke-linejoin="round"/><path d="M24 9V35" stroke="#7A4E1E" stroke-width="2.4"/><path d="M9 14Q15 12 20 15M9 20Q15 18 20 21M28 15Q33 12 39 14M28 21Q33 18 39 20" stroke="#B58B52" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M4 34Q14 29 24 35 34 29 44 34V38Q34 33 24 39 14 33 4 38z" fill="#A5472E" stroke="#7A4E1E" stroke-width="2" stroke-linejoin="round"/></svg>`,
@@ -9084,7 +9085,7 @@ function gameChrome() {
   const h = Hearts.left(p), tx = todayXP(p), goal = p.dailyGoal || 50, pct = Math.min(100, Math.round(tx / goal * 100)), c = course();
   const tb = $('#topbar');
   if (tb) tb.innerHTML = `<button class="lang-chip" data-sheet="lang" aria-label="Change language"><span class="flag script" ${attrs(c)} style="font-family:${c.font}">${c.flag}</span>${c.name}</button><span class="spacer"></span>
-    <button class="sp-stat" data-sheet="streak" aria-label="${p.xp} points">${ICON_BANANA}<b>${p.xp}</b></button>
+    <button class="sp-stat streak" data-sheet="streak" aria-label="${liveStreak(p)} day streak">${ICON_CANDLE}<b>${liveStreak(p)}</b></button>
     <button class="sp-stat" data-sheet="hearts" aria-label="${h} hearts">${ICON.heart}<b>${h}</b></button>`;
   const bn = $('#bnav');
   if (bn) bn.innerHTML = `<button class="bn" data-tab="now">${ICON.sunI}<span>Today</span></button><button class="bn" data-tab="learn">${GI.book}<span>Manor</span></button>
@@ -9261,7 +9262,7 @@ function splash() {
     <div class="sp-boo"><div class="sp-ghost">${booBookSVG('boo')}</div></div><div class="sp-bubble">Boo!</div>
     <div class="sp-word">${'GabBoo'.split('').map((ch, i) => `<span style="animation-delay:${2.4 + i * .09}s">${ch}</span>`).join('')}</div><div class="sp-tag">Peek. Speak. Repeat.</div>
     <button class="sp-sound" aria-label="Sound" data-state="${sp}">${sp === 'on' ? '♪ Sound on' : 'Sound off'}</button><button class="sp-skip">Skip</button>`;
-  document.body.append(el);
+  document.body.append(el); document.documentElement.classList.remove('boot');
   const ghost = $('.sp-ghost', el), face = m => { if (ghost.isConnected) ghost.innerHTML = booBookSVG(m); };
   const T = [[350, () => Sfx.whoosh()], [1250, () => { Sfx.boo(); el.classList.add('flash'); }], [1750, () => el.classList.remove('flash')], [2100, () => { face('giggle'); Sfx.giggle(); }], [2800, () => { face('happy'); Sfx.chime(); }]];
   const timers = T.map(([ms, fn]) => setTimeout(fn, ms));
@@ -9303,6 +9304,26 @@ const RESUMED = (() => { try { const r = sessionStorage.getItem('gabboo.alive') 
   enterApp = function (...a) { let t = null; try { t = sessionStorage.getItem('gabboo.tab'); } catch (e) { /* ignore */ } const out = _en.apply(this, a); if (RESUMED) { if (t && t !== 'now' && $('#tab-' + t)) setTimeout(() => showTab(t), 30); } return out; };
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') Voice.stop(); });
 }
+/* ---- Encouragement: streak, this week, daily goal ---- */
+function streakCardHTML(p) {
+  const st = liveStreak(p), goal = p.dailyGoal || 50, tx = todayXP(p), pct = Math.min(100, Math.round(tx / goal * 100)), done = tx >= goal, today = new Date();
+  const lastKey = p.lastDay, from = new Date(); if (lastKey) { const [y, m, d] = lastKey.split('-').map(Number); from.setFullYear(y, m - 1, d); }
+  const dots = Array.from({ length: 7 }, (_, i) => { const d = new Date(today); d.setDate(today.getDate() - 6 + i); const diff = Math.round((from - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000), on = st > 0 && diff >= 0 && diff < st, isToday = i === 6;
+    return `<span class="wk ${on ? 'on' : ''} ${isToday ? 'today' : ''}"><i>${on ? '✓' : ''}</i><small>${'SMTWTFS'[d.getDay()]}</small></span>`; }).join('');
+  const msg = st === 0 ? 'Start a streak today. Boo is waiting!' : done ? `Goal done! ${st}-day streak. See you tomorrow.` : st >= 7 ? `${st} days in a row. Unstoppable!` : st >= 3 ? `${st}-day streak. Keep it going!` : `${st}-day streak. Nice start!`;
+  return `<section class="streak-card" data-sheet="streak"><div class="sk-top">${ICON_CANDLE}<div><b>${esc(msg)}</b><small>${done ? 'Daily goal complete' : `${tx} of ${goal} XP today`}</small></div></div><div class="sk-week">${dots}</div><div class="sk-bar"><i style="width:${pct}%"></i></div></section>`;
+}
+/* Prior knowledge: chapters the learner already knows start done, so they skip the easy exercises. */
+const KNOWN_SKIP = [0, 3, 10, 18];
+function applyKnown(p, code, level) {
+  try {
+    const n = KNOWN_SKIP[level] || 0; if (!n) return;
+    const c = COURSES[code], units = unitList(c, 'main').slice(0, n);
+    units.forEach(u => { LS().path[u.id] = Math.max(unitProgress(p, c.code, u.id), UNIT_LESSONS); });
+    Store.save(); renderChrome(); showTab(UI.tab);
+    setTimeout(() => toast('Starting at chapter ' + (n + 1) + '. You can replay the earlier ones any time.'), 1200);
+  } catch (e) { /* ignore */ }
+}
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
@@ -9310,7 +9331,7 @@ function warmPics() {
   (window.requestIdleCallback || (f => setTimeout(f, 800)))(next);
 }
 function bootApp() {
-  warmPics();
+  warmPics(); setTimeout(() => document.documentElement.classList.remove('boot'), 6500);
   const hideSplash = RESUMED ? (() => {}) : splash();   // the opening animation plays only on a fresh launch
   Store.load(); Voice.init();
   Account.boot(() => {
@@ -9323,7 +9344,7 @@ function bootApp() {
   if (window.SPEAKABOO_PWA && 'serviceWorker' in navigator && location.protocol === 'https:') {
     // Always re-check for a new version, and reload once when a new one takes over.
     const hadController = !!navigator.serviceWorker.controller; let reloaded = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadController && !reloaded) { reloaded = true; location.reload(); } });
+    /* a new version applies on the next fresh launch: reloading here would replay the opening */
     navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(r => { r.update().catch(() => {}); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') r.update().catch(() => {}); }); }).catch(() => {});
   }
 }
@@ -10812,6 +10833,7 @@ Account.boot = function (start) {
         this.user = u; if (!$('#ob')) authScreen('loading');
         try { await this.pull(); } catch (e) { toast('Couldn’t reach your cloud save. Using this phone’s copy for now.'); }
         this.ready = true; Billing.refresh();
+        if (needsVerify(u)) { Onboard2.verify(u); return; }
         if ($('#ob')) Onboard2.accountReady(); else Starter.go();
       });
     }).catch(() => authScreen('offline'));
@@ -10887,7 +10909,7 @@ Billing.buy = async function (sku) { if (!this.available()) { toast('Subscriptio
 Onboard.shouldShow = () => false;   // the old intro is replaced by this one
 const Onboard2 = {
   step: 0, PROFILE: 7, ACCOUNT: 6, LAST: 7,
-  draft: { lang: 'ko', why: 'fun', name: '', mascot: 'mandu', goal: 50, email: '' },
+  draft: { lang: 'ko', why: '', known: null, name: '', mascot: 'mandu', goal: 50, email: '' },
   open(step = 0) {
     if (step === 0) step = 1;   // short welcome: skip hide-and-seek
     $('#profiles').hidden = true; $('#auth') && ($('#auth').hidden = true);
@@ -10909,9 +10931,12 @@ const Onboard2 = {
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
         <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
-      () => `<div class="ob-s"><h1>What brings you here?</h1><p>Boo will pick moments that matter to you.</p>
-        <div class="ob-why">${[['travel', 'Travel', 'island'], ['culture', 'Shows & music', 'radio'], ['people', 'Family & friends', 'friends'], ['work', 'Work & study', 'work'], ['fun', 'Just for fun', 'gift']].map(([k, l, a]) => `<button class="ob-chip ${d.why === k ? 'on' : ''}" data-why="${k}">${artSVG(a)}<b>${l}</b></button>`).join('')}</div>
-        <button class="btn primary big" data-ob-next ${d.why ? '' : 'disabled'}>Next</button></div>`,
+      () => `<div class="ob-s ob-goal"><h1>Tell Boo about you</h1>
+        <p class="ob-q">Why are you learning ${esc(c.name)}?</p>
+        <div class="ob-opts">${[['travel', 'Travel'], ['people', 'Family & friends'], ['work', 'Work & study'], ['culture', 'Shows & music'], ['fun', 'Just for fun']].map(([k, l]) => `<button class="ob-pill ${d.why === k ? 'on' : ''}" data-why="${k}">${l}</button>`).join('')}</div>
+        <p class="ob-q">Do you already know some ${esc(c.name)}?</p>
+        <div class="ob-opts col">${[['0', 'Not yet', 'Start from the very beginning'], ['1', 'A few words', 'Skip the first greetings'], ['2', 'I can chat a little', 'Skip the easy chapters'], ['3', 'I am quite good', 'Start with harder chapters']].map(([k, l, sub]) => `<button class="ob-pill wide ${String(d.known) === k ? 'on' : ''}" data-known="${k}"><b>${l}</b><small>${sub}</small></button>`).join('')}</div>
+        <button class="btn primary big" data-ob-next ${d.why && d.known != null ? '' : 'disabled'}>Next</button></div>`,
       () => `<div class="ob-s"><h1>Say your very first word!</h1><p>Listen to Boo, then say it back.</p>
         <button class="ob-word" data-ob-hear><span class="script" ${attrs(c)}>${esc(g[d.lang][0])}</span><small>${esc(g[d.lang][1])} · ${esc(g[d.lang][2])}</small><em>${ICON.speaker} Hear it</em></button>
         <div class="ob-boo sm mascot" id="ob-boo"></div>
@@ -10929,11 +10954,11 @@ const Onboard2 = {
         <p class="ob-label">My language <small>(for translations when you get stuck)</small></p><select class="input" id="ob-mylang">${MY_LANGS.map(([c, n]) => `<option value="${c}" ${c === (d.myLang || 'en') ? 'selected' : ''}>${n}</option>`).join('')}</select>
         <button class="btn primary big" id="ob-go">Start my journey</button></div>`
     ];
-    const pct = Math.round(([1, 2, 3, 5, 6, 7].indexOf(this.step) + 1) / 6 * 100);
+    const pct = Math.round(([1, 2, 3, 4, 5, 6, 7].indexOf(this.step) + 1) / 7 * 100);
     el.innerHTML = `<div class="ob-top"><div class="ob-bar"><i style="width:${pct}%"></i></div>${this.step < this.ACCOUNT ? '<button class="ob-skip" data-ob-skip>Skip</button>' : ''}</div><div class="ob-stage">${S[this.step]()}</div>`;
     this.wire();
   },
-  next() { this.step = Math.min(this.LAST, ({ 1: 2, 2: 3, 3: 5, 5: 6 })[this.step] || this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
+  next() { this.step = Math.min(this.LAST, ({ 1: 2, 2: 3, 3: 4, 4: 5, 5: 6 })[this.step] || this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
   accountReady() { if (this.step <= this.ACCOUNT) { this.step = this.PROFILE; this.show(); } },
   wire() {
     const el = $('#ob'), d = this.draft;
@@ -10951,7 +10976,11 @@ const Onboard2 = {
     if (this.step === 1) { const f = $('#ob-ghost', el); let n = 0; const t = setInterval(() => { if (!f || !f.isConnected) return clearInterval(t); n++; f.classList.toggle('talk', n % 2 === 1); if (n > 14) { clearInterval(t); f.classList.remove('talk'); } }, 210); }
     if (false) setTimeout(() => Voice.speak('Psst… I’m Boo. Let’s learn to speak together!', 'en-US', 1, d.mascot, 'happy'), 400);
     if (this.step === 3) $$('[data-city]', el).forEach(b => b.onclick = () => { d.lang = b.dataset.city; $$('[data-city]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).textContent = `Let’s go to ${CITY[d.lang].city}`; Voice.speak(Onboard.GREET[d.lang][0], COURSES[d.lang].tts, .9, d.mascot, 'happy'); });
-    if (this.step === 4) $$('[data-why]', el).forEach(b => b.onclick = () => { d.why = b.dataset.why; $$('[data-why]', el).forEach(x => x.classList.toggle('on', x === b)); $('[data-ob-next]', el).disabled = false; Sfx.tap(); });
+    if (this.step === 4) {
+      const ready = () => { $('[data-ob-next]', el).disabled = !(d.why && d.known != null); };
+      $$('[data-why]', el).forEach(b => b.onclick = () => { d.why = b.dataset.why; $$('[data-why]', el).forEach(x => x.classList.toggle('on', x === b)); ready(); Sfx.tap(); });
+      $$('[data-known]', el).forEach(b => b.onclick = () => { d.known = +b.dataset.known; $$('[data-known]', el).forEach(x => x.classList.toggle('on', x === b)); ready(); Sfx.tap(); });
+    }
     if (this.step === 5) {
       const c = COURSES[d.lang], w = Onboard.GREET[d.lang], hear = () => Voice.speakThen(w[0], c.tts, .85, d.mascot, 'happy');
       $('[data-ob-hear]', el).onclick = hear; setTimeout(hear, 500);
@@ -10988,15 +11017,42 @@ const Onboard2 = {
       $('#ob-mylang', el).onchange = e => { d.myLang = e.target.value; };
       $('#ob-go', el).onclick = () => {
         const name = d.name.trim(); if (!name) { const i = $('#ob-name', el); i.focus(); i.classList.add('shake'); setTimeout(() => i.classList.remove('shake'), 500); return; }
-        const p = newProfile(name, d.mascot, d.lang); p.dailyGoal = d.goal; p.why = d.why; p.myLang = d.myLang || 'en';
+        const p = newProfile(name, d.mascot, d.lang); p.dailyGoal = d.goal; p.why = d.why; p.known = d.known || 0; p.myLang = d.myLang || 'en';
         Store.data.profiles[p.id] = p; Store.data.order.push(p.id); Store.data.introDone = true; Store.save();
         try { localStorage.setItem('speakaboo.intro', '1'); } catch (e) { /* ignore */ }
         const o = $('#ob'); o.classList.add('out'); setTimeout(() => o.remove(), 600);
-        enterApp(p.id);
+        enterApp(p.id); applyKnown(p, d.lang, d.known || 0);
         const s = Access.state(); if (s.mode === 'trial') setTimeout(() => toast(`Your ${TRIAL_DAYS}-day free trial has started!`, '★'), 900);
       };
     }
   }
+};
+/* ---- Email check: an account must confirm its email before the learner is set up ---- */
+const needsVerify = u => !!(Acct.cloud() && u && !u.emailVerified && (u.providerData || []).some(x => x.providerId === 'password'));
+Onboard2.verify = function (u) {
+  $('#auth') && ($('#auth').hidden = true);
+  let el = $('#ob'); if (!el) { el = document.createElement('div'); el.id = 'ob'; el.className = 'ob'; document.body.append(el); }
+  el.innerHTML = `<div class="ob-top"><div class="ob-bar"><i style="width:80%"></i></div></div><div class="ob-stage"><div class="ob-s ob-verify">
+    <h1>Check your email</h1>
+    <p>We sent a link to <b>${esc(u.email)}</b>. Open it, then come back here.</p>
+    <button class="btn primary big" id="ov-ok">I have verified</button>
+    <button class="btn ghost" id="ov-resend">Send it again</button>
+    <button class="link-btn" id="ov-other">Use a different email</button>
+    <p class="auth-err" id="ov-msg" role="status"></p></div></div>`;
+  const msg = t => { const m = $('#ov-msg'); if (m) m.textContent = t; };
+  let stop = false;
+  const check = async quiet => {
+    try { await u.reload(); } catch (e) { if (!quiet) msg('Couldn’t check just now. Try again.'); return; }
+    const cu = firebase.auth().currentUser;
+    if (cu && cu.emailVerified) { stop = true; msg(''); if ($('#ob') && $('#ob').dataset.fresh !== '0') { Onboard2.step = Onboard2.PROFILE; Onboard2.show(); } else { $('#ob')?.remove(); Starter.go(); } return; }
+    if (!quiet) msg('Not verified yet. Open the link in your email first.');
+  };
+  $('#ov-ok').onclick = () => check(false);
+  let wait = 0; const rs = $('#ov-resend');
+  rs.onclick = async () => { if (wait) return; try { await u.sendEmailVerification(); msg('Sent. Check your inbox and spam folder.'); } catch (e) { msg('Couldn’t send it. Wait a minute and try again.'); return; }
+    wait = 30; const t = setInterval(() => { wait--; if (!rs.isConnected || wait <= 0) { clearInterval(t); wait = 0; if (rs.isConnected) rs.textContent = 'Send it again'; } else rs.textContent = `Send it again (${wait})`; }, 1000); };
+  $('#ov-other').onclick = async () => { stop = true; try { await firebase.auth().signOut(); } catch (e) { /* ignore */ } };
+  const poll = setInterval(() => { if (stop || !$('.ob-verify')) return clearInterval(poll); check(true); }, 4000);
 };
 /* =====================================================================
    EPISODE FLOW
