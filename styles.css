@@ -2436,3 +2436,6 @@ input.input, select.input, .ob .input { background: var(--surface) !important; c
 .ob-s.ob-goal { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; padding-top: 4px; }
 .ob-opts.col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .ob-pill.wide { padding: 10px 12px; } .ob-pill.wide small { font-size: 12px; line-height: 1.2; }
 .ob-goal h1 { font-size: 28px; }
+
+.ob-verify { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; padding-top: 40px; } .ob-verify h1 { margin: 0; } .ob-verify p { margin: 0; max-width: 320px; color: var(--ink-2) !important; } .ob-verify p b { color: var(--ink); }
+.ob-verify .btn { width: 100%; max-width: 320px; }

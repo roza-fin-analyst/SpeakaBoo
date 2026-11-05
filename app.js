@@ -10833,6 +10833,7 @@ Account.boot = function (start) {
         this.user = u; if (!$('#ob')) authScreen('loading');
         try { await this.pull(); } catch (e) { toast('Couldn’t reach your cloud save. Using this phone’s copy for now.'); }
         this.ready = true; Billing.refresh();
+        if (needsVerify(u)) { Onboard2.verify(u); return; }
         if ($('#ob')) Onboard2.accountReady(); else Starter.go();
       });
     }).catch(() => authScreen('offline'));
@@ -11025,6 +11026,33 @@ const Onboard2 = {
       };
     }
   }
+};
+/* ---- Email check: an account must confirm its email before the learner is set up ---- */
+const needsVerify = u => !!(Acct.cloud() && u && !u.emailVerified && (u.providerData || []).some(x => x.providerId === 'password'));
+Onboard2.verify = function (u) {
+  $('#auth') && ($('#auth').hidden = true);
+  let el = $('#ob'); if (!el) { el = document.createElement('div'); el.id = 'ob'; el.className = 'ob'; document.body.append(el); }
+  el.innerHTML = `<div class="ob-top"><div class="ob-bar"><i style="width:80%"></i></div></div><div class="ob-stage"><div class="ob-s ob-verify">
+    <h1>Check your email</h1>
+    <p>We sent a link to <b>${esc(u.email)}</b>. Open it, then come back here.</p>
+    <button class="btn primary big" id="ov-ok">I have verified</button>
+    <button class="btn ghost" id="ov-resend">Send it again</button>
+    <button class="link-btn" id="ov-other">Use a different email</button>
+    <p class="auth-err" id="ov-msg" role="status"></p></div></div>`;
+  const msg = t => { const m = $('#ov-msg'); if (m) m.textContent = t; };
+  let stop = false;
+  const check = async quiet => {
+    try { await u.reload(); } catch (e) { if (!quiet) msg('Couldn’t check just now. Try again.'); return; }
+    const cu = firebase.auth().currentUser;
+    if (cu && cu.emailVerified) { stop = true; msg(''); if ($('#ob') && $('#ob').dataset.fresh !== '0') { Onboard2.step = Onboard2.PROFILE; Onboard2.show(); } else { $('#ob')?.remove(); Starter.go(); } return; }
+    if (!quiet) msg('Not verified yet. Open the link in your email first.');
+  };
+  $('#ov-ok').onclick = () => check(false);
+  let wait = 0; const rs = $('#ov-resend');
+  rs.onclick = async () => { if (wait) return; try { await u.sendEmailVerification(); msg('Sent. Check your inbox and spam folder.'); } catch (e) { msg('Couldn’t send it. Wait a minute and try again.'); return; }
+    wait = 30; const t = setInterval(() => { wait--; if (!rs.isConnected || wait <= 0) { clearInterval(t); wait = 0; if (rs.isConnected) rs.textContent = 'Send it again'; } else rs.textContent = `Send it again (${wait})`; }, 1000); };
+  $('#ov-other').onclick = async () => { stop = true; try { await firebase.auth().signOut(); } catch (e) { /* ignore */ } };
+  const poll = setInterval(() => { if (stop || !$('.ob-verify')) return clearInterval(poll); check(true); }, 4000);
 };
 /* =====================================================================
    EPISODE FLOW
