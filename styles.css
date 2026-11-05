@@ -2465,3 +2465,8 @@ body[data-wx="night"] { background-image: linear-gradient(rgb(70 60 140 / .08), 
 @media (prefers-reduced-motion: reduce) { #wx i, .wx-flash { animation: none !important; display: none; } }
 .acct-mail { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; color: var(--ink-2); }
 .set-row .btn.danger { color: var(--coral) !important; border-color: var(--coral) !important; }
+
+/* Weather mood: only on the Today screen, never while learning or doing exercises */
+body:not([data-screen="now"]) #wx { display: none !important; }
+body:has(#lesson:not([hidden])) #wx, body:has(.rt) #wx, body:has(.call-screen) #wx, body:has(#modal:not([hidden])) #wx { display: none !important; }
+body[data-wx]:not([data-screen="now"]), body[data-wx]:has(#lesson:not([hidden])) { background-image: none !important; }
