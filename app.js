@@ -9055,9 +9055,9 @@ function jungleBackdrop() {   // spooky: a moonlit haunted hill
 jungleBackdrop();
 
 {
-  document.body.dataset.tab = 'now';
+  document.body.dataset.screen = 'now';
   const _st = showTab;
-  showTab = function (t, ...r) { document.body.dataset.tab = t; return _st.call(this, t, ...r); };
+  showTab = function (t, ...r) { document.body.dataset.screen = t; return _st.call(this, t, ...r); };
 }
 /* Boo as artwork (poses cut from the character sheet): welcome, cheer, think, ponder... */
 const GHOST_MOOD = { welcome: 'happy', cheer: 'cheer', ponder: 'oops', thumbs: 'proud', think: 'think', cross: 'happy' };
@@ -9239,12 +9239,18 @@ renderProfile = function () {
     <section class="me-sec"><h2>Settings</h2>
       <label class="set-row">My language<select id="me-mylang">${MY_LANGS.map(([cc, n]) => `<option value="${cc}" ${cc === my ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
       <label class="set-row">Sound<input type="checkbox" class="toggle" id="me-sound" ${Sound.on() ? 'checked' : ''}></label>
+      <label class="set-row">Weather mood<input type="checkbox" class="toggle" id="me-wx" ${Weather.on() ? 'checked' : ''}></label>
       ${showPlan ? `<div class="set-row">${esc(plan)}<button class="btn ghost sm" data-plans>${st.mode === 'premium' ? 'Manage' : 'See plans'}</button></div>` : ''}</section>
-    <p class="me-foot"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a> · <button class="link" data-signout>Sign out</button></p></div>`;
+    <section class="me-sec"><h2>Account</h2>
+      <div class="set-row"><span class="acct-mail">${esc(Acct.email() && !/this-device\.local$/.test(Acct.email()) ? Acct.email() : 'Guest on this phone')}</span><button class="btn ghost sm" data-signout>Sign out</button></div>
+      <div class="set-row">Delete my account<button class="btn ghost sm danger" data-delete-account>Delete</button></div>
+      <p class="hint">Signing out keeps your progress. Sign back in any time. Deleting removes your account and progress for good.</p></section>
+    <p class="me-foot"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a></p></div>`;
   const root = $('#tab-profile');
   $$('[data-mascot-live]', root).forEach(el => paintMascot(el, p.mascot, 'happy', true));
   $$('[data-wear]', root).forEach(b => b.onclick = () => { p.wear = b.dataset.wear || null; Store.save(); renderProfile(); renderChrome(); Sfx.pop(); const w = WARDROBE.find(x => x.id === p.wear); toast(w ? `Wearing the ${w.name.toLowerCase()}` : 'No costume'); });
   $('#me-mylang').onchange = e => { p.myLang = e.target.value; Store.save(); };
+  $('#me-wx').onchange = e => Weather.set(e.target.checked);
   $('#me-sound').onchange = e => { Sound.set(e.target.checked); if (e.target.checked) { Sound.ready(); Sfx.chime(); } };
   $('#fr-invite').onclick = async () => { const link = Friends.link(), text = `Come learn ${c.name} with me on GabBoo!`; try { if (navigator.share) { await navigator.share({ text, url: link }); return; } } catch (e) { if (e && e.name === 'AbortError') return; } try { await navigator.clipboard.writeText(`${text} ${link}`); toast('Link copied. Send it to a friend.'); } catch (e) { toast(link); } };
   $('#fr-add').onclick = () => { const o = Friends.parse($('#fr-code').value); if (!o) { toast('That code doesn’t look right'); return; } Friends.add(o); toast(`${o.n} added`); renderProfile(); };
@@ -9323,6 +9329,64 @@ function applyKnown(p, code, level) {
     Store.save(); renderChrome(); showTab(UI.tab);
     setTimeout(() => toast('Starting at chapter ' + (n + 1) + '. You can replay the earlier ones any time.'), 1200);
   } catch (e) { /* ignore */ }
+}
+/* =====================================================================
+   WEATHER MOOD: the app's sky changes with the weather where the learner is.
+   Opt-in. Uses the phone's location (rounded to about 1 km) and the free Open-Meteo service.
+   ===================================================================== */
+const Weather = {
+  cur: null,
+  on() { try { return localStorage.getItem('gabboo.weather') === '1'; } catch (e) { return false; } },
+  set(v) { try { localStorage.setItem('gabboo.weather', v ? '1' : '0'); } catch (e) { /* ignore */ } if (v) this.refresh(true); else { this.apply(null); if (UI.tab === 'now') renderNow(); } },
+  kind(o) {
+    const c = o.code, day = !!o.day;
+    if (c >= 95) return { k: 'storm', txt: 'Stormy' };
+    if (c >= 71 && c <= 77 || c === 85 || c === 86) return { k: 'snow', txt: 'Snowy' };
+    if (c >= 51 && c <= 67 || c >= 80 && c <= 82) return { k: 'rain', txt: 'Rainy' };
+    if (c === 45 || c === 48) return { k: 'fog', txt: 'Foggy' };
+    if (c >= 2) return { k: 'cloud', txt: 'Cloudy' };
+    return day ? { k: 'sun', txt: 'Sunny' } : { k: 'night', txt: 'Clear night' };
+  },
+  line(o) {
+    const k = this.kind(o).k;
+    return { storm: 'Thunder outside. A good time to stay in and talk.', snow: 'Snow outside. Cosy time for a lesson.', rain: 'Rain outside. Perfect for learning indoors.', fog: 'Foggy out there. Boo feels right at home.', cloud: 'Grey skies. Brighten them with a lesson.', sun: 'Sunny out there. Say something to the sun!', night: 'Quiet night. Boo is wide awake.' }[k];
+  },
+  async refresh(ask) {
+    if (!this.on()) return this.apply(null);
+    let c = null; try { c = JSON.parse(localStorage.getItem('gabboo.wx') || 'null'); } catch (e) { /* ignore */ }
+    if (c && Date.now() - c.at < 30 * 60 * 1000) return this.apply(c);
+    if (!navigator.geolocation) { if (ask) toast('This phone can’t share its location.'); return; }
+    navigator.geolocation.getCurrentPosition(async pos => {
+      try {
+        const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude.toFixed(2)}&longitude=${pos.coords.longitude.toFixed(2)}&current=weather_code,is_day,temperature_2m`);
+        const cu = (await r.json()).current, o = { code: cu.weather_code, day: cu.is_day, t: Math.round(cu.temperature_2m), at: Date.now() };
+        try { localStorage.setItem('gabboo.wx', JSON.stringify(o)); } catch (e) { /* ignore */ }
+        this.apply(o); if (ask) toast('Weather mood is on.');
+      } catch (e) { if (ask) toast('Couldn’t get the weather. Try again later.'); }
+    }, () => { if (ask) { toast('Location is blocked, so the mood can’t follow the weather.'); try { localStorage.setItem('gabboo.weather', '0'); } catch (e) { /* ignore */ } const t = $('#me-wx'); if (t) t.checked = false; } }, { timeout: 9000, maximumAge: 600000 });
+  },
+  apply(o) {
+    this.cur = o; $('#wx')?.remove(); delete document.body.dataset.wx;
+    if (!o) { if (UI.tab === 'now' && P() && !$('#app').hidden) renderNow(); return; }
+    const k = this.kind(o).k; document.body.dataset.wx = k;
+    const el = document.createElement('div'); el.id = 'wx'; el.setAttribute('aria-hidden', 'true');
+    const n = { rain: 34, storm: 46, snow: 26 }[k] || 0;
+    for (let i = 0; i < n; i++) { const d = document.createElement('i'); d.style.cssText = `left:${(i * 100 / n + (i * 7) % 5).toFixed(1)}%;animation-duration:${k === 'snow' ? 6 + (i * 3) % 7 : .7 + (i % 5) * .12}s;animation-delay:${-((i * 37) % 70) / 10}s;${k === 'snow' ? `width:${4 + i % 4}px;height:${4 + i % 4}px;` : ''}`; el.append(d); }
+    if (k === 'storm') { const f = document.createElement('div'); f.className = 'wx-flash'; el.append(f); }
+    document.body.append(el);
+    if (UI.tab === 'now' && P() && !$('#app').hidden) renderNow();
+  }
+};
+{
+  const _rn = renderNow;
+  renderNow = function () {
+    _rn();
+    const o = Weather.cur, sky = $('#tab-now .sky'); if (!o || !sky || $('.wx-line', sky)) return;
+    const k = Weather.kind(o);
+    sky.dataset.wx = k.k; sky.querySelector('.sky-sub')?.insertAdjacentHTML('afterend', `<p class="wx-line"><b>${k.txt} · ${o.t}°C where you are.</b> ${esc(Weather.line(o))}</p>`);
+  };
+  setTimeout(() => Weather.refresh(false), 1500);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') Weather.refresh(false); });
 }
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
@@ -9702,11 +9766,10 @@ Object.assign(RENDER, {
       const w = step.ws[i], last = i === step.ws.length - 1;
       el.innerHTML = `<p class="q">Watch the scene <span class="muted num" style="font-size:15px">${i + 1}/${step.ws.length}</span></p>
         <div class="scene-wrap">${panelHTML(w, 'word', { rom: true })}</div>
-        <button class="reveal" id="sc-rev">What does it mean? <small>Guess, then tap</small></button>
+        <div class="sc-en"><small>In English</small><b>${esc(cleanEn(w.en))}</b></div>
         ${last ? '' : `<button class="btn primary" id="sc-next" style="width:100%;margin-top:10px">Next panel</button>`}`;
       setTimeout(() => sayCtx(w), 350);
       $('.panel', el).onclick = () => sayCtx(w);
-      $('#sc-rev').onclick = e => { const b = e.currentTarget; b.classList.add('on'); b.innerHTML = `<b>${esc(cleanEn(w.en))}</b>`; Sfx.pop(); };
       $('#sc-next') && ($('#sc-next').onclick = () => { i++; show(); });
       if (last) R.nextOnly('I’ve seen it');
     };
