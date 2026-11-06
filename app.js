@@ -7932,9 +7932,7 @@ const Runner = {
     const show = info.show, d = [];
     if (show) {
       const c = course(), txt = typeof show === 'string' ? show : show.t;
-      d.push(`<span>${ok ? 'Meaning:' : 'Correct answer:'}</span><span class="script" ${typeof show === 'string' ? '' : attrs(c)}>${esc(txt)}</span>`);
-      if (show.r) d.push(`<small>${esc(show.r)}</small>`);
-      if (show.en && show.en !== txt) d.push(`<small>${esc(show.en)}</small>`);
+      if (!ok) { d.push(`<span>Correct answer:</span><span class="script" ${typeof show === 'string' ? '' : attrs(c)}>${esc(txt)}</span>`); if (show.r) d.push(`<small>${esc(show.r)}</small>`); }
     }
     if (info.teach && !show) d.push(`<small>${esc(info.teach)}</small>`);
     $('#l-fb-detail').innerHTML = d.join('');
@@ -8019,7 +8017,9 @@ const Runner = {
     p.stats.lessons++; LS().lessons++; if (perfect) { p.stats.perfect++; Quests.bump('perfect'); }
     if (meta.mode !== 'practice' && meta.mode !== 'place') Quests.bump('lesson');
     p.gems += gems;
+    const wasToday = p.lastDay === dayKey();
     award(xp); checkAchievements(); Store.save();
+    this._celebrate = (!wasToday && p.lastDay === dayKey() && !this._gateFail) ? { n: liveStreak(p) } : null;
     const verdict = acc >= .95 ? 'Amazing' : acc >= .8 ? 'Great' : acc >= .6 ? 'Good' : 'Keep going';
     $('#l-bar').style.width = '100%'; $('#l-boo').style.left = '100%';
     const friends = shuffle(courseCast()).slice(0, 2);
@@ -9076,6 +9076,7 @@ const GI = {
   ghost: `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M24 3C13 3 8 12 8 21v19l6-4 5 4 5-4 5 4 5-4 6 4V21C40 12 35 3 24 3z" fill="#F4F0FF" stroke="#8E7BD0" stroke-width="2.4" stroke-linejoin="round"/><ellipse cx="18" cy="20" rx="3" ry="4" fill="#2B1D3F"/><ellipse cx="30" cy="20" rx="3" ry="4" fill="#2B1D3F"/><ellipse cx="24" cy="29" rx="3.200" ry="4" fill="#2B1D3F"/></svg>`,
   book: `<svg viewBox="0 0 48 40" aria-hidden="true"><path d="M4 8Q14 3 24 9 34 3 44 8V34Q34 29 24 35 14 29 4 34z" fill="#F6E7C1" stroke="#7A4E1E" stroke-width="2.6" stroke-linejoin="round"/><path d="M24 9V35" stroke="#7A4E1E" stroke-width="2.4"/><path d="M9 14Q15 12 20 15M9 20Q15 18 20 21M28 15Q33 12 39 14M28 21Q33 18 39 20" stroke="#B58B52" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M4 34Q14 29 24 35 34 29 44 34V38Q34 33 24 39 14 33 4 38z" fill="#A5472E" stroke="#7A4E1E" stroke-width="2" stroke-linejoin="round"/></svg>`,
   swords: `<svg viewBox="0 0 48 44" aria-hidden="true"><g stroke="#4A4F5A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M10 6l22 22-4 4L6 10z" fill="#DADFE8"/><path d="M38 6L16 28l4 4 22-22z" fill="#C7CED9"/><path d="M26 34l8 8M22 34l-8 8" stroke="#7A4E1E" stroke-width="4"/><path d="M26 28l8 8-3 3-8-8zM22 28l-8 8 3 3 8-8z" fill="#C9962E" stroke="#7A4E1E"/></g></svg>`,
+  me: `<svg viewBox="0 0 48 44" aria-hidden="true"><circle cx="24" cy="15" r="9" fill="#FFD9B8" stroke="#B8470A" stroke-width="2.6"/><path d="M7 41c0-10 7-16 17-16s17 6 17 16z" fill="#FF9A4D" stroke="#B8470A" stroke-width="2.6" stroke-linejoin="round"/></svg>`,
   chest: `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M6 20Q6 8 24 8t18 12v20H6z" fill="#B7793A" stroke="#5A3A1E" stroke-width="2.6" stroke-linejoin="round"/><path d="M6 20h36" stroke="#5A3A1E" stroke-width="2.6"/><path d="M6 20Q6 8 24 8t18 12z" fill="#CF9150"/><rect x="19" y="18" width="10" height="12" rx="3" fill="#F2C94C" stroke="#8A6A12" stroke-width="2"/><circle cx="24" cy="24" r="2" fill="#5A3A1E"/><path d="M12 10v30M36 10v30" stroke="#8A5A28" stroke-width="2"/></svg>`,
   map: `<svg viewBox="0 0 48 44" aria-hidden="true"><path d="M5 12l12-4 14 4 12-4v26l-12 4-14-4-12 4z" fill="#EAD9A8" stroke="#7A4E1E" stroke-width="2.4" stroke-linejoin="round"/><path d="M17 8v26M31 12v26" stroke="#B58B52" stroke-width="2"/><path d="M36 6a6 6 0 0 1 6 6c0 5-6 10-6 10s-6-5-6-10a6 6 0 0 1 6-6z" fill="#E4472E" stroke="#8A1F12" stroke-width="2"/><circle cx="36" cy="12" r="2.2" fill="#fff"/></svg>`
 };
@@ -9091,7 +9092,7 @@ function gameChrome() {
   if (bn) bn.innerHTML = `<button class="bn" data-tab="now">${ICON.sunI}<span>Today</span></button><button class="bn" data-tab="learn">${GI.book}<span>Manor</span></button>
     <button class="bn" data-tab="chat">${GI.ghost}<span>Haunts</span></button>
     <button class="bn" data-tab="practice">${GI.swords}<span>Train</span></button>
-    <button class="bn" data-tab="profile">${GI.chest}<span>Me</span></button>`;
+    <button class="bn" data-tab="profile">${GI.me}<span>Me</span></button>`;
   markNav(UI.tab);
 }
 function markNav(t) { $$('#bnav .bn').forEach(b => { if (b.dataset.tab === t || (t === 'letters' && b.dataset.tab === 'learn')) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); }); }
@@ -9222,36 +9223,61 @@ document.addEventListener('click', e => { const b = e.target.closest && e.target
 /* ---- the new, small Me tab ---- */
 renderProfile = function () {
   const p = P(), c = course(); if (!p) return; syncCostumes(p);
-  const lvl = levelFor(p.xp), st = Access.state(), my = p.myLang || 'en';
+  const lvl = levelFor(p.xp), st = Access.state(), my = p.myLang || 'en', rm = Remind.get();
   const plan = st.mode === 'premium' ? 'Premium' : st.mode === 'trial' ? `Free trial · ${st.daysLeft} day${st.daysLeft > 1 ? 's' : ''} left` : st.mode === 'owner' || st.mode === 'local' ? 'Everything unlocked' : 'Free trial ended';
   const showPlan = st.mode !== 'owner' && st.mode !== 'local';
   const nextC = WARDROBE.filter(w => !costumeUnlocked(p, w.id)).sort((a, b) => COSTUME_LEVEL[a.id] - COSTUME_LEVEL[b.id])[0];
+  const mail = Acct.email() && !/this-device\.local$/.test(Acct.email()) ? Acct.email() : 'Guest on this phone';
+  const sm = p.scriptMode || 'auto';
   $('#tab-profile').innerHTML = `<div class="pad me2">
-    <section class="me-hero"><div class="me-ghost" data-mascot-live></div><div class="me-who"><h1>${esc(p.name)}</h1><p>Level ${lvl} · ${liveStreak(p)}-day streak</p><button class="btn primary sm" data-share>Share my progress</button></div></section>
+    <section class="me-hero"><div class="me-ghost" data-mascot-live></div><div class="me-who"><h1>${esc(p.name)}</h1><p>Level ${lvl} · ${liveStreak(p)}-day streak</p><p>${p.xp} XP · ${learnedWords(p, c.code).length} words</p><button class="btn primary sm" data-share>Share my progress</button></div></section>
     <section class="me-sec"><h2>Costumes</h2><p class="hint">${nextC ? `Next: ${esc(nextC.name)} at level ${COSTUME_LEVEL[nextC.id]}` : 'You unlocked them all!'}</p>
       <div class="costumes"><button class="cos ${!p.wear ? 'on' : ''}" data-wear=""><span>${ghostAvatar(p.mascot, '')}</span><small>None</small></button>
       ${WARDROBE.slice().sort((a, b) => COSTUME_LEVEL[a.id] - COSTUME_LEVEL[b.id]).map(w => { const ok = costumeUnlocked(p, w.id); return `<button class="cos ${p.wear === w.id ? 'on' : ''} ${ok ? '' : 'locked'}" ${ok ? `data-wear="${w.id}"` : 'disabled'}><span>${ghostAvatar(p.mascot, ok ? w.id : '')}</span><small>${ok ? esc(w.name) : 'Level ' + COSTUME_LEVEL[w.id]}</small></button>`; }).join('')}</div></section>
+    <section class="me-sec"><h2>Your Boo</h2><div class="pick-row">${MASCOT_ORDER.map(k => `<button class="pk ${k === p.mascot ? 'on' : ''}" data-me-m="${k}" aria-label="${esc(MASCOTS[k].name)}"><span>${ghostAvatar(k, k === p.mascot ? p.wear : '')}</span><small>${esc(MASCOTS[k].name)}</small></button>`).join('')}</div></section>
     <section class="me-sec"><h2>Friends</h2>
       <div class="friend-list">${Friends.list().map((f, i) => `<div class="friend ${f.me ? 'me' : ''}"><b class="rk">${i + 1}</b><span class="fav">${ghostAvatar(f.m, f.w)}</span><span class="fname"><b>${esc(f.n)}${f.me ? ' (you)' : ''}</b><small>Level ${f.l} · ${f.s}-day streak</small></span>${f.me ? '' : `<button class="fx" data-fdel="${esc(f.n + '|' + f.m)}" aria-label="Remove">×</button>`}</div>`).join('')}</div>
       <div class="friend-actions"><button class="btn primary sm" id="fr-invite">Invite a friend</button></div>
       <div class="friend-add"><input class="input" id="fr-code" placeholder="Paste a friend’s code or link"><button class="btn ghost sm" id="fr-add">Add</button></div>
       <p class="hint">Friends update when they share a new code or link with you.</p></section>
-    <section class="me-sec"><h2>Settings</h2>
+    <section class="me-sec"><h2>Learning</h2>
+      <label class="set-row">Daily goal<select id="me-goal">${[20, 50, 100, 150].map(g => `<option value="${g}" ${(p.dailyGoal || 50) === g ? 'selected' : ''}>${g} XP</option>`).join('')}</select></label>
       <label class="set-row">My language<select id="me-mylang">${MY_LANGS.map(([cc, n]) => `<option value="${cc}" ${cc === my ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+      ${isLatinLang(c.code) ? '' : `<label class="set-row">Show first<select id="me-script">${[['auto', 'Automatic'], ['sound', 'Sound first'], ['script', 'Script first']].map(([v, l]) => `<option value="${v}" ${sm === v ? 'selected' : ''}>${l}</option>`).join('')}</select></label>`}
+      <label class="set-row">Boo speaks lines aloud<input type="checkbox" class="toggle" id="me-voice" ${p.autoVoice ? 'checked' : ''}></label></section>
+    <section class="me-sec"><h2>Reminders</h2>
+      <label class="set-row">Daily reminder<input type="checkbox" class="toggle" id="me-rem" ${rm.on ? 'checked' : ''}></label>
+      <label class="set-row">Remind me at<input type="time" class="input time" id="me-remt" value="${esc(rm.time)}"></label>
+      <div class="set-row"><span>Try it now</span><button class="btn ghost sm" id="me-remtest">Send a test</button></div>
+      <p class="hint">GabBoo nudges you if you haven’t practised by then. Works best once the app is installed on your home screen.</p></section>
+    <section class="me-sec"><h2>App</h2>
       <label class="set-row">Sound<input type="checkbox" class="toggle" id="me-sound" ${Sound.on() ? 'checked' : ''}></label>
       <label class="set-row">Weather mood<input type="checkbox" class="toggle" id="me-wx" ${Weather.on() ? 'checked' : ''}></label>
       ${showPlan ? `<div class="set-row">${esc(plan)}<button class="btn ghost sm" data-plans>${st.mode === 'premium' ? 'Manage' : 'See plans'}</button></div>` : ''}</section>
     <section class="me-sec"><h2>Account</h2>
-      <div class="set-row"><span class="acct-mail">${esc(Acct.email() && !/this-device\.local$/.test(Acct.email()) ? Acct.email() : 'Guest on this phone')}</span><button class="btn ghost sm" data-signout>Sign out</button></div>
+      <div class="set-row"><span class="acct-mail">${esc(mail)}</span></div>
+      <div class="set-row">Your name<span class="name-edit"><input class="input" id="me-name" maxlength="20" value="${esc(p.name)}"></span></div>
+      <div class="set-row">Switch learner<button class="btn ghost sm" data-switch>Switch</button></div>
+      <div class="set-row">Sign out<button class="btn ghost sm" data-signout>Sign out</button></div>
       <div class="set-row">Delete my account<button class="btn ghost sm danger" data-delete-account>Delete</button></div>
       <p class="hint">Signing out keeps your progress. Sign back in any time. Deleting removes your account and progress for good.</p></section>
-    <p class="me-foot"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a></p></div>`;
+    <section class="me-sec"><h2>Help</h2>
+      <div class="set-row">Found a mistake or a bug?<a class="btn ghost sm" href="mailto:ayeshaferozroza@gmail.com?subject=${encodeURIComponent('GabBoo feedback')}">Tell us</a></div></section>
+    <p class="me-foot"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a> · GabBoo ${esc(SPEAKABOO_VERSION)}</p></div>`;
   const root = $('#tab-profile');
   $$('[data-mascot-live]', root).forEach(el => paintMascot(el, p.mascot, 'happy', true));
   $$('[data-wear]', root).forEach(b => b.onclick = () => { p.wear = b.dataset.wear || null; Store.save(); renderProfile(); renderChrome(); Sfx.pop(); const w = WARDROBE.find(x => x.id === p.wear); toast(w ? `Wearing the ${w.name.toLowerCase()}` : 'No costume'); });
+  $$('[data-me-m]', root).forEach(b => b.onclick = () => { p.mascot = b.dataset.meM; Store.save(); renderChrome(); renderProfile(); Sfx.pop(); });
   $('#me-mylang').onchange = e => { p.myLang = e.target.value; Store.save(); };
+  $('#me-goal').onchange = e => { p.dailyGoal = +e.target.value; Store.save(); renderChrome(); };
+  $('#me-script') && ($('#me-script').onchange = e => { p.scriptMode = e.target.value; Store.save(); try { applyScriptMode && applyScriptMode(); } catch (x) { /* ignore */ } });
+  $('#me-voice').onchange = e => { p.autoVoice = e.target.checked; Store.save(); };
+  $('#me-name').onchange = e => { const v = e.target.value.trim(); if (v) { p.name = v.slice(0, 20); Store.save(); renderChrome(); toast('Name saved'); } };
   $('#me-wx').onchange = e => Weather.set(e.target.checked);
   $('#me-sound').onchange = e => { Sound.set(e.target.checked); if (e.target.checked) { Sound.ready(); Sfx.chime(); } };
+  $('#me-rem').onchange = async e => { const r = Remind.get(); if (e.target.checked) { const ok = await Remind.enable(); if (!ok) { e.target.checked = false; return; } r.on = true; toast('Reminder on at ' + r.time); } else { r.on = false; } Remind.save(r); };
+  $('#me-remt').onchange = e => { const r = Remind.get(); r.time = e.target.value || '19:00'; Remind.save(r); toast('Reminder time saved'); };
+  $('#me-remtest').onclick = async () => { const ok = await Remind.enable(); if (ok) { Remind.notify(true); toast('Sent. Check your notifications.'); } };
   $('#fr-invite').onclick = async () => { const link = Friends.link(), text = `Come learn ${c.name} with me on GabBoo!`; try { if (navigator.share) { await navigator.share({ text, url: link }); return; } } catch (e) { if (e && e.name === 'AbortError') return; } try { await navigator.clipboard.writeText(`${text} ${link}`); toast('Link copied. Send it to a friend.'); } catch (e) { toast(link); } };
   $('#fr-add').onclick = () => { const o = Friends.parse($('#fr-code').value); if (!o) { toast('That code doesn’t look right'); return; } Friends.add(o); toast(`${o.n} added`); renderProfile(); };
   $$('[data-fdel]', root).forEach(b => b.onclick = () => { p.friends = (p.friends || []).filter(f => f.n + '|' + f.m !== b.dataset.fdel); Store.save(); renderProfile(); });
@@ -9280,6 +9306,23 @@ function splash() {
   $('.sp-skip', el).onclick = () => hide(true);
   setTimeout(hide, 5600);
   return hide;
+}
+/* ---- More speaking while learning: every scene ends with out-loud practice ---- */
+{
+  const _bl2 = buildLesson;
+  buildLesson = function (u, level) {
+    const out = _bl2.call(this, u, level);
+    try {
+      if (!u || u.track === 'letters' || (u.letters || []).length) return out;
+      const W = shuffle((u.words || []).slice()), S = shuffle((u.sentences || []).slice());
+      const have = out.filter(x => x.kind === 'speak').length, want = level >= 2 ? 4 : 3;
+      const used = new Set(out.filter(x => x.kind === 'speak').map(x => x.item && x.item.t));
+      const pool = (level >= 2 ? S.concat(W) : W.concat(S)).filter(x => x && x.t && !used.has(x.t));
+      for (let k = 0; k < Math.max(0, want - have) && k < pool.length; k++) out.push(EX.speak(pool[k]));
+      const sh = S.find(x => x && x.t && !used.has(x.t)); if (sh && !out.some(x => x.kind === 'shadow') && typeof EX.shadow === 'function') out.push(EX.shadow(sh));
+    } catch (e) { /* keep the normal lesson */ }
+    return out;
+  };
 }
 /* ---- Difficulty ramp: later chapters are harder and more conversational ---- */
 const tierOf = u => { const i = (u && u.track !== 'letters' ? u.index : 0) || 0; return i < 6 ? 1 : i < 12 ? 2 : i < 18 ? 3 : 4; };
@@ -9387,6 +9430,96 @@ const Weather = {
   };
   setTimeout(() => Weather.refresh(false), 1500);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') Weather.refresh(false); });
+}
+/* =====================================================================
+   STREAK CELEBRATION: shown when a lesson extends your streak for the day
+   ===================================================================== */
+const Celebrate = {
+  line(n) {
+    if (n >= 100) return 'One hundred days. You are a legend.';
+    if (n >= 50) return '50 days! Boo is crying happy ghost tears.';
+    if (n >= 30) return 'A whole month. Unreal.';
+    if (n >= 14) return 'Two weeks in a row. You are unstoppable.';
+    if (n >= 7) return 'A full week! Look at you go.';
+    if (n >= 3) return 'Three days! You are on fire.';
+    if (n === 2) return 'Two days in a row. Keep it going.';
+    return 'Your streak has started. Come back tomorrow!';
+  },
+  show(o) {
+    const p = P(), n = o.n; $('#cele')?.remove();
+    const el = document.createElement('div'); el.id = 'cele';
+    const dow = ['S', 'M', 'T', 'W', 'T', 'F', 'S'], today = new Date();
+    const days = Array.from({ length: 7 }, (_, i) => { const d = new Date(today); d.setDate(today.getDate() - 6 + i); return { l: dow[d.getDay()], on: 6 - i < n, now: i === 6 }; });
+    el.innerHTML = `<div class="cele-in"><div class="cele-flame">${ICON_CANDLE}</div>
+      <div class="cele-num"><b id="cele-n">${Math.max(0, n - 1)}</b></div><div class="cele-label">day streak!</div>
+      <p class="cele-line">${esc(this.line(n))}</p>
+      <div class="cele-week">${days.map((d, i) => `<span class="cw ${d.on ? 'on' : ''} ${d.now ? 'now' : ''}" style="animation-delay:${.5 + i * .12}s"><i>${d.on ? '✓' : ''}</i><small>${d.l}</small></span>`).join('')}</div>
+      <div class="cele-boo" id="cele-boo"></div>
+      <button class="btn primary big" id="cele-go">Keep going</button>
+      <button class="link-btn" data-share-win="I’m on a ${n}-day streak on GabBoo!">Share my streak</button></div>`;
+    document.body.append(el); paintMascot($('#cele-boo'), p.mascot, n >= 7 ? 'love' : 'cheer', true);
+    setTimeout(() => { const b = $('#cele-n'); if (b) { b.textContent = n; b.classList.add('bump'); } Sfx.level(); }, 700);
+    try { React.rain(n >= 7 ? 'confetti' : 'stars', 22); } catch (e) { /* ignore */ }
+    $('#cele-go').onclick = () => { el.classList.add('out'); setTimeout(() => el.remove(), 350); };
+  }
+};
+{
+  const _rc = Runner.close;
+  Runner.close = function () { const c = this._celebrate; this._celebrate = null; const r = _rc.apply(this, arguments); if (c) setTimeout(() => Celebrate.show(c), 350); return r; };
+}
+
+/* =====================================================================
+   REMINDERS: a daily nudge at the time you choose
+   While the app is open (or installed with background sync) GabBoo shows a notification if you have not practised yet.
+   ===================================================================== */
+const Remind = {
+  get() { try { return Object.assign({ on: false, time: '19:00' }, JSON.parse(localStorage.getItem('gabboo.remind') || '{}')); } catch (e) { return { on: false, time: '19:00' }; } },
+  save(o) { try { localStorage.setItem('gabboo.remind', JSON.stringify(o)); } catch (e) { /* ignore */ } this.sync(); },
+  supported() { return 'Notification' in window; },
+  async enable() {
+    if (!this.supported()) { toast('This browser can’t show notifications.'); return false; }
+    let perm = Notification.permission; if (perm === 'default') perm = await Notification.requestPermission();
+    if (perm !== 'granted') { toast('Notifications are blocked. Allow them in your browser settings.'); return false; }
+    try { const reg = await Promise.race([navigator.serviceWorker?.ready, new Promise(r => setTimeout(r, 800))]); if (reg && reg.periodicSync) await reg.periodicSync.register('gabboo-remind', { minInterval: 12 * 3600 * 1000 }); } catch (e) { /* not available everywhere */ }
+    return true;
+  },
+  body() { const p = P(), st = p ? liveStreak(p) : 0; return st > 0 ? `Keep your ${st}-day streak alive. Boo is waiting!` : 'A two-minute lesson makes Boo happy.'; },
+  async notify(test) {
+    const title = test ? 'Boo says hi' : 'Time to speak!', opts = { body: this.body(), icon: 'icon-192.png', badge: 'icon-192.png', tag: 'gabboo-remind', data: { url: './' } };
+    try { const reg = await navigator.serviceWorker?.getRegistration(); if (reg && reg.showNotification) return reg.showNotification(title, opts); } catch (e) { /* fall through */ }
+    try { new Notification(title, opts); } catch (e) { /* ignore */ }
+  },
+  due() {
+    const r = this.get(), p = P(); if (!r.on || !p || Notification.permission !== 'granted') return false;
+    const [h, m] = r.time.split(':').map(Number), now = new Date(), at = new Date(); at.setHours(h, m, 0, 0);
+    let seen = ''; try { seen = localStorage.getItem('gabboo.remind.seen') || ''; } catch (e) { /* ignore */ }
+    return now >= at && p.lastDay !== dayKey() && seen !== dayKey();
+  },
+  tick() { if (this.due()) { try { localStorage.setItem('gabboo.remind.seen', dayKey()); } catch (e) { /* ignore */ } this.notify(false); } },
+  async sync() {   // tell the service worker what it needs to remind you while the app is closed
+    try { const p = P(), r = this.get(); const c = await caches.open('gabboo-state'); await c.put('state', new Response(JSON.stringify({ remind: r.on, time: r.time, lastDay: p ? p.lastDay : '', streak: p ? liveStreak(p) : 0, today: dayKey(), notified: (() => { try { return localStorage.getItem('gabboo.remind.seen') || ''; } catch (e) { return ''; } })() }))); } catch (e) { /* ignore */ }
+  }
+};
+if ('Notification' in window) { setInterval(() => Remind.tick(), 60000); setTimeout(() => { Remind.tick(); Remind.sync(); }, 4000); document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') Remind.tick(); else Remind.sync(); }); }
+/* ---- Two more speaking drills in Train: say whole sentences, and repeat after Boo ---- */
+{
+  const _bp = buildPractice;
+  buildPractice = function (kind) {
+    if (kind === 'speaksent' || kind === 'echo') {
+      const c = course(), p = P(), started = c.units.filter(u => u.track !== 'letters' && unitProgress(p, c.code, u.id) > 0), units = started.length ? started : c.units.filter(u => u.track !== 'letters').slice(0, 2);
+      const sents = units.flatMap(u => u.sentences || []), pool = shuffle((sents.length ? sents : units.flatMap(u => u.words || [])).slice()).slice(0, 10);
+      return kind === 'speaksent' ? pool.map(x => EX.speak(x)) : pool.slice(0, 6).map(x => EX.shadow(x));
+    }
+    return _bp(kind);
+  };
+  const _prac2 = renderPractice;
+  renderPractice = function () {
+    _prac2(); const t = $('#tab-practice'); if (!t || $('[data-practice="speaksent"]', t)) return;
+    const sp = $('[data-practice="speak"]', t); if (!sp) return;
+    sp.insertAdjacentHTML('afterend', `<button class="drill" data-practice="speaksent"><span class="ic">${ICON.mic}</span><b>Say sentences</b><small>Whole sentences, out loud</small></button><button class="drill" data-practice="echo"><span class="ic">${ICON.speaker}</span><b>Repeat after Boo</b><small>Listen, then copy</small></button>`);
+  };
+  const _acc = Access.allows;
+  Access.allows = function (what, ctx) { if (what === 'drill' && (ctx === 'speaksent' || ctx === 'echo')) return _acc.call(this, 'drill', 'speak'); return _acc.apply(this, arguments); };
 }
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
