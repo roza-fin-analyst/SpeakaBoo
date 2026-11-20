@@ -8219,7 +8219,7 @@ const RENDER = {
     const c = course(), w = step.w;
     el.innerHTML = `<p class="q">${step.retry ? '<span class="badge-new" style="margin-right:8px">Previous mistake</span>' : ''}Which picture is this?</p>
       <div class="prompt"><button class="speaker" data-say="${esc(w.t)}" aria-label="Play">${ICON.speaker}</button><div><div class="prompt-text script" ${attrs(c)} style="font-size:34px">${esc(w.t)}</div><div class="prompt-sub" style="width:auto">${esc(w.r)}</div></div></div>
-      <div class="pic-grid">${step.options.map((o, i) => `<button class="pic-card" data-i="${i}"><span class="pic">${artSVG(o.pic)}</span><small class="pic-label">${esc(cleanEn(o.en))}</small></button>`).join('')}</div>`;
+      <div class="pic-grid">${step.options.map((o, i) => `<button class="pic-card" data-i="${i}" aria-label="${esc(cleanEn(o.en))}"><span class="pic">${artSVG(o.pic)}</span><small class="pic-label">${esc(cleanEn(o.en))}</small></button>`).join('')}</div>`;
     const answer = i => {
       if (R.locked) return; const ok = step.options[i].t === w.t;
       $$('.pic-card', el).forEach((b, j) => { b.classList.add('revealed'); if (step.options[j].t === w.t) b.classList.add('right'); else if (j === i) b.classList.add('wrong'); });
@@ -11619,8 +11619,12 @@ buildLesson = function (u, level) {
     out.push(Object.assign(EX.speak(w, me), { stage: 'speak' }));
     if (k >= 1) out.push(check(set[k - 1], k - 1));
   });
-  if (set.length >= 3) out.push(rep(EX.pop(set)));
   out.push(check(set[set.length - 1], 1));
+  // A short second scene (chapters with 6-9 words): bring back words from the first scene too.
+  const review = level === 1 && set.length < 4 ? shuffle(W.slice(0, 5).filter(w => !set.includes(w))).slice(0, 5 - set.length) : [];
+  review.forEach((w, k) => out.push(check(w, k)));   // starts with a tap check, so spoken checks never pile up
+  const popSet = set.concat(review);
+  if (popSet.length >= 3) out.push(rep(EX.pop(popSet)));
   const S = u.sentences || [];
   if (S.length) {
     const clean = x => String(x).replace(/[.,!?¿¡،؟…~“”"«»()]/g, '').trim().toLowerCase();
