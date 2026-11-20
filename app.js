@@ -7164,7 +7164,7 @@ Theme.apply();
 const LATIN_LANGS = ['es', 'fr', 'de'];
 const isLatinLang = code => LATIN_LANGS.includes(code);
 const BRAND_SVG = `<span class="brand-boo" aria-hidden="true">${mascotSVG('mandu', 'peek')}</span>`;
-const SPEAKABOO_VERSION = '2026.10.25-a';
+const SPEAKABOO_VERSION = '2026.11.20-a';
 const ICON_BANANA = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 7c-9 0-13 6-13 12s5 9 13 9 13-3 13-9S25 7 16 7z" fill="#FF8A1F" stroke="#B3500A" stroke-width="2"/><path d="M16 7c-3 4-3 17 0 21M16 7c3 4 3 17 0 21" fill="none" stroke="#B3500A" stroke-width="1.6"/><path d="M16 7q0-4 4-5" stroke="#4B7A2A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M10 16l3 3-4 0zM22 16l-3 3 4 0z M11 22q5 4 10 0" fill="#2A1450" stroke="#2A1450" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
 const ICON_LEAFY = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3c-7 0-10 6-10 11v14l4-3 3 3 3-3 3 3 3-3 4 3V14c0-5-3-11-10-11z" fill="#B7FFD1" stroke="#2EA86B" stroke-width="2" stroke-linejoin="round"/><circle cx="12.500" cy="14" r="2.200" fill="#123"/><circle cx="19.500" cy="14" r="2.200" fill="#123"/></svg>`;
 const UI = { tab: 'now', manage: false, creating: false, confirmDel: null, draft: { name: '', mascot: 'mandu', lang: 'ko' }, meConfirm: null };
@@ -8761,9 +8761,9 @@ function fitStage() {
     const st = $('#l-stage'), inn = st && $('.l-inner', st); if (!inn || $('#lesson').hidden) return;
     const fb = $('#l-foot'); if (fb && (fb.classList.contains('ok') || fb.classList.contains('bad'))) return;   // keep the size while the answer bar is showing
     inn.style.zoom = ''; const cs = getComputedStyle(st);
-    const foot = $('#l-foot'), footH = foot && !foot.hidden ? foot.offsetHeight : 0;   // the answer bar's space is reserved up front, so nothing resizes when it appears
-    const co = $('.coach', st), avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - Math.max(0, 170 - footH) - (co ? co.offsetHeight + 10 : 0), need = inn.offsetHeight;
-    if (need > avail + 2) inn.style.zoom = Math.max(0.9, avail / need).toFixed(3);
+    // The answer bar's space is already reserved by the stage's bottom padding, so nothing resizes when it appears.
+    const co = $('.coach', st), avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - (co ? co.offsetHeight + 10 : 0), need = inn.offsetHeight;
+    if (need > avail + 2) inn.style.zoom = Math.max(0.82, avail / need).toFixed(3);
   });
 }
 { const wire = () => { const st = document.getElementById('l-stage'); if (!st) return setTimeout(wire, 500);
@@ -8881,7 +8881,7 @@ function renderTalk() {
       <div class="tk-list">${T.scenes().map(t => `<button class="tk-card" data-tk-open="${t.id}"><span class="mascot" data-tk-m="${T.who(t)}"></span><span class="tk-ct"><b>${esc(t.title)}</b><small>${esc(t.en)}</small></span><span class="tk-go">›</span></button>`).join('')}</div>
       <h2 class="tk-h2">More with characters</h2>
       <div class="tk-list"><button class="tk-card" data-realtalk><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Real Talk</b><small>Slang, tone and idioms</small></span><span class="tk-go">›</span></button>
-        <button class="tk-card" data-adventure="STORY_ADVENTURE"><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Story</b><small>Choose what to say next</small></span><span class="tk-go">›</span></button></div></div>`;
+        <button class="tk-card" data-adventure="STORY_ADVENTURE"><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Story adventure</b><small>Choose what to say next</small></span><span class="tk-go">›</span></button></div></div>`;
     $$('[data-tk-m]', root).forEach(m => paintMascot(m, m.dataset.tkM, 'happy', false));
     return;
   }
@@ -9230,11 +9230,11 @@ renderProfile = function () {
   const mail = Acct.email() && !/this-device\.local$/.test(Acct.email()) ? Acct.email() : 'Guest on this phone';
   const sm = p.scriptMode || 'auto';
   $('#tab-profile').innerHTML = `<div class="pad me2">
-    <section class="me-hero"><div class="me-ghost" data-mascot-live></div><div class="me-who"><h1>${esc(p.name)}</h1><p>Level ${lvl} · ${liveStreak(p)}-day streak</p><p>${p.xp} XP · ${learnedWords(p, c.code).length} words</p><button class="btn primary sm" data-share>Share my progress</button></div></section>
-    <section class="me-sec"><h2>Costumes</h2><p class="hint">${nextC ? `Next: ${esc(nextC.name)} at level ${COSTUME_LEVEL[nextC.id]}` : 'You unlocked them all!'}</p>
+    <section class="me-hero"><div class="me-ghost" data-mascot-live></div><div class="me-who"><h1>${esc(p.name)}</h1><p>Level ${lvl} · ${p.xp} XP</p><p>${learnedWords(p, c.code).length} words · ${(p.stats && p.stats.spoken) || 0} said out loud</p><button class="btn primary sm" data-share>Share my progress</button></div></section>
+    <section class="me-sec"><h2>Your Boo</h2><div class="pick-row">${MASCOT_ORDER.map(k => `<button class="pk ${k === p.mascot ? 'on' : ''}" data-me-m="${k}" aria-label="${esc(MASCOTS[k].name)}"><span>${ghostAvatar(k, k === p.mascot ? p.wear : '')}</span><small>${esc(MASCOTS[k].name)}</small></button>`).join('')}</div>
+      <h3 class="me-sub">Costumes</h3><p class="hint">${nextC ? `Next: ${esc(nextC.name)} at level ${COSTUME_LEVEL[nextC.id]}` : 'You unlocked them all!'}</p>
       <div class="costumes"><button class="cos ${!p.wear ? 'on' : ''}" data-wear=""><span>${ghostAvatar(p.mascot, '')}</span><small>None</small></button>
       ${WARDROBE.slice().sort((a, b) => COSTUME_LEVEL[a.id] - COSTUME_LEVEL[b.id]).map(w => { const ok = costumeUnlocked(p, w.id); return `<button class="cos ${p.wear === w.id ? 'on' : ''} ${ok ? '' : 'locked'}" ${ok ? `data-wear="${w.id}"` : 'disabled'}><span>${ghostAvatar(p.mascot, ok ? w.id : '')}</span><small>${ok ? esc(w.name) : 'Level ' + COSTUME_LEVEL[w.id]}</small></button>`; }).join('')}</div></section>
-    <section class="me-sec"><h2>Your Boo</h2><div class="pick-row">${MASCOT_ORDER.map(k => `<button class="pk ${k === p.mascot ? 'on' : ''}" data-me-m="${k}" aria-label="${esc(MASCOTS[k].name)}"><span>${ghostAvatar(k, k === p.mascot ? p.wear : '')}</span><small>${esc(MASCOTS[k].name)}</small></button>`).join('')}</div></section>
     <section class="me-sec"><h2>Friends</h2>
       <div class="friend-list">${Friends.list().map((f, i) => `<div class="friend ${f.me ? 'me' : ''}"><b class="rk">${i + 1}</b><span class="fav">${ghostAvatar(f.m, f.w)}</span><span class="fname"><b>${esc(f.n)}${f.me ? ' (you)' : ''}</b><small>Level ${f.l} · ${f.s}-day streak</small></span>${f.me ? '' : `<button class="fx" data-fdel="${esc(f.n + '|' + f.m)}" aria-label="Remove">×</button>`}</div>`).join('')}</div>
       <div class="friend-actions"><button class="btn primary sm" id="fr-invite">Invite a friend</button></div>
@@ -9296,7 +9296,7 @@ function splash() {
     <button class="sp-sound" aria-label="Sound" data-state="${sp}">${sp === 'on' ? '♪ Sound on' : 'Sound off'}</button><button class="sp-skip">Skip</button>`;
   document.body.append(el); document.documentElement.classList.remove('boot');
   const ghost = $('.sp-ghost', el), face = m => { if (ghost.isConnected) ghost.innerHTML = booBookSVG(m); };
-  const T = [[350, () => Sfx.whoosh()], [1250, () => { Sfx.boo(); el.classList.add('flash'); }], [1750, () => el.classList.remove('flash')], [2100, () => { face('giggle'); Sfx.giggle(); }], [2800, () => { face('happy'); Sfx.chime(); }]];
+  const T = [[350, () => Sfx.whoosh()], [1250, () => { Sfx.boo(); el.classList.add('sp-flash'); }], [1750, () => el.classList.remove('sp-flash')], [2100, () => { face('giggle'); Sfx.giggle(); }], [2800, () => { face('happy'); Sfx.chime(); }]];
   const timers = T.map(([ms, fn]) => setTimeout(fn, ms));
   const btn = $('.sp-sound', el);
   btn.onclick = () => { const v = !Sound.on(); Sound.set(v); btn.dataset.state = v ? 'on' : 'off'; btn.textContent = v ? '♪ Sound on' : 'Sound off'; if (v) { Sound.ready(); Sfx.chime(); } };
@@ -9510,6 +9510,13 @@ if ('Notification' in window) { setInterval(() => Remind.tick(), 60000); setTime
       const sents = units.flatMap(u => u.sentences || []), pool = shuffle((sents.length ? sents : units.flatMap(u => u.words || [])).slice()).slice(0, 10);
       return kind === 'speaksent' ? pool.map(x => EX.speak(x)) : pool.slice(0, 6).map(x => EX.shadow(x));
     }
+    if (kind === 'saypic') {   // say what you see: words you met that have a picture
+      const c = course(), p = P(), seen = new Set(), started = c.units.filter(u => u.track !== 'letters' && !(u.letters || []).length && unitProgress(p, c.code, u.id) > 0);
+      const weak = SRS.weak(p).map(id => VOCAB_INDEX[id]).filter(w => w && w.lang === c.code);
+      const ws = [...weak, ...shuffle((started.length ? started : c.units.filter(u => !(u.letters || []).length).slice(0, 1)).flatMap(u => u.words || []))]
+        .filter(w => w && w.pic && ART[w.pic] && !seen.has(w.t) && seen.add(w.t));
+      return ws.slice(0, 8).map(w => EX.saypic(w));
+    }
     return _bp(kind);
   };
   const _prac2 = renderPractice;
@@ -9519,41 +9526,41 @@ if ('Notification' in window) { setInterval(() => Remind.tick(), 60000); setTime
     sp.insertAdjacentHTML('afterend', `<button class="drill" data-practice="speaksent"><span class="ic">${ICON.mic}</span><b>Say sentences</b><small>Whole sentences, out loud</small></button><button class="drill" data-practice="echo"><span class="ic">${ICON.speaker}</span><b>Repeat after Boo</b><small>Listen, then copy</small></button>`);
   };
   const _acc = Access.allows;
-  Access.allows = function (what, ctx) { if (what === 'drill' && (ctx === 'speaksent' || ctx === 'echo')) return _acc.call(this, 'drill', 'speak'); return _acc.apply(this, arguments); };
+  Access.allows = function (what, ctx) { if (what === 'drill' && (ctx === 'speaksent' || ctx === 'echo' || ctx === 'saypic')) return _acc.call(this, 'drill', 'speak'); return _acc.apply(this, arguments); };
 }
 /* ---- Train, rebuilt: one daily button, then tidy groups (Speak / Listen and read / Quick games / Letters) ---- */
 renderPractice = function () {
   const p = P(), c = course(), words = learnedWords(p, c.code), due = SRS.due().length;
-  const T = (kind, icon, name, sub, dis) => `<button class="tile" data-practice="${kind}" ${dis ? 'disabled' : ''}><span class="ic">${icon}</span><b>${name}</b><small>${sub}</small></button>`;
+  const T = (kind, icon, name, sub, dis) => `<button class="tr-tile" data-practice="${kind}" ${dis ? 'disabled' : ''}><span class="ic">${icon}</span><b>${name}</b><small>${sub}</small></button>`;
   const lettersOn = c.letterUnits.length && lettersOpen();
   $('#tab-practice').innerHTML = `<div class="pad stack train">
     <div class="card practice-hero"><div class="mascot" data-pr-m></div><div><h2>Daily practice</h2>
-      <p>${due ? `${due} word${due > 1 ? 's are' : ' is'} ready to review.` : words.length ? 'Keep your words fresh.' : 'Finish a lesson and your words land here.'}</p>
+      <p>${due ? `${due} word${due > 1 ? 's are' : ' is'} ready to review.` : words.length ? 'Your weakest words, mixed up.' : 'Finish a lesson and your words land here.'}</p>
       <button class="btn primary" data-practice="mix">Start · +5 XP</button></div></div>
     <h3 class="tgroup">Speak</h3>
-    <div class="tiles">
-      ${T('speak', ICON.mic, 'Speaking', 'Say words, checked by voice')}
+    <div class="tr-tiles">
+      ${T('saypic', ICON.mic, 'Say what you see', 'A picture, you say it')}
+      ${T('speak', ICON.mic, 'Say words', 'Checked by voice')}
       ${T('speaksent', ICON.mic, 'Say sentences', 'Whole sentences aloud')}
       ${T('echo', ICON.speaker, 'Repeat after Boo', 'Listen, then copy')}
-      <button class="tile" data-realtalk><span class="ic">${ICON.chat}</span><b>Real Talk</b><small>Role-plays with Boo</small></button>
-      <button class="tile" data-tone><span class="ic">${ICON.speaker}</span><b>Tone Studio</b><small>Same words, new feeling</small></button>
+      <button class="tr-tile" data-tone><span class="ic">${ICON.speaker}</span><b>Tone Studio</b><small>Same words, new feeling</small></button>
       ${T('soundlab', ICON.mic, 'Sound Lab', 'Your trickiest sounds')}
     </div>
     <h3 class="tgroup">Listen and read</h3>
-    <div class="tiles">
+    <div class="tr-tiles">
       ${T('listen', ICON.ear, 'Listening', 'Hear it, pick it')}
       ${T('sentences', ICON.chat, 'Sentences', 'Build and translate', !c.units.some(u => u.sentences))}
       ${T('story', ICON.book, 'Story time', 'Read, listen, answer', !c.units.some(u => u.story))}
       ${T('pictures', ICON.target, 'Picture quiz', 'See it, name it')}
     </div>
     <h3 class="tgroup">Quick games</h3>
-    <div class="tiles">
+    <div class="tr-tiles">
       ${T('speed', ICON.bolt, '60-second sprint', p.stats.speedBest ? `Your record: ${p.stats.speedBest}` : 'How many can you get?')}
       ${T('matching', ICON.blocks, 'Match madness', 'Pair words fast')}
       ${T('mistakes', ICON.target, 'Fix my mistakes', 'Only what you missed')}
       ${T('grammar', ICON.chat, 'Grammar gym', 'Fill the gap')}
     </div>
-    ${lettersOn ? `<h3 class="tgroup">${c.code === 'ko' ? 'Hangeul' : 'Letters'}</h3><div class="tiles">${T('letters', ICON.blocks, c.code === 'ko' ? 'Hangeul drill' : 'Letter drill', 'Sounds and building')}<button class="tile" data-adventure="LETTER_EXPLORER"><span class="ic">${ICON.blocks}</span><b>Letter Explorer</b><small>Find letters in words</small></button></div>` : ''}
+    ${lettersOn ? `<h3 class="tgroup">${c.code === 'ko' ? 'Hangeul' : 'Letters'}</h3><div class="tr-tiles">${T('letters', ICON.blocks, c.code === 'ko' ? 'Hangeul drill' : 'Letter drill', 'Sounds and building')}<button class="tr-tile" data-adventure="LETTER_EXPLORER"><span class="ic">${ICON.blocks}</span><b>Letter Explorer</b><small>Find letters in words</small></button></div>` : ''}
     <details class="more"><summary>My stuff: voice journal, phrasebook, jokes</summary>
       ${voiceJournalHTML()}
       ${phrasebookHTML()}
@@ -10883,7 +10890,7 @@ const TRIAL_DAYS = CFG.trialDays || 7;
 const FREE = { chapters: 2, talkPerDay: 3, gamesPerDay: 1 };
 Object.assign(TRIAL, { callBoo: true });
 const WHY_SB = [
-  ['speak', 'You speak from minute one', 'Most apps have you tap tiles and match pairs. In GabBoo you answer out loud and Boo listens, scores and reacts.'],
+  ['speak', 'Peek. Speak. Repeat.', 'Every new word: peek at a picture and guess it, then say it out loud straight away. Boo listens and scores you. Most apps only have you tap.'],
   ['friends', 'Moments, not word lists', 'Every phrase lives in a tiny comic scene: who you’re talking to and where. That’s how you learn when to be polite or casual.'],
   ['clock', 'It follows your day', 'Today shows what people actually say in the next few hours, then sends you out with a real-life mission.'],
   ['radio', 'Hear the feeling', '진짜? vs 진짜! Tone Studio teaches the melody of real speech and draws your own voice so you can match it.'],
@@ -11345,5 +11352,179 @@ Object.assign(MOMENTS, {
 });
 Object.assign(Onboard.GREET, {"fr": ["Bonjour !", "bon-ZHOOR", "Hello!"], "de": ["Hallo!", "HAH-loh", "Hello!"], "ja": ["こんにちは！", "kon-ni-chi-wa", "Hello!"], "zh": ["你好！", "nǐ hǎo", "Hello!"]});
 const OPEN_X = {"fr": {"t": "Bonjour ! Comment était ta journée ?", "r": "bon-ZHOOR! koh-MOHN ay-TEH tah zhoor-NAY?", "en": "Hi! How was your day?"}, "de": {"t": "Hallo! Wie war dein Tag?", "r": "HAH-loh! vee vahr dine TAHK?", "en": "Hi! How was your day?"}, "ja": {"t": "こんにちは！今日 は どう でした か？", "r": "konnichiwa! kyō wa dō deshita ka?", "en": "Hi! How was your day?"}, "zh": {"t": "你 好！今天 过得 怎么样？", "r": "nǐ hǎo! jīntiān guò de zěnmeyàng?", "en": "Hi! How was your day?"}};
+/* =====================================================================
+   PEEK · SPEAK · REPEAT  (the first two scenes of every chapter)
+   Every new word: PEEK (guess it from a picture, a moment or an example
+   sentence; a wrong guess costs no heart), then SPEAK it straight away.
+   Then REPEAT: quick checks, half of them out loud, and the words in a
+   real sentence. No "watch the scene" panels, no read-only word cards.
+   ===================================================================== */
+const STAGE_LABEL = { peek: 'Peek · new word', speak: 'Speak', repeat: 'Repeat' };
+const stageChip = s => STAGE_LABEL[s] ? `<span class="stage-chip st-${s}">${STAGE_LABEL[s]}</span>` : '';
+Object.assign(CREW_KIND, { peek: 'nabi', saypic: 'horangi' });
+/** A real course sentence that uses the word, with the word highlighted. */
+function peekExampleHTML(ex, w, opts = {}) {
+  const c = course(), t = String(ex.t), at = w ? t.toLowerCase().indexOf(String(w.t).toLowerCase()) : -1;
+  const hl = at >= 0 ? `${esc(t.slice(0, at))}<mark>${esc(t.slice(at, at + String(w.t).length))}</mark>${esc(t.slice(at + String(w.t).length))}` : esc(t);
+  const rom = (ex.r || romFor(t)) && !isLatinLang(c.code) ? `<small class="ex-rom">${esc(ex.r || romFor(t))}</small>` : '';
+  return `<button class="peek-ex ${opts.cls || ''}" data-say="${esc(t)}">${ICON.speaker}<span>${opts.label ? `<small class="pe-label">${esc(opts.label)}</small>` : ''}<span class="script" ${attrs(c)}>${hl}</span>${rom}<small class="ex-en">${esc(ex.en)}</small></span></button>`;
+}
+Object.assign(EX, {
+  /** Guess a brand-new word: picture cards when it has a drawing, else its moment, else an example sentence. */
+  peek(w, set, pool) {
+    const key = x => cleanEn(x.en).toLowerCase(), ex = exampleFor(w);
+    let mode = w.pic && ART[w.pic] ? 'cards' : ctxOf(w) ? 'scene' : ex ? 'example' : 'plain', options = null;
+    if (mode === 'cards') {
+      const seenK = new Set([key(w)]), seenP = new Set([w.pic]), seenT = new Set([w.t]), opts = [w];
+      for (const o of [...shuffle(set.filter(x => x !== w)), ...shuffle(pool.slice())]) {
+        if (opts.length >= 4) break;
+        if (!o || !o.pic || !ART[o.pic] || seenK.has(key(o)) || seenP.has(o.pic) || seenT.has(o.t)) continue;
+        seenK.add(key(o)); seenP.add(o.pic); seenT.add(o.t); opts.push(o);
+      }
+      if (opts.length >= 3) options = shuffle(opts); else mode = ctxOf(w) ? 'scene' : ex ? 'example' : 'plain';
+    }
+    if (!options) {
+      const seen = new Set([key(w)]), out = [cleanEn(w.en)];
+      for (const o of [...shuffle(set.filter(x => x !== w)), ...shuffle(pool.slice())]) { if (out.length >= 3) break; const v = cleanEn(o.en); if (!v || seen.has(v.toLowerCase())) continue; seen.add(v.toLowerCase()); out.push(v); }
+      options = shuffle(out);
+    }
+    return { kind: 'peek', mode, w, ex, options, answer: cleanEn(w.en), srsId: w.id, stage: 'peek' };
+  },
+  /** Say what you see: a picture (or the English) and the mic. Recall by speaking. */
+  saypic: w => ({ kind: 'saypic', w, srsId: w.id, stage: 'repeat' })
+});
+RENDER.peek = function (step, el, R) {
+  const c = course(), w = step.w, en = cleanEn(w.en), free = !step.retry, cards = step.mode === 'cards';
+  const rom = x => x.r && x.r !== x.t && !isLatinLang(c.code) ? `<small class="pk-rom">${esc(x.r)}</small>` : '';
+  let body;
+  if (cards) body = `<p class="q">Which one is “${esc(en)}”?</p>${free ? '<p class="peek-sub">Look at the pictures and guess. No hearts lost.</p>' : ''}
+      <div class="peek-grid n${step.options.length}">${step.options.map((o, i) => `<button class="peek-card" data-i="${i}"><span class="pk-pic">${artSVG(o.pic)}</span><span class="pk-word script" ${attrs(c)}>${esc(o.t)}</span>${rom(o)}</button>`).join('')}</div>`;
+  else {
+    const top = step.mode === 'scene' ? panelHTML(w, 'word', { rom: true, tools: false })
+      : step.mode === 'example' ? peekExampleHTML(step.ex, w, { cls: 'big' })
+      : `<div class="peek-word"><button class="speaker" data-say="${esc(w.t)}" aria-label="Play">${ICON.speaker}</button><div><div class="prompt-text script" ${attrs(c)}>${esc(w.t)}</div>${rom(w)}</div></div>`;
+    body = `<p class="q">What does <span class="script" ${attrs(c)}>${esc(w.t)}</span> mean${step.mode === 'scene' ? ' here' : ''}?</p>${free ? `<p class="peek-sub">${step.mode === 'example' ? 'Use the example to guess.' : step.mode === 'scene' ? 'Look at the moment and guess.' : 'Have a guess.'} No hearts lost.</p>` : ''}
+      ${top}<div class="opts">${step.options.map((o, i) => `<button class="opt" data-i="${i}"><kbd>${i + 1}</kbd><span>${esc(o)}</span></button>`).join('')}</div>`;
+  }
+  el.innerHTML = `${stageChip(free ? 'peek' : 'repeat')}${body}<div class="peek-after" id="pk-after"></div>`;
+  if (free) Coach.pending = R.i === 0 ? 'Peek, speak, repeat! Guess the new word, then say it.' : pick(['Peek and guess. Then you say it.', 'New word! Trust your eyes.', 'Guess first. It sticks better.']);
+  const sel = cards ? '.peek-card' : '.opt', isRight = i => cards ? step.options[i].t === w.t : step.options[i] === step.answer;
+  const answer = i => {
+    if (R.locked) return; const ok = isRight(i);
+    $$(sel, el).forEach((b, j) => { b.disabled = true; if (isRight(j)) b.classList.add('right'); else if (j === i) b.classList.add('wrong'); });
+    el.classList.add('peek-done');   // keep only your pick and the right one, so the meaning and the example fit on screen
+    const after = $('#pk-after', el);
+    if (after) after.innerHTML = `${cards ? `<p class="pk-means"><b class="script" ${attrs(c)}>${esc(w.t)}</b> means “${esc(en)}”</p>` : ''}${step.ex && step.mode !== 'example' ? peekExampleHTML(step.ex, w, { label: 'Example' }) : ''}`;
+    if (!ok && free) {   // a free guess: no heart, the answer is on screen, and the word comes back a few steps later
+      R.queue.splice(Math.min(R.queue.length, R.i + 4), 0, Object.assign({}, step, { retry: true, options: shuffle(step.options.slice()), stage: 'repeat' }));
+      if (!after.innerHTML) after.innerHTML = `<p class="pk-means"><b class="script" ${attrs(c)}>${esc(w.t)}</b> means “${esc(en)}”</p>`;
+      setTimeout(() => { if (el.isConnected) Voice.speak(w.t); }, 250);
+      R.grade(false, { free: true, teach: 'It comes back in a moment.' });
+      return;
+    }
+    R.grade(ok, { you: cards ? step.options[i].t : step.options[i], show: { t: w.t, r: w.r, en }, noAuto: ok && !!step.ex && step.mode !== 'example' });
+  };
+  $$(sel, el).forEach(b => b.onclick = () => answer(+b.dataset.i)); R.select = answer;
+  if (!cards) setTimeout(() => { if (!R.locked && el.isConnected) Voice.speak(w.t); }, 300);
+};
+RENDER.saypic = function (step, el, R) {
+  const c = course(), w = step.w, en = cleanEn(w.en), canMic = !!Mic.SR && !Mic.blocked, art = w.pic && ART[w.pic] ? artSVG(w.pic) : '';
+  let tries = 0, revealed = false;
+  el.innerHTML = `${stageChip('repeat')}<p class="q">${art ? 'Say what you see!' : `How do you say “${esc(en)}”?`}</p>
+    ${art ? `<div class="say-pic" aria-hidden="true">${art}</div><p class="say-en">${esc(en)}</p>` : ''}
+    <div class="say-ans" id="sy-ans"><b>?</b><small>Say it out loud</small></div>
+    ${canMic ? `<div class="mic-row"><button class="mic-big" id="sy-mic" aria-label="Tap to speak">${ICON.mic}</button><div class="mic-status"><span id="sy-st">Tap the mic and say it</span></div></div><button class="link-btn" id="sy-help">Show me the word</button>`
+      : `<div class="fallback">Say it out loud first, then check.<div class="row"><button class="btn ghost sm" id="sy-show">Show the answer</button></div></div>`}`;
+  const reveal = () => { if (revealed) return; revealed = true; const a = $('#sy-ans', el); if (a) { a.classList.add('open'); a.innerHTML = `<span class="script" ${attrs(c)}>${esc(w.t)}</span>${w.r && w.r !== w.t && !isLatinLang(c.code) ? `<small>${esc(w.r)}</small>` : ''}`; } Voice.speak(w.t); };
+  const soft = msg => { R.grade(true, { teach: msg, noAuto: true }); const t = $('#l-fb-title'); if (t) t.textContent = 'Keep practising'; };
+  R.skipAllowed('Can’t speak now');
+  if (!canMic) {
+    $('#sy-show', el).onclick = () => {
+      reveal(); const f = $('.fallback', el);
+      f.innerHTML = `Did you say it?<div class="row"><button class="btn good sm" id="sy-yes">Yes, I did</button><button class="btn ghost sm" id="sy-no">Not yet</button></div>`;
+      $('#sy-yes', el).onclick = () => R.grade(true, {}); $('#sy-no', el).onclick = () => soft('Say it once more with the audio.');
+    };
+    return;
+  }
+  $('#sy-help', el).onclick = () => { reveal(); tries = Math.max(tries, 1); };
+  $('#sy-mic', el).onclick = async () => {
+    const btn = $('#sy-mic', el), st = $('#sy-st', el); if (R.locked) return; if (Mic.active) { Mic.stop(); return; }
+    btn.classList.add('on'); st.textContent = 'Listening…';
+    try {
+      const alts = await listenOnce(c.stt, { target: w.t, onInterim: t => { st.textContent = `Hearing: ${t}…`; } }); btn.classList.remove('on'); tries++;
+      const r = pronScore(w.t, alts || []);
+      if (r.ok) { reveal(); P().stats.spoken++; Quests.bump('speak'); R.grade(true, { teach: `${r.pct}% match` }); }
+      else if (tries >= 3) { reveal(); soft(`${r.pct}%. Listen and say it again tomorrow.`); }
+      else {
+        Sfx.wrong(); st.textContent = `I heard “${r.best || '…'}” (${r.pct}%). Try ${tries + 1} of 3`;
+        if (tries === 1 && !revealed) { const a = $('#sy-ans', el); if (a) a.innerHTML = `<small>It starts with</small><b>${esc(String(w.r || w.t).split(/[\s-]/)[0])}…</b>`; }
+        if (tries === 2) reveal();
+      }
+    } catch (code) { btn.classList.remove('on'); st.textContent = Mic.explain(code); if (Mic.blocked) RENDER.saypic(step, el, R); }
+  };
+};
+/* "Say your line" also gets the skip button. */
+{ const _cs = RENDER.ctxsay; RENDER.ctxsay = function (step, el, R) { _cs(step, el, R); if (Mic.SR && !Mic.blocked && $('#cs-mic', el)) R.skipAllowed('Can’t speak now'); }; }
+/* "Can't speak now" turns speaking off for the rest of this lesson (not just one step). */
+{
+  const SPEAKING = new Set(['speak', 'shadow', 'saypic']);
+  const _sa = Runner.skipAllowed;
+  Runner.skipAllowed = function (label) {
+    _sa.call(this, label);
+    const s = $('#l-skip'); if (!s || !/speak/i.test(label || '')) return;
+    s.onclick = () => {
+      const keep = this.queue.slice(0, this.i + 1), rest = this.queue.slice(this.i + 1).map(x => x.kind === 'ctxsay' ? Object.assign({}, x, { kind: 'ctxpick' }) : x).filter(x => !SPEAKING.has(x.kind));
+      this.queue = keep.concat(rest);
+      toast('Speaking is off for this lesson. It comes back next time.');
+      this.next();
+    };
+  };
+}
+/* Stage chip on every step of a Peek · Speak · Repeat lesson; a stamp for great speaking. */
+{
+  const _rr = Runner.render;
+  Runner.render = function () {
+    const out = _rr.apply(this, arguments);
+    try { const st = this.queue && this.queue[this.i], inn = $('#l-stage .l-inner'); if (st && st.stage && inn && !$('.stage-chip', inn)) inn.insertAdjacentHTML('afterbegin', stageChip(st.retry ? 'repeat' : st.stage)); } catch (e) { /* ignore */ }
+    return out;
+  };
+  const _gs = Runner.grade;
+  Runner.grade = function (ok, info = {}) {
+    const was = this.locked, step = this.queue && this.queue[this.i], out = _gs.call(this, ok, info);
+    try {
+      const m = ok && !was && step && /^(speak|saypic|ctxsay|shadow)$/.test(step.kind) && /(\d+)% match/.exec(info.teach || '');
+      if (m && +m[1] >= 75) { const s = document.createElement('div'); s.className = 'say-stamp'; s.innerHTML = `<b>${+m[1] >= 90 ? 'Perfect!' : 'Great!'}</b><small>${m[1]}% match</small>`; $('#l-stage').append(s); setTimeout(() => s.remove(), 1600); }
+    } catch (e) { /* ignore */ }
+    return out;
+  };
+}
+/* The recipe. */
+const _buildLessonPeek = buildLesson;
+buildLesson = function (u, level) {
+  if (!u || u.track === 'letters' || (u.letters || []).length || level > 1 || !(u.words || []).length) return _buildLessonPeek(u, level);
+  const W = u.words, set = level === 0 ? W.slice(0, 5) : (W.slice(5, 10).length ? W.slice(5, 10) : W.slice(-5));
+  const wp = vocabPool(course()), me = P().mascot, out = [];
+  const rep = x => Object.assign(x, { stage: 'repeat' });
+  const check = (w, k) => k % 2 === 0
+    ? rep(concretePic(w) && picPool().length > 3 ? EX.pickPic(w, picPool()) : EX.listenWord(w, wp))   // tap: hear it, find it
+    : rep(ctxOf(w) ? EX.ctxsay(w, set.concat(wp), set) : EX.saypic(w));                                 // out loud: say it from memory
+  set.forEach((w, k) => {
+    out.push(EX.peek(w, set, wp));
+    out.push(Object.assign(EX.speak(w, me), { stage: 'speak' }));
+    if (k >= 1) out.push(check(set[k - 1], k - 1));
+  });
+  if (set.length >= 3) out.push(rep(EX.pop(set)));
+  out.push(check(set[set.length - 1], 1));
+  const S = u.sentences || [];
+  if (S.length) {
+    const clean = x => String(x).replace(/[.,!?¿¡،؟…~“”"«»()]/g, '').trim().toLowerCase();
+    const score = sn => set.reduce((n, w) => { const t = clean(w.t), st = t.length > 2 ? t.slice(0, -1) : t; return n + (t && clean(sn.t).includes(st) ? 1 : 0); }, 0);
+    const picks = shuffle(S.slice().sort((a, b) => score(b) - score(a)).slice(0, 4)).slice(0, 2);
+    if (picks[0]) { out.push(rep(EX.listenTiles(picks[0]))); out.push(rep(EX.speak(picks[0]))); }
+    if (picks[1]) out.push(rep(EX.toKo(picks[1])));
+  }
+  return out.filter(Boolean);
+};
+
 /* Start the app once every module has loaded. */
 bootApp();
