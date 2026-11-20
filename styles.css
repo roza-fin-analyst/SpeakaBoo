@@ -2585,3 +2585,6 @@ body[data-screen="now"] #right .rr-goal { display: none; }   /* Today already sh
 #right .stat { background: var(--surface); border: 1px solid var(--line); box-shadow: none; color: var(--ink); border-radius: 999px; padding: 3px 12px 3px 8px; }
 #right .stat .num { color: var(--ink); text-shadow: none; }
 #right .stat svg { width: 24px; height: 24px; }
+/* Win screen streak line: was cream/white from the dark theme */
+.vstreak { color: var(--ink-2) !important; flex-wrap: wrap; text-align: center; } .vstreak b { color: var(--berry-text) !important; }
+.victory .vghost { position: static !important; display: block; width: 92px !important; height: 88px !important; margin: 6px auto -2px; }

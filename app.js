@@ -7898,6 +7898,7 @@ const Runner = {
   render() {
     clearTimeout(this.advanceT);
     const step = this.queue[this.i];
+    if (!step) { if (!this.finished) this.complete(); return; }   // never draw past the last step
     const pct = this.i / this.queue.length * 100; $('#l-bar').style.width = pct + '%'; $('#l-boo').style.left = pct + '%';
     const foot = $('#l-foot'); foot.className = 'l-foot'; foot.hidden = true;
     $('#l-fb').hidden = true; $('#l-skip').hidden = true; $('#l-fb-detail').innerHTML = '';
@@ -7980,7 +7981,7 @@ const Runner = {
     clearTimeout(this.advanceT);
     if (this.outOfHearts) return this.heartsOut();
     this.i++; if (this.i >= this.queue.length || (this.meta.speed && Date.now() > this.deadline)) return this.complete();
-    if (!this.halfDone && !this.meta.speed && this.queue.length >= 8 && this.i >= this.queue.length / 2) { this.halfDone = true; this.locked = true; $('#l-foot').hidden = true; this.halfway(); setTimeout(() => { if (!$('#lesson').hidden) this.render(); }, 1300); return; }
+    if (!this.halfDone && !this.meta.speed && this.queue.length >= 8 && this.i >= this.queue.length / 2) { this.halfDone = true; this.locked = true; this.mode = 'wait'; $('#l-foot').hidden = true; this.halfway(); setTimeout(() => { if (!$('#lesson').hidden && !this.finished && this.queue[this.i]) this.render(); }, 1300); return; }
     this.render();
   },
   main() {
