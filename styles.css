@@ -2580,3 +2580,8 @@ body:has(#cele) .toast { display: none !important; }
 @media (prefers-reduced-motion: reduce) { .ov-env { animation: none; } }
 .ob .link-btn, .ob-s .link-btn { color: var(--berry-text) !important; font-weight: 800; }
 .ob-local { margin: 8px 0 0; padding: 8px 12px; border-radius: 12px; background: var(--surface-2, #F3EDE2); color: var(--ink-2); font-size: 13px; font-weight: 700; line-height: 1.4; text-align: center; }
+body[data-screen="now"] #right .rr-goal { display: none; }   /* Today already shows the goal in the streak card */
+/* Laptop: stat chips readable on the light theme (the old wood theme made the numbers white) */
+#right .stat { background: var(--surface); border: 1px solid var(--line); box-shadow: none; color: var(--ink); border-radius: 999px; padding: 3px 12px 3px 8px; }
+#right .stat .num { color: var(--ink); text-shadow: none; }
+#right .stat svg { width: 24px; height: 24px; }

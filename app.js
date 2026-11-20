@@ -7054,7 +7054,7 @@ function renderNow() {
   const showInstall = !IS_STANDALONE && !IN_ARTIFACT && !p.hideInstall && innerWidth < 900;
   tab.innerHTML = `<div class="now">
     <section class="sky sky-${sky}">${skyDeco(sky)}
-      <div class="sky-top"><span class="sky-clock">${String(h).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')} · ${DAYPARTS[part].name}</span>${ct && ct.label ? `<span class="sky-city">${esc(ct.city)} ${ct.label}${ct.h != null ? ` · ${ct.h >= 6 && ct.h < 18 ? 'daytime' : 'night'} there` : ''}</span>` : ''}</div>
+      <div class="sky-top"><span class="sky-clock">${String(h).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')} · ${DAYPARTS[part].name}</span>${ct && ct.label ? `<span class="sky-city">${esc(ct.city)} ${ct.label}${ct.h != null ? ` · ${ct.h < 5 || ct.h >= 21 ? 'night' : ct.h < 12 ? 'morning' : ct.h < 17 ? 'afternoon' : 'evening'} there` : ''}</span>` : ''}</div>
       <h1 class="sky-hi">${hi}, ${esc(p.name)}.</h1>
       <p class="sky-sub">${['bored', 'missing', 'fading', 'ghosted'].includes(st.key) ? esc(st.line) : `Here’s what people say in ${esc(c.name)} around now.`}</p>
       <button class="sky-boo" data-sky-boo aria-label="Tap ${esc(mc.name)}"></button><div class="sky-bubble" id="sky-bubble" hidden></div>
@@ -7387,7 +7387,7 @@ function showProfiles() { Store.data.active = null; Store.save(); UI.manage = fa
 /* =====================================================================
    APP SHELL & NAVIGATION
    ===================================================================== */
-const TABS = [['now', 'Today', 'sunI'], ['learn', 'Manor', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Haunts', 'chat'], ['practice', 'Practice', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Spirit', 'user']];
+const TABS = [['now', 'Today', 'sunI'], ['learn', 'Manor', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Haunts', 'chat'], ['practice', 'Train', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
 const NAV_HIDDEN = ['letters', 'quests'];
 
 function enterApp(id) {
@@ -7409,7 +7409,7 @@ function setLang(code) {
 }
 function statsHTML(p) {
   const live = p.lastDay === dayKey(), h = Hearts.left(p);
-  return `<button class="stat streak ${live ? '' : 'cold'}" data-sheet="streak" aria-label="${liveStreak(p)} day streak">${ICON_BANANA}<span class="num">${liveStreak(p)}</span></button>
+  return `<button class="stat streak ${live ? '' : 'cold'}" data-sheet="streak" aria-label="${liveStreak(p)} day streak">${typeof ICON_CANDLE !== 'undefined' ? ICON_CANDLE : ICON_BANANA}<span class="num">${liveStreak(p)}</span></button>
     <button class="stat gems" data-sheet="gems" aria-label="${p.gems} gems">${ICON_LEAFY}<span class="num">${p.gems}</span></button>
     <button class="stat hearts" data-sheet="hearts" aria-label="${h === Infinity ? 'unlimited' : h} hearts">${ICON.heart}<span class="num">${h === Infinity ? '∞' : h}</span></button>`;
 }
@@ -7421,14 +7421,14 @@ function renderChrome() {
   const p = P(); if (!p || $('#app').hidden) return;
   const navBtns = cls => TABS.filter(([id]) => !NAV_HIDDEN.includes(id)).map(([id, label, ic]) => `<button class="${cls}" data-tab="${id}" ${(UI.tab === 'letters' ? 'learn' : UI.tab) === id ? 'aria-current="page"' : ''}>${ICON[ic]}<span>${label}</span></button>`).join('');
   $('#rail').innerHTML = `<div class="logo">${BRAND_SVG}<span>GabBoo<small>Peek. Speak. Repeat.</small></span></div>${navBtns('nav-i')}
-    <button class="who-btn" data-switch><div class="mascot" data-art="${p.mascot}"></div><span><b>${esc(p.name)}</b><small>Switch learner</small></span></button>`;
+    <button class="who-btn" data-tab="profile"><div class="mascot" data-art="${p.mascot}"></div><span><b>${esc(p.name)}</b><small>My profile</small></span></button>`;
   $('#topbar').innerHTML = `${langChipHTML()}<span class="spacer"></span>${statsHTML(p)}`;
   $('#bnav').innerHTML = navBtns('');
   const tx = todayXP(p), pct = Math.min(1, tx / p.dailyGoal), C = 2 * Math.PI * 30;
   const qs = Quests.today(p);
   $('#right').innerHTML = `<div class="stats-row">${langChipHTML()}${statsHTML(p)}</div>
     <div class="card mascot-card"><div data-mascot-live></div><div class="speech" data-speech></div></div>
-    <div class="card"><h3>Daily goal</h3><div class="goal">
+    <div class="card rr-goal"><h3>Daily goal</h3><div class="goal">
       <svg class="ring" viewBox="0 0 76 76"><circle class="track" cx="38" cy="38" r="30"/><circle class="val" cx="38" cy="38" r="30" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - pct)}"/><text x="38" y="44" text-anchor="middle">${Math.round(pct * 100)}%</text></svg>
       <div><strong class="num">${tx} / ${p.dailyGoal} XP</strong><p>${pct >= 1 ? 'Done for today. Anything more is showing off.' : 'One lesson gets you most of the way.'}</p></div></div></div>
     <div class="card"><h3>Daily quests <button class="link" data-tab="quests">View all</button></h3>${qs.map(questHTML).join('')}</div>
@@ -9272,7 +9272,6 @@ renderProfile = function () {
     <section class="me-sec"><h2>Account</h2>
       <div class="set-row"><span class="acct-mail">${esc(mail)}</span></div>
       <div class="set-row">Your name<span class="name-edit"><input class="input" id="me-name" maxlength="20" value="${esc(p.name)}"></span></div>
-      <div class="set-row">Switch learner<button class="btn ghost sm" data-switch>Switch</button></div>
       <div class="set-row">Sign out<button class="btn ghost sm" data-signout>Sign out</button></div>
       <div class="set-row">Delete my account<button class="btn ghost sm danger" data-delete-account>Delete</button></div>
       <p class="hint">Signing out keeps your progress. Sign back in any time. Deleting removes your account and progress for good.</p></section>
