@@ -2588,3 +2588,10 @@ body[data-screen="now"] #right .rr-goal { display: none; }   /* Today already sh
 /* Win screen streak line: was cream/white from the dark theme */
 .vstreak { color: var(--ink-2) !important; flex-wrap: wrap; text-align: center; } .vstreak b { color: var(--berry-text) !important; }
 .victory .vghost { position: static !important; display: block; width: 92px !important; height: 88px !important; margin: 6px auto -2px; }
+/* Intro on the light theme: these were white-on-cream (invisible) */
+.ob-skip { color: var(--ink-2) !important; background: var(--surface-2) !important; border-radius: 999px; padding: 6px 14px !important; }
+.ob-city { background: var(--surface) !important; border: 2px solid var(--line) !important; color: var(--ink) !important; box-shadow: 0 3px 0 var(--line); }
+.ob-city.on { border-color: var(--berry) !important; background: var(--berry-soft) !important; box-shadow: 0 3px 0 var(--berry); }
+.ob-city b { color: var(--ink) !important; } .ob-city small { color: var(--ink-2) !important; opacity: 1 !important; } .ob-city small .script { color: var(--berry-text) !important; font-weight: 800; }
+/* Active tab label: darker orange so it reads well on the pale highlight */
+.bnav button[aria-current="page"] span, .bnav .bn[aria-current="page"] span, .rail .nav-i[aria-current="page"] span { color: var(--berry-text) !important; }

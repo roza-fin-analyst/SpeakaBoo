@@ -7005,6 +7005,20 @@ function skylineSVG(code, sky) {
   } else if (code === 'ar') {
     far_ = `<path d="M30 112l40-36 40 36zM96 112l26-22 26 22z" fill="${far}"/><path d="M0 116h400v14H0z" fill="${far}"/>`;
     land = `<g fill="${near}"><path d="M262 130V70h8v60z"/><path d="M259 72h14l-7-16z"/><circle cx="266" cy="52" r="2.2"/><path d="M276 130v-30q22-26 44 0v30z"/><path d="M298 74v-6"/></g>`;
+  } else if (code === 'fr') {   // Paris: the Eiffel Tower
+    far_ = `<path d="M0 110q80-26 160-10q70-30 140-4q60-16 100 2V130H0z" fill="${far}"/>`;
+    land = `<g fill="${near}"><path d="M299 16h2l1 26h-4z"/><path d="M297 42h6l3 36h-12z"/><rect x="291" y="76" width="18" height="4" rx="1"/><path d="M293 80h14l8 25h-30z"/><rect x="282" y="103" width="36" height="4" rx="1"/><path d="M284 107h32l8 23h-11q-7-14-13-14t-13 14h-11z"/></g>${night ? '<circle cx="300" cy="14" r="2" fill="#FFD66B"/>' : ''}`;
+  } else if (code === 'de') {   // Berlin: the TV Tower
+    far_ = `<path d="M0 112q70-24 150-10q80-28 160-2q50-12 90 4V130H0z" fill="${far}"/>`;
+    land = `<g fill="${near}"><rect x="298.6" y="12" width="2.8" height="34"/><circle cx="300" cy="56" r="11"/><rect x="294" y="66" width="12" height="4" rx="2"/><path d="M296.5 68h7l2 62h-11z"/></g><circle cx="300" cy="11" r="2" fill="${night ? '#FF6B6B' : near}"/>`;
+  } else if (code === 'ja') {   // Tokyo: Tokyo Tower (red and white by day)
+    const red = night ? near : '#D9542B';
+    far_ = `<path d="M0 106q60-34 130-14q70-34 150-4q70-20 120 2V130H0z" fill="${far}"/>`;
+    land = `<g fill="${red}"><path d="M299.2 14h1.6l1 22h-3.6z"/><rect x="295" y="36" width="10" height="6" rx="1"/><path d="M296.5 42h7l3 26h-13z"/><rect x="289" y="66" width="22" height="8" rx="1.5"/><path d="M292 74h16l10 36h-36z"/><rect x="284" y="107" width="32" height="4" rx="1"/><path d="M285 111h30l7 19h-10q-5-9-12-9t-12 9h-10z"/></g>`;
+  } else if (code === 'zh') {   // Shanghai: the Oriental Pearl Tower
+    const pearl = night ? '#C77DFF' : near;
+    far_ = `<path d="M0 108q70-32 150-12q60-30 140-2q60-18 110 0V130H0z" fill="${far}"/>`;
+    land = `<g fill="${near}"><rect x="298.6" y="10" width="2.8" height="22"/><rect x="297" y="40" width="6" height="22"/><rect x="296.5" y="74" width="7" height="20"/><path d="M287 130l9-19h8l9 19h-5l-8-12-8 12z"/></g><g fill="${pearl}"><circle cx="300" cy="36" r="4.5"/><circle cx="300" cy="67" r="10"/><circle cx="300" cy="104" r="13"/></g>`;
   } else {
     far_ = `<path d="M0 108q70-30 140-12q60-40 140-6q70-22 120 0V130H0z" fill="${far}"/>`;
     land = `<g fill="${near}"><path d="M296 130V58h7v72z"/><rect x="292" y="52" width="15" height="7" rx="2"/><path d="M299.5 52l-5-12h10z"/><circle cx="299.5" cy="38" r="3" fill="${night ? '#FFD66B' : '#E9B949'}"/></g>`;
