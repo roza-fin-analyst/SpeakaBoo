@@ -11593,11 +11593,23 @@ RENDER.saypic = function (step, el, R) {
   const _sa = Runner.skipAllowed;
   Runner.skipAllowed = function (label) {
     _sa.call(this, label);
-    const s = $('#l-skip'); if (!s || !/speak/i.test(label || '')) return;
-    s.onclick = () => {
+    const s = $('#l-skip'); if (!s) return;
+    if (/speak/i.test(label || '')) s.onclick = () => {
       const keep = this.queue.slice(0, this.i + 1), rest = this.queue.slice(this.i + 1).map(x => x.kind === 'ctxsay' ? Object.assign({}, x, { kind: 'ctxpick' }) : x).filter(x => !SPEAKING.has(x.kind));
       this.queue = keep.concat(rest);
       toast('Speaking is off for this lesson. It comes back next time.');
+      this.next();
+    };
+    if (/listen/i.test(label || '')) s.onclick = () => {   // no headphones: the rest of the lesson works without sound
+      const wp = vocabPool(course()), keep = this.queue.slice(0, this.i + 1);
+      const rest = this.queue.slice(this.i + 1).map(x => {
+        if (x.kind === 'tiles' && x.listen) return Object.assign({}, x, { listen: false });   // build it from the English instead
+        if (x.kind === 'mcq' && x.prompt && x.prompt.audio) { const w = x.srsId && VOCAB_INDEX[x.srsId]; return w ? EX.meaning(w, wp) : null; }
+        if (x.kind === 'pop' || x.kind === 'order') return null;
+        return x;
+      }).filter(Boolean);
+      this.queue = keep.concat(rest); this.noListen = true;
+      toast('Listening is off for this lesson. It comes back next time.');
       this.next();
     };
   };
@@ -11608,6 +11620,10 @@ RENDER.saypic = function (step, el, R) {
   Runner.render = function () {
     const out = _rr.apply(this, arguments);
     try { const st = this.queue && this.queue[this.i], inn = $('#l-stage .l-inner'); if (st && st.stage && inn && !$('.stage-chip', inn)) inn.insertAdjacentHTML('afterbegin', stageChip(st.retry ? 'repeat' : st.stage)); } catch (e) { /* ignore */ }
+    try {   // listening steps can be switched off, like speaking
+      const st = this.queue && this.queue[this.i], listening = st && (st.kind === 'pop' || st.kind === 'order' || (st.kind === 'tiles' && st.listen) || (st.kind === 'mcq' && st.prompt && st.prompt.audio));
+      if (listening && !this.meta.speed && $('#l-skip') && $('#l-skip').hidden) this.skipAllowed('Can’t listen now');
+    } catch (e) { /* ignore */ }
     return out;
   };
   const _gs = Runner.grade;
