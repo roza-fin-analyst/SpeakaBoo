@@ -4298,7 +4298,14 @@ const Store = {
     try { const raw = localStorage.getItem(this.KEY); if (raw) { const d = JSON.parse(raw); if (d && d.v === 2) { d.ai = Object.assign(this.fresh().ai, d.ai || {}); return (this.data = d); } } } catch (e) { /* storage blocked: run in memory */ }
     return (this.data = this.fresh());
   },
-  save() { try { localStorage.setItem(this.KEY, JSON.stringify(this.data)); } catch (e) { /* ignore */ } }
+  save() {
+    let raw; try { raw = JSON.stringify(this.data); } catch (e) { return; }
+    try { localStorage.setItem(this.KEY, raw); }
+    catch (e) {   // storage full: drop the translation cache (it refills itself) and try again; if it still fails, say so once
+      try { localStorage.removeItem('speakaboo.tr.v1'); localStorage.setItem(this.KEY, raw); }
+      catch (x) { if (!this._warned) { this._warned = true; try { toast('Your phone’s storage is full, so progress can’t be saved right now. Free up some space.'); } catch (y) { /* not ready */ } } }
+    }
+  }
 };
 
 function newProfile(name, mascot, lang) {
