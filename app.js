@@ -11512,7 +11512,7 @@ RENDER.peek = function (step, el, R) {
     body = `<p class="q">What does <span class="script" ${attrs(c)}>${esc(w.t)}</span> mean${step.mode === 'scene' ? ' here' : ''}?</p>${free ? `<p class="peek-sub">${step.mode === 'example' ? 'Use the example to guess.' : step.mode === 'scene' ? 'Look at the moment and guess.' : 'Have a guess.'} No hearts lost.</p>` : ''}
       ${top}<div class="opts">${step.options.map((o, i) => `<button class="opt" data-i="${i}"><kbd>${i + 1}</kbd><span>${esc(o)}</span></button>`).join('')}</div>`;
   }
-  el.innerHTML = `${stageChip(free ? 'peek' : 'repeat')}${body}<div class="peek-after" id="pk-after"></div>`;
+  el.innerHTML = `${stageChip(free ? 'peek' : 'repeat')}${body}<div class="peek-after" id="pk-after"></div>`; el.classList.add('peek-step', 'peek-' + step.mode);
   if (free) Coach.pending = R.i === 0 ? 'Peek, speak, repeat! Guess the new word, then say it.' : pick(['Peek and guess. Then you say it.', 'New word! Trust your eyes.', 'Guess first. It sticks better.']);
   const sel = cards ? '.peek-card' : '.opt', isRight = i => cards ? step.options[i].t === w.t : step.options[i] === step.answer;
   const answer = i => {

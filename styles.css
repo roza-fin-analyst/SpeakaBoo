@@ -2595,3 +2595,11 @@ body[data-screen="now"] #right .rr-goal { display: none; }   /* Today already sh
 .ob-city b { color: var(--ink) !important; } .ob-city small { color: var(--ink-2) !important; opacity: 1 !important; } .ob-city small .script { color: var(--berry-text) !important; font-weight: 800; }
 /* Active tab label: darker orange so it reads well on the pale highlight */
 .bnav button[aria-current="page"] span, .bnav .bn[aria-current="page"] span, .rail .nav-i[aria-current="page"] span { color: var(--berry-text) !important; }
+@media (max-height: 700px) {
+  .pic-card { min-height: 112px; padding: 8px; gap: 2px; } .pic-card .pic .art { width: 68px; height: 68px; } .pic-grid { gap: 8px; }
+}
+@media (max-height: 700px) {
+  .peek-step .peek-sub { display: none; }
+  .peek-scene figure.panel { zoom: .5 !important; } .peek-step .opts { gap: 8px; } .peek-step .opt { min-height: 48px; padding-top: 8px; padding-bottom: 8px; }
+  .tiles-note { display: none; } .l-inner .prompt-row { min-height: 0; }
+}
