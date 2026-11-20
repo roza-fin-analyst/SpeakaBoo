@@ -10746,7 +10746,7 @@ const Onboard = {
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}<span class="peek-eyes"></span></button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
       () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Psst… I’m Boo.</b><span>I’ve haunted every country for 500 years, so I know every language. Learn from me, and speak your way out of the manor.</span></div><div class="ob-ghost ob-ghost-img" id="ob-ghost">${ghostPose('welcome')}</div><button class="btn primary big" data-ob-next>Let’s begin</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
-        <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
+        <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk').replace('xMidYMax slice', 'xMaxYMax slice')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
       () => `<div class="ob-s"><h1>What brings you here?</h1><p>Boo will pick moments that matter to you.</p>
         <div class="ob-why">${[['travel', 'Travel', 'island'], ['culture', 'Shows & music', 'radio'], ['people', 'Family & friends', 'friends'], ['work', 'Work & study', 'work'], ['fun', 'Just for fun', 'gift']].map(([k, l, a]) => `<button class="ob-chip ${d.why === k ? 'on' : ''}" data-why="${k}">${artSVG(a)}<b>${l}</b></button>`).join('')}</div>
@@ -11231,7 +11231,7 @@ const Onboard2 = {
         <div class="sc"><span>4</span><p><b>Speak the words</b> to open each door and escape the manor.</p></div></div>
         <button class="btn primary big" data-ob-next>I’m in</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
-        <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
+        <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk').replace('xMidYMax slice', 'xMaxYMax slice')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
       () => `<div class="ob-s ob-goal"><h1>Tell Boo about you</h1>
         <p class="ob-q">Why are you learning ${esc(c.name)}?</p>
