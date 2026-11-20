@@ -2613,3 +2613,5 @@ html.sound-first .peek-word > div { display: flex; flex-direction: column; } htm
 html.sound-first .say-ans.open small { order: -1; font: 800 20px var(--font-body); color: var(--ink); } html.sound-first .say-ans.open .script { font-size: 15px; color: var(--ink-2); }
 html.sound-first .peek-ex .pe-label { order: -2; } html.sound-first .peek-ex .ex-rom { order: -1; font-weight: 800; font-size: 16px; color: var(--ink); } html.sound-first .peek-ex .script { font-size: 14px !important; color: var(--ink-2); }
 html.sound-first .pk-means b { font-size: 15px; color: var(--ink-2); }
+/* After answering a "moment" guess, the scene shrinks so the example sentence is visible above the answer bar */
+.peek-done.peek-scene figure.panel { zoom: .58 !important; margin-bottom: 4px; }
