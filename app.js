@@ -9521,6 +9521,47 @@ if ('Notification' in window) { setInterval(() => Remind.tick(), 60000); setTime
   const _acc = Access.allows;
   Access.allows = function (what, ctx) { if (what === 'drill' && (ctx === 'speaksent' || ctx === 'echo')) return _acc.call(this, 'drill', 'speak'); return _acc.apply(this, arguments); };
 }
+/* ---- Train, rebuilt: one daily button, then tidy groups (Speak / Listen and read / Quick games / Letters) ---- */
+renderPractice = function () {
+  const p = P(), c = course(), words = learnedWords(p, c.code), due = SRS.due().length;
+  const T = (kind, icon, name, sub, dis) => `<button class="tile" data-practice="${kind}" ${dis ? 'disabled' : ''}><span class="ic">${icon}</span><b>${name}</b><small>${sub}</small></button>`;
+  const lettersOn = c.letterUnits.length && lettersOpen();
+  $('#tab-practice').innerHTML = `<div class="pad stack train">
+    <div class="card practice-hero"><div class="mascot" data-pr-m></div><div><h2>Daily practice</h2>
+      <p>${due ? `${due} word${due > 1 ? 's are' : ' is'} ready to review.` : words.length ? 'Keep your words fresh.' : 'Finish a lesson and your words land here.'}</p>
+      <button class="btn primary" data-practice="mix">Start · +5 XP</button></div></div>
+    <h3 class="tgroup">Speak</h3>
+    <div class="tiles">
+      ${T('speak', ICON.mic, 'Speaking', 'Say words, checked by voice')}
+      ${T('speaksent', ICON.mic, 'Say sentences', 'Whole sentences aloud')}
+      ${T('echo', ICON.speaker, 'Repeat after Boo', 'Listen, then copy')}
+      <button class="tile" data-realtalk><span class="ic">${ICON.chat}</span><b>Real Talk</b><small>Role-plays with Boo</small></button>
+      <button class="tile" data-tone><span class="ic">${ICON.speaker}</span><b>Tone Studio</b><small>Same words, new feeling</small></button>
+      ${T('soundlab', ICON.mic, 'Sound Lab', 'Your trickiest sounds')}
+    </div>
+    <h3 class="tgroup">Listen and read</h3>
+    <div class="tiles">
+      ${T('listen', ICON.ear, 'Listening', 'Hear it, pick it')}
+      ${T('sentences', ICON.chat, 'Sentences', 'Build and translate', !c.units.some(u => u.sentences))}
+      ${T('story', ICON.book, 'Story time', 'Read, listen, answer', !c.units.some(u => u.story))}
+      ${T('pictures', ICON.target, 'Picture quiz', 'See it, name it')}
+    </div>
+    <h3 class="tgroup">Quick games</h3>
+    <div class="tiles">
+      ${T('speed', ICON.bolt, '60-second sprint', p.stats.speedBest ? `Your record: ${p.stats.speedBest}` : 'How many can you get?')}
+      ${T('matching', ICON.blocks, 'Match madness', 'Pair words fast')}
+      ${T('mistakes', ICON.target, 'Fix my mistakes', 'Only what you missed')}
+      ${T('grammar', ICON.chat, 'Grammar gym', 'Fill the gap')}
+    </div>
+    ${lettersOn ? `<h3 class="tgroup">${c.code === 'ko' ? 'Hangeul' : 'Letters'}</h3><div class="tiles">${T('letters', ICON.blocks, c.code === 'ko' ? 'Hangeul drill' : 'Letter drill', 'Sounds and building')}<button class="tile" data-adventure="LETTER_EXPLORER"><span class="ic">${ICON.blocks}</span><b>Letter Explorer</b><small>Find letters in words</small></button></div>` : ''}
+    <details class="more"><summary>My stuff: voice journal, phrasebook, jokes</summary>
+      ${voiceJournalHTML()}
+      ${phrasebookHTML()}
+      <div class="card jokes"><h3>Joke jar <span class="muted num" style="font:700 14px var(--font-body)">${p.jokes.length}</span></h3>${p.jokes.length ? `<ul>${p.jokes.slice(0, 40).map(j => `<li>${esc(j.text)}</li>`).join('')}</ul>` : '<p class="note">Every mistake unlocks a joke from your tutor.</p>'}</div>
+    </details>
+  </div>`;
+  paintMascot($('[data-pr-m]'), p.mascot, 'cheer', false);
+};
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
   const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
