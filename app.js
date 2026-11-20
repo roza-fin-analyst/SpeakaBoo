@@ -7415,7 +7415,14 @@ function enterApp(id) {
   Mascot.set('happy', todayXP(p) ? `Welcome back, ${p.name}! ${todayXP(p)} XP so far today.` : `Hi ${p.name}! Tap a phrase to hear it.`);
   if (!Access.state().ok) Paywall.show();
 }
-function applyLang() { document.documentElement.style.setProperty('--script', course().font); }
+function applyLang() { document.documentElement.style.setProperty('--script', course().font); loadScriptFont(course().code); }
+/** Fonts for non-Latin scripts load only for the language you are learning (they are big). Phones show their own font meanwhile. */
+const SCRIPT_FONTS = { ko: 'Noto+Sans+KR:wght@400;500;700&family=Jua', ja: 'Noto+Sans+JP:wght@400;500;700', zh: 'Noto+Sans+SC:wght@400;500;700', ar: 'Noto+Naskh+Arabic:wght@400;600;700' };
+function loadScriptFont(code) {
+  const fam = SCRIPT_FONTS[code]; if (!fam || document.querySelector(`link[data-script-font="${code}"]`)) return;
+  const l = document.createElement('link'); l.rel = 'stylesheet'; l.dataset.scriptFont = code;
+  l.href = `https://fonts.googleapis.com/css2?family=${fam}&display=swap`; document.head.append(l);
+}
 function setLang(code) {
   closeSheet(); if (P().lang === code) return;
   P().lang = code; Store.save(); applyLang(); renderChrome(); showTab(UI.tab);
@@ -9600,9 +9607,15 @@ renderPractice = function () {
 };
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
-  const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
-  const next = () => { for (let n = 0; n < 6 && i < files.length; n++) { const im = new Image(); im.decoding = 'async'; im.src = 'pics/' + files[i++]; } if (i < files.length) setTimeout(next, 120); };
-  (window.requestIdleCallback || (f => setTimeout(f, 800)))(next);
+  // After the opening (so it never competes with it): the language you are learning first, the rest a little later,
+  // and only your language when the phone is saving data.
+  setTimeout(() => {
+    let mine = []; try { if (P()) mine = vocabPool(course()).map(w => PIC_FILES[w.pic]).filter(Boolean); } catch (e) { /* no learner yet */ }
+    const lite = !!(navigator.connection && (navigator.connection.saveData || /(^|-)2g$/.test(navigator.connection.effectiveType || '')));
+    const files = [...new Set(lite ? mine : [...mine, ...Object.values(PIC_FILES)])], firstN = new Set(mine).size; let i = 0;
+    const next = () => { for (let n = 0; n < 6 && i < files.length; n++) { const im = new Image(); im.decoding = 'async'; im.src = 'pics/' + files[i++]; } if (i < files.length) setTimeout(next, i < firstN ? 120 : 400); };
+    (window.requestIdleCallback || (f => setTimeout(f, 800)))(next);
+  }, 6000);
 }
 function bootApp() {
   warmPics(); setTimeout(() => document.documentElement.classList.remove('boot'), 6500);
