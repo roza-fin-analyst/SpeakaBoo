@@ -5707,6 +5707,7 @@ const Account = {
       try { const d = JSON.parse(this.meta.store); if (d && d.v === 2) { d.ai = Object.assign(Store.fresh().ai, d.ai || {}); Store.data = d; Store.save(true); } } catch (e) { /* keep local */ }
     }
     Object.values(Store.data.profiles).forEach(upgradeProfile);
+    this.pulled = true;
   },
   /** Save to the cloud a few seconds after the last change. */
   queuePush() {
@@ -5715,7 +5716,7 @@ const Account = {
     this.pushT = setTimeout(() => this.push(), 3000);
   },
   async push() {
-    if (!this.user) return;
+    if (!this.user || !this.pulled) return;   // nothing goes to the cloud before the account is confirmed and loaded
     const d = Store.data, copy = { ...d, ai: { ...d.ai, geminiKey: '' } };   // never upload the AI key
     try { await this.ref().set({ store: JSON.stringify(copy), savedAt: d.savedAt || Date.now() }, { merge: true }); } catch (e) { /* retried on next change */ }
   },
@@ -5723,7 +5724,19 @@ const Account = {
   ms(v) { return !v ? 0 : typeof v === 'number' ? v : v.toMillis ? v.toMillis() : v.seconds ? v.seconds * 1000 : 0; },
   async signUp(email, pw) {
     const cred = await firebase.auth().createUserWithEmailAndPassword(email, pw);
-    try { await cred.user.sendEmailVerification(); } catch (e) { /* not essential */ }
+    this.mailError = null;
+    try { await this.verifyMail(cred.user); } catch (e) { this.mailError = e; }   // the "check your email" screen offers to send it again
+  },
+  /** Email the confirmation link. The link's page has a Continue button back to GabBoo when this site is an authorised domain in Firebase. */
+  async verifyMail(u) {
+    u = u || firebase.auth().currentUser; if (!u) throw { code: 'auth/no-current-user' };
+    try { firebase.auth().useDeviceLanguage(); } catch (e) { /* English is fine */ }
+    const url = location.protocol === 'https:' ? location.origin + location.pathname : (window.SPEAKABOO_APP_URL || '');
+    if (url) {
+      try { await u.sendEmailVerification({ url }); this.mailSentAt = Date.now(); return; }
+      catch (e) { if (!/continue-uri|unauthorized|domain|argument/i.test((e && e.code) || '')) throw e; }   // site not authorised yet: send a plain link instead
+    }
+    await u.sendEmailVerification(); this.mailSentAt = Date.now();
   },
   signIn(email, pw) { return firebase.auth().signInWithEmailAndPassword(email, pw); },
   reset(email) { return firebase.auth().sendPasswordResetEmail(email); },
@@ -5746,7 +5759,7 @@ Store.save = function (fromCloud) { if (this.data && !fromCloud) this.data.saved
 /* ---------- Owner / tester mode: only the app owner can jump around ----------
    On Play (accounts on): automatic when signed in with an email listed in config.js → owners.
    Local mode (no accounts): tap the version line on Me 7 times to switch it on for this device. */
-const OWNERS = (CFG.owners || ['ayeshaferozroza@gmail.com']).map(e => String(e).toLowerCase());
+const OWNERS = (CFG.owners || []).map(e => String(e).toLowerCase());   // set in config.js
 const Tester = {
   on() {
     try { if (isOwner()) return true; } catch (e) { /* not ready yet */ }
@@ -5894,8 +5907,10 @@ function authScreen(mode, msg = '') {
 }
 function authError(e) {
   const c = e && e.code || '';
-  return ({ 'auth/email-already-in-use': 'That email already has an account. Try signing in.', 'auth/invalid-email': 'That email doesn’t look right.', 'auth/weak-password': 'Use at least 6 characters for your password.',
-    'auth/wrong-password': 'Wrong email or password.', 'auth/invalid-credential': 'Wrong email or password.', 'auth/user-not-found': 'No account with that email yet.', 'auth/too-many-requests': 'Too many tries. Wait a minute and try again.', 'auth/network-request-failed': 'No internet connection.' })[c] || 'Something went wrong. Please try again.';
+  return ({ 'auth/email-already-in-use': 'That email already has an account. Try signing in.', 'auth/invalid-email': 'That email doesn’t look right.', 'auth/weak-password': 'Use at least 8 characters for your password.',
+    'auth/wrong-password': 'Wrong email or password.', 'auth/invalid-credential': 'Wrong email or password.', 'auth/invalid-login-credentials': 'Wrong email or password.', 'auth/user-not-found': 'No account with that email yet.', 'auth/missing-password': 'Please type your password.',
+    'auth/user-disabled': 'This account has been switched off. Contact us from the Help section.', 'auth/too-many-requests': 'Too many tries. Wait a minute and try again.', 'auth/network-request-failed': 'No internet connection.',
+    'auth/operation-not-allowed': 'Email sign-up isn’t switched on yet (Firebase → Authentication → Sign-in method → Email/Password).', 'auth/configuration-not-found': 'Accounts aren’t set up yet (Firebase → Authentication → Get started).' })[c] || 'Something went wrong. Please try again.';
 }
 const Paywall = {
   hide() { $('#paywall')?.remove(); },
@@ -8813,7 +8828,7 @@ Object.values(MASCOTS).forEach(m => Object.assign(m, {
   };
 }
 /* Report a mistake: opens an email to the app owner with the sentence filled in. */
-const REPORT_EMAIL = 'ayeshaferozroza@gmail.com';
+const REPORT_EMAIL = CFG.supportEmail || '';   // set in config.js
 function reportHref(t, r, en) {
   const c = course(), body = `Language: ${c ? c.name : ''}\nText: ${t}\nPronunciation: ${r || ''}\nMeaning: ${en || ''}\n\nWhat is wrong:\n`;
   return `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent('GabBoo mistake')}&body=${encodeURIComponent(body)}`;
@@ -9262,7 +9277,7 @@ renderProfile = function () {
       <div class="set-row">Delete my account<button class="btn ghost sm danger" data-delete-account>Delete</button></div>
       <p class="hint">Signing out keeps your progress. Sign back in any time. Deleting removes your account and progress for good.</p></section>
     <section class="me-sec"><h2>Help</h2>
-      <div class="set-row">Found a mistake or a bug?<a class="btn ghost sm" href="mailto:ayeshaferozroza@gmail.com?subject=${encodeURIComponent('GabBoo feedback')}">Tell us</a></div></section>
+      ${CFG.supportEmail ? `<div class="set-row">Found a mistake or a bug?<a class="btn ghost sm" href="mailto:${esc(CFG.supportEmail)}?subject=${encodeURIComponent('GabBoo feedback')}">Tell us</a></div>` : ''}</section>
     <p class="me-foot"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a> · GabBoo ${esc(SPEAKABOO_VERSION)}</p></div>`;
   const root = $('#tab-profile');
   $$('[data-mascot-live]', root).forEach(el => paintMascot(el, p.mascot, 'happy', true));
@@ -11073,11 +11088,20 @@ Account.boot = function (start) {
     authScreen('loading');
     this.sdk().then(() => { firebase.initializeApp(CFG.firebase); this.db = firebase.firestore(); try { this.db.enablePersistence({ synchronizeTabs: true }).catch(() => {}); } catch (e) { /* ignore */ }
       firebase.auth().onAuthStateChanged(async u => {
-        if (!u) { this.user = null; this.meta = {}; if (!Starter.introDone()) { $('#auth') && ($('#auth').hidden = true); Onboard2.open(0); } else authScreen('signin'); return; }
-        this.user = u; if (!$('#ob')) authScreen('loading');
+        if (!u) {
+          this.user = null; this.meta = {}; this.pulled = false;
+          if (Onboard2.backToAccount) { Onboard2.backToAccount = false; $('#auth') && ($('#auth').hidden = true); Onboard2.open(Onboard2.ACCOUNT); return; }   // "use a different email"
+          if (!Starter.introDone()) { $('#auth') && ($('#auth').hidden = true); Onboard2.open(0); } else authScreen('signin'); return;
+        }
+        this.user = u;
+        if (needsVerify(u)) {   // the saved copy of the user can be stale: ask Firebase before showing "check your email"
+          try { await u.reload(); } catch (e) { /* offline: show the screen anyway */ }
+          if (needsVerify(firebase.auth().currentUser || u)) { this.ready = true; Onboard2.verify(firebase.auth().currentUser || u); return; }
+          try { await u.getIdToken(true); } catch (e) { /* the next refresh picks it up */ }
+        }
+        if (!$('#ob')) authScreen('loading');
         try { await this.pull(); } catch (e) { toast('Couldn’t reach your cloud save. Using this phone’s copy for now.'); }
         this.ready = true; Billing.refresh();
-        if (needsVerify(u)) { Onboard2.verify(u); return; }
         if ($('#ob')) Onboard2.accountReady(); else Starter.go();
       });
     }).catch(() => authScreen('offline'));
@@ -11203,7 +11227,10 @@ const Onboard2 = {
     this.wire();
   },
   next() { this.step = Math.min(this.LAST, ({ 1: 2, 2: 3, 3: 4, 4: 5, 5: 6 })[this.step] || this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
-  accountReady() { if (this.step <= this.ACCOUNT) { this.step = this.PROFILE; this.show(); } },
+  accountReady() {
+    if (Store.data.order && Store.data.order.length) { $('#ob')?.remove(); Starter.go(); return; }   // signed in to an account that already has a learner
+    if (this.step <= this.ACCOUNT) { this.step = this.PROFILE; this.show(); }
+  },
   wire() {
     const el = $('#ob'), d = this.draft;
     $('[data-ob-skip]', el) && ($('[data-ob-skip]', el).onclick = () => { this.step = Acct.email() ? this.PROFILE : this.ACCOUNT; this.show(); });
@@ -11273,30 +11300,82 @@ const Onboard2 = {
 };
 /* ---- Email check: an account must confirm its email before the learner is set up ---- */
 const needsVerify = u => !!(Acct.cloud() && u && !u.emailVerified && (u.providerData || []).some(x => x.providerId === 'password'));
+/* Before cloud accounts are connected (config.js has no Firebase project), say plainly that no email is sent. */
+{
+  const note = '<p class="ob-local">Saved on this phone for now. No confirmation email is sent until GabBoo’s cloud accounts are switched on.</p>';
+  const _obShow = Onboard2.show;
+  Onboard2.show = function () { const r = _obShow.apply(this, arguments); if (this.step === this.ACCOUNT && !Acct.cloud()) $('#ob-acct')?.insertAdjacentHTML('afterend', note); return r; };
+  const _auth = authScreen;
+  authScreen = function (mode) { const r = _auth.apply(this, arguments); if (mode === 'signup' && !Acct.cloud()) $('#auth-form')?.insertAdjacentHTML('afterend', note); return r; };
+}
+/** Plain words for the errors you can get while sending the confirmation email. */
+function mailError(e) {
+  const c = (e && e.code) || '';
+  if (/too-many-requests|quota/.test(c)) return 'Too many emails in a short time. Wait a few minutes, then tap “Send it again”.';
+  if (/network/.test(c)) return 'No internet connection. Connect, then tap “Send it again”.';
+  return 'We couldn’t send the email just now. Tap “Send it again”.';
+}
+/** A shortcut to the inbox for the big email providers. */
+function inboxFor(email) {
+  const d = String(email || '').split('@')[1] || '';
+  if (/^(gmail|googlemail)\.com$/.test(d)) return ['Open Gmail', 'https://mail.google.com/mail/u/0/#inbox'];
+  if (/^(outlook|hotmail|live|msn)\.[a-z.]+$/.test(d)) return ['Open Outlook', 'https://outlook.live.com/mail/'];
+  if (/^(yahoo|ymail)\.[a-z.]+$/.test(d)) return ['Open Yahoo Mail', 'https://mail.yahoo.com/'];
+  if (/^(icloud|me|mac)\.com$/.test(d)) return ['Open iCloud Mail', 'https://www.icloud.com/mail'];
+  return null;
+}
 Onboard2.verify = function (u) {
   $('#auth') && ($('#auth').hidden = true);
   let el = $('#ob'); if (!el) { el = document.createElement('div'); el.id = 'ob'; el.className = 'ob'; document.body.append(el); }
+  const inbox = inboxFor(u.email);
   el.innerHTML = `<div class="ob-top"><div class="ob-bar"><i style="width:80%"></i></div></div><div class="ob-stage"><div class="ob-s ob-verify">
+    <div class="ov-env" aria-hidden="true"><svg viewBox="0 0 64 48"><rect x="4" y="8" width="56" height="36" rx="7" fill="#FFF3E6" stroke="#E8590C" stroke-width="3"/><path d="M6 12l26 18 26-18" fill="none" stroke="#E8590C" stroke-width="3" stroke-linejoin="round"/></svg></div>
     <h1>Check your email</h1>
-    <p>We sent a link to <b>${esc(u.email)}</b>. Open it, then come back here.</p>
-    <button class="btn primary big" id="ov-ok">I have verified</button>
+    <p>We sent a confirmation link to <b class="ov-mail">${esc(u.email)}</b>. Open it, then come back here. This screen moves on by itself.</p>
+    ${inbox ? `<a class="btn primary big" id="ov-inbox" href="${inbox[1]}" target="_blank" rel="noopener">${inbox[0]}</a>` : ''}
+    <button class="btn ${inbox ? 'ghost' : 'primary big'}" id="ov-ok">I’ve confirmed it</button>
     <button class="btn ghost" id="ov-resend">Send it again</button>
-    <button class="link-btn" id="ov-other">Use a different email</button>
+    <p class="ov-tip">Can’t find it? Look in Spam or Promotions. It comes from <b>noreply@${esc((CFG.firebase && CFG.firebase.authDomain) || 'firebaseapp.com')}</b>.</p>
+    <button class="link-btn" id="ov-other">Wrong email? Use a different one</button>
     <p class="auth-err" id="ov-msg" role="status"></p></div></div>`;
   const msg = t => { const m = $('#ov-msg'); if (m) m.textContent = t; };
-  let stop = false;
-  const check = async quiet => {
-    try { await u.reload(); } catch (e) { if (!quiet) msg('Couldn’t check just now. Try again.'); return; }
+  if (Account.mailError) { msg(mailError(Account.mailError)); Account.mailError = null; }
+  let stop = false, busy = false;
+  const done = async () => {
+    stop = true; msg('Confirmed! Setting things up…');
     const cu = firebase.auth().currentUser;
-    if (cu && cu.emailVerified) { stop = true; msg(''); if ($('#ob') && $('#ob').dataset.fresh !== '0') { Onboard2.step = Onboard2.PROFILE; Onboard2.show(); } else { $('#ob')?.remove(); Starter.go(); } return; }
-    if (!quiet) msg('Not verified yet. Open the link in your email first.');
+    try { await cu.getIdToken(true); } catch (e) { /* the next refresh picks it up */ }   // the sign-in token must carry "email confirmed" before the cloud save opens
+    try { await Account.pull(); } catch (e) { /* this phone's copy is used until the cloud answers */ }
+    Account.ready = true; try { Billing.refresh(); } catch (e) { /* ignore */ }
+    if (Store.data.order && Store.data.order.length) $('#ob')?.remove();   // a returning learner goes straight in
+    Starter.go(); toast('Email confirmed. Welcome to GabBoo!', '✓');
+  };
+  const check = async quiet => {
+    if (busy || stop) return; busy = true;
+    try { await (firebase.auth().currentUser || u).reload(); }
+    catch (e) { busy = false; if (!quiet) msg('Couldn’t check just now. Try again in a moment.'); return; }
+    busy = false;
+    const cu = firebase.auth().currentUser;
+    if (cu && cu.emailVerified) return done();
+    if (!quiet) msg('Not confirmed yet. Open the link in the email first.');
   };
   $('#ov-ok').onclick = () => check(false);
   let wait = 0; const rs = $('#ov-resend');
-  rs.onclick = async () => { if (wait) return; try { await u.sendEmailVerification(); msg('Sent. Check your inbox and spam folder.'); } catch (e) { msg('Couldn’t send it. Wait a minute and try again.'); return; }
-    wait = 30; const t = setInterval(() => { wait--; if (!rs.isConnected || wait <= 0) { clearInterval(t); wait = 0; if (rs.isConnected) rs.textContent = 'Send it again'; } else rs.textContent = `Send it again (${wait})`; }, 1000); };
-  $('#ov-other').onclick = async () => { stop = true; try { await firebase.auth().signOut(); } catch (e) { /* ignore */ } };
+  const cooldown = s => { wait = s; const t = setInterval(() => { wait--; if (!rs.isConnected || wait <= 0) { clearInterval(t); wait = 0; if (rs.isConnected) rs.textContent = 'Send it again'; } else rs.textContent = `Send it again (${wait})`; }, 1000); };
+  rs.onclick = async () => {
+    if (wait) return; rs.disabled = true;
+    try { await Account.verifyMail(firebase.auth().currentUser || u); msg('Sent again. Check your inbox and the Spam folder.'); cooldown(45); }
+    catch (e) { msg(mailError(e)); cooldown(20); }
+    rs.disabled = false;
+  };
+  $('#ov-other').onclick = async () => {   // a typo: remove the unconfirmed account and go back to the email form
+    stop = true; Onboard2.backToAccount = true;
+    const cu = firebase.auth().currentUser;
+    try { if (cu && !cu.emailVerified) await cu.delete(); else await firebase.auth().signOut(); }
+    catch (e) { try { await firebase.auth().signOut(); } catch (x) { /* ignore */ } }
+  };
   const poll = setInterval(() => { if (stop || !$('.ob-verify')) return clearInterval(poll); check(true); }, 4000);
+  document.addEventListener('visibilitychange', function onVis() { if (stop || !$('.ob-verify')) return document.removeEventListener('visibilitychange', onVis); if (document.visibilityState === 'visible') check(true); });
 };
 /* =====================================================================
    EPISODE FLOW

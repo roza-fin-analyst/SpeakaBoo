@@ -1,12 +1,23 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // A learner can only read and write their own saved progress,
-    // and only after they have confirmed their email address.
+    // Only the signed-in learner, and only after they confirmed their email.
+    function me(uid) {
+      return request.auth != null
+          && request.auth.uid == uid
+          && request.auth.token.email_verified == true;
+    }
     match /users/{uid} {
-      allow read, write: if request.auth != null
-                         && request.auth.uid == uid
-                         && request.auth.token.email_verified == true;
+      allow read: if me(uid);
+      // First save: the free trial starts now, on the server's clock (not the phone's).
+      allow create: if me(uid)
+        && request.resource.data.keys().hasOnly(['email', 'trialStart', 'created', 'store', 'savedAt'])
+        && request.resource.data.trialStart == request.time
+        && request.resource.data.created == request.time;
+      // Later saves: progress only. The trial date and Premium can never be changed from the app.
+      allow update: if me(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['store', 'savedAt', 'email']);
+      allow delete: if me(uid);
     }
     // Everything else is closed.
     match /{document=**} {
