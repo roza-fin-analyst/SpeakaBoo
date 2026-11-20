@@ -5927,7 +5927,7 @@ const Paywall = {
       <h2>${s.mode === 'expired' ? `Your free week is over, but ${esc(name)} isn’t!` : 'GabBoo Premium'}</h2>
       ${reason ? `<p class="pw-reason">${esc(reason)}</p>` : ''}
       <p class="note">Keep talking with ${esc(name)}: every season and language, unlimited Talk and Call Boo, all drills, daily Peekaboo and your progress saved in the cloud.</p>
-      <ul class="pw-list"><li>All seasons in Korean, Arabic and Spanish</li><li>Unlimited Talk buddy and Call Boo</li><li>Every practice drill, story and outfit</li><li>Cancel any time in Google Play</li></ul>
+      <ul class="pw-list"><li>Every chapter, in all 7 languages</li><li>Unlimited Talk buddy and Call Boo</li><li>Every practice drill, story and outfit</li><li>Cancel any time in Google Play</li></ul>
       <div class="plans">${plans}</div>
       ${inPlay ? '' : `<p class="pw-note">Subscriptions are bought in the GabBoo app from Google Play.${CFG.playStoreUrl ? ` <a href="${esc(CFG.playStoreUrl)}" target="_blank" rel="noopener">Get it on Google Play</a>` : ''}</p>`}
       <div class="pw-links"><button class="link" data-restore>Restore purchase</button><a class="link" href="https://play.google.com/store/account/subscriptions" target="_blank" rel="noopener">Manage in Google Play</a><button class="link" data-signout>Sign out</button></div>
@@ -11167,7 +11167,7 @@ Paywall.show = async function (soft, reason) {
     const pr = Billing.prices[x.id];
     return `<button class="plan ${x.best ? 'best' : ''}" data-sub="${esc(x.id)}">${x.best ? '<span class="plan-tag">Best value</span>' : ''}<b>${esc(x.name)}</b><span class="plan-price">${pr ? esc(pr.label) : esc(x.price || '')}</span><small>per ${esc(x.period)}${x.note ? ` · ${esc(x.note)}` : ''}</small></button>`;
   }).join('');
-  const rows = [['Part 1 chapters', '2 samples', 'All', 'All 6 seasons'], ['Languages', '1', '1', 'Korean, Arabic & Spanish'], ['Talk with Boo', '3 a day', '10 a day', 'Unlimited'], ['Call Boo (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
+  const rows = [['Chapters', 'First 2', 'All of Part 1', 'Every chapter'], ['Talk with Boo', '3 a day', '10 a day', 'Unlimited'], ['Call Boo (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
   el.innerHTML = `<div class="pw-card">${soft ? `<button class="icon-btn pw-x" data-pw-close aria-label="Close">${ICON.x}</button>` : ''}
     <div class="mascot pw-boo" id="pw-m"></div>
     <h2>${s.mode === 'free' ? 'Your free week is over. Boo isn’t!' : s.mode === 'trial' ? `Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left` : 'GabBoo Premium'}</h2>

@@ -1,7 +1,7 @@
 {
   "name": "GabBoo: Peek. Speak. Repeat.",
   "short_name": "GabBoo",
-  "description": "A free, talk-first way to learn Korean, Arabic and Spanish with a friendly Boo buddy who listens and helps.",
+  "description": "A talk-first way to learn Korean, Spanish, French, German, Japanese, Chinese or Arabic with Boo, a friendly ghost who listens and helps you speak.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
