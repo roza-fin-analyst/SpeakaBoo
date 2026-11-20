@@ -7082,7 +7082,7 @@ function renderNow() {
       ${skylineSVG(c.code, sky)}
     </section>
     ${streakCardHTML(p)}
-    ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Chapter ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
+    ${cur ? `<button class="journey-card ${(p.xp || 0) === 0 ? 'first' : ''}" data-go="${cur.u.id}:${cur.i}:lesson">${(p.xp || 0) === 0 ? '<span class="jc-start">Start here</span>' : ''}<span class="jc-line"></span><span class="jc-txt"><small>Your journey · Chapter ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
     <section class="moment card-lift">
       <div class="moment-head"><span class="chip-time">${DAYPARTS[part].name}</span><b>Your next few hours</b></div>
       ${ph.map((x, i) => `<div class="phrase" style="animation-delay:${i * 80}ms"><button class="ph-play" data-say="${esc(x.t)}" aria-label="Play">${ICON.speaker}</button>

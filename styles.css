@@ -2615,3 +2615,9 @@ html.sound-first .peek-ex .pe-label { order: -2; } html.sound-first .peek-ex .ex
 html.sound-first .pk-means b { font-size: 15px; color: var(--ink-2); }
 /* After answering a "moment" guess, the scene shrinks so the example sentence is visible above the answer bar */
 .peek-done.peek-scene figure.panel { zoom: .58 !important; margin-bottom: 4px; }
+/* A brand-new learner sees where to begin */
+.journey-card { position: relative; }
+.journey-card.first { border-color: var(--berry) !important; animation: jcNudge 2.4s ease-in-out 1s infinite; }
+.jc-start { position: absolute; right: 14px; top: -11px; padding: 2px 10px; border-radius: 999px; background: var(--berry); color: #fff; font: 800 11px var(--font-body); letter-spacing: .06em; text-transform: uppercase; box-shadow: 0 2px 0 var(--berry-deep); }
+@keyframes jcNudge { 0%, 70%, 100% { transform: none; } 80% { transform: translateY(-3px); } 90% { transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .journey-card.first { animation: none; } }
