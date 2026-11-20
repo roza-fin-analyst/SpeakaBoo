@@ -11619,5 +11619,29 @@ buildLesson = function (u, level) {
   return out.filter(Boolean);
 };
 
+/* Scenes 3-5 of a chapter: mix the exercise types and spread the speaking through the lesson
+   (it used to be five sentence puzzles in a row and all the speaking at the end).
+   Conversations and stories keep their order, because their lines follow each other. */
+const _buildLessonMix = buildLesson;
+buildLesson = function (u, level) {
+  const out = _buildLessonMix(u, level);
+  try {
+    if (!u || level < 2 || u.track === 'letters' || (u.letters || []).length || out.some(s => s.kind === 'dialog' || s.kind === 'story')) return out;
+    const isTalk = s => s.kind === 'speak' || s.kind === 'shadow' || s.kind === 'saypic' || s.kind === 'ctxsay';
+    const tip = out.find(s => s.kind === 'tip'), talk = out.filter(isTalk), rest = out.filter(s => !isTalk(s) && s.kind !== 'tip');
+    const byKind = {}; rest.forEach(s => (byKind[s.kind] = byKind[s.kind] || []).push(s));
+    const mixed = []; let last = null;
+    while (Object.values(byKind).some(a => a.length)) {   // never the same kind twice in a row when there is a choice
+      const kinds = Object.keys(byKind).filter(k => byKind[k].length).sort((a, b) => byKind[b].length - byKind[a].length);
+      const k = kinds.find(x => x !== last) || kinds[0]; mixed.push(byKind[k].shift()); last = k;
+    }
+    const res = [], gap = Math.max(1, Math.round(mixed.length / (talk.length + 1))); let ti = 0;
+    mixed.forEach((s, i) => { res.push(s); if ((i + 1) % gap === 0 && ti < talk.length) res.push(talk[ti++]); });
+    while (ti < talk.length) res.push(talk[ti++]);
+    if (tip) res.splice(Math.min(1, res.length), 0, tip);   // the tip comes early, before most of the practice it explains
+    return res.length === out.length ? res : out;
+  } catch (e) { return out; }
+};
+
 /* Start the app once every module has loaded. */
 bootApp();
