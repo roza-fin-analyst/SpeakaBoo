@@ -2603,3 +2603,5 @@ body[data-screen="now"] #right .rr-goal { display: none; }   /* Today already sh
   .peek-scene figure.panel { zoom: .5 !important; } .peek-step .opts { gap: 8px; } .peek-step .opt { min-height: 48px; padding-top: 8px; padding-bottom: 8px; }
   .tiles-note { display: none; } .l-inner .prompt-row { min-height: 0; }
 }
+/* Today sky: the sound button stays in the top-right corner even when the time pills wrap */
+.sky-top { padding-right: 42px; } .sky-top .amb-btn { position: absolute; right: 0; top: -2px; margin: 0; }
