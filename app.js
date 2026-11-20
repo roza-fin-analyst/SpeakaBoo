@@ -11469,9 +11469,25 @@ const STAGE_LABEL = { peek: 'Peek · new word', speak: 'Speak', repeat: 'Repeat'
 const stageChip = s => STAGE_LABEL[s] ? `<span class="stage-chip st-${s}">${STAGE_LABEL[s]}</span>` : '';
 Object.assign(CREW_KIND, { peek: 'nabi', saypic: 'horangi' });
 /** A real course sentence that uses the word, with the word highlighted. */
+/* Spanish, French and German: examples must use the word as a whole word ("je" is not inside "déjeuner"). */
+{
+  // Accents stay: "té" (tea) is not "te" (you), "là" is not "la".
+  const fold = s => String(s || '').normalize('NFC').toLowerCase().replace(/[’‘]/g, "'").replace(/[.,!?¿¡~"“”«»…·:;()]/g, ' ').replace(/\s+/g, ' ').trim();
+  const _ex = exampleFor;
+  exampleFor = function (w) {
+    if (!isLatinLang(course().code)) return _ex(w);
+    const t = fold(w.t); if (!t || t.length < 2) return null;
+    const pad = s => ` ${fold(s).replace(/'/g, "' ")} `;   // j'habite → "j' habite"
+    const hit = allSentences().filter(s => pad(s.t).includes(` ${t.replace(/'/g, "' ")} `) && fold(s.t) !== t);
+    return hit.length ? pick(hit) : null;
+  };
+}
 function peekExampleHTML(ex, w, opts = {}) {
-  const c = course(), t = String(ex.t), at = w ? t.toLowerCase().indexOf(String(w.t).toLowerCase()) : -1;
-  const hl = at >= 0 ? `${esc(t.slice(0, at))}<mark>${esc(t.slice(at, at + String(w.t).length))}</mark>${esc(t.slice(at + String(w.t).length))}` : esc(t);
+  const c = course(), t = String(ex.t), wt = w ? String(w.t).replace(/^[¡¿"“«(\s]+|[!?.,"”»)\s]+$/g, '') : '';
+  let at = -1, len = wt.length;
+  if (wt && isLatinLang(c.code)) { const m = new RegExp(`(^|[^\\p{L}\\p{M}])(${wt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})(?=$|[^\\p{L}\\p{M}])`, 'iu').exec(t); if (m) at = m.index + m[1].length; }
+  else if (wt) at = t.toLowerCase().indexOf(wt.toLowerCase());
+  const hl = at >= 0 ? `${esc(t.slice(0, at))}<mark>${esc(t.slice(at, at + len))}</mark>${esc(t.slice(at + len))}` : esc(t);
   const rom = (ex.r || romFor(t)) && !isLatinLang(c.code) ? `<small class="ex-rom">${esc(ex.r || romFor(t))}</small>` : '';
   return `<button class="peek-ex ${opts.cls || ''}" data-say="${esc(t)}">${ICON.speaker}<span>${opts.label ? `<small class="pe-label">${esc(opts.label)}</small>` : ''}<span class="script" ${attrs(c)}>${hl}</span>${rom}<small class="ex-en">${esc(ex.en)}</small></span></button>`;
 }
