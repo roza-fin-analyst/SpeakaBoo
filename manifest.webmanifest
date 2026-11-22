@@ -1,13 +1,13 @@
 {
   "name": "GabBoo: Peek. Speak. Repeat.",
   "short_name": "GabBoo",
-  "description": "A free, talk-first way to learn Korean, Arabic and Spanish with a friendly Boo buddy who listens and helps.",
+  "description": "A talk-first way to learn Korean, Spanish, French, German, Japanese, Chinese or Arabic with Boo, a friendly ghost who listens and helps you speak.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#170C2B",
-  "theme_color": "#170C2B",
+  "background_color": "#5B4B9A",
+  "theme_color": "#5B4B9A",
   "icons": [
     {
       "src": "icon-192.png",

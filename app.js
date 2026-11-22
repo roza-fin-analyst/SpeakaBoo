@@ -4298,7 +4298,14 @@ const Store = {
     try { const raw = localStorage.getItem(this.KEY); if (raw) { const d = JSON.parse(raw); if (d && d.v === 2) { d.ai = Object.assign(this.fresh().ai, d.ai || {}); return (this.data = d); } } } catch (e) { /* storage blocked: run in memory */ }
     return (this.data = this.fresh());
   },
-  save() { try { localStorage.setItem(this.KEY, JSON.stringify(this.data)); } catch (e) { /* ignore */ } }
+  save() {
+    let raw; try { raw = JSON.stringify(this.data); } catch (e) { return; }
+    try { localStorage.setItem(this.KEY, raw); }
+    catch (e) {   // storage full: drop the translation cache (it refills itself) and try again; if it still fails, say so once
+      try { localStorage.removeItem('speakaboo.tr.v1'); localStorage.setItem(this.KEY, raw); }
+      catch (x) { if (!this._warned) { this._warned = true; try { toast('Your phone’s storage is full, so progress can’t be saved right now. Free up some space.'); } catch (y) { /* not ready */ } } }
+    }
+  }
 };
 
 function newProfile(name, mascot, lang) {
@@ -5707,6 +5714,7 @@ const Account = {
       try { const d = JSON.parse(this.meta.store); if (d && d.v === 2) { d.ai = Object.assign(Store.fresh().ai, d.ai || {}); Store.data = d; Store.save(true); } } catch (e) { /* keep local */ }
     }
     Object.values(Store.data.profiles).forEach(upgradeProfile);
+    this.pulled = true;
   },
   /** Save to the cloud a few seconds after the last change. */
   queuePush() {
@@ -5715,7 +5723,7 @@ const Account = {
     this.pushT = setTimeout(() => this.push(), 3000);
   },
   async push() {
-    if (!this.user) return;
+    if (!this.user || !this.pulled) return;   // nothing goes to the cloud before the account is confirmed and loaded
     const d = Store.data, copy = { ...d, ai: { ...d.ai, geminiKey: '' } };   // never upload the AI key
     try { await this.ref().set({ store: JSON.stringify(copy), savedAt: d.savedAt || Date.now() }, { merge: true }); } catch (e) { /* retried on next change */ }
   },
@@ -5723,7 +5731,19 @@ const Account = {
   ms(v) { return !v ? 0 : typeof v === 'number' ? v : v.toMillis ? v.toMillis() : v.seconds ? v.seconds * 1000 : 0; },
   async signUp(email, pw) {
     const cred = await firebase.auth().createUserWithEmailAndPassword(email, pw);
-    try { await cred.user.sendEmailVerification(); } catch (e) { /* not essential */ }
+    this.mailError = null;
+    try { await this.verifyMail(cred.user); } catch (e) { this.mailError = e; }   // the "check your email" screen offers to send it again
+  },
+  /** Email the confirmation link. The link's page has a Continue button back to GabBoo when this site is an authorised domain in Firebase. */
+  async verifyMail(u) {
+    u = u || firebase.auth().currentUser; if (!u) throw { code: 'auth/no-current-user' };
+    try { firebase.auth().useDeviceLanguage(); } catch (e) { /* English is fine */ }
+    const url = location.protocol === 'https:' ? location.origin + location.pathname : (window.SPEAKABOO_APP_URL || '');
+    if (url) {
+      try { await u.sendEmailVerification({ url }); this.mailSentAt = Date.now(); return; }
+      catch (e) { if (!/continue-uri|unauthorized|domain|argument/i.test((e && e.code) || '')) throw e; }   // site not authorised yet: send a plain link instead
+    }
+    await u.sendEmailVerification(); this.mailSentAt = Date.now();
   },
   signIn(email, pw) { return firebase.auth().signInWithEmailAndPassword(email, pw); },
   reset(email) { return firebase.auth().sendPasswordResetEmail(email); },
@@ -5746,7 +5766,7 @@ Store.save = function (fromCloud) { if (this.data && !fromCloud) this.data.saved
 /* ---------- Owner / tester mode: only the app owner can jump around ----------
    On Play (accounts on): automatic when signed in with an email listed in config.js → owners.
    Local mode (no accounts): tap the version line on Me 7 times to switch it on for this device. */
-const OWNERS = (CFG.owners || ['ayeshaferozroza@gmail.com']).map(e => String(e).toLowerCase());
+const OWNERS = (CFG.owners || []).map(e => String(e).toLowerCase());   // set in config.js
 const Tester = {
   on() {
     try { if (isOwner()) return true; } catch (e) { /* not ready yet */ }
@@ -5894,8 +5914,10 @@ function authScreen(mode, msg = '') {
 }
 function authError(e) {
   const c = e && e.code || '';
-  return ({ 'auth/email-already-in-use': 'That email already has an account. Try signing in.', 'auth/invalid-email': 'That email doesn’t look right.', 'auth/weak-password': 'Use at least 6 characters for your password.',
-    'auth/wrong-password': 'Wrong email or password.', 'auth/invalid-credential': 'Wrong email or password.', 'auth/user-not-found': 'No account with that email yet.', 'auth/too-many-requests': 'Too many tries. Wait a minute and try again.', 'auth/network-request-failed': 'No internet connection.' })[c] || 'Something went wrong. Please try again.';
+  return ({ 'auth/email-already-in-use': 'That email already has an account. Try signing in.', 'auth/invalid-email': 'That email doesn’t look right.', 'auth/weak-password': 'Use at least 8 characters for your password.',
+    'auth/wrong-password': 'Wrong email or password.', 'auth/invalid-credential': 'Wrong email or password.', 'auth/invalid-login-credentials': 'Wrong email or password.', 'auth/user-not-found': 'No account with that email yet.', 'auth/missing-password': 'Please type your password.',
+    'auth/user-disabled': 'This account has been switched off. Contact us from the Help section.', 'auth/too-many-requests': 'Too many tries. Wait a minute and try again.', 'auth/network-request-failed': 'No internet connection.',
+    'auth/operation-not-allowed': 'Email sign-up isn’t switched on yet (Firebase → Authentication → Sign-in method → Email/Password).', 'auth/configuration-not-found': 'Accounts aren’t set up yet (Firebase → Authentication → Get started).' })[c] || 'Something went wrong. Please try again.';
 }
 const Paywall = {
   hide() { $('#paywall')?.remove(); },
@@ -5912,7 +5934,7 @@ const Paywall = {
       <h2>${s.mode === 'expired' ? `Your free week is over, but ${esc(name)} isn’t!` : 'GabBoo Premium'}</h2>
       ${reason ? `<p class="pw-reason">${esc(reason)}</p>` : ''}
       <p class="note">Keep talking with ${esc(name)}: every season and language, unlimited Talk and Call Boo, all drills, daily Peekaboo and your progress saved in the cloud.</p>
-      <ul class="pw-list"><li>All seasons in Korean, Arabic and Spanish</li><li>Unlimited Talk buddy and Call Boo</li><li>Every practice drill, story and outfit</li><li>Cancel any time in Google Play</li></ul>
+      <ul class="pw-list"><li>Every chapter, in all 7 languages</li><li>Unlimited Talk buddy and Call Boo</li><li>Every practice drill, story and outfit</li><li>Cancel any time in Google Play</li></ul>
       <div class="plans">${plans}</div>
       ${inPlay ? '' : `<p class="pw-note">Subscriptions are bought in the GabBoo app from Google Play.${CFG.playStoreUrl ? ` <a href="${esc(CFG.playStoreUrl)}" target="_blank" rel="noopener">Get it on Google Play</a>` : ''}</p>`}
       <div class="pw-links"><button class="link" data-restore>Restore purchase</button><a class="link" href="https://play.google.com/store/account/subscriptions" target="_blank" rel="noopener">Manage in Google Play</a><button class="link" data-signout>Sign out</button></div>
@@ -6990,6 +7012,20 @@ function skylineSVG(code, sky) {
   } else if (code === 'ar') {
     far_ = `<path d="M30 112l40-36 40 36zM96 112l26-22 26 22z" fill="${far}"/><path d="M0 116h400v14H0z" fill="${far}"/>`;
     land = `<g fill="${near}"><path d="M262 130V70h8v60z"/><path d="M259 72h14l-7-16z"/><circle cx="266" cy="52" r="2.2"/><path d="M276 130v-30q22-26 44 0v30z"/><path d="M298 74v-6"/></g>`;
+  } else if (code === 'fr') {   // Paris: the Eiffel Tower
+    far_ = `<path d="M0 110q80-26 160-10q70-30 140-4q60-16 100 2V130H0z" fill="${far}"/>`;
+    land = `<g fill="${near}"><path d="M299 16h2l1 26h-4z"/><path d="M297 42h6l3 36h-12z"/><rect x="291" y="76" width="18" height="4" rx="1"/><path d="M293 80h14l8 25h-30z"/><rect x="282" y="103" width="36" height="4" rx="1"/><path d="M284 107h32l8 23h-11q-7-14-13-14t-13 14h-11z"/></g>${night ? '<circle cx="300" cy="14" r="2" fill="#FFD66B"/>' : ''}`;
+  } else if (code === 'de') {   // Berlin: the TV Tower
+    far_ = `<path d="M0 112q70-24 150-10q80-28 160-2q50-12 90 4V130H0z" fill="${far}"/>`;
+    land = `<g fill="${near}"><rect x="298.6" y="12" width="2.8" height="34"/><circle cx="300" cy="56" r="11"/><rect x="294" y="66" width="12" height="4" rx="2"/><path d="M296.5 68h7l2 62h-11z"/></g><circle cx="300" cy="11" r="2" fill="${night ? '#FF6B6B' : near}"/>`;
+  } else if (code === 'ja') {   // Tokyo: Tokyo Tower (red and white by day)
+    const red = night ? near : '#D9542B';
+    far_ = `<path d="M0 106q60-34 130-14q70-34 150-4q70-20 120 2V130H0z" fill="${far}"/>`;
+    land = `<g fill="${red}"><path d="M299.2 14h1.6l1 22h-3.6z"/><rect x="295" y="36" width="10" height="6" rx="1"/><path d="M296.5 42h7l3 26h-13z"/><rect x="289" y="66" width="22" height="8" rx="1.5"/><path d="M292 74h16l10 36h-36z"/><rect x="284" y="107" width="32" height="4" rx="1"/><path d="M285 111h30l7 19h-10q-5-9-12-9t-12 9h-10z"/></g>`;
+  } else if (code === 'zh') {   // Shanghai: the Oriental Pearl Tower
+    const pearl = night ? '#C77DFF' : near;
+    far_ = `<path d="M0 108q70-32 150-12q60-30 140-2q60-18 110 0V130H0z" fill="${far}"/>`;
+    land = `<g fill="${near}"><rect x="298.6" y="10" width="2.8" height="22"/><rect x="297" y="40" width="6" height="22"/><rect x="296.5" y="74" width="7" height="20"/><path d="M287 130l9-19h8l9 19h-5l-8-12-8 12z"/></g><g fill="${pearl}"><circle cx="300" cy="36" r="4.5"/><circle cx="300" cy="67" r="10"/><circle cx="300" cy="104" r="13"/></g>`;
   } else {
     far_ = `<path d="M0 108q70-30 140-12q60-40 140-6q70-22 120 0V130H0z" fill="${far}"/>`;
     land = `<g fill="${near}"><path d="M296 130V58h7v72z"/><rect x="292" y="52" width="15" height="7" rx="2"/><path d="M299.5 52l-5-12h10z"/><circle cx="299.5" cy="38" r="3" fill="${night ? '#FFD66B' : '#E9B949'}"/></g>`;
@@ -7039,14 +7075,14 @@ function renderNow() {
   const showInstall = !IS_STANDALONE && !IN_ARTIFACT && !p.hideInstall && innerWidth < 900;
   tab.innerHTML = `<div class="now">
     <section class="sky sky-${sky}">${skyDeco(sky)}
-      <div class="sky-top"><span class="sky-clock">${String(h).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')} · ${DAYPARTS[part].name}</span>${ct && ct.label ? `<span class="sky-city">${esc(ct.city)} ${ct.label}${ct.h != null ? ` · ${ct.h >= 6 && ct.h < 18 ? 'daytime' : 'night'} there` : ''}</span>` : ''}</div>
+      <div class="sky-top"><span class="sky-clock">${String(h).padStart(2, '0')}:${String(new Date().getMinutes()).padStart(2, '0')} · ${DAYPARTS[part].name}</span>${ct && ct.label ? `<span class="sky-city">${esc(ct.city)} ${ct.label}${ct.h != null ? ` · ${ct.h < 5 || ct.h >= 21 ? 'night' : ct.h < 12 ? 'morning' : ct.h < 17 ? 'afternoon' : 'evening'} there` : ''}</span>` : ''}</div>
       <h1 class="sky-hi">${hi}, ${esc(p.name)}.</h1>
       <p class="sky-sub">${['bored', 'missing', 'fading', 'ghosted'].includes(st.key) ? esc(st.line) : `Here’s what people say in ${esc(c.name)} around now.`}</p>
       <button class="sky-boo" data-sky-boo aria-label="Tap ${esc(mc.name)}"></button><div class="sky-bubble" id="sky-bubble" hidden></div>
       ${skylineSVG(c.code, sky)}
     </section>
     ${streakCardHTML(p)}
-    ${cur ? `<button class="journey-card" data-go="${cur.u.id}:${cur.i}:lesson"><span class="jc-line"></span><span class="jc-txt"><small>Your journey · Chapter ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
+    ${cur ? `<button class="journey-card ${(p.xp || 0) === 0 ? 'first' : ''}" data-go="${cur.u.id}:${cur.i}:lesson">${(p.xp || 0) === 0 ? '<span class="jc-start">Start here</span>' : ''}<span class="jc-line"></span><span class="jc-txt"><small>Your journey · Chapter ${cur.u.index + 1}</small><b>${esc(cur.u.title)}</b><small>Scene ${cur.i + 1} of ${UNIT_LESSONS}</small></span><span class="jc-go">${ICON.play5 || '▶'}</span></button>` : ''}
     <section class="moment card-lift">
       <div class="moment-head"><span class="chip-time">${DAYPARTS[part].name}</span><b>Your next few hours</b></div>
       ${ph.map((x, i) => `<div class="phrase" style="animation-delay:${i * 80}ms"><button class="ph-play" data-say="${esc(x.t)}" aria-label="Play">${ICON.speaker}</button>
@@ -7164,7 +7200,7 @@ Theme.apply();
 const LATIN_LANGS = ['es', 'fr', 'de'];
 const isLatinLang = code => LATIN_LANGS.includes(code);
 const BRAND_SVG = `<span class="brand-boo" aria-hidden="true">${mascotSVG('mandu', 'peek')}</span>`;
-const SPEAKABOO_VERSION = '2026.10.25-a';
+const SPEAKABOO_VERSION = '2026.11.20-a';
 const ICON_BANANA = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 7c-9 0-13 6-13 12s5 9 13 9 13-3 13-9S25 7 16 7z" fill="#FF8A1F" stroke="#B3500A" stroke-width="2"/><path d="M16 7c-3 4-3 17 0 21M16 7c3 4 3 17 0 21" fill="none" stroke="#B3500A" stroke-width="1.6"/><path d="M16 7q0-4 4-5" stroke="#4B7A2A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M10 16l3 3-4 0zM22 16l-3 3 4 0z M11 22q5 4 10 0" fill="#2A1450" stroke="#2A1450" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
 const ICON_LEAFY = `<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3c-7 0-10 6-10 11v14l4-3 3 3 3-3 3 3 3-3 4 3V14c0-5-3-11-10-11z" fill="#B7FFD1" stroke="#2EA86B" stroke-width="2" stroke-linejoin="round"/><circle cx="12.500" cy="14" r="2.200" fill="#123"/><circle cx="19.500" cy="14" r="2.200" fill="#123"/></svg>`;
 const UI = { tab: 'now', manage: false, creating: false, confirmDel: null, draft: { name: '', mascot: 'mandu', lang: 'ko' }, meConfirm: null };
@@ -7372,7 +7408,7 @@ function showProfiles() { Store.data.active = null; Store.save(); UI.manage = fa
 /* =====================================================================
    APP SHELL & NAVIGATION
    ===================================================================== */
-const TABS = [['now', 'Today', 'sunI'], ['learn', 'Manor', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Haunts', 'chat'], ['practice', 'Practice', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Spirit', 'user']];
+const TABS = [['now', 'Today', 'sunI'], ['learn', 'Manor', 'route'], ['letters', 'Letters', 'letters'], ['chat', 'Haunts', 'chat'], ['practice', 'Train', 'bag'], ['quests', 'Passport', 'target'], ['profile', 'Me', 'user']];
 const NAV_HIDDEN = ['letters', 'quests'];
 
 function enterApp(id) {
@@ -7386,7 +7422,14 @@ function enterApp(id) {
   Mascot.set('happy', todayXP(p) ? `Welcome back, ${p.name}! ${todayXP(p)} XP so far today.` : `Hi ${p.name}! Tap a phrase to hear it.`);
   if (!Access.state().ok) Paywall.show();
 }
-function applyLang() { document.documentElement.style.setProperty('--script', course().font); }
+function applyLang() { document.documentElement.style.setProperty('--script', course().font); loadScriptFont(course().code); }
+/** Fonts for non-Latin scripts load only for the language you are learning (they are big). Phones show their own font meanwhile. */
+const SCRIPT_FONTS = { ko: 'Noto+Sans+KR:wght@400;500;700&family=Jua', ja: 'Noto+Sans+JP:wght@400;500;700', zh: 'Noto+Sans+SC:wght@400;500;700', ar: 'Noto+Naskh+Arabic:wght@400;600;700' };
+function loadScriptFont(code) {
+  const fam = SCRIPT_FONTS[code]; if (!fam || document.querySelector(`link[data-script-font="${code}"]`)) return;
+  const l = document.createElement('link'); l.rel = 'stylesheet'; l.dataset.scriptFont = code;
+  l.href = `https://fonts.googleapis.com/css2?family=${fam}&display=swap`; document.head.append(l);
+}
 function setLang(code) {
   closeSheet(); if (P().lang === code) return;
   P().lang = code; Store.save(); applyLang(); renderChrome(); showTab(UI.tab);
@@ -7394,7 +7437,7 @@ function setLang(code) {
 }
 function statsHTML(p) {
   const live = p.lastDay === dayKey(), h = Hearts.left(p);
-  return `<button class="stat streak ${live ? '' : 'cold'}" data-sheet="streak" aria-label="${liveStreak(p)} day streak">${ICON_BANANA}<span class="num">${liveStreak(p)}</span></button>
+  return `<button class="stat streak ${live ? '' : 'cold'}" data-sheet="streak" aria-label="${liveStreak(p)} day streak">${typeof ICON_CANDLE !== 'undefined' ? ICON_CANDLE : ICON_BANANA}<span class="num">${liveStreak(p)}</span></button>
     <button class="stat gems" data-sheet="gems" aria-label="${p.gems} gems">${ICON_LEAFY}<span class="num">${p.gems}</span></button>
     <button class="stat hearts" data-sheet="hearts" aria-label="${h === Infinity ? 'unlimited' : h} hearts">${ICON.heart}<span class="num">${h === Infinity ? '∞' : h}</span></button>`;
 }
@@ -7406,14 +7449,14 @@ function renderChrome() {
   const p = P(); if (!p || $('#app').hidden) return;
   const navBtns = cls => TABS.filter(([id]) => !NAV_HIDDEN.includes(id)).map(([id, label, ic]) => `<button class="${cls}" data-tab="${id}" ${(UI.tab === 'letters' ? 'learn' : UI.tab) === id ? 'aria-current="page"' : ''}>${ICON[ic]}<span>${label}</span></button>`).join('');
   $('#rail').innerHTML = `<div class="logo">${BRAND_SVG}<span>GabBoo<small>Peek. Speak. Repeat.</small></span></div>${navBtns('nav-i')}
-    <button class="who-btn" data-switch><div class="mascot" data-art="${p.mascot}"></div><span><b>${esc(p.name)}</b><small>Switch learner</small></span></button>`;
+    <button class="who-btn" data-tab="profile"><div class="mascot" data-art="${p.mascot}"></div><span><b>${esc(p.name)}</b><small>My profile</small></span></button>`;
   $('#topbar').innerHTML = `${langChipHTML()}<span class="spacer"></span>${statsHTML(p)}`;
   $('#bnav').innerHTML = navBtns('');
   const tx = todayXP(p), pct = Math.min(1, tx / p.dailyGoal), C = 2 * Math.PI * 30;
   const qs = Quests.today(p);
   $('#right').innerHTML = `<div class="stats-row">${langChipHTML()}${statsHTML(p)}</div>
     <div class="card mascot-card"><div data-mascot-live></div><div class="speech" data-speech></div></div>
-    <div class="card"><h3>Daily goal</h3><div class="goal">
+    <div class="card rr-goal"><h3>Daily goal</h3><div class="goal">
       <svg class="ring" viewBox="0 0 76 76"><circle class="track" cx="38" cy="38" r="30"/><circle class="val" cx="38" cy="38" r="30" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - pct)}"/><text x="38" y="44" text-anchor="middle">${Math.round(pct * 100)}%</text></svg>
       <div><strong class="num">${tx} / ${p.dailyGoal} XP</strong><p>${pct >= 1 ? 'Done for today. Anything more is showing off.' : 'One lesson gets you most of the way.'}</p></div></div></div>
     <div class="card"><h3>Daily quests <button class="link" data-tab="quests">View all</button></h3>${qs.map(questHTML).join('')}</div>
@@ -7883,6 +7926,7 @@ const Runner = {
   render() {
     clearTimeout(this.advanceT);
     const step = this.queue[this.i];
+    if (!step) { if (!this.finished) this.complete(); return; }   // never draw past the last step
     const pct = this.i / this.queue.length * 100; $('#l-bar').style.width = pct + '%'; $('#l-boo').style.left = pct + '%';
     const foot = $('#l-foot'); foot.className = 'l-foot'; foot.hidden = true;
     $('#l-fb').hidden = true; $('#l-skip').hidden = true; $('#l-fb-detail').innerHTML = '';
@@ -7965,7 +8009,7 @@ const Runner = {
     clearTimeout(this.advanceT);
     if (this.outOfHearts) return this.heartsOut();
     this.i++; if (this.i >= this.queue.length || (this.meta.speed && Date.now() > this.deadline)) return this.complete();
-    if (!this.halfDone && !this.meta.speed && this.queue.length >= 8 && this.i >= this.queue.length / 2) { this.halfDone = true; this.locked = true; $('#l-foot').hidden = true; this.halfway(); setTimeout(() => { if (!$('#lesson').hidden) this.render(); }, 1300); return; }
+    if (!this.halfDone && !this.meta.speed && this.queue.length >= 8 && this.i >= this.queue.length / 2) { this.halfDone = true; this.locked = true; this.mode = 'wait'; $('#l-foot').hidden = true; this.halfway(); setTimeout(() => { if (!$('#lesson').hidden && !this.finished && this.queue[this.i]) this.render(); }, 1300); return; }
     this.render();
   },
   main() {
@@ -8182,7 +8226,7 @@ const RENDER = {
     const c = course(), w = step.w;
     el.innerHTML = `<p class="q">${step.retry ? '<span class="badge-new" style="margin-right:8px">Previous mistake</span>' : ''}Which picture is this?</p>
       <div class="prompt"><button class="speaker" data-say="${esc(w.t)}" aria-label="Play">${ICON.speaker}</button><div><div class="prompt-text script" ${attrs(c)} style="font-size:34px">${esc(w.t)}</div><div class="prompt-sub" style="width:auto">${esc(w.r)}</div></div></div>
-      <div class="pic-grid">${step.options.map((o, i) => `<button class="pic-card" data-i="${i}"><span class="pic">${artSVG(o.pic)}</span><small class="pic-label">${esc(cleanEn(o.en))}</small></button>`).join('')}</div>`;
+      <div class="pic-grid">${step.options.map((o, i) => `<button class="pic-card" data-i="${i}" aria-label="${esc(cleanEn(o.en))}"><span class="pic">${artSVG(o.pic)}</span><small class="pic-label">${esc(cleanEn(o.en))}</small></button>`).join('')}</div>`;
     const answer = i => {
       if (R.locked) return; const ok = step.options[i].t === w.t;
       $$('.pic-card', el).forEach((b, j) => { b.classList.add('revealed'); if (step.options[j].t === w.t) b.classList.add('right'); else if (j === i) b.classList.add('wrong'); });
@@ -8761,9 +8805,9 @@ function fitStage() {
     const st = $('#l-stage'), inn = st && $('.l-inner', st); if (!inn || $('#lesson').hidden) return;
     const fb = $('#l-foot'); if (fb && (fb.classList.contains('ok') || fb.classList.contains('bad'))) return;   // keep the size while the answer bar is showing
     inn.style.zoom = ''; const cs = getComputedStyle(st);
-    const foot = $('#l-foot'), footH = foot && !foot.hidden ? foot.offsetHeight : 0;   // the answer bar's space is reserved up front, so nothing resizes when it appears
-    const co = $('.coach', st), avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - Math.max(0, 170 - footH) - (co ? co.offsetHeight + 10 : 0), need = inn.offsetHeight;
-    if (need > avail + 2) inn.style.zoom = Math.max(0.9, avail / need).toFixed(3);
+    // The answer bar's space is already reserved by the stage's bottom padding, so nothing resizes when it appears.
+    const co = $('.coach', st), avail = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - (co ? co.offsetHeight + 10 : 0), need = inn.offsetHeight;
+    if (need > avail + 2) inn.style.zoom = Math.max(0.82, avail / need).toFixed(3);
   });
 }
 { const wire = () => { const st = document.getElementById('l-stage'); if (!st) return setTimeout(wire, 500);
@@ -8813,7 +8857,7 @@ Object.values(MASCOTS).forEach(m => Object.assign(m, {
   };
 }
 /* Report a mistake: opens an email to the app owner with the sentence filled in. */
-const REPORT_EMAIL = 'ayeshaferozroza@gmail.com';
+const REPORT_EMAIL = CFG.supportEmail || '';   // set in config.js
 function reportHref(t, r, en) {
   const c = course(), body = `Language: ${c ? c.name : ''}\nText: ${t}\nPronunciation: ${r || ''}\nMeaning: ${en || ''}\n\nWhat is wrong:\n`;
   return `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent('GabBoo mistake')}&body=${encodeURIComponent(body)}`;
@@ -8881,7 +8925,7 @@ function renderTalk() {
       <div class="tk-list">${T.scenes().map(t => `<button class="tk-card" data-tk-open="${t.id}"><span class="mascot" data-tk-m="${T.who(t)}"></span><span class="tk-ct"><b>${esc(t.title)}</b><small>${esc(t.en)}</small></span><span class="tk-go">›</span></button>`).join('')}</div>
       <h2 class="tk-h2">More with characters</h2>
       <div class="tk-list"><button class="tk-card" data-realtalk><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Real Talk</b><small>Slang, tone and idioms</small></span><span class="tk-go">›</span></button>
-        <button class="tk-card" data-adventure="STORY_ADVENTURE"><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Story</b><small>Choose what to say next</small></span><span class="tk-go">›</span></button></div></div>`;
+        <button class="tk-card" data-adventure="STORY_ADVENTURE"><span class="mascot" data-tk-m="${P().mascot}"></span><span class="tk-ct"><b>Story adventure</b><small>Choose what to say next</small></span><span class="tk-go">›</span></button></div></div>`;
     $$('[data-tk-m]', root).forEach(m => paintMascot(m, m.dataset.tkM, 'happy', false));
     return;
   }
@@ -9230,11 +9274,11 @@ renderProfile = function () {
   const mail = Acct.email() && !/this-device\.local$/.test(Acct.email()) ? Acct.email() : 'Guest on this phone';
   const sm = p.scriptMode || 'auto';
   $('#tab-profile').innerHTML = `<div class="pad me2">
-    <section class="me-hero"><div class="me-ghost" data-mascot-live></div><div class="me-who"><h1>${esc(p.name)}</h1><p>Level ${lvl} · ${liveStreak(p)}-day streak</p><p>${p.xp} XP · ${learnedWords(p, c.code).length} words</p><button class="btn primary sm" data-share>Share my progress</button></div></section>
-    <section class="me-sec"><h2>Costumes</h2><p class="hint">${nextC ? `Next: ${esc(nextC.name)} at level ${COSTUME_LEVEL[nextC.id]}` : 'You unlocked them all!'}</p>
+    <section class="me-hero"><div class="me-ghost" data-mascot-live></div><div class="me-who"><h1>${esc(p.name)}</h1><p>Level ${lvl} · ${p.xp} XP</p><p>${learnedWords(p, c.code).length} words · ${(p.stats && p.stats.spoken) || 0} said out loud</p><button class="btn primary sm" data-share>Share my progress</button></div></section>
+    <section class="me-sec"><h2>Your Boo</h2><div class="pick-row">${MASCOT_ORDER.map(k => `<button class="pk ${k === p.mascot ? 'on' : ''}" data-me-m="${k}" aria-label="${esc(MASCOTS[k].name)}"><span>${ghostAvatar(k, k === p.mascot ? p.wear : '')}</span><small>${esc(MASCOTS[k].name)}</small></button>`).join('')}</div>
+      <h3 class="me-sub">Costumes</h3><p class="hint">${nextC ? `Next: ${esc(nextC.name)} at level ${COSTUME_LEVEL[nextC.id]}` : 'You unlocked them all!'}</p>
       <div class="costumes"><button class="cos ${!p.wear ? 'on' : ''}" data-wear=""><span>${ghostAvatar(p.mascot, '')}</span><small>None</small></button>
       ${WARDROBE.slice().sort((a, b) => COSTUME_LEVEL[a.id] - COSTUME_LEVEL[b.id]).map(w => { const ok = costumeUnlocked(p, w.id); return `<button class="cos ${p.wear === w.id ? 'on' : ''} ${ok ? '' : 'locked'}" ${ok ? `data-wear="${w.id}"` : 'disabled'}><span>${ghostAvatar(p.mascot, ok ? w.id : '')}</span><small>${ok ? esc(w.name) : 'Level ' + COSTUME_LEVEL[w.id]}</small></button>`; }).join('')}</div></section>
-    <section class="me-sec"><h2>Your Boo</h2><div class="pick-row">${MASCOT_ORDER.map(k => `<button class="pk ${k === p.mascot ? 'on' : ''}" data-me-m="${k}" aria-label="${esc(MASCOTS[k].name)}"><span>${ghostAvatar(k, k === p.mascot ? p.wear : '')}</span><small>${esc(MASCOTS[k].name)}</small></button>`).join('')}</div></section>
     <section class="me-sec"><h2>Friends</h2>
       <div class="friend-list">${Friends.list().map((f, i) => `<div class="friend ${f.me ? 'me' : ''}"><b class="rk">${i + 1}</b><span class="fav">${ghostAvatar(f.m, f.w)}</span><span class="fname"><b>${esc(f.n)}${f.me ? ' (you)' : ''}</b><small>Level ${f.l} · ${f.s}-day streak</small></span>${f.me ? '' : `<button class="fx" data-fdel="${esc(f.n + '|' + f.m)}" aria-label="Remove">×</button>`}</div>`).join('')}</div>
       <div class="friend-actions"><button class="btn primary sm" id="fr-invite">Invite a friend</button></div>
@@ -9257,12 +9301,11 @@ renderProfile = function () {
     <section class="me-sec"><h2>Account</h2>
       <div class="set-row"><span class="acct-mail">${esc(mail)}</span></div>
       <div class="set-row">Your name<span class="name-edit"><input class="input" id="me-name" maxlength="20" value="${esc(p.name)}"></span></div>
-      <div class="set-row">Switch learner<button class="btn ghost sm" data-switch>Switch</button></div>
       <div class="set-row">Sign out<button class="btn ghost sm" data-signout>Sign out</button></div>
       <div class="set-row">Delete my account<button class="btn ghost sm danger" data-delete-account>Delete</button></div>
       <p class="hint">Signing out keeps your progress. Sign back in any time. Deleting removes your account and progress for good.</p></section>
     <section class="me-sec"><h2>Help</h2>
-      <div class="set-row">Found a mistake or a bug?<a class="btn ghost sm" href="mailto:ayeshaferozroza@gmail.com?subject=${encodeURIComponent('GabBoo feedback')}">Tell us</a></div></section>
+      ${CFG.supportEmail ? `<div class="set-row">Found a mistake or a bug?<a class="btn ghost sm" href="mailto:${esc(CFG.supportEmail)}?subject=${encodeURIComponent('GabBoo feedback')}">Tell us</a></div>` : ''}</section>
     <p class="me-foot"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="terms.html" target="_blank" rel="noopener">Terms</a> · GabBoo ${esc(SPEAKABOO_VERSION)}</p></div>`;
   const root = $('#tab-profile');
   $$('[data-mascot-live]', root).forEach(el => paintMascot(el, p.mascot, 'happy', true));
@@ -9296,7 +9339,7 @@ function splash() {
     <button class="sp-sound" aria-label="Sound" data-state="${sp}">${sp === 'on' ? '♪ Sound on' : 'Sound off'}</button><button class="sp-skip">Skip</button>`;
   document.body.append(el); document.documentElement.classList.remove('boot');
   const ghost = $('.sp-ghost', el), face = m => { if (ghost.isConnected) ghost.innerHTML = booBookSVG(m); };
-  const T = [[350, () => Sfx.whoosh()], [1250, () => { Sfx.boo(); el.classList.add('flash'); }], [1750, () => el.classList.remove('flash')], [2100, () => { face('giggle'); Sfx.giggle(); }], [2800, () => { face('happy'); Sfx.chime(); }]];
+  const T = [[350, () => Sfx.whoosh()], [1250, () => { Sfx.boo(); el.classList.add('sp-flash'); }], [1750, () => el.classList.remove('sp-flash')], [2100, () => { face('giggle'); Sfx.giggle(); }], [2800, () => { face('happy'); Sfx.chime(); }]];
   const timers = T.map(([ms, fn]) => setTimeout(fn, ms));
   const btn = $('.sp-sound', el);
   btn.onclick = () => { const v = !Sound.on(); Sound.set(v); btn.dataset.state = v ? 'on' : 'off'; btn.textContent = v ? '♪ Sound on' : 'Sound off'; if (v) { Sound.ready(); Sfx.chime(); } };
@@ -9510,6 +9553,13 @@ if ('Notification' in window) { setInterval(() => Remind.tick(), 60000); setTime
       const sents = units.flatMap(u => u.sentences || []), pool = shuffle((sents.length ? sents : units.flatMap(u => u.words || [])).slice()).slice(0, 10);
       return kind === 'speaksent' ? pool.map(x => EX.speak(x)) : pool.slice(0, 6).map(x => EX.shadow(x));
     }
+    if (kind === 'saypic') {   // say what you see: words you met that have a picture
+      const c = course(), p = P(), seen = new Set(), started = c.units.filter(u => u.track !== 'letters' && !(u.letters || []).length && unitProgress(p, c.code, u.id) > 0);
+      const weak = SRS.weak(p).map(id => VOCAB_INDEX[id]).filter(w => w && w.lang === c.code);
+      const ws = [...weak, ...shuffle((started.length ? started : c.units.filter(u => !(u.letters || []).length).slice(0, 1)).flatMap(u => u.words || []))]
+        .filter(w => w && w.pic && ART[w.pic] && !seen.has(w.t) && seen.add(w.t));
+      return ws.slice(0, 8).map(w => EX.saypic(w));
+    }
     return _bp(kind);
   };
   const _prac2 = renderPractice;
@@ -9519,13 +9569,60 @@ if ('Notification' in window) { setInterval(() => Remind.tick(), 60000); setTime
     sp.insertAdjacentHTML('afterend', `<button class="drill" data-practice="speaksent"><span class="ic">${ICON.mic}</span><b>Say sentences</b><small>Whole sentences, out loud</small></button><button class="drill" data-practice="echo"><span class="ic">${ICON.speaker}</span><b>Repeat after Boo</b><small>Listen, then copy</small></button>`);
   };
   const _acc = Access.allows;
-  Access.allows = function (what, ctx) { if (what === 'drill' && (ctx === 'speaksent' || ctx === 'echo')) return _acc.call(this, 'drill', 'speak'); return _acc.apply(this, arguments); };
+  Access.allows = function (what, ctx) { if (what === 'drill' && (ctx === 'speaksent' || ctx === 'echo' || ctx === 'saypic')) return _acc.call(this, 'drill', 'speak'); return _acc.apply(this, arguments); };
 }
+/* ---- Train, rebuilt: one daily button, then tidy groups (Speak / Listen and read / Quick games / Letters) ---- */
+renderPractice = function () {
+  const p = P(), c = course(), words = learnedWords(p, c.code), due = SRS.due().length;
+  const T = (kind, icon, name, sub, dis) => `<button class="tr-tile" data-practice="${kind}" ${dis ? 'disabled' : ''}><span class="ic">${icon}</span><b>${name}</b><small>${sub}</small></button>`;
+  const lettersOn = c.letterUnits.length && lettersOpen();
+  $('#tab-practice').innerHTML = `<div class="pad stack train">
+    <div class="card practice-hero"><div class="mascot" data-pr-m></div><div><h2>Daily practice</h2>
+      <p>${due ? `${due} word${due > 1 ? 's are' : ' is'} ready to review.` : words.length ? 'Your weakest words, mixed up.' : 'Finish a lesson and your words land here.'}</p>
+      <button class="btn primary" data-practice="mix">Start · +5 XP</button></div></div>
+    <h3 class="tgroup">Speak</h3>
+    <div class="tr-tiles">
+      ${T('saypic', ICON.mic, 'Say what you see', 'A picture, you say it')}
+      ${T('speak', ICON.mic, 'Say words', 'Checked by voice')}
+      ${T('speaksent', ICON.mic, 'Say sentences', 'Whole sentences aloud')}
+      ${T('echo', ICON.speaker, 'Repeat after Boo', 'Listen, then copy')}
+      <button class="tr-tile" data-tone><span class="ic">${ICON.speaker}</span><b>Tone Studio</b><small>Same words, new feeling</small></button>
+      ${T('soundlab', ICON.mic, 'Sound Lab', 'Your trickiest sounds')}
+    </div>
+    <h3 class="tgroup">Listen and read</h3>
+    <div class="tr-tiles">
+      ${T('listen', ICON.ear, 'Listening', 'Hear it, pick it')}
+      ${T('sentences', ICON.chat, 'Sentences', 'Build and translate', !c.units.some(u => u.sentences))}
+      ${T('story', ICON.book, 'Story time', 'Read, listen, answer', !c.units.some(u => u.story))}
+      ${T('pictures', ICON.target, 'Picture quiz', 'See it, name it')}
+    </div>
+    <h3 class="tgroup">Quick games</h3>
+    <div class="tr-tiles">
+      ${T('speed', ICON.bolt, '60-second sprint', p.stats.speedBest ? `Your record: ${p.stats.speedBest}` : 'How many can you get?')}
+      ${T('matching', ICON.blocks, 'Match madness', 'Pair words fast')}
+      ${T('mistakes', ICON.target, 'Fix my mistakes', 'Only what you missed')}
+      ${T('grammar', ICON.chat, 'Grammar gym', 'Fill the gap')}
+    </div>
+    ${lettersOn ? `<h3 class="tgroup">${c.code === 'ko' ? 'Hangeul' : 'Letters'}</h3><div class="tr-tiles">${T('letters', ICON.blocks, c.code === 'ko' ? 'Hangeul drill' : 'Letter drill', 'Sounds and building')}<button class="tr-tile" data-adventure="LETTER_EXPLORER"><span class="ic">${ICON.blocks}</span><b>Letter Explorer</b><small>Find letters in words</small></button></div>` : ''}
+    <details class="more"><summary>My stuff: voice journal, phrasebook, jokes</summary>
+      ${voiceJournalHTML()}
+      ${phrasebookHTML()}
+      <div class="card jokes"><h3>Joke jar <span class="muted num" style="font:700 14px var(--font-body)">${p.jokes.length}</span></h3>${p.jokes.length ? `<ul>${p.jokes.slice(0, 40).map(j => `<li>${esc(j.text)}</li>`).join('')}</ul>` : '<p class="note">Every mistake unlocks a joke from your tutor.</p>'}</div>
+    </details>
+  </div>`;
+  paintMascot($('[data-pr-m]'), p.mascot, 'cheer', false);
+};
 /** Warm the flat pictures in idle time so the next exercise never waits for them. */
 function warmPics() {
-  const files = [...new Set(Object.values(PIC_FILES))]; let i = 0;
-  const next = () => { for (let n = 0; n < 6 && i < files.length; n++) { const im = new Image(); im.decoding = 'async'; im.src = 'pics/' + files[i++]; } if (i < files.length) setTimeout(next, 120); };
-  (window.requestIdleCallback || (f => setTimeout(f, 800)))(next);
+  // After the opening (so it never competes with it): the language you are learning first, the rest a little later,
+  // and only your language when the phone is saving data.
+  setTimeout(() => {
+    let mine = []; try { if (P()) mine = vocabPool(course()).map(w => PIC_FILES[w.pic]).filter(Boolean); } catch (e) { /* no learner yet */ }
+    const lite = !!(navigator.connection && (navigator.connection.saveData || /(^|-)2g$/.test(navigator.connection.effectiveType || '')));
+    const files = [...new Set(lite ? mine : [...mine, ...Object.values(PIC_FILES)])], firstN = new Set(mine).size; let i = 0;
+    const next = () => { for (let n = 0; n < 6 && i < files.length; n++) { const im = new Image(); im.decoding = 'async'; im.src = 'pics/' + files[i++]; } if (i < files.length) setTimeout(next, i < firstN ? 120 : 400); };
+    (window.requestIdleCallback || (f => setTimeout(f, 800)))(next);
+  }, 6000);
 }
 function bootApp() {
   warmPics(); setTimeout(() => document.documentElement.classList.remove('boot'), 6500);
@@ -10649,7 +10746,7 @@ const Onboard = {
         <div class="ob-spots">${['tree', 'gift', 'umbrella'].map((k, i) => `<button class="ob-spot" data-spot="${i}" style="animation-delay:${i * 120}ms">${artSVG(k)}<span class="peek-eyes"></span></button>`).join('')}</div><p class="ob-hint" id="ob-hint">Tap one!</p></div>`,
       () => `<div class="ob-s ob-welcome"><div class="ob-bubble"><b>Psst… I’m Boo.</b><span>I’ve haunted every country for 500 years, so I know every language. Learn from me, and speak your way out of the manor.</span></div><div class="ob-ghost ob-ghost-img" id="ob-ghost">${ghostPose('welcome')}</div><button class="btn primary big" data-ob-next>Let’s begin</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
-        <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
+        <div class="ob-cities">${['ko', 'ar', 'es'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk').replace('xMidYMax slice', 'xMaxYMax slice')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
       () => `<div class="ob-s"><h1>What brings you here?</h1><p>Boo will pick moments that matter to you.</p>
         <div class="ob-why">${[['travel', 'Travel', 'island'], ['culture', 'Shows & music', 'radio'], ['people', 'Family & friends', 'friends'], ['work', 'Work & study', 'work'], ['fun', 'Just for fun', 'gift']].map(([k, l, a]) => `<button class="ob-chip ${d.why === k ? 'on' : ''}" data-why="${k}">${artSVG(a)}<b>${l}</b></button>`).join('')}</div>
@@ -10842,7 +10939,7 @@ const TRIAL_DAYS = CFG.trialDays || 7;
 const FREE = { chapters: 2, talkPerDay: 3, gamesPerDay: 1 };
 Object.assign(TRIAL, { callBoo: true });
 const WHY_SB = [
-  ['speak', 'You speak from minute one', 'Most apps have you tap tiles and match pairs. In GabBoo you answer out loud and Boo listens, scores and reacts.'],
+  ['speak', 'Peek. Speak. Repeat.', 'Every new word: peek at a picture and guess it, then say it out loud straight away. Boo listens and scores you. Most apps only have you tap.'],
   ['friends', 'Moments, not word lists', 'Every phrase lives in a tiny comic scene: who you’re talking to and where. That’s how you learn when to be polite or casual.'],
   ['clock', 'It follows your day', 'Today shows what people actually say in the next few hours, then sends you out with a real-life mission.'],
   ['radio', 'Hear the feeling', '진짜? vs 진짜! Tone Studio teaches the melody of real speech and draws your own voice so you can match it.'],
@@ -11025,11 +11122,20 @@ Account.boot = function (start) {
     authScreen('loading');
     this.sdk().then(() => { firebase.initializeApp(CFG.firebase); this.db = firebase.firestore(); try { this.db.enablePersistence({ synchronizeTabs: true }).catch(() => {}); } catch (e) { /* ignore */ }
       firebase.auth().onAuthStateChanged(async u => {
-        if (!u) { this.user = null; this.meta = {}; if (!Starter.introDone()) { $('#auth') && ($('#auth').hidden = true); Onboard2.open(0); } else authScreen('signin'); return; }
-        this.user = u; if (!$('#ob')) authScreen('loading');
+        if (!u) {
+          this.user = null; this.meta = {}; this.pulled = false;
+          if (Onboard2.backToAccount) { Onboard2.backToAccount = false; $('#auth') && ($('#auth').hidden = true); Onboard2.open(Onboard2.ACCOUNT); return; }   // "use a different email"
+          if (!Starter.introDone()) { $('#auth') && ($('#auth').hidden = true); Onboard2.open(0); } else authScreen('signin'); return;
+        }
+        this.user = u;
+        if (needsVerify(u)) {   // the saved copy of the user can be stale: ask Firebase before showing "check your email"
+          try { await u.reload(); } catch (e) { /* offline: show the screen anyway */ }
+          if (needsVerify(firebase.auth().currentUser || u)) { this.ready = true; Onboard2.verify(firebase.auth().currentUser || u); return; }
+          try { await u.getIdToken(true); } catch (e) { /* the next refresh picks it up */ }
+        }
+        if (!$('#ob')) authScreen('loading');
         try { await this.pull(); } catch (e) { toast('Couldn’t reach your cloud save. Using this phone’s copy for now.'); }
         this.ready = true; Billing.refresh();
-        if (needsVerify(u)) { Onboard2.verify(u); return; }
         if ($('#ob')) Onboard2.accountReady(); else Starter.go();
       });
     }).catch(() => authScreen('offline'));
@@ -11081,7 +11187,7 @@ Paywall.show = async function (soft, reason) {
     const pr = Billing.prices[x.id];
     return `<button class="plan ${x.best ? 'best' : ''}" data-sub="${esc(x.id)}">${x.best ? '<span class="plan-tag">Best value</span>' : ''}<b>${esc(x.name)}</b><span class="plan-price">${pr ? esc(pr.label) : esc(x.price || '')}</span><small>per ${esc(x.period)}${x.note ? ` · ${esc(x.note)}` : ''}</small></button>`;
   }).join('');
-  const rows = [['Part 1 chapters', '2 samples', 'All', 'All 6 seasons'], ['Languages', '1', '1', 'Korean, Arabic & Spanish'], ['Talk with Boo', '3 a day', '10 a day', 'Unlimited'], ['Call Boo (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
+  const rows = [['Chapters', 'First 2', 'All of Part 1', 'Every chapter'], ['Talk with Boo', '3 a day', '10 a day', 'Unlimited'], ['Call Boo (hands-free)', '—', '✓', '✓'], ['Real Talk, Story, Tone Studio', '1 a day', '✓', '✓'], ['Live it & real-life missions', '✓', '✓', '✓']];
   el.innerHTML = `<div class="pw-card">${soft ? `<button class="icon-btn pw-x" data-pw-close aria-label="Close">${ICON.x}</button>` : ''}
     <div class="mascot pw-boo" id="pw-m"></div>
     <h2>${s.mode === 'free' ? 'Your free week is over. Boo isn’t!' : s.mode === 'trial' ? `Free trial: ${s.daysLeft} day${s.daysLeft > 1 ? 's' : ''} left` : 'GabBoo Premium'}</h2>
@@ -11125,7 +11231,7 @@ const Onboard2 = {
         <div class="sc"><span>4</span><p><b>Speak the words</b> to open each door and escape the manor.</p></div></div>
         <button class="btn primary big" data-ob-next>I’m in</button></div>`,
       () => `<div class="ob-s"><h1>Where are we going?</h1><p>Tap a city to hear it say hello.</p>
-        <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
+        <div class="ob-cities">${['ko', 'es', 'fr', 'de', 'ja', 'zh', 'ar'].map(k => `<button class="ob-city ${d.lang === k ? 'on' : ''}" data-city="${k}"><div class="ob-sky">${skylineSVG(k, 'dusk').replace('xMidYMax slice', 'xMaxYMax slice')}</div><span><b>${esc(CITY[k].city)}</b><small>${esc(COURSES[k].name)} · <span class="script" ${attrs(COURSES[k])}>${esc(g[k][0])}</span></small></span></button>`).join('')}</div>
         <button class="btn primary big" data-ob-next>Let’s go to ${esc(CITY[d.lang].city)}</button></div>`,
       () => `<div class="ob-s ob-goal"><h1>Tell Boo about you</h1>
         <p class="ob-q">Why are you learning ${esc(c.name)}?</p>
@@ -11155,7 +11261,10 @@ const Onboard2 = {
     this.wire();
   },
   next() { this.step = Math.min(this.LAST, ({ 1: 2, 2: 3, 3: 4, 4: 5, 5: 6 })[this.step] || this.step + 1); if (this.step === this.ACCOUNT && Acct.email()) this.step = this.PROFILE; Sfx.pop(); this.show(); },
-  accountReady() { if (this.step <= this.ACCOUNT) { this.step = this.PROFILE; this.show(); } },
+  accountReady() {
+    if (Store.data.order && Store.data.order.length) { $('#ob')?.remove(); Starter.go(); return; }   // signed in to an account that already has a learner
+    if (this.step <= this.ACCOUNT) { this.step = this.PROFILE; this.show(); }
+  },
   wire() {
     const el = $('#ob'), d = this.draft;
     $('[data-ob-skip]', el) && ($('[data-ob-skip]', el).onclick = () => { this.step = Acct.email() ? this.PROFILE : this.ACCOUNT; this.show(); });
@@ -11225,30 +11334,82 @@ const Onboard2 = {
 };
 /* ---- Email check: an account must confirm its email before the learner is set up ---- */
 const needsVerify = u => !!(Acct.cloud() && u && !u.emailVerified && (u.providerData || []).some(x => x.providerId === 'password'));
+/* Before cloud accounts are connected (config.js has no Firebase project), say plainly that no email is sent. */
+{
+  const note = '<p class="ob-local">Saved on this phone for now. No confirmation email is sent until GabBoo’s cloud accounts are switched on.</p>';
+  const _obShow = Onboard2.show;
+  Onboard2.show = function () { const r = _obShow.apply(this, arguments); if (this.step === this.ACCOUNT && !Acct.cloud()) $('#ob-acct')?.insertAdjacentHTML('afterend', note); return r; };
+  const _auth = authScreen;
+  authScreen = function (mode) { const r = _auth.apply(this, arguments); if (mode === 'signup' && !Acct.cloud()) $('#auth-form')?.insertAdjacentHTML('afterend', note); return r; };
+}
+/** Plain words for the errors you can get while sending the confirmation email. */
+function mailError(e) {
+  const c = (e && e.code) || '';
+  if (/too-many-requests|quota/.test(c)) return 'Too many emails in a short time. Wait a few minutes, then tap “Send it again”.';
+  if (/network/.test(c)) return 'No internet connection. Connect, then tap “Send it again”.';
+  return 'We couldn’t send the email just now. Tap “Send it again”.';
+}
+/** A shortcut to the inbox for the big email providers. */
+function inboxFor(email) {
+  const d = String(email || '').split('@')[1] || '';
+  if (/^(gmail|googlemail)\.com$/.test(d)) return ['Open Gmail', 'https://mail.google.com/mail/u/0/#inbox'];
+  if (/^(outlook|hotmail|live|msn)\.[a-z.]+$/.test(d)) return ['Open Outlook', 'https://outlook.live.com/mail/'];
+  if (/^(yahoo|ymail)\.[a-z.]+$/.test(d)) return ['Open Yahoo Mail', 'https://mail.yahoo.com/'];
+  if (/^(icloud|me|mac)\.com$/.test(d)) return ['Open iCloud Mail', 'https://www.icloud.com/mail'];
+  return null;
+}
 Onboard2.verify = function (u) {
   $('#auth') && ($('#auth').hidden = true);
   let el = $('#ob'); if (!el) { el = document.createElement('div'); el.id = 'ob'; el.className = 'ob'; document.body.append(el); }
+  const inbox = inboxFor(u.email);
   el.innerHTML = `<div class="ob-top"><div class="ob-bar"><i style="width:80%"></i></div></div><div class="ob-stage"><div class="ob-s ob-verify">
+    <div class="ov-env" aria-hidden="true"><svg viewBox="0 0 64 48"><rect x="4" y="8" width="56" height="36" rx="7" fill="#FFF3E6" stroke="#E8590C" stroke-width="3"/><path d="M6 12l26 18 26-18" fill="none" stroke="#E8590C" stroke-width="3" stroke-linejoin="round"/></svg></div>
     <h1>Check your email</h1>
-    <p>We sent a link to <b>${esc(u.email)}</b>. Open it, then come back here.</p>
-    <button class="btn primary big" id="ov-ok">I have verified</button>
+    <p>We sent a confirmation link to <b class="ov-mail">${esc(u.email)}</b>. Open it, then come back here. This screen moves on by itself.</p>
+    ${inbox ? `<a class="btn primary big" id="ov-inbox" href="${inbox[1]}" target="_blank" rel="noopener">${inbox[0]}</a>` : ''}
+    <button class="btn ${inbox ? 'ghost' : 'primary big'}" id="ov-ok">I’ve confirmed it</button>
     <button class="btn ghost" id="ov-resend">Send it again</button>
-    <button class="link-btn" id="ov-other">Use a different email</button>
+    <p class="ov-tip">Can’t find it? Look in Spam or Promotions. It comes from <b>noreply@${esc((CFG.firebase && CFG.firebase.authDomain) || 'firebaseapp.com')}</b>.</p>
+    <button class="link-btn" id="ov-other">Wrong email? Use a different one</button>
     <p class="auth-err" id="ov-msg" role="status"></p></div></div>`;
   const msg = t => { const m = $('#ov-msg'); if (m) m.textContent = t; };
-  let stop = false;
-  const check = async quiet => {
-    try { await u.reload(); } catch (e) { if (!quiet) msg('Couldn’t check just now. Try again.'); return; }
+  if (Account.mailError) { msg(mailError(Account.mailError)); Account.mailError = null; }
+  let stop = false, busy = false;
+  const done = async () => {
+    stop = true; msg('Confirmed! Setting things up…');
     const cu = firebase.auth().currentUser;
-    if (cu && cu.emailVerified) { stop = true; msg(''); if ($('#ob') && $('#ob').dataset.fresh !== '0') { Onboard2.step = Onboard2.PROFILE; Onboard2.show(); } else { $('#ob')?.remove(); Starter.go(); } return; }
-    if (!quiet) msg('Not verified yet. Open the link in your email first.');
+    try { await cu.getIdToken(true); } catch (e) { /* the next refresh picks it up */ }   // the sign-in token must carry "email confirmed" before the cloud save opens
+    try { await Account.pull(); } catch (e) { /* this phone's copy is used until the cloud answers */ }
+    Account.ready = true; try { Billing.refresh(); } catch (e) { /* ignore */ }
+    if (Store.data.order && Store.data.order.length) $('#ob')?.remove();   // a returning learner goes straight in
+    Starter.go(); toast('Email confirmed. Welcome to GabBoo!', '✓');
+  };
+  const check = async quiet => {
+    if (busy || stop) return; busy = true;
+    try { await (firebase.auth().currentUser || u).reload(); }
+    catch (e) { busy = false; if (!quiet) msg('Couldn’t check just now. Try again in a moment.'); return; }
+    busy = false;
+    const cu = firebase.auth().currentUser;
+    if (cu && cu.emailVerified) return done();
+    if (!quiet) msg('Not confirmed yet. Open the link in the email first.');
   };
   $('#ov-ok').onclick = () => check(false);
   let wait = 0; const rs = $('#ov-resend');
-  rs.onclick = async () => { if (wait) return; try { await u.sendEmailVerification(); msg('Sent. Check your inbox and spam folder.'); } catch (e) { msg('Couldn’t send it. Wait a minute and try again.'); return; }
-    wait = 30; const t = setInterval(() => { wait--; if (!rs.isConnected || wait <= 0) { clearInterval(t); wait = 0; if (rs.isConnected) rs.textContent = 'Send it again'; } else rs.textContent = `Send it again (${wait})`; }, 1000); };
-  $('#ov-other').onclick = async () => { stop = true; try { await firebase.auth().signOut(); } catch (e) { /* ignore */ } };
+  const cooldown = s => { wait = s; const t = setInterval(() => { wait--; if (!rs.isConnected || wait <= 0) { clearInterval(t); wait = 0; if (rs.isConnected) rs.textContent = 'Send it again'; } else rs.textContent = `Send it again (${wait})`; }, 1000); };
+  rs.onclick = async () => {
+    if (wait) return; rs.disabled = true;
+    try { await Account.verifyMail(firebase.auth().currentUser || u); msg('Sent again. Check your inbox and the Spam folder.'); cooldown(45); }
+    catch (e) { msg(mailError(e)); cooldown(20); }
+    rs.disabled = false;
+  };
+  $('#ov-other').onclick = async () => {   // a typo: remove the unconfirmed account and go back to the email form
+    stop = true; Onboard2.backToAccount = true;
+    const cu = firebase.auth().currentUser;
+    try { if (cu && !cu.emailVerified) await cu.delete(); else await firebase.auth().signOut(); }
+    catch (e) { try { await firebase.auth().signOut(); } catch (x) { /* ignore */ } }
+  };
   const poll = setInterval(() => { if (stop || !$('.ob-verify')) return clearInterval(poll); check(true); }, 4000);
+  document.addEventListener('visibilitychange', function onVis() { if (stop || !$('.ob-verify')) return document.removeEventListener('visibilitychange', onVis); if (document.visibilityState === 'visible') check(true); });
 };
 /* =====================================================================
    EPISODE FLOW
@@ -11304,5 +11465,239 @@ Object.assign(MOMENTS, {
 });
 Object.assign(Onboard.GREET, {"fr": ["Bonjour !", "bon-ZHOOR", "Hello!"], "de": ["Hallo!", "HAH-loh", "Hello!"], "ja": ["こんにちは！", "kon-ni-chi-wa", "Hello!"], "zh": ["你好！", "nǐ hǎo", "Hello!"]});
 const OPEN_X = {"fr": {"t": "Bonjour ! Comment était ta journée ?", "r": "bon-ZHOOR! koh-MOHN ay-TEH tah zhoor-NAY?", "en": "Hi! How was your day?"}, "de": {"t": "Hallo! Wie war dein Tag?", "r": "HAH-loh! vee vahr dine TAHK?", "en": "Hi! How was your day?"}, "ja": {"t": "こんにちは！今日 は どう でした か？", "r": "konnichiwa! kyō wa dō deshita ka?", "en": "Hi! How was your day?"}, "zh": {"t": "你 好！今天 过得 怎么样？", "r": "nǐ hǎo! jīntiān guò de zěnmeyàng?", "en": "Hi! How was your day?"}};
+/* =====================================================================
+   PEEK · SPEAK · REPEAT  (the first two scenes of every chapter)
+   Every new word: PEEK (guess it from a picture, a moment or an example
+   sentence; a wrong guess costs no heart), then SPEAK it straight away.
+   Then REPEAT: quick checks, half of them out loud, and the words in a
+   real sentence. No "watch the scene" panels, no read-only word cards.
+   ===================================================================== */
+const STAGE_LABEL = { peek: 'Peek · new word', speak: 'Speak', repeat: 'Repeat' };
+const stageChip = s => STAGE_LABEL[s] ? `<span class="stage-chip st-${s}">${STAGE_LABEL[s]}</span>` : '';
+Object.assign(CREW_KIND, { peek: 'nabi', saypic: 'horangi' });
+/** A real course sentence that uses the word, with the word highlighted. */
+/* Spanish, French and German: examples must use the word as a whole word ("je" is not inside "déjeuner"). */
+{
+  // Accents stay: "té" (tea) is not "te" (you), "là" is not "la".
+  const fold = s => String(s || '').normalize('NFC').toLowerCase().replace(/[’‘]/g, "'").replace(/[.,!?¿¡~"“”«»…·:;()]/g, ' ').replace(/\s+/g, ' ').trim();
+  const _ex = exampleFor;
+  exampleFor = function (w) {
+    if (!isLatinLang(course().code)) return _ex(w);
+    const t = fold(w.t); if (!t || t.length < 2) return null;
+    const pad = s => ` ${fold(s).replace(/'/g, "' ")} `;   // j'habite → "j' habite"
+    const hit = allSentences().filter(s => pad(s.t).includes(` ${t.replace(/'/g, "' ")} `) && fold(s.t) !== t);
+    return hit.length ? pick(hit) : null;
+  };
+}
+function peekExampleHTML(ex, w, opts = {}) {
+  const c = course(), t = String(ex.t), wt = w ? String(w.t).replace(/^[¡¿"“«(\s]+|[!?.,"”»)\s]+$/g, '') : '';
+  let at = -1, len = wt.length;
+  if (wt && isLatinLang(c.code)) { const m = new RegExp(`(^|[^\\p{L}\\p{M}])(${wt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})(?=$|[^\\p{L}\\p{M}])`, 'iu').exec(t); if (m) at = m.index + m[1].length; }
+  else if (wt) at = t.toLowerCase().indexOf(wt.toLowerCase());
+  const hl = at >= 0 ? `${esc(t.slice(0, at))}<mark>${esc(t.slice(at, at + len))}</mark>${esc(t.slice(at + len))}` : esc(t);
+  const rom = (ex.r || romFor(t)) && !isLatinLang(c.code) ? `<small class="ex-rom">${esc(ex.r || romFor(t))}</small>` : '';
+  return `<button class="peek-ex ${opts.cls || ''}" data-say="${esc(t)}">${ICON.speaker}<span>${opts.label ? `<small class="pe-label">${esc(opts.label)}</small>` : ''}<span class="script" ${attrs(c)}>${hl}</span>${rom}<small class="ex-en">${esc(ex.en)}</small></span></button>`;
+}
+Object.assign(EX, {
+  /** Guess a brand-new word: picture cards when it has a drawing, else its moment, else an example sentence. */
+  peek(w, set, pool) {
+    const key = x => cleanEn(x.en).toLowerCase(), ex = exampleFor(w);
+    let mode = w.pic && ART[w.pic] ? 'cards' : ctxOf(w) ? 'scene' : ex ? 'example' : 'plain', options = null;
+    if (mode === 'cards') {
+      const seenK = new Set([key(w)]), seenP = new Set([w.pic]), seenT = new Set([w.t]), opts = [w];
+      for (const o of [...shuffle(set.filter(x => x !== w)), ...shuffle(pool.slice())]) {
+        if (opts.length >= 4) break;
+        if (!o || !o.pic || !ART[o.pic] || seenK.has(key(o)) || seenP.has(o.pic) || seenT.has(o.t)) continue;
+        seenK.add(key(o)); seenP.add(o.pic); seenT.add(o.t); opts.push(o);
+      }
+      if (opts.length >= 3) options = shuffle(opts); else mode = ctxOf(w) ? 'scene' : ex ? 'example' : 'plain';
+    }
+    if (!options) {
+      const seen = new Set([key(w)]), out = [cleanEn(w.en)];
+      for (const o of [...shuffle(set.filter(x => x !== w)), ...shuffle(pool.slice())]) { if (out.length >= 3) break; const v = cleanEn(o.en); if (!v || seen.has(v.toLowerCase())) continue; seen.add(v.toLowerCase()); out.push(v); }
+      options = shuffle(out);
+    }
+    return { kind: 'peek', mode, w, ex, options, answer: cleanEn(w.en), srsId: w.id, stage: 'peek' };
+  },
+  /** Say what you see: a picture (or the English) and the mic. Recall by speaking. */
+  saypic: w => ({ kind: 'saypic', w, srsId: w.id, stage: 'repeat' })
+});
+RENDER.peek = function (step, el, R) {
+  const c = course(), w = step.w, en = cleanEn(w.en), free = !step.retry, cards = step.mode === 'cards';
+  const rom = x => x.r && x.r !== x.t && !isLatinLang(c.code) ? `<small class="pk-rom">${esc(x.r)}</small>` : '';
+  let body;
+  if (cards) body = `<p class="q">Which one is “${esc(en)}”?</p>${free ? '<p class="peek-sub">Look at the pictures and guess. No hearts lost.</p>' : ''}
+      <div class="peek-grid n${step.options.length}">${step.options.map((o, i) => `<button class="peek-card" data-i="${i}"><span class="pk-pic">${artSVG(o.pic)}</span><span class="pk-word script" ${attrs(c)}>${esc(o.t)}</span>${rom(o)}</button>`).join('')}</div>`;
+  else {
+    const top = step.mode === 'scene' ? panelHTML(w, 'word', { rom: true, tools: false })
+      : step.mode === 'example' ? peekExampleHTML(step.ex, w, { cls: 'big' })
+      : `<div class="peek-word"><button class="speaker" data-say="${esc(w.t)}" aria-label="Play">${ICON.speaker}</button><div><div class="prompt-text script" ${attrs(c)}>${esc(w.t)}</div>${rom(w)}</div></div>`;
+    body = `<p class="q">What does <span class="script" ${attrs(c)}>${esc(w.t)}</span> mean${step.mode === 'scene' ? ' here' : ''}?</p>${free ? `<p class="peek-sub">${step.mode === 'example' ? 'Use the example to guess.' : step.mode === 'scene' ? 'Look at the moment and guess.' : 'Have a guess.'} No hearts lost.</p>` : ''}
+      ${top}<div class="opts">${step.options.map((o, i) => `<button class="opt" data-i="${i}"><kbd>${i + 1}</kbd><span>${esc(o)}</span></button>`).join('')}</div>`;
+  }
+  el.innerHTML = `${stageChip(free ? 'peek' : 'repeat')}${body}<div class="peek-after" id="pk-after"></div>`; el.classList.add('peek-step', 'peek-' + step.mode);
+  if (free) Coach.pending = R.i === 0 ? 'Peek, speak, repeat! Guess the new word, then say it.' : pick(['Peek and guess. Then you say it.', 'New word! Trust your eyes.', 'Guess first. It sticks better.']);
+  const sel = cards ? '.peek-card' : '.opt', isRight = i => cards ? step.options[i].t === w.t : step.options[i] === step.answer;
+  const answer = i => {
+    if (R.locked) return; const ok = isRight(i);
+    $$(sel, el).forEach((b, j) => { b.disabled = true; if (isRight(j)) b.classList.add('right'); else if (j === i) b.classList.add('wrong'); });
+    el.classList.add('peek-done');   // keep only your pick and the right one, so the meaning and the example fit on screen
+    const after = $('#pk-after', el);
+    if (after) after.innerHTML = `${cards ? `<p class="pk-means"><b class="script" ${attrs(c)}>${esc(w.t)}</b> means “${esc(en)}”</p>` : ''}${step.ex && step.mode !== 'example' ? peekExampleHTML(step.ex, w, { label: 'Example' }) : ''}`;
+    if (!ok && free) {   // a free guess: no heart, the answer is on screen, and the word comes back a few steps later
+      R.queue.splice(Math.min(R.queue.length, R.i + 4), 0, Object.assign({}, step, { retry: true, options: shuffle(step.options.slice()), stage: 'repeat' }));
+      if (!after.innerHTML) after.innerHTML = `<p class="pk-means"><b class="script" ${attrs(c)}>${esc(w.t)}</b> means “${esc(en)}”</p>`;
+      setTimeout(() => { if (el.isConnected) Voice.speak(w.t); }, 250);
+      R.grade(false, { free: true, teach: 'It comes back in a moment.' });
+      return;
+    }
+    R.grade(ok, { you: cards ? step.options[i].t : step.options[i], show: { t: w.t, r: w.r, en }, noAuto: ok && !!step.ex && step.mode !== 'example' });
+  };
+  $$(sel, el).forEach(b => b.onclick = () => answer(+b.dataset.i)); R.select = answer;
+  if (!cards) setTimeout(() => { if (!R.locked && el.isConnected) Voice.speak(w.t); }, 300);
+};
+RENDER.saypic = function (step, el, R) {
+  const c = course(), w = step.w, en = cleanEn(w.en), canMic = !!Mic.SR && !Mic.blocked, art = w.pic && ART[w.pic] ? artSVG(w.pic) : '';
+  let tries = 0, revealed = false;
+  el.innerHTML = `${stageChip('repeat')}<p class="q">${art ? 'Say what you see!' : `How do you say “${esc(en)}”?`}</p>
+    ${art ? `<div class="say-pic" aria-hidden="true">${art}</div><p class="say-en">${esc(en)}</p>` : ''}
+    <div class="say-ans" id="sy-ans"><b>?</b><small>Say it out loud</small></div>
+    ${canMic ? `<div class="mic-row"><button class="mic-big" id="sy-mic" aria-label="Tap to speak">${ICON.mic}</button><div class="mic-status"><span id="sy-st">Tap the mic and say it</span></div></div><button class="link-btn" id="sy-help">Show me the word</button>`
+      : `<div class="fallback">Say it out loud first, then check.<div class="row"><button class="btn ghost sm" id="sy-show">Show the answer</button></div></div>`}`;
+  const reveal = () => { if (revealed) return; revealed = true; const a = $('#sy-ans', el); if (a) { a.classList.add('open'); a.innerHTML = `<span class="script" ${attrs(c)}>${esc(w.t)}</span>${w.r && w.r !== w.t && !isLatinLang(c.code) ? `<small>${esc(w.r)}</small>` : ''}`; } Voice.speak(w.t); };
+  const soft = msg => { R.grade(true, { teach: msg, noAuto: true }); const t = $('#l-fb-title'); if (t) t.textContent = 'Keep practising'; };
+  R.skipAllowed('Can’t speak now');
+  if (!canMic) {
+    $('#sy-show', el).onclick = () => {
+      reveal(); const f = $('.fallback', el);
+      f.innerHTML = `Did you say it?<div class="row"><button class="btn good sm" id="sy-yes">Yes, I did</button><button class="btn ghost sm" id="sy-no">Not yet</button></div>`;
+      $('#sy-yes', el).onclick = () => R.grade(true, {}); $('#sy-no', el).onclick = () => soft('Say it once more with the audio.');
+    };
+    return;
+  }
+  $('#sy-help', el).onclick = () => { reveal(); tries = Math.max(tries, 1); };
+  $('#sy-mic', el).onclick = async () => {
+    const btn = $('#sy-mic', el), st = $('#sy-st', el); if (R.locked) return; if (Mic.active) { Mic.stop(); return; }
+    btn.classList.add('on'); st.textContent = 'Listening…';
+    try {
+      const alts = await listenOnce(c.stt, { target: w.t, onInterim: t => { st.textContent = `Hearing: ${t}…`; } }); btn.classList.remove('on'); tries++;
+      const r = pronScore(w.t, alts || []);
+      if (r.ok) { reveal(); P().stats.spoken++; Quests.bump('speak'); R.grade(true, { teach: `${r.pct}% match` }); }
+      else if (tries >= 3) { reveal(); soft(`${r.pct}%. Listen and say it again tomorrow.`); }
+      else {
+        Sfx.wrong(); st.textContent = `I heard “${r.best || '…'}” (${r.pct}%). Try ${tries + 1} of 3`;
+        if (tries === 1 && !revealed) { const a = $('#sy-ans', el); if (a) a.innerHTML = `<small>It starts with</small><b>${esc(String(w.r || w.t).split(/[\s-]/)[0])}…</b>`; }
+        if (tries === 2) reveal();
+      }
+    } catch (code) { btn.classList.remove('on'); st.textContent = Mic.explain(code); if (Mic.blocked) RENDER.saypic(step, el, R); }
+  };
+};
+/* "Say your line" also gets the skip button. */
+{ const _cs = RENDER.ctxsay; RENDER.ctxsay = function (step, el, R) { _cs(step, el, R); if (Mic.SR && !Mic.blocked && $('#cs-mic', el)) R.skipAllowed('Can’t speak now'); }; }
+/* "Can't speak now" turns speaking off for the rest of this lesson (not just one step). */
+{
+  const SPEAKING = new Set(['speak', 'shadow', 'saypic']);
+  const _sa = Runner.skipAllowed;
+  Runner.skipAllowed = function (label) {
+    _sa.call(this, label);
+    const s = $('#l-skip'); if (!s) return;
+    if (/speak/i.test(label || '')) s.onclick = () => {
+      const keep = this.queue.slice(0, this.i + 1), rest = this.queue.slice(this.i + 1).map(x => x.kind === 'ctxsay' ? Object.assign({}, x, { kind: 'ctxpick' }) : x).filter(x => !SPEAKING.has(x.kind));
+      this.queue = keep.concat(rest);
+      toast('Speaking is off for this lesson. It comes back next time.');
+      this.next();
+    };
+    if (/listen/i.test(label || '')) s.onclick = () => {   // no headphones: the rest of the lesson works without sound
+      const wp = vocabPool(course()), keep = this.queue.slice(0, this.i + 1);
+      const rest = this.queue.slice(this.i + 1).map(x => {
+        if (x.kind === 'tiles' && x.listen) return Object.assign({}, x, { listen: false });   // build it from the English instead
+        if (x.kind === 'mcq' && x.prompt && x.prompt.audio) { const w = x.srsId && VOCAB_INDEX[x.srsId]; return w ? EX.meaning(w, wp) : null; }
+        if (x.kind === 'pop' || x.kind === 'order') return null;
+        return x;
+      }).filter(Boolean);
+      this.queue = keep.concat(rest); this.noListen = true;
+      toast('Listening is off for this lesson. It comes back next time.');
+      this.next();
+    };
+  };
+}
+/* Stage chip on every step of a Peek · Speak · Repeat lesson; a stamp for great speaking. */
+{
+  const _rr = Runner.render;
+  Runner.render = function () {
+    const out = _rr.apply(this, arguments);
+    try { const st = this.queue && this.queue[this.i], inn = $('#l-stage .l-inner'); if (st && st.stage && inn && !$('.stage-chip', inn)) inn.insertAdjacentHTML('afterbegin', stageChip(st.retry ? 'repeat' : st.stage)); } catch (e) { /* ignore */ }
+    try {   // listening steps can be switched off, like speaking
+      const st = this.queue && this.queue[this.i], listening = st && (st.kind === 'pop' || st.kind === 'order' || (st.kind === 'tiles' && st.listen) || (st.kind === 'mcq' && st.prompt && st.prompt.audio));
+      if (listening && !this.meta.speed && $('#l-skip') && $('#l-skip').hidden) this.skipAllowed('Can’t listen now');
+    } catch (e) { /* ignore */ }
+    return out;
+  };
+  const _gs = Runner.grade;
+  Runner.grade = function (ok, info = {}) {
+    const was = this.locked, step = this.queue && this.queue[this.i], out = _gs.call(this, ok, info);
+    try {
+      const m = ok && !was && step && /^(speak|saypic|ctxsay|shadow)$/.test(step.kind) && /(\d+)% match/.exec(info.teach || '');
+      if (m && +m[1] >= 75) { const s = document.createElement('div'); s.className = 'say-stamp'; s.innerHTML = `<b>${+m[1] >= 90 ? 'Perfect!' : 'Great!'}</b><small>${m[1]}% match</small>`; $('#l-stage').append(s); setTimeout(() => s.remove(), 1600); }
+    } catch (e) { /* ignore */ }
+    return out;
+  };
+}
+/* The recipe. */
+const _buildLessonPeek = buildLesson;
+buildLesson = function (u, level) {
+  if (!u || u.track === 'letters' || (u.letters || []).length || level > 1 || !(u.words || []).length) return _buildLessonPeek(u, level);
+  const W = u.words, set = level === 0 ? W.slice(0, 5) : (W.slice(5, 10).length ? W.slice(5, 10) : W.slice(-5));
+  const wp = vocabPool(course()), me = P().mascot, out = [];
+  const rep = x => Object.assign(x, { stage: 'repeat' });
+  const check = (w, k) => k % 2 === 0
+    ? rep(concretePic(w) && picPool().length > 3 ? EX.pickPic(w, picPool()) : EX.listenWord(w, wp))   // tap: hear it, find it
+    : rep(ctxOf(w) ? EX.ctxsay(w, set.concat(wp), set) : EX.saypic(w));                                 // out loud: say it from memory
+  set.forEach((w, k) => {
+    out.push(EX.peek(w, set, wp));
+    out.push(Object.assign(EX.speak(w, me), { stage: 'speak' }));
+    if (k >= 1) out.push(check(set[k - 1], k - 1));
+  });
+  out.push(check(set[set.length - 1], 1));
+  // A short second scene (chapters with 6-9 words): bring back words from the first scene too.
+  const review = level === 1 && set.length < 4 ? shuffle(W.slice(0, 5).filter(w => !set.includes(w))).slice(0, 5 - set.length) : [];
+  review.forEach((w, k) => out.push(check(w, k)));   // starts with a tap check, so spoken checks never pile up
+  const popSet = set.concat(review);
+  if (popSet.length >= 3) out.push(rep(EX.pop(popSet)));
+  const S = u.sentences || [];
+  if (S.length) {
+    const clean = x => String(x).replace(/[.,!?¿¡،؟…~“”"«»()]/g, '').trim().toLowerCase();
+    const score = sn => set.reduce((n, w) => { const t = clean(w.t), st = t.length > 2 ? t.slice(0, -1) : t; return n + (t && clean(sn.t).includes(st) ? 1 : 0); }, 0);
+    const picks = shuffle(S.slice().sort((a, b) => score(b) - score(a)).slice(0, 4)).slice(0, 2);
+    if (picks[0]) { out.push(rep(EX.listenTiles(picks[0]))); out.push(rep(EX.speak(picks[0]))); }
+    if (picks[1]) out.push(rep(EX.toKo(picks[1])));
+  }
+  return out.filter(Boolean);
+};
+
+/* Scenes 3-5 of a chapter: mix the exercise types and spread the speaking through the lesson
+   (it used to be five sentence puzzles in a row and all the speaking at the end).
+   Conversations and stories keep their order, because their lines follow each other. */
+const _buildLessonMix = buildLesson;
+buildLesson = function (u, level) {
+  const out = _buildLessonMix(u, level);
+  try {
+    if (!u || level < 2 || u.track === 'letters' || (u.letters || []).length || out.some(s => s.kind === 'dialog' || s.kind === 'story')) return out;
+    const isTalk = s => s.kind === 'speak' || s.kind === 'shadow' || s.kind === 'saypic' || s.kind === 'ctxsay';
+    const tip = out.find(s => s.kind === 'tip'), talk = out.filter(isTalk), rest = out.filter(s => !isTalk(s) && s.kind !== 'tip');
+    const byKind = {}; rest.forEach(s => (byKind[s.kind] = byKind[s.kind] || []).push(s));
+    const mixed = []; let last = null;
+    while (Object.values(byKind).some(a => a.length)) {   // never the same kind twice in a row when there is a choice
+      const kinds = Object.keys(byKind).filter(k => byKind[k].length).sort((a, b) => byKind[b].length - byKind[a].length);
+      const k = kinds.find(x => x !== last) || kinds[0]; mixed.push(byKind[k].shift()); last = k;
+    }
+    const res = [], gap = Math.max(1, Math.round(mixed.length / (talk.length + 1))); let ti = 0;
+    mixed.forEach((s, i) => { res.push(s); if ((i + 1) % gap === 0 && ti < talk.length) res.push(talk[ti++]); });
+    while (ti < talk.length) res.push(talk[ti++]);
+    if (tip) res.splice(Math.min(1, res.length), 0, tip);   // the tip comes early, before most of the practice it explains
+    return res.length === out.length ? res : out;
+  } catch (e) { return out; }
+};
+
 /* Start the app once every module has loaded. */
 bootApp();
