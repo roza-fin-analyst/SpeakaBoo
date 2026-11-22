@@ -8022,7 +8022,7 @@ const Runner = {
     m.innerHTML = `<div class="panel"><div class="mascot" id="ho-m"></div><h3>You ran out of hearts</h3>
       <p>Say a few phrases out loud to earn one back. Or wait ${mins} min for a free one.</p>
       <button class="btn primary" id="ho-practice">Say it to earn a heart</button>
-      <button class="btn gold" id="ho-refill" ${p.gems >= 100 ? '' : 'disabled'}>Refill hearts · 100 gems</button>
+      <button class="btn gold" id="ho-refill" ${p.gems >= 100 ? '' : 'disabled'}>Refill hearts · 100 gems${p.gems >= 100 ? '' : ` (you have ${p.gems})`}</button>
       <button class="btn ghost" id="ho-quit">Quit lesson</button></div>`;
     paintMascot($('#ho-m'), p.mascot, 'shocked');
     $('#ho-practice').onclick = () => { m.hidden = true; this.close(); startPractice('speak'); };
