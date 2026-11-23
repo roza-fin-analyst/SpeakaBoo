@@ -11699,5 +11699,79 @@ buildLesson = function (u, level) {
   } catch (e) { return out; }
 };
 
+/* =====================================================================
+   CLASSROOM SOUNDS + VIBRATION
+   Sounds: marimba "ding" when right, a soft wood-block "tok" for a
+   mistake, a pencil tick on taps, a page flip, a little school-bell
+   tune when a lesson is done. Vibration (phones that support it, e.g.
+   Android): a light tick when right, a double buzz for a mistake, a
+   happy pattern for a win, a long buzz for losing or running out of
+   hearts. Both can be switched off in Me.
+   ===================================================================== */
+const Haptic = {
+  on() { try { return localStorage.getItem('gabboo.haptic') !== '0'; } catch (e) { return true; } },
+  set(v) { try { localStorage.setItem('gabboo.haptic', v ? '1' : '0'); } catch (e) { /* ignore */ } },
+  supported() { return typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function'; },
+  go(pattern) { if (!this.on() || !this.supported()) return; try { navigator.vibrate(pattern); } catch (e) { /* ignore */ } },
+  P: { right: 18, wrong: [45, 35, 45], combo: [25, 40, 25, 40, 60], win: [30, 50, 30, 50, 120], lose: [260], hearts: [120, 80, 120, 80, 120], streak: [40, 60, 40, 60, 40, 60, 220], speak: [20, 40, 30] }
+};
+React.buzz = pattern => Haptic.go(pattern);   // every existing vibration now respects the switch
+Object.assign(Sfx, {
+  /** A struck bar (marimba/xylophone): a quick sine with a soft overtone. */
+  bar(f, t0, dur = .45, g = .16) { this.tone(f, t0, dur, 'sine', g); this.tone(f * 4, t0, dur * .25, 'sine', g * .18); },
+  /** Short filtered noise: page flips, pencil ticks, wood. */
+  noise(t0, dur, freq, q = 1, g = .12, type = 'bandpass', sweepTo) {
+    if (!Sound.on() || !Sound.ready()) return;
+    try {
+      const c = this.ctx, n = Math.ceil(c.sampleRate * dur), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+      const s = c.createBufferSource(), f = c.createBiquadFilter(), v = c.createGain(), t = c.currentTime + t0;
+      s.buffer = buf; f.type = type; f.frequency.setValueAtTime(freq, t); if (sweepTo) f.frequency.exponentialRampToValueAtTime(sweepTo, t + dur); f.Q.value = q;
+      v.gain.setValueAtTime(g, t); v.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      s.connect(f).connect(v).connect(c.destination); s.start(t); s.stop(t + dur + .02);
+    } catch (e) { /* audio unavailable */ }
+  },
+  tap() { this.noise(0, .04, 3000, 1.5, .35); },                                   // pencil tick
+  correct() { this.bar(784, 0, .35, .15); this.bar(1175, .08, .55, .15); },        // marimba "ding-ding"
+  wrong() { this.tone(330, 0, .12, 'sine', .12); this.noise(0, .06, 900, 3, .06); this.tone(262, .1, .2, 'sine', .1); },   // soft wood-block "tok-tok"
+  pop() { this.bar(988, 0, .12, .09); },
+  page() { this.noise(0, .28, 1400, .7, .45, 'bandpass', 4800); },                  // a page turning
+  complete() { this.page(); [523, 659, 784, 1047, 784, 1047].forEach((f, i) => this.bar(f, .12 + i * .12, i === 5 ? .9 : .35, .13)); },   // school-bell tune
+  level() { [523, 659, 784, 988, 1175, 1568].forEach((f, i) => this.bar(f, i * .07, .4, .12)); },
+  whoosh() { this.page(); },                                                         // opening: a book opens
+  boo() { this.bar(659, 0, .3, .14); this.bar(988, .1, .5, .14); },                  // "ta-da" instead of a spooky boo
+  giggle() { [1047, 1175, 1319, 1568].forEach((f, i) => this.bar(f, i * .07, .18, .08)); },
+  chime() { [784, 988, 1175, 1568].forEach((f, i) => this.bar(f, i * .11, .7, .09)); }
+});
+/* Vibrate at the big moments. */
+{
+  const _g = Runner.grade;
+  Runner.grade = function (ok, info = {}) {
+    const was = this.locked, out = _g.call(this, ok, info);
+    if (!was && !(info.free && !ok)) Haptic.go(ok ? (this.combo && this.combo % 5 === 0 ? Haptic.P.combo : Haptic.P.right) : Haptic.P.wrong);
+    if (!was && ok && /(\d+)% match/.test(info.teach || '') && +/(\d+)%/.exec(info.teach)[1] >= 75) setTimeout(() => Haptic.go(Haptic.P.speak), 120);
+    return out;
+  };
+  const _c = Runner.complete;
+  Runner.complete = function () {
+    const before = this.finished, out = _c.apply(this, arguments);
+    if (!before && this.finished) { const acc = this.graded ? this.correct / this.graded : 1; Haptic.go(acc >= .5 && !this._gateFail ? Haptic.P.win : Haptic.P.lose); }
+    return out;
+  };
+  const _h = Runner.heartsOut; Runner.heartsOut = function () { Haptic.go(Haptic.P.hearts); return _h.apply(this, arguments); };
+  const _cs = Celebrate.show; Celebrate.show = function (o) { setTimeout(() => Haptic.go(Haptic.P.streak), 700); return _cs.call(this, o); };
+}
+/* Me → App: a Vibration switch next to Sound (only on phones that can vibrate). */
+{
+  const _rp = renderProfile;
+  renderProfile = function () {
+    const out = _rp.apply(this, arguments);
+    const snd = $('#me-sound'); if (!snd || $('#me-haptic') || !Haptic.supported()) return out;
+    snd.closest('.set-row').insertAdjacentHTML('afterend', `<label class="set-row">Vibration<input type="checkbox" class="toggle" id="me-haptic" ${Haptic.on() ? 'checked' : ''}></label>`);
+    $('#me-haptic').onchange = e => { Haptic.set(e.target.checked); if (e.target.checked) Haptic.go(Haptic.P.right); };
+    return out;
+  };
+}
+
 /* Start the app once every module has loaded. */
 bootApp();
