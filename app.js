@@ -8022,7 +8022,7 @@ const Runner = {
     m.innerHTML = `<div class="panel"><div class="mascot" id="ho-m"></div><h3>You ran out of hearts</h3>
       <p>Say a few phrases out loud to earn one back. Or wait ${mins} min for a free one.</p>
       <button class="btn primary" id="ho-practice">Say it to earn a heart</button>
-      <button class="btn gold" id="ho-refill" ${p.gems >= 100 ? '' : 'disabled'}>Refill hearts · 100 gems</button>
+      <button class="btn gold" id="ho-refill" ${p.gems >= 100 ? '' : 'disabled'}>Refill hearts · 100 gems${p.gems >= 100 ? '' : ` (you have ${p.gems})`}</button>
       <button class="btn ghost" id="ho-quit">Quit lesson</button></div>`;
     paintMascot($('#ho-m'), p.mascot, 'shocked');
     $('#ho-practice').onclick = () => { m.hidden = true; this.close(); startPractice('speak'); };
@@ -11698,6 +11698,240 @@ buildLesson = function (u, level) {
     return res.length === out.length ? res : out;
   } catch (e) { return out; }
 };
+
+/* =====================================================================
+   CLASSROOM SOUNDS + VIBRATION
+   Sounds: marimba "ding" when right, a soft wood-block "tok" for a
+   mistake, a pencil tick on taps, a page flip, a little school-bell
+   tune when a lesson is done. Vibration (phones that support it, e.g.
+   Android): a light tick when right, a double buzz for a mistake, a
+   happy pattern for a win, a long buzz for losing or running out of
+   hearts. Both can be switched off in Me.
+   ===================================================================== */
+const Haptic = {
+  on() { try { return localStorage.getItem('gabboo.haptic') !== '0'; } catch (e) { return true; } },
+  set(v) { try { localStorage.setItem('gabboo.haptic', v ? '1' : '0'); } catch (e) { /* ignore */ } },
+  supported() { return typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function'; },
+  go(pattern) { if (!this.on() || !this.supported()) return; try { navigator.vibrate(pattern); } catch (e) { /* ignore */ } },
+  P: { right: 18, wrong: [45, 35, 45], combo: [25, 40, 25, 40, 60], win: [30, 50, 30, 50, 120], lose: [260], hearts: [120, 80, 120, 80, 120], streak: [40, 60, 40, 60, 40, 60, 220], speak: [20, 40, 30] }
+};
+React.buzz = pattern => Haptic.go(pattern);   // every existing vibration now respects the switch
+Object.assign(Sfx, {
+  /** A struck bar (marimba/xylophone): a quick sine with a soft overtone. */
+  bar(f, t0, dur = .45, g = .16) { this.tone(f, t0, dur, 'sine', g); this.tone(f * 4, t0, dur * .25, 'sine', g * .18); },
+  /** Short filtered noise: page flips, pencil ticks, wood. */
+  noise(t0, dur, freq, q = 1, g = .12, type = 'bandpass', sweepTo) {
+    if (!Sound.on() || !Sound.ready()) return;
+    try {
+      const c = this.ctx, n = Math.ceil(c.sampleRate * dur), buf = c.createBuffer(1, n, c.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+      const s = c.createBufferSource(), f = c.createBiquadFilter(), v = c.createGain(), t = c.currentTime + t0;
+      s.buffer = buf; f.type = type; f.frequency.setValueAtTime(freq, t); if (sweepTo) f.frequency.exponentialRampToValueAtTime(sweepTo, t + dur); f.Q.value = q;
+      v.gain.setValueAtTime(g, t); v.gain.exponentialRampToValueAtTime(.0001, t + dur);
+      s.connect(f).connect(v).connect(c.destination); s.start(t); s.stop(t + dur + .02);
+    } catch (e) { /* audio unavailable */ }
+  },
+  tap() { this.noise(0, .04, 3000, 1.5, .35); },                                   // pencil tick
+  correct() { this.bar(784, 0, .35, .15); this.bar(1175, .08, .55, .15); },        // marimba "ding-ding"
+  wrong() { this.tone(330, 0, .12, 'sine', .12); this.noise(0, .06, 900, 3, .06); this.tone(262, .1, .2, 'sine', .1); },   // soft wood-block "tok-tok"
+  pop() { this.bar(988, 0, .12, .09); },
+  page() { this.noise(0, .28, 1400, .7, .45, 'bandpass', 4800); },                  // a page turning
+  complete() { this.page(); [523, 659, 784, 1047, 784, 1047].forEach((f, i) => this.bar(f, .12 + i * .12, i === 5 ? .9 : .35, .13)); },   // school-bell tune
+  level() { [523, 659, 784, 988, 1175, 1568].forEach((f, i) => this.bar(f, i * .07, .4, .12)); },
+  whoosh() { this.page(); },                                                         // opening: a book opens
+  boo() { this.bar(659, 0, .3, .14); this.bar(988, .1, .5, .14); },                  // "ta-da" instead of a spooky boo
+  giggle() { [1047, 1175, 1319, 1568].forEach((f, i) => this.bar(f, i * .07, .18, .08)); },
+  chime() { [784, 988, 1175, 1568].forEach((f, i) => this.bar(f, i * .11, .7, .09)); }
+});
+/* Vibrate at the big moments (per-answer vibration lives in the ANSWER FEEDBACK block below). */
+{
+  const _c = Runner.complete;
+  Runner.complete = function () {
+    const before = this.finished, out = _c.apply(this, arguments);
+    if (!before && this.finished) { const acc = this.graded ? this.correct / this.graded : 1; Haptic.go(acc >= .5 && !this._gateFail ? Haptic.P.win : Haptic.P.lose); }
+    return out;
+  };
+  const _h = Runner.heartsOut; Runner.heartsOut = function () { Haptic.go(Haptic.P.hearts); return _h.apply(this, arguments); };
+  const _cs = Celebrate.show; Celebrate.show = function (o) { setTimeout(() => Haptic.go(Haptic.P.streak), 700); return _cs.call(this, o); };
+}
+/* Me → App: a Vibration switch next to Sound (only on phones that can vibrate). */
+{
+  const _rp = renderProfile;
+  renderProfile = function () {
+    const out = _rp.apply(this, arguments);
+    const snd = $('#me-sound'); if (!snd || $('#me-haptic') || !Haptic.supported()) return out;
+    snd.closest('.set-row').insertAdjacentHTML('afterend', `<label class="set-row">Vibration<input type="checkbox" class="toggle" id="me-haptic" ${Haptic.on() ? 'checked' : ''}></label>`);
+    $('#me-haptic').onchange = e => { Haptic.set(e.target.checked); if (e.target.checked) Haptic.go(Haptic.P.right); };
+    return out;
+  };
+}
+
+/* =====================================================================
+   ANSWER FEEDBACK THAT FEELS GOOD
+   Right: a marimba "ding" that climbs one note with every answer in a
+   row, stars from the answer you picked, the progress bar jumps ahead,
+   a light tick in your hand. Streaks (3 / 5 / 10 in a row): the bar
+   glows flame, gold, then "legendary", Boo on the bar glows, a banner
+   and fanfare at each milestone, and each tier vibrates differently.
+   Wrong: a soft "try again" sound, a gentle tap on the shoulder, kind
+   words. Two in a row: a calm chord and "Take a breath". A streak that
+   ends fizzles out kindly. Losing a heart shows the heart breaking.
+   ===================================================================== */
+const FLAME_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-6 1-9z" fill="#FF7A3D"/><path d="M12 11c1 2 3 3 3 5.5a3 3 0 0 1-6 0c0-1.3.8-2.3 1.4-3 .4 1 1 1.4 1.6 1.4 0-1.6-.6-2.6 0-3.9z" fill="#FFC23D"/></svg>';
+const FX = {
+  prevCombo: 0,
+  lessonOpen() { const l = $('#lesson'); return !!(l && !l.hidden); },
+  tier(n) { return n >= 10 ? 3 : n >= 5 ? 2 : n >= 3 ? 1 : 0; },
+  milestone(n) { return n === 3 || n === 5 || (n >= 10 && n % 5 === 0); },
+  okLines: ['Nice!', 'Great!', 'Correct!', 'You got it!', 'Well done!', 'Awesome!'],
+  badLines: ['Almost!', 'Not quite', 'Good try!'],
+  cheer: ['Mistakes help you learn.', 'You’ll get it next time.', 'Almost there. Keep going!', 'Every try makes it stick.'],
+  icon(ok) {
+    return ok ? '<svg class="fb-ic ok" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M6.6 12.4l3.6 3.6 7.3-7.8"/></svg>'
+      : '<svg class="fb-ic bad" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11"/><path d="M16.2 9.2a5 5 0 1 0 .9 4.2"/><path d="M16.6 5.6v3.9h-3.9"/></svg>';
+  },
+  /** The progress bar and Boo on it change with the streak. */
+  trail(n) {
+    const tr = $('#lesson .trail'); if (!tr) return; const t = this.tier(n);
+    [1, 2, 3].forEach(k => tr.classList.toggle('streak-' + k, t === k));
+  },
+  /** A sparkle at the front of the progress bar. */
+  barSpark() {
+    const tr = $('#lesson .trail'), bar = $('#l-bar'); if (!tr || !bar) return;
+    const s = document.createElement('span'); s.className = 'bar-spark'; s.style.left = bar.style.width || '0%'; tr.append(s); setTimeout(() => s.remove(), 700);
+  },
+  /** The flame of a streak that just ended floats away. */
+  fizzle(prev) {
+    const h = $('#l-hearts'); if (!h) return; const r = h.getBoundingClientRect();
+    const s = document.createElement('span'); s.className = 'fx-fizzle'; s.innerHTML = `${FLAME_SVG}<b>${prev}</b>`;
+    s.style.left = (r.left - 44) + 'px'; s.style.top = (r.top + 4) + 'px'; document.body.append(s); setTimeout(() => s.remove(), 1300);
+  },
+  /** 3, 5, 10, 15… in a row: banner, fanfare, a shower, a happy vibration. */
+  celebrate(n) {
+    if (!this.lessonOpen()) return; const l = $('#lesson');
+    Sfx.fanfare(n); setTimeout(() => Haptic.go(Haptic.P.milestone), 80);
+    const el = document.createElement('div'); el.className = 'fx-banner t' + this.tier(n);
+    el.innerHTML = `<span class="fxb-flame">${FLAME_SVG}</span><span class="fxb-txt"><b>${n} in a row!</b><small>${n >= 10 ? 'Legendary streak!' : n >= 5 ? 'Boo is glowing' : 'You’re on a roll'}</small></span>`;
+    l.append(el); setTimeout(() => el.remove(), 1800);
+    try { React.rain(n >= 10 ? 'confetti' : 'stars', n >= 10 ? 26 : n >= 5 ? 18 : 10); } catch (e) { /* ignore */ }
+    l.classList.remove('fx-glow'); void l.offsetWidth; l.classList.add('fx-glow'); setTimeout(() => l.classList.remove('fx-glow'), 1300);
+  },
+  vibe(ok, n, prev, wrongRun, free) {
+    const P = Haptic.P;
+    if (ok) return Haptic.go(n >= 10 ? P.r10 : n >= 5 ? P.r5 : n >= 3 ? P.r3 : n === 2 ? P.r2 : P.r1);
+    if (free) return Haptic.go(P.soft);
+    Haptic.go(prev >= 3 ? P.broke : wrongRun >= 2 ? P.wrongAgain : P.wrong);
+  },
+  /** Everything that happens right after an answer is checked. */
+  after(R, ok, info, prev) {
+    const free = !!info.free && !ok, n = R.combo || 0, speed = !!(R.meta && R.meta.speed);
+    const t = $('#l-fb-title'), m = $('#l-fb-msg');
+    if (t && !free) {
+      let head, sub = '';
+      if (ok) { head = n >= 5 ? `${n} in a row!` : n >= 3 ? 'On a roll!' : pick(this.okLines); sub = n >= 10 ? 'Amazing. Keep the streak going!' : n >= 5 ? 'Keep the streak going!' : ''; }
+      else { head = R.wrongRun >= 2 ? 'Take a breath' : pick(this.badLines); sub = prev >= 3 ? `Your ${prev}-in-a-row streak ended. Start a new one!` : R.wrongRun >= 2 ? 'You’re doing fine. Look at the answer, then go on.' : pick(this.cheer); }
+      t.innerHTML = this.icon(ok) + `<span>${esc(head)}</span>`;
+      if (m) { const had = /Free miss/.test(m.textContent); m.textContent = sub + (had ? (sub ? ' ' : '') + 'No heart lost this time.' : ''); }
+    } else if (t && free) t.innerHTML = this.icon(false) + `<span>${esc(t.textContent)}</span>`;
+    this.vibe(ok, n, prev, R.wrongRun, free);
+    this.trail(ok ? n : (free ? n : 0));
+    [['#l-boo', ok ? 'hop' : 'shiver'], ['#coach-m', ok ? 'hop' : 'shiver']].forEach(([sel, cls]) => { const x = $(sel); if (!x) return; x.classList.remove('hop', 'shiver'); void x.offsetWidth; x.classList.add(cls); });
+    if (ok) {
+      const bar = $('#l-bar'); if (bar && R.queue && R.queue.length) bar.style.width = Math.min(100, (R.i + 1) / R.queue.length * 100) + '%';   // the bar moves as soon as you are right
+      const b = $('#l-boo'); if (b) b.style.left = bar ? bar.style.width : b.style.left;
+      this.barSpark();
+      const picked = $('#l-stage .l-inner .right'); if (picked && !speed) React.burst(picked, 'stars', n >= 5 ? 12 : 7);
+      if (this.milestone(n) && !speed) setTimeout(() => this.celebrate(n), 240);
+    } else if (!free && prev >= 3) { Sfx.streakEnd(); this.fizzle(prev); }
+  }
+};
+Object.assign(Haptic.P, {
+  r1: [15], r2: [15, 55, 15], r3: [14, 40, 14, 40, 14], r5: [18, 30, 24, 30, 34], r10: [30, 25, 30, 25, 30, 25, 70],
+  milestone: [50, 70, 50, 70, 140], wrong: [80, 60, 40], wrongAgain: [160], broke: [60, 50, 60, 50, 110], soft: [30], heart: [90, 40, 90]
+});
+{
+  const PENTA = [0, 2, 4, 7, 9, 12, 14, 16];   // climbs about an octave and a half, then stays bright
+  Object.assign(Sfx, {
+    correct() {   // the ding climbs a note with each answer in a row
+      const n = FX.lessonOpen() ? Math.max(1, Runner.combo || 1) : 1, f = 587.33 * Math.pow(2, PENTA[Math.min(n - 1, PENTA.length - 1)] / 12);
+      this.bar(f, 0, .32, .15); this.bar(f * 1.5, .08, .5, .14);
+      if (n >= 3) this.bar(f * 2, .17, .5, .07);
+    },
+    wrong() {
+      if (FX.lessonOpen() && Runner.wrongRun >= 2) { this.tone(392, 0, .55, 'sine', .07); this.tone(494, .02, .55, 'sine', .05); this.tone(587, .04, .55, 'sine', .04); return; }   // calm, warm chord
+      this.tone(349, 0, .14, 'sine', .11); this.tone(392, .13, .26, 'sine', .09);   // soft "hmm-mm": try again
+    },
+    soft() { this.tone(523, 0, .18, 'sine', .06); },
+    streakEnd() { this.sweep(620, 330, .1, .4, 'sine', .05); },
+    fanfare(n) { const s = n >= 10 ? [784, 988, 1175, 1568, 1976] : n >= 5 ? [659, 784, 988, 1319] : [587, 740, 880]; s.forEach((f, i) => this.bar(f, .1 + i * .07, i === s.length - 1 ? .6 : .2, .11)); }
+  });
+}
+{
+  const _g = Runner.grade;
+  Runner.grade = function (ok, info = {}) {
+    const was = this.locked, prev = this.combo || 0; FX.prevCombo = prev;
+    const out = _g.call(this, ok, info);
+    if (!was) { try { if (info.free && !ok) Sfx.soft(); FX.after(this, ok, info, prev); } catch (e) { /* never break a lesson over an effect */ } }
+    return out;
+  };
+  const _o = Runner.open;
+  Runner.open = function () { this._hearts = null; const out = _o.apply(this, arguments); FX.trail(0); return out; };
+  const _dh = Runner.drawHearts;
+  Runner.drawHearts = function () {
+    const before = this._hearts, out = _dh.apply(this, arguments);
+    try {
+      if (!this.meta || this.meta.speed) return out;
+      const h = this.practiceMode() ? Infinity : Hearts.left();
+      if (before != null && h < before) {   // a heart breaks
+        const el = $('#l-hearts'); el.classList.remove('heart-lost'); void el.offsetWidth; el.classList.add('heart-lost');
+        React.burst(el, 'hearts', 4); setTimeout(() => Haptic.go(Haptic.P.heart), 260);
+      }
+      this._hearts = h;
+    } catch (e) { /* ignore */ }
+    return out;
+  };
+  const _cc = React.comboChip;
+  React.comboChip = function (n) {
+    _cc.call(this, n); const c = $('#l-combo'); if (!c) return;
+    const t = FX.tier(n); [1, 2, 3].forEach(k => c.classList.toggle('t' + k, t === k));
+  };
+  /* Word tiles fly between the word bank and the answer line instead of jumping. */
+  const _tiles = RENDER.tiles;
+  RENDER.tiles = function (step, el, R) {
+    _tiles(step, el, R);
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    el.addEventListener('click', e => {   // capture: runs before the tile moves, so we know where it came from
+      if (R.locked) return;
+      const b = e.target.closest('[data-b]'), a = e.target.closest('[data-a]'); if (!b && !a) return;
+      const from = (b || a).getBoundingClientRect(), id = b ? b.dataset.b : a.dataset.a;
+      requestAnimationFrame(() => {
+        const to_ = b ? [...el.querySelectorAll('#ans [data-a]')].find(x => x.dataset.a === id) : el.querySelector(`[data-b="${id}"]`);
+        if (!to_ || !to_.animate) return; const to = to_.getBoundingClientRect();
+        to_.animate([{ transform: `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(1.05)` }, { transform: 'none' }], { duration: 260, easing: 'cubic-bezier(.3, 1.3, .5, 1)' });
+      });
+    }, true);
+  };
+  /* The win screen: best streak, a "Perfect lesson!" ribbon, soft ticks while the numbers count up. */
+  const _cm = Runner.complete;
+  Runner.complete = function () {
+    const p0 = P(), goalBefore = p0 ? todayXP(p0) >= (p0.dailyGoal || 50) : true, lvlBefore = p0 ? levelFor(p0.xp) : 0;
+    const before = this.finished, out = _cm.apply(this, arguments);
+    try {
+      const v = $('#l-stage .victory'); if (before || !this.finished || !v) return out;
+      const p = P(), acc = this.graded ? this.correct / this.graded : 1, perfect = acc >= .999 && this.graded > 0 && !this._gateFail;
+      const goalNow = !goalBefore && todayXP(p) >= (p.dailyGoal || 50), lvl = levelFor(p.xp), leveled = lvl > lvlBefore;
+      const panel = $('.vpanel', v);
+      if (panel && this.maxCombo >= 3) panel.insertAdjacentHTML('beforeend', `<p class="vbest">${FLAME_SVG}<span>Best streak: <b>${this.maxCombo} in a row</b></span></p>`);
+      const ribbons = [perfect ? '<span class="vperfect">Perfect lesson!</span>' : '', goalNow ? '<span class="vperfect goal">Daily goal reached!</span>' : '', leveled ? `<span class="vperfect level">Level ${lvl}!</span>` : ''].filter(Boolean);
+      if (ribbons.length) $('.vplaque', v)?.insertAdjacentHTML('afterend', `<div class="vribbons">${ribbons.join('')}</div>`);
+      if (perfect || leveled) setTimeout(() => { Sfx.fanfare(10); try { React.rain('confetti', 30); } catch (e) { /* ignore */ } }, 900);
+      else if (goalNow) setTimeout(() => { Sfx.chime(); try { React.rain('stars', 18); } catch (e) { /* ignore */ } }, 900);
+      if (goalNow || leveled) setTimeout(() => Haptic.go(Haptic.P.milestone), 1000);
+      for (let k = 0; k < 9; k++) setTimeout(() => Sfx.tap(), 380 + k * 75);   // the numbers tick up
+    } catch (e) { /* ignore */ }
+    return out;
+  };
+}
 
 /* Start the app once every module has loaded. */
 bootApp();
