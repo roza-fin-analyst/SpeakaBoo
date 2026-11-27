@@ -2707,3 +2707,9 @@ html.sound-first .pk-means b { font-size: 15px; color: var(--ink-2); }
 .tr-tile:active:not(:disabled) .ic { transform: scale(.9); } .tr-tile .ic { transition: transform .15s; }
 @media (prefers-reduced-motion: reduce) { .vbest, .vperfect, .victory .vt, .bnav svg, .tr-tiles .tr-tile, #tab-now .now > * { animation: none !important; } }
 .vperfect { position: relative; z-index: 5; margin: 10px auto 8px !important; }
+/* Boo on the progress bar and the coach hop when you're right, shiver when you're not */
+.trail-boo.hop, .coach .mascot.hop { animation: booHop .5s cubic-bezier(.3, 1.6, .5, 1); }
+.trail-boo.shiver, .coach .mascot.shiver { animation: booShiver .45s ease-in-out; }
+@keyframes booHop { 40% { translate: 0 -10px; scale: 1.08; } 100% { translate: 0 0; scale: 1; } }
+@keyframes booShiver { 20% { rotate: -9deg; } 40% { rotate: 7deg; } 60% { rotate: -5deg; } 80% { rotate: 3deg; } 100% { rotate: 0deg; } }
+@media (prefers-reduced-motion: reduce) { .trail-boo.hop, .coach .mascot.hop, .trail-boo.shiver, .coach .mascot.shiver { animation: none; } }

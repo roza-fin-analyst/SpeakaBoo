@@ -11835,6 +11835,7 @@ const FX = {
     } else if (t && free) t.innerHTML = this.icon(false) + `<span>${esc(t.textContent)}</span>`;
     this.vibe(ok, n, prev, R.wrongRun, free);
     this.trail(ok ? n : (free ? n : 0));
+    [['#l-boo', ok ? 'hop' : 'shiver'], ['#coach-m', ok ? 'hop' : 'shiver']].forEach(([sel, cls]) => { const x = $(sel); if (!x) return; x.classList.remove('hop', 'shiver'); void x.offsetWidth; x.classList.add(cls); });
     if (ok) {
       const bar = $('#l-bar'); if (bar && R.queue && R.queue.length) bar.style.width = Math.min(100, (R.i + 1) / R.queue.length * 100) + '%';   // the bar moves as soon as you are right
       const b = $('#l-boo'); if (b) b.style.left = bar ? bar.style.width : b.style.left;
