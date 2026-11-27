@@ -2623,3 +2623,87 @@ html.sound-first .pk-means b { font-size: 15px; color: var(--ink-2); }
 @media (prefers-reduced-motion: reduce) { .journey-card.first { animation: none; } }
 /* Disabled buttons look disabled (an old rule painted every orange button the same) */
 .btn.primary:disabled, .btn.gold:disabled, #l-main:disabled, .go:disabled { background: var(--surface-2) !important; color: var(--ink-2) !important; box-shadow: 0 3px 0 var(--line) !important; cursor: not-allowed; }
+
+/* ===== Answer feedback that feels good ===== */
+#l-fb-title { display: inline-flex; align-items: center; gap: 8px; }
+.fb-ic { width: 30px; height: 30px; flex: none; } .fb-ic circle { stroke: none; } .fb-ic path { fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.fb-ic.ok circle { fill: var(--jade); } .fb-ic.bad circle { fill: var(--coral); }
+.fb-ic.ok { animation: icPop .5s cubic-bezier(.3, 1.8, .5, 1) both; } .fb-ic.ok path { stroke-dasharray: 20; stroke-dashoffset: 20; animation: icDraw .35s .12s ease-out forwards; }
+.fb-ic.bad { animation: icWobble .6s ease-in-out both; }
+@keyframes icPop { 0% { transform: scale(0) rotate(-30deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes icDraw { to { stroke-dashoffset: 0; } }
+@keyframes icWobble { 0% { transform: scale(0); } 40% { transform: scale(1.1) rotate(-12deg); } 70% { transform: rotate(8deg); } 100% { transform: none; } }
+#l-fb-msg { display: block; margin-top: 2px; font-weight: 700; font-size: 14.5px; }
+.l-foot.ok #l-fb-msg { color: var(--jade-deep, #136B42); } .l-foot.bad #l-fb-msg { color: #8A2E2E; }
+
+/* Streak tiers: the progress bar glows, Boo on the bar glows */
+.trail #l-bar { position: relative; overflow: hidden; transition: width .45s cubic-bezier(.3, 1.3, .5, 1), background .4s; }
+.trail.streak-1 #l-bar { background: linear-gradient(90deg, #FF8A3D, #FFB23D, #FF8A3D) !important; background-size: 200% 100% !important; animation: barFlow 1.6s linear infinite; }
+.trail.streak-2 #l-bar { background: linear-gradient(90deg, #FF6A1F, #FFD24A, #FF6A1F) !important; background-size: 200% 100% !important; animation: barFlow 1.1s linear infinite; box-shadow: 0 0 10px rgb(255 170 40 / .75); }
+.trail.streak-3 #l-bar { background: linear-gradient(90deg, #8E5BFF, #FF5FA2, #FFD24A, #8E5BFF) !important; background-size: 300% 100% !important; animation: barFlow 1.4s linear infinite; box-shadow: 0 0 14px rgb(190 110 255 / .8); }
+.trail[class*="streak-"] #l-bar::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / .55) 50%, transparent 70%); background-size: 220% 100%; animation: barShine 1.3s ease-in-out infinite; }
+@keyframes barFlow { to { background-position: -200% 0; } }
+@keyframes barShine { from { background-position: 150% 0; } to { background-position: -70% 0; } }
+.trail.streak-2 .trail-boo { filter: drop-shadow(0 0 6px #FFC23D) drop-shadow(0 0 2px #FFC23D); }
+.trail.streak-3 .trail-boo { filter: drop-shadow(0 0 8px #FFD24A) drop-shadow(0 0 4px #FF5FA2); animation: booGlow 1s ease-in-out infinite alternate; }
+@keyframes booGlow { to { filter: drop-shadow(0 0 12px #FFD24A) drop-shadow(0 0 6px #8E5BFF); } }
+.bar-spark { position: absolute; top: 50%; width: 26px; height: 26px; margin: -13px 0 0 -13px; pointer-events: none; background: radial-gradient(circle, #fff 0 18%, #FFE27A 30%, transparent 62%); border-radius: 50%; animation: sparkOut .65s ease-out forwards; }
+@keyframes sparkOut { 0% { transform: scale(.2); opacity: 1; } 100% { transform: scale(2.2); opacity: 0; } }
+
+/* The flame counter grows with the streak */
+.l-combo svg { transition: transform .3s; } .l-combo b { transition: transform .3s; }
+.l-combo.t1 svg { transform: scale(1.2); }
+.l-combo.t2 { color: #E8590C; } .l-combo.t2 svg { transform: scale(1.4); filter: drop-shadow(0 0 4px rgb(255 140 40 / .8)); } .l-combo.t2 b { transform: scale(1.12); }
+.l-combo.t3 { color: #8E5BFF; } .l-combo.t3 svg { transform: scale(1.55); filter: drop-shadow(0 0 6px rgb(190 110 255 / .9)); } .l-combo.t3 b { transform: scale(1.2); }
+
+/* Milestone banner: 3 / 5 / 10 in a row */
+.fx-banner { position: absolute; left: 50%; top: calc(74px + env(safe-area-inset-top, 0px)); z-index: 40; display: flex; align-items: center; gap: 10px; padding: 10px 18px 10px 12px; border-radius: 999px; background: #fff; border: 3px solid #FFB23D; box-shadow: 0 6px 0 #E8590C, 0 14px 30px rgb(232 89 12 / .35); pointer-events: none; transform: translateX(-50%); animation: bannerIn 1.8s cubic-bezier(.3, 1.6, .5, 1) both; white-space: nowrap; }
+.fx-banner .fxb-flame svg { width: 38px; height: 38px; display: block; animation: flameDance .5s ease-in-out infinite alternate; }
+.fx-banner b { display: block; font: 600 22px/1.1 var(--font-display); color: #E8590C; } .fx-banner small { display: block; font: 800 12px var(--font-body); color: var(--ink-2); }
+.fx-banner.t2 { border-color: #FFD24A; box-shadow: 0 6px 0 #D9930B, 0 14px 30px rgb(255 180 40 / .45); } .fx-banner.t2 b { color: #C76A00; }
+.fx-banner.t3 { border-color: #B98CFF; background: linear-gradient(135deg, #fff, #F6EEFF); box-shadow: 0 6px 0 #7A4BE0, 0 14px 30px rgb(142 91 255 / .45); } .fx-banner.t3 b { color: #7A3FE0; }
+@keyframes bannerIn { 0% { opacity: 0; transform: translate(-50%, -20px) scale(.4); } 14% { opacity: 1; transform: translate(-50%, 0) scale(1.08); } 22% { transform: translate(-50%, 0) scale(1); } 82% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; transform: translate(-50%, -14px) scale(.9); } }
+@keyframes flameDance { to { transform: scale(1.12) rotate(-5deg); } }
+.lesson.fx-glow::before { content: ""; position: absolute; inset: 0; z-index: 39; pointer-events: none; box-shadow: inset 0 0 0 4px rgb(255 194 61 / .9), inset 0 0 60px rgb(255 194 61 / .55); border-radius: inherit; animation: glowFade 1.3s ease-out forwards; }
+@keyframes glowFade { from { opacity: 1; } to { opacity: 0; } }
+
+/* A streak that ends: its flame floats up and fades */
+.fx-fizzle { position: fixed; z-index: 60; display: inline-flex; align-items: center; gap: 2px; font: 800 15px var(--font-body); color: var(--ink-2); pointer-events: none; animation: fizzle 1.3s ease-in forwards; }
+.fx-fizzle svg { width: 22px; height: 22px; filter: grayscale(1); opacity: .8; }
+@keyframes fizzle { 0% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-34px) scale(.6) rotate(-10deg); } }
+
+/* Losing a heart */
+#l-hearts.heart-lost { animation: heartLost .6s ease-in-out; }
+#l-hearts.heart-lost svg { animation: heartBreak .6s ease-in-out; }
+@keyframes heartLost { 20% { transform: translateX(-4px); } 40% { transform: translateX(4px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(2px); } }
+@keyframes heartBreak { 30% { transform: scale(1.35); filter: grayscale(.6); } 100% { transform: scale(1); } }
+
+/* Buttons press down like real buttons */
+.opt, .peek-card, .pic-card, .tr-tile, .tk-card, .journey-card { transition: transform .12s ease, box-shadow .12s ease; }
+.opt:active:not(:disabled), .pic-card:active:not(:disabled), .tk-card:active, .journey-card:active { transform: translateY(2px) scale(.99); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-ic, .fb-ic path, .trail[class*="streak-"] #l-bar, .trail[class*="streak-"] #l-bar::after, .trail.streak-3 .trail-boo, .fx-banner, .fx-banner .fxb-flame svg, .bar-spark, .fx-fizzle, #l-hearts.heart-lost, #l-hearts.heart-lost svg { animation: none !important; }
+  .fb-ic.ok path { stroke-dashoffset: 0; } .lesson.fx-glow::before { display: none; }
+}
+#l-fb-title > span { font: 600 24px/1.15 var(--font-display) !important; color: inherit; }
+.l-top .trail[class*="streak-"] { height: 16px; transition: height .3s; }
+.l-top .trail.streak-1 #l-bar { box-shadow: 0 0 8px rgb(255 160 50 / .6) !important; }
+.l-top .trail.streak-2 #l-bar { box-shadow: 0 0 12px rgb(255 190 40 / .9), 0 0 2px #fff inset !important; }
+.l-top .trail.streak-3 #l-bar { box-shadow: 0 0 16px rgb(190 110 255 / .95), 0 0 3px #fff inset !important; }
+/* Win screen extras */
+.vbest { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 10px 0 0; font-weight: 700; color: var(--ink-2); animation: optIn .5s .9s both; }
+.vbest svg { width: 22px; height: 22px; } .vbest b { color: #E8590C; }
+.vperfect { margin: -6px auto 8px; width: fit-content; padding: 4px 16px; border-radius: 999px; background: linear-gradient(90deg, #8E5BFF, #FF5FA2, #FFB23D); color: #fff; font: 800 13px var(--font-body); letter-spacing: .08em; text-transform: uppercase; box-shadow: 0 3px 0 #6A3FC9; animation: perfectIn .7s .5s cubic-bezier(.3, 1.8, .5, 1) both; }
+@keyframes perfectIn { from { opacity: 0; transform: scale(.3) rotate(-8deg); } }
+.victory .vt { animation: optIn .5s cubic-bezier(.3, 1.5, .5, 1) both; } .victory .vt:nth-child(2) { animation-delay: .18s; } .victory .vt:nth-child(3) { animation-delay: .36s; }
+/* Tabs: the icon bounces when you switch */
+.bnav button[aria-current="page"] svg, .bnav .bn[aria-current="page"] svg { animation: navBounce .5s cubic-bezier(.3, 1.8, .5, 1); }
+@keyframes navBounce { 0% { transform: scale(.7); } 60% { transform: scale(1.15) translateY(-2px); } 100% { transform: none; } }
+/* Train tiles and Today cards float in */
+.tr-tiles .tr-tile { animation: optIn .45s cubic-bezier(.2, .9, .3, 1.2) both; }
+.tr-tiles .tr-tile:nth-child(2) { animation-delay: .04s; } .tr-tiles .tr-tile:nth-child(3) { animation-delay: .08s; } .tr-tiles .tr-tile:nth-child(4) { animation-delay: .12s; } .tr-tiles .tr-tile:nth-child(5) { animation-delay: .16s; } .tr-tiles .tr-tile:nth-child(6) { animation-delay: .2s; }
+#tab-now .now > * { animation: optIn .5s cubic-bezier(.2, .9, .3, 1.2) both; } #tab-now .now > *:nth-child(2) { animation-delay: .06s; } #tab-now .now > *:nth-child(3) { animation-delay: .12s; } #tab-now .now > *:nth-child(4) { animation-delay: .18s; }
+.tr-tile:active:not(:disabled) .ic { transform: scale(.9); } .tr-tile .ic { transition: transform .15s; }
+@media (prefers-reduced-motion: reduce) { .vbest, .vperfect, .victory .vt, .bnav svg, .tr-tiles .tr-tile, #tab-now .now > * { animation: none !important; } }
+.vperfect { position: relative; z-index: 5; margin: 10px auto 8px !important; }
