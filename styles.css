@@ -2713,3 +2713,7 @@ html.sound-first .pk-means b { font-size: 15px; color: var(--ink-2); }
 @keyframes booHop { 40% { translate: 0 -10px; scale: 1.08; } 100% { translate: 0 0; scale: 1; } }
 @keyframes booShiver { 20% { rotate: -9deg; } 40% { rotate: 7deg; } 60% { rotate: -5deg; } 80% { rotate: 3deg; } 100% { rotate: 0deg; } }
 @media (prefers-reduced-motion: reduce) { .trail-boo.hop, .coach .mascot.hop, .trail-boo.shiver, .coach .mascot.shiver { animation: none; } }
+.vribbons { position: relative; z-index: 5; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 10px auto 8px; }
+.vribbons .vperfect { margin: 0 !important; display: inline-block; }
+.vperfect.goal { background: linear-gradient(90deg, #1E8E5A, #3CC48A); box-shadow: 0 3px 0 #136B42; animation-delay: .7s; }
+.vperfect.level { background: linear-gradient(90deg, #E8590C, #FFB23D); box-shadow: 0 3px 0 #B8470A; animation-delay: .9s; }

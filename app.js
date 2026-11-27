@@ -11914,13 +11914,19 @@ Object.assign(Haptic.P, {
   /* The win screen: best streak, a "Perfect lesson!" ribbon, soft ticks while the numbers count up. */
   const _cm = Runner.complete;
   Runner.complete = function () {
+    const p0 = P(), goalBefore = p0 ? todayXP(p0) >= (p0.dailyGoal || 50) : true, lvlBefore = p0 ? levelFor(p0.xp) : 0;
     const before = this.finished, out = _cm.apply(this, arguments);
     try {
       const v = $('#l-stage .victory'); if (before || !this.finished || !v) return out;
-      const acc = this.graded ? this.correct / this.graded : 1, perfect = acc >= .999 && this.graded > 0 && !this._gateFail;
+      const p = P(), acc = this.graded ? this.correct / this.graded : 1, perfect = acc >= .999 && this.graded > 0 && !this._gateFail;
+      const goalNow = !goalBefore && todayXP(p) >= (p.dailyGoal || 50), lvl = levelFor(p.xp), leveled = lvl > lvlBefore;
       const panel = $('.vpanel', v);
       if (panel && this.maxCombo >= 3) panel.insertAdjacentHTML('beforeend', `<p class="vbest">${FLAME_SVG}<span>Best streak: <b>${this.maxCombo} in a row</b></span></p>`);
-      if (perfect) { $('.vplaque', v)?.insertAdjacentHTML('afterend', '<div class="vperfect">Perfect lesson!</div>'); setTimeout(() => { Sfx.fanfare(10); try { React.rain('confetti', 30); } catch (e) { /* ignore */ } }, 900); }
+      const ribbons = [perfect ? '<span class="vperfect">Perfect lesson!</span>' : '', goalNow ? '<span class="vperfect goal">Daily goal reached!</span>' : '', leveled ? `<span class="vperfect level">Level ${lvl}!</span>` : ''].filter(Boolean);
+      if (ribbons.length) $('.vplaque', v)?.insertAdjacentHTML('afterend', `<div class="vribbons">${ribbons.join('')}</div>`);
+      if (perfect || leveled) setTimeout(() => { Sfx.fanfare(10); try { React.rain('confetti', 30); } catch (e) { /* ignore */ } }, 900);
+      else if (goalNow) setTimeout(() => { Sfx.chime(); try { React.rain('stars', 18); } catch (e) { /* ignore */ } }, 900);
+      if (goalNow || leveled) setTimeout(() => Haptic.go(Haptic.P.milestone), 1000);
       for (let k = 0; k < 9; k++) setTimeout(() => Sfx.tap(), 380 + k * 75);   // the numbers tick up
     } catch (e) { /* ignore */ }
     return out;
